@@ -1,0 +1,52 @@
+//
+//  PPCommonDef.h
+//  PPVideo
+//
+//  Created by Liang on 2016/10/15.
+//  Copyright © 2016年 Liang. All rights reserved.
+//
+
+#ifndef PPCommonDef_h
+#define PPCommonDef_h
+
+typedef NS_ENUM(NSUInteger, PPDeviceType) {
+    PPDeviceTypeUnknown,
+    PPDeviceType_iPhone4,
+    PPDeviceType_iPhone4S,
+    PPDeviceType_iPhone5,
+    PPDeviceType_iPhone5C,
+    PPDeviceType_iPhone5S,
+    PPDeviceType_iPhone6,
+    PPDeviceType_iPhone6P,
+    PPDeviceType_iPhone6S,
+    PPDeviceType_iPhone6SP,
+    PPDeviceType_iPhoneSE,
+    PPDeviceType_iPhone7,
+    PPDeviceType_iPhone7P,
+    PPDeviceType_iPad = 100
+};
+
+typedef NS_ENUM(NSInteger ,PPVipLevel) {
+    PPVipLevelNone,
+    PPVipLevelVipA,
+    PPVipLevelVipB,
+    PPVipLevelVipC
+};
+
+#define kPaidNotificationName             @"PPVideoPaidNotification"
+
+
+#define kWidth(width)                     kScreenWidth  * width  / 750
+#define kHeight(height)                   kScreenHeight * height / 1334.
+
+#define PP_SYSTEM_CONTACT_NAME            @"CONTACT_NAME"
+#define PP_SYSTEM_CONTACT_SCHEME          @"CONTACT_SCHEME"
+#define PP_SYSTEM_IMAGE_TOKEN             @"IMG_REFERER"
+
+//#define PP_SYSTEM_MINE_IMG                @"MINE_IMG"
+//#define PP_SYSTEM_PAY_AMOUNT              @"PAY_AMOUNT"
+//#define PP_SYSTEM_SVIP_PAY_AMOUNT         @"SVIP_PAY_AMOUNT"
+//#define PP_SYSTEM_PAY_IMG                 @"PAY_IMG"
+//#define PP_SYSTEM_SVIP_PAY_IMG            @"SVIP_PAY_IMG"
+
+#endif /* PPCommonDef_h */

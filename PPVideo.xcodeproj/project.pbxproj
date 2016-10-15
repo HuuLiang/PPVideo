@@ -9,23 +9,102 @@
 /* Begin PBXBuildFile section */
 		ECC097551DB1C8AA00875D56 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = ECC097541DB1C8AA00875D56 /* main.m */; };
 		ECC097581DB1C8AA00875D56 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = ECC097571DB1C8AA00875D56 /* AppDelegate.m */; };
-		ECC0975B1DB1C8AA00875D56 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ECC0975A1DB1C8AA00875D56 /* ViewController.m */; };
 		ECC0975E1DB1C8AA00875D56 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ECC0975C1DB1C8AA00875D56 /* Main.storyboard */; };
 		ECC097601DB1C8AA00875D56 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ECC0975F1DB1C8AA00875D56 /* Assets.xcassets */; };
 		ECC097631DB1C8AA00875D56 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ECC097611DB1C8AA00875D56 /* LaunchScreen.storyboard */; };
+		ECC097851DB1E06500875D56 /* config.plist in Resources */ = {isa = PBXBuildFile; fileRef = ECC097841DB1E06500875D56 /* config.plist */; };
+		ECC097891DB1E21E00875D56 /* PPTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = ECC097881DB1E21E00875D56 /* PPTabBarController.m */; };
+		ECC0978C1DB1F1F400875D56 /* PPConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = ECC0978B1DB1F1F400875D56 /* PPConfiguration.m */; };
+		ECC0978F1DB1F84C00875D56 /* PPUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = ECC0978E1DB1F84C00875D56 /* PPUtil.m */; };
+		ECC097931DB2026C00875D56 /* UIView+Loading.m in Sources */ = {isa = PBXBuildFile; fileRef = ECC097921DB2026C00875D56 /* UIView+Loading.m */; };
+		ECC097961DB2038C00875D56 /* PPActivateModel.m in Sources */ = {isa = PBXBuildFile; fileRef = ECC097951DB2038C00875D56 /* PPActivateModel.m */; };
+		ECC097991DB2059900875D56 /* PPUserAccessModel.m in Sources */ = {isa = PBXBuildFile; fileRef = ECC097981DB2059900875D56 /* PPUserAccessModel.m */; };
+		ECC0979C1DB2061800875D56 /* PPSystemConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = ECC0979B1DB2061800875D56 /* PPSystemConfig.m */; };
+		ECC0979F1DB2065300875D56 /* PPSystemConfigModel.m in Sources */ = {isa = PBXBuildFile; fileRef = ECC0979E1DB2065300875D56 /* PPSystemConfigModel.m */; };
+		ECC097A21DB2096D00875D56 /* PPBaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ECC097A11DB2096D00875D56 /* PPBaseViewController.m */; };
+		ECC097B91DB20CD600875D56 /* PPTrialViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ECC097B81DB20CD600875D56 /* PPTrialViewController.m */; };
+		ECC097BC1DB20CE700875D56 /* PPVipViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ECC097BB1DB20CE700875D56 /* PPVipViewController.m */; };
+		ECC097BF1DB20CF500875D56 /* PPSexViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ECC097BE1DB20CF500875D56 /* PPSexViewController.m */; };
+		ECC097C21DB20D0300875D56 /* PPHotViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ECC097C11DB20D0300875D56 /* PPHotViewController.m */; };
+		ECC097C51DB20D1300875D56 /* PPMineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ECC097C41DB20D1300875D56 /* PPMineViewController.m */; };
+		ECC097D61DB23ECD00875D56 /* TAAbstractDotView.m in Sources */ = {isa = PBXBuildFile; fileRef = ECC097C91DB23ECD00875D56 /* TAAbstractDotView.m */; };
+		ECC097D71DB23ECD00875D56 /* TAAnimatedDotView.m in Sources */ = {isa = PBXBuildFile; fileRef = ECC097CB1DB23ECD00875D56 /* TAAnimatedDotView.m */; };
+		ECC097D81DB23ECD00875D56 /* TADotView.m in Sources */ = {isa = PBXBuildFile; fileRef = ECC097CD1DB23ECD00875D56 /* TADotView.m */; };
+		ECC097D91DB23ECD00875D56 /* TAPageControl.m in Sources */ = {isa = PBXBuildFile; fileRef = ECC097CF1DB23ECD00875D56 /* TAPageControl.m */; };
+		ECC097DA1DB23ECD00875D56 /* SDCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = ECC097D11DB23ECD00875D56 /* SDCollectionViewCell.m */; };
+		ECC097DB1DB23ECD00875D56 /* SDCycleScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = ECC097D31DB23ECD00875D56 /* SDCycleScrollView.m */; };
+		ECC097DC1DB23ECD00875D56 /* UIView+SDExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = ECC097D51DB23ECD00875D56 /* UIView+SDExtension.m */; };
+		ECC097DF1DB240E200875D56 /* PPLayoutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ECC097DE1DB240E200875D56 /* PPLayoutViewController.m */; };
+		ECC097E21DB2411500875D56 /* UITableView+Separator.m in Sources */ = {isa = PBXBuildFile; fileRef = ECC097E11DB2411500875D56 /* UITableView+Separator.m */; };
+		ECC097E51DB2423F00875D56 /* UIScrollView+Refresh.m in Sources */ = {isa = PBXBuildFile; fileRef = ECC097E41DB2423F00875D56 /* UIScrollView+Refresh.m */; };
+		F16FC29275575E2FF3312376 /* libPods-PPVideo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 023420A73BCDB4EDC186B735 /* libPods-PPVideo.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		023420A73BCDB4EDC186B735 /* libPods-PPVideo.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-PPVideo.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		D1AEB812654C461832824D5D /* Pods-PPVideo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PPVideo.release.xcconfig"; path = "Pods/Target Support Files/Pods-PPVideo/Pods-PPVideo.release.xcconfig"; sourceTree = "<group>"; };
 		ECC097501DB1C8AA00875D56 /* PPVideo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PPVideo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		ECC097541DB1C8AA00875D56 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		ECC097561DB1C8AA00875D56 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		ECC097571DB1C8AA00875D56 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		ECC097591DB1C8AA00875D56 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		ECC0975A1DB1C8AA00875D56 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		ECC0975D1DB1C8AA00875D56 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		ECC0975F1DB1C8AA00875D56 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		ECC097621DB1C8AA00875D56 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		ECC097641DB1C8AA00875D56 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		ECC097801DB1E00A00875D56 /* PPCommonDef.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPCommonDef.h; sourceTree = "<group>"; };
+		ECC097811DB1E02800875D56 /* PPPrefixHeader.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPPrefixHeader.pch; sourceTree = "<group>"; };
+		ECC097841DB1E06500875D56 /* config.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = config.plist; sourceTree = "<group>"; };
+		ECC097861DB1E07F00875D56 /* PPConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPConfig.h; sourceTree = "<group>"; };
+		ECC097871DB1E21E00875D56 /* PPTabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPTabBarController.h; sourceTree = "<group>"; };
+		ECC097881DB1E21E00875D56 /* PPTabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPTabBarController.m; sourceTree = "<group>"; };
+		ECC0978A1DB1F1F400875D56 /* PPConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPConfiguration.h; sourceTree = "<group>"; };
+		ECC0978B1DB1F1F400875D56 /* PPConfiguration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPConfiguration.m; sourceTree = "<group>"; };
+		ECC0978D1DB1F84C00875D56 /* PPUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPUtil.h; sourceTree = "<group>"; };
+		ECC0978E1DB1F84C00875D56 /* PPUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPUtil.m; sourceTree = "<group>"; };
+		ECC097901DB1F99C00875D56 /* PPExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPExtensions.h; sourceTree = "<group>"; };
+		ECC097911DB2026C00875D56 /* UIView+Loading.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Loading.h"; sourceTree = "<group>"; };
+		ECC097921DB2026C00875D56 /* UIView+Loading.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Loading.m"; sourceTree = "<group>"; };
+		ECC097941DB2038C00875D56 /* PPActivateModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPActivateModel.h; sourceTree = "<group>"; };
+		ECC097951DB2038C00875D56 /* PPActivateModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPActivateModel.m; sourceTree = "<group>"; };
+		ECC097971DB2059900875D56 /* PPUserAccessModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPUserAccessModel.h; sourceTree = "<group>"; };
+		ECC097981DB2059900875D56 /* PPUserAccessModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPUserAccessModel.m; sourceTree = "<group>"; };
+		ECC0979A1DB2061800875D56 /* PPSystemConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPSystemConfig.h; sourceTree = "<group>"; };
+		ECC0979B1DB2061800875D56 /* PPSystemConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPSystemConfig.m; sourceTree = "<group>"; };
+		ECC0979D1DB2065300875D56 /* PPSystemConfigModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPSystemConfigModel.h; sourceTree = "<group>"; };
+		ECC0979E1DB2065300875D56 /* PPSystemConfigModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPSystemConfigModel.m; sourceTree = "<group>"; };
+		ECC097A01DB2096D00875D56 /* PPBaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPBaseViewController.h; sourceTree = "<group>"; };
+		ECC097A11DB2096D00875D56 /* PPBaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPBaseViewController.m; sourceTree = "<group>"; };
+		ECC097B71DB20CD600875D56 /* PPTrialViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPTrialViewController.h; sourceTree = "<group>"; };
+		ECC097B81DB20CD600875D56 /* PPTrialViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPTrialViewController.m; sourceTree = "<group>"; };
+		ECC097BA1DB20CE700875D56 /* PPVipViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPVipViewController.h; sourceTree = "<group>"; };
+		ECC097BB1DB20CE700875D56 /* PPVipViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPVipViewController.m; sourceTree = "<group>"; };
+		ECC097BD1DB20CF500875D56 /* PPSexViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPSexViewController.h; sourceTree = "<group>"; };
+		ECC097BE1DB20CF500875D56 /* PPSexViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPSexViewController.m; sourceTree = "<group>"; };
+		ECC097C01DB20D0300875D56 /* PPHotViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPHotViewController.h; sourceTree = "<group>"; };
+		ECC097C11DB20D0300875D56 /* PPHotViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPHotViewController.m; sourceTree = "<group>"; };
+		ECC097C31DB20D1300875D56 /* PPMineViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPMineViewController.h; sourceTree = "<group>"; };
+		ECC097C41DB20D1300875D56 /* PPMineViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPMineViewController.m; sourceTree = "<group>"; };
+		ECC097C81DB23ECD00875D56 /* TAAbstractDotView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TAAbstractDotView.h; sourceTree = "<group>"; };
+		ECC097C91DB23ECD00875D56 /* TAAbstractDotView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TAAbstractDotView.m; sourceTree = "<group>"; };
+		ECC097CA1DB23ECD00875D56 /* TAAnimatedDotView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TAAnimatedDotView.h; sourceTree = "<group>"; };
+		ECC097CB1DB23ECD00875D56 /* TAAnimatedDotView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TAAnimatedDotView.m; sourceTree = "<group>"; };
+		ECC097CC1DB23ECD00875D56 /* TADotView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TADotView.h; sourceTree = "<group>"; };
+		ECC097CD1DB23ECD00875D56 /* TADotView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TADotView.m; sourceTree = "<group>"; };
+		ECC097CE1DB23ECD00875D56 /* TAPageControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TAPageControl.h; sourceTree = "<group>"; };
+		ECC097CF1DB23ECD00875D56 /* TAPageControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TAPageControl.m; sourceTree = "<group>"; };
+		ECC097D01DB23ECD00875D56 /* SDCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDCollectionViewCell.h; sourceTree = "<group>"; };
+		ECC097D11DB23ECD00875D56 /* SDCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDCollectionViewCell.m; sourceTree = "<group>"; };
+		ECC097D21DB23ECD00875D56 /* SDCycleScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDCycleScrollView.h; sourceTree = "<group>"; };
+		ECC097D31DB23ECD00875D56 /* SDCycleScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDCycleScrollView.m; sourceTree = "<group>"; };
+		ECC097D41DB23ECD00875D56 /* UIView+SDExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+SDExtension.h"; sourceTree = "<group>"; };
+		ECC097D51DB23ECD00875D56 /* UIView+SDExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+SDExtension.m"; sourceTree = "<group>"; };
+		ECC097DD1DB240E200875D56 /* PPLayoutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPLayoutViewController.h; sourceTree = "<group>"; };
+		ECC097DE1DB240E200875D56 /* PPLayoutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPLayoutViewController.m; sourceTree = "<group>"; };
+		ECC097E01DB2411500875D56 /* UITableView+Separator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITableView+Separator.h"; sourceTree = "<group>"; };
+		ECC097E11DB2411500875D56 /* UITableView+Separator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITableView+Separator.m"; sourceTree = "<group>"; };
+		ECC097E31DB2423F00875D56 /* UIScrollView+Refresh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIScrollView+Refresh.h"; sourceTree = "<group>"; };
+		ECC097E41DB2423F00875D56 /* UIScrollView+Refresh.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+Refresh.m"; sourceTree = "<group>"; };
+		FCBF9BC6404344E8E96607B9 /* Pods-PPVideo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PPVideo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PPVideo/Pods-PPVideo.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -33,17 +112,37 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F16FC29275575E2FF3312376 /* libPods-PPVideo.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		16B0C462D92788A9B31FE3A1 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				023420A73BCDB4EDC186B735 /* libPods-PPVideo.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		A68705864820F491700AD478 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				FCBF9BC6404344E8E96607B9 /* Pods-PPVideo.debug.xcconfig */,
+				D1AEB812654C461832824D5D /* Pods-PPVideo.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		ECC097471DB1C8AA00875D56 = {
 			isa = PBXGroup;
 			children = (
 				ECC097521DB1C8AA00875D56 /* PPVideo */,
 				ECC097511DB1C8AA00875D56 /* Products */,
+				A68705864820F491700AD478 /* Pods */,
+				16B0C462D92788A9B31FE3A1 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -60,13 +159,9 @@
 			children = (
 				ECC097561DB1C8AA00875D56 /* AppDelegate.h */,
 				ECC097571DB1C8AA00875D56 /* AppDelegate.m */,
-				ECC097591DB1C8AA00875D56 /* ViewController.h */,
-				ECC0975A1DB1C8AA00875D56 /* ViewController.m */,
-				ECC0975C1DB1C8AA00875D56 /* Main.storyboard */,
-				ECC0975F1DB1C8AA00875D56 /* Assets.xcassets */,
-				ECC097611DB1C8AA00875D56 /* LaunchScreen.storyboard */,
-				ECC097641DB1C8AA00875D56 /* Info.plist */,
+				ECC0976A1DB1D8CA00875D56 /* Resource */,
 				ECC097531DB1C8AA00875D56 /* Supporting Files */,
+				ECC0976B1DB1D8DD00875D56 /* Class */,
 			);
 			path = PPVideo;
 			sourceTree = "<group>";
@@ -74,9 +169,320 @@
 		ECC097531DB1C8AA00875D56 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				ECC0975C1DB1C8AA00875D56 /* Main.storyboard */,
+				ECC0975F1DB1C8AA00875D56 /* Assets.xcassets */,
+				ECC097611DB1C8AA00875D56 /* LaunchScreen.storyboard */,
+				ECC097641DB1C8AA00875D56 /* Info.plist */,
 				ECC097541DB1C8AA00875D56 /* main.m */,
+				ECC097801DB1E00A00875D56 /* PPCommonDef.h */,
+				ECC097811DB1E02800875D56 /* PPPrefixHeader.pch */,
+				ECC097841DB1E06500875D56 /* config.plist */,
+				ECC097861DB1E07F00875D56 /* PPConfig.h */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		ECC0976A1DB1D8CA00875D56 /* Resource */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Resource;
+			sourceTree = "<group>";
+		};
+		ECC0976B1DB1D8DD00875D56 /* Class */ = {
+			isa = PBXGroup;
+			children = (
+				ECC097741DB1D97A00875D56 /* Vendor */,
+				ECC097701DB1D97A00875D56 /* Utils */,
+				ECC0976C1DB1D97A00875D56 /* Base */,
+				ECC097AF1DB20C9200875D56 /* Trial */,
+				ECC097B31DB20C9200875D56 /* VIP */,
+				ECC097AB1DB20C9200875D56 /* Sex */,
+				ECC097A31DB20C9200875D56 /* Hot */,
+				ECC097A71DB20C9200875D56 /* Mine */,
+			);
+			path = Class;
+			sourceTree = "<group>";
+		};
+		ECC0976C1DB1D97A00875D56 /* Base */ = {
+			isa = PBXGroup;
+			children = (
+				ECC0976D1DB1D97A00875D56 /* Controller */,
+				ECC0976E1DB1D97A00875D56 /* Model */,
+				ECC0976F1DB1D97A00875D56 /* View */,
+			);
+			path = Base;
+			sourceTree = "<group>";
+		};
+		ECC0976D1DB1D97A00875D56 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				ECC097A01DB2096D00875D56 /* PPBaseViewController.h */,
+				ECC097A11DB2096D00875D56 /* PPBaseViewController.m */,
+				ECC097DD1DB240E200875D56 /* PPLayoutViewController.h */,
+				ECC097DE1DB240E200875D56 /* PPLayoutViewController.m */,
+				ECC097871DB1E21E00875D56 /* PPTabBarController.h */,
+				ECC097881DB1E21E00875D56 /* PPTabBarController.m */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		ECC0976E1DB1D97A00875D56 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		ECC0976F1DB1D97A00875D56 /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		ECC097701DB1D97A00875D56 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				ECC0977E1DB1DFB500875D56 /* Extensions */,
+				ECC0977F1DB1DFCE00875D56 /* System */,
+				ECC0978D1DB1F84C00875D56 /* PPUtil.h */,
+				ECC0978E1DB1F84C00875D56 /* PPUtil.m */,
+				ECC0978A1DB1F1F400875D56 /* PPConfiguration.h */,
+				ECC0978B1DB1F1F400875D56 /* PPConfiguration.m */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+		ECC097741DB1D97A00875D56 /* Vendor */ = {
+			isa = PBXGroup;
+			children = (
+				ECC097C61DB23ECD00875D56 /* SDCycleScrollView */,
+			);
+			path = Vendor;
+			sourceTree = "<group>";
+		};
+		ECC0977E1DB1DFB500875D56 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				ECC097901DB1F99C00875D56 /* PPExtensions.h */,
+				ECC097E31DB2423F00875D56 /* UIScrollView+Refresh.h */,
+				ECC097E41DB2423F00875D56 /* UIScrollView+Refresh.m */,
+				ECC097911DB2026C00875D56 /* UIView+Loading.h */,
+				ECC097921DB2026C00875D56 /* UIView+Loading.m */,
+				ECC097E01DB2411500875D56 /* UITableView+Separator.h */,
+				ECC097E11DB2411500875D56 /* UITableView+Separator.m */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		ECC0977F1DB1DFCE00875D56 /* System */ = {
+			isa = PBXGroup;
+			children = (
+				ECC097941DB2038C00875D56 /* PPActivateModel.h */,
+				ECC097951DB2038C00875D56 /* PPActivateModel.m */,
+				ECC097971DB2059900875D56 /* PPUserAccessModel.h */,
+				ECC097981DB2059900875D56 /* PPUserAccessModel.m */,
+				ECC0979A1DB2061800875D56 /* PPSystemConfig.h */,
+				ECC0979B1DB2061800875D56 /* PPSystemConfig.m */,
+				ECC0979D1DB2065300875D56 /* PPSystemConfigModel.h */,
+				ECC0979E1DB2065300875D56 /* PPSystemConfigModel.m */,
+			);
+			path = System;
+			sourceTree = "<group>";
+		};
+		ECC097A31DB20C9200875D56 /* Hot */ = {
+			isa = PBXGroup;
+			children = (
+				ECC097A41DB20C9200875D56 /* Controller */,
+				ECC097A51DB20C9200875D56 /* Model */,
+				ECC097A61DB20C9200875D56 /* View */,
+			);
+			path = Hot;
+			sourceTree = "<group>";
+		};
+		ECC097A41DB20C9200875D56 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				ECC097C01DB20D0300875D56 /* PPHotViewController.h */,
+				ECC097C11DB20D0300875D56 /* PPHotViewController.m */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		ECC097A51DB20C9200875D56 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		ECC097A61DB20C9200875D56 /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		ECC097A71DB20C9200875D56 /* Mine */ = {
+			isa = PBXGroup;
+			children = (
+				ECC097A81DB20C9200875D56 /* Controller */,
+				ECC097A91DB20C9200875D56 /* Model */,
+				ECC097AA1DB20C9200875D56 /* View */,
+			);
+			path = Mine;
+			sourceTree = "<group>";
+		};
+		ECC097A81DB20C9200875D56 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				ECC097C31DB20D1300875D56 /* PPMineViewController.h */,
+				ECC097C41DB20D1300875D56 /* PPMineViewController.m */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		ECC097A91DB20C9200875D56 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		ECC097AA1DB20C9200875D56 /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		ECC097AB1DB20C9200875D56 /* Sex */ = {
+			isa = PBXGroup;
+			children = (
+				ECC097AC1DB20C9200875D56 /* Controller */,
+				ECC097AD1DB20C9200875D56 /* Model */,
+				ECC097AE1DB20C9200875D56 /* View */,
+			);
+			path = Sex;
+			sourceTree = "<group>";
+		};
+		ECC097AC1DB20C9200875D56 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				ECC097BD1DB20CF500875D56 /* PPSexViewController.h */,
+				ECC097BE1DB20CF500875D56 /* PPSexViewController.m */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		ECC097AD1DB20C9200875D56 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		ECC097AE1DB20C9200875D56 /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		ECC097AF1DB20C9200875D56 /* Trial */ = {
+			isa = PBXGroup;
+			children = (
+				ECC097B01DB20C9200875D56 /* Controller */,
+				ECC097B11DB20C9200875D56 /* Model */,
+				ECC097B21DB20C9200875D56 /* View */,
+			);
+			path = Trial;
+			sourceTree = "<group>";
+		};
+		ECC097B01DB20C9200875D56 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				ECC097B71DB20CD600875D56 /* PPTrialViewController.h */,
+				ECC097B81DB20CD600875D56 /* PPTrialViewController.m */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		ECC097B11DB20C9200875D56 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		ECC097B21DB20C9200875D56 /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		ECC097B31DB20C9200875D56 /* VIP */ = {
+			isa = PBXGroup;
+			children = (
+				ECC097B41DB20C9200875D56 /* Controller */,
+				ECC097B51DB20C9200875D56 /* Model */,
+				ECC097B61DB20C9200875D56 /* View */,
+			);
+			path = VIP;
+			sourceTree = "<group>";
+		};
+		ECC097B41DB20C9200875D56 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				ECC097BA1DB20CE700875D56 /* PPVipViewController.h */,
+				ECC097BB1DB20CE700875D56 /* PPVipViewController.m */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		ECC097B51DB20C9200875D56 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		ECC097B61DB20C9200875D56 /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		ECC097C61DB23ECD00875D56 /* SDCycleScrollView */ = {
+			isa = PBXGroup;
+			children = (
+				ECC097C71DB23ECD00875D56 /* PageControl */,
+				ECC097D01DB23ECD00875D56 /* SDCollectionViewCell.h */,
+				ECC097D11DB23ECD00875D56 /* SDCollectionViewCell.m */,
+				ECC097D21DB23ECD00875D56 /* SDCycleScrollView.h */,
+				ECC097D31DB23ECD00875D56 /* SDCycleScrollView.m */,
+				ECC097D41DB23ECD00875D56 /* UIView+SDExtension.h */,
+				ECC097D51DB23ECD00875D56 /* UIView+SDExtension.m */,
+			);
+			path = SDCycleScrollView;
+			sourceTree = "<group>";
+		};
+		ECC097C71DB23ECD00875D56 /* PageControl */ = {
+			isa = PBXGroup;
+			children = (
+				ECC097C81DB23ECD00875D56 /* TAAbstractDotView.h */,
+				ECC097C91DB23ECD00875D56 /* TAAbstractDotView.m */,
+				ECC097CA1DB23ECD00875D56 /* TAAnimatedDotView.h */,
+				ECC097CB1DB23ECD00875D56 /* TAAnimatedDotView.m */,
+				ECC097CC1DB23ECD00875D56 /* TADotView.h */,
+				ECC097CD1DB23ECD00875D56 /* TADotView.m */,
+				ECC097CE1DB23ECD00875D56 /* TAPageControl.h */,
+				ECC097CF1DB23ECD00875D56 /* TAPageControl.m */,
+			);
+			path = PageControl;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -86,9 +492,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = ECC097671DB1C8AA00875D56 /* Build configuration list for PBXNativeTarget "PPVideo" */;
 			buildPhases = (
+				C8B7A8AB160655ACB9B5F859 /* [CP] Check Pods Manifest.lock */,
 				ECC0974C1DB1C8AA00875D56 /* Sources */,
 				ECC0974D1DB1C8AA00875D56 /* Frameworks */,
 				ECC0974E1DB1C8AA00875D56 /* Resources */,
+				E2776A2A6B103532B6564C40 /* [CP] Embed Pods Frameworks */,
+				9C9B982EA3AAF83FDC47CB65 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -111,7 +520,7 @@
 					ECC0974F1DB1C8AA00875D56 = {
 						CreatedOnToolsVersion = 8.0;
 						DevelopmentTeam = 7VHT3KAS56;
-						ProvisioningStyle = Automatic;
+						ProvisioningStyle = Manual;
 					};
 				};
 			};
@@ -138,6 +547,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ECC097851DB1E06500875D56 /* config.plist in Resources */,
 				ECC097631DB1C8AA00875D56 /* LaunchScreen.storyboard in Resources */,
 				ECC097601DB1C8AA00875D56 /* Assets.xcassets in Resources */,
 				ECC0975E1DB1C8AA00875D56 /* Main.storyboard in Resources */,
@@ -146,14 +556,85 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		9C9B982EA3AAF83FDC47CB65 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-PPVideo/Pods-PPVideo-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		C8B7A8AB160655ACB9B5F859 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		E2776A2A6B103532B6564C40 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-PPVideo/Pods-PPVideo-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		ECC0974C1DB1C8AA00875D56 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				ECC0975B1DB1C8AA00875D56 /* ViewController.m in Sources */,
+				ECC097991DB2059900875D56 /* PPUserAccessModel.m in Sources */,
+				ECC097B91DB20CD600875D56 /* PPTrialViewController.m in Sources */,
+				ECC097DA1DB23ECD00875D56 /* SDCollectionViewCell.m in Sources */,
+				ECC0978F1DB1F84C00875D56 /* PPUtil.m in Sources */,
+				ECC0978C1DB1F1F400875D56 /* PPConfiguration.m in Sources */,
 				ECC097581DB1C8AA00875D56 /* AppDelegate.m in Sources */,
+				ECC097BC1DB20CE700875D56 /* PPVipViewController.m in Sources */,
+				ECC097E21DB2411500875D56 /* UITableView+Separator.m in Sources */,
+				ECC097DB1DB23ECD00875D56 /* SDCycleScrollView.m in Sources */,
+				ECC097C21DB20D0300875D56 /* PPHotViewController.m in Sources */,
+				ECC0979F1DB2065300875D56 /* PPSystemConfigModel.m in Sources */,
+				ECC097D71DB23ECD00875D56 /* TAAnimatedDotView.m in Sources */,
+				ECC097D61DB23ECD00875D56 /* TAAbstractDotView.m in Sources */,
+				ECC097D81DB23ECD00875D56 /* TADotView.m in Sources */,
 				ECC097551DB1C8AA00875D56 /* main.m in Sources */,
+				ECC097C51DB20D1300875D56 /* PPMineViewController.m in Sources */,
+				ECC097891DB1E21E00875D56 /* PPTabBarController.m in Sources */,
+				ECC097DF1DB240E200875D56 /* PPLayoutViewController.m in Sources */,
+				ECC097DC1DB23ECD00875D56 /* UIView+SDExtension.m in Sources */,
+				ECC097BF1DB20CF500875D56 /* PPSexViewController.m in Sources */,
+				ECC097A21DB2096D00875D56 /* PPBaseViewController.m in Sources */,
+				ECC0979C1DB2061800875D56 /* PPSystemConfig.m in Sources */,
+				ECC097D91DB23ECD00875D56 /* TAPageControl.m in Sources */,
+				ECC097961DB2038C00875D56 /* PPActivateModel.m in Sources */,
+				ECC097931DB2026C00875D56 /* UIView+Loading.m in Sources */,
+				ECC097E51DB2423F00875D56 /* UIScrollView+Refresh.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -219,7 +700,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -261,7 +742,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -271,25 +752,50 @@
 		};
 		ECC097681DB1C8AA00875D56 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = FCBF9BC6404344E8E96607B9 /* Pods-PPVideo.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = 7VHT3KAS56;
+				ENABLE_BITCODE = NO;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SRCROOT)/PPVideo/PPPrefixHeader.pch";
 				INFOPLIST_FILE = PPVideo/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = iqu8.PPVideo;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/PPVideo/Class/Vendor/Umeng",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.paopaoyingyuan.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "0c01ef04-9736-44a2-969e-ba7be108a2b4";
+				PROVISIONING_PROFILE_SPECIFIER = PaoPaoYingYuanDevProvisioningProfile;
+				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/**";
 			};
 			name = Debug;
 		};
 		ECC097691DB1C8AA00875D56 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = D1AEB812654C461832824D5D /* Pods-PPVideo.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				DEVELOPMENT_TEAM = 7VHT3KAS56;
+				ENABLE_BITCODE = NO;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SRCROOT)/PPVideo/PPPrefixHeader.pch";
 				INFOPLIST_FILE = PPVideo/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = iqu8.PPVideo;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/PPVideo/Class/Vendor/Umeng",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.paopaoyingyuan.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "4dbc4db4-acaa-4179-a060-28ed0a0113f8";
+				PROVISIONING_PROFILE_SPECIFIER = PaoPaoYingYuanInHouseProvisioningProfile;
+				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/**";
 			};
 			name = Release;
 		};
@@ -312,6 +818,7 @@
 				ECC097691DB1C8AA00875D56 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

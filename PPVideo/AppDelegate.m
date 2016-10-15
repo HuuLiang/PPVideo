@@ -7,44 +7,208 @@
 //
 
 #import "AppDelegate.h"
+#import "PPTabBarController.h"
+#import <QBPaymentManager.h>
 
-@interface AppDelegate ()
+#import "PPActivateModel.h"
+#import "PPSystemConfigModel.h"
+#import "PPUserAccessModel.h"
 
+static NSString *const kAliPaySchemeUrl = @"paoPaoYingyuanAliPayUrlScheme";
+
+@interface AppDelegate () <UITabBarControllerDelegate>
+@property (nonatomic) UIViewController *rootViewController;
 @end
 
 @implementation AppDelegate
 
+- (UIWindow *)window {
+    if (_window) {
+        return _window;
+    }
+    
+    _window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
+    _window.backgroundColor = [UIColor whiteColor];
+    
+    return _window;
+}
+
+- (UIViewController *)rootViewController {
+    if (_rootViewController) {
+        return _rootViewController;
+    }
+    PPTabBarController *tabBarVC = [[PPTabBarController alloc] init];
+    tabBarVC.delegate = self;
+    _rootViewController = tabBarVC;
+    return _rootViewController;
+}
+
+- (void)setupCommonStyles {
+    
+    [[UITabBar appearance] setBarTintColor:[UIColor colorWithHexString:@"#212121"]];
+    [[UITabBar appearance] setTintColor:[UIColor redColor]];
+    [[UITabBar appearance] setBarStyle:UIBarStyleBlack];
+    [[UITabBarItem appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]} forState:UIControlStateNormal];
+    [[UITabBarItem appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]} forState:UIControlStateSelected];
+    [[UINavigationBar appearance] setBarTintColor:[UIColor colorWithHexString:@"#ffe100"]];
+    [[UINavigationBar appearance] setTintColor:[UIColor blackColor]];
+    [[UINavigationBar appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont boldSystemFontOfSize:[PPUtil isIpad] ? 21 : kWidth(36)],
+                                                           NSForegroundColorAttributeName:[UIColor colorWithHexString:@"#222222"]}];
+    
+    [UIViewController aspect_hookSelector:@selector(viewDidLoad)
+                              withOptions:AspectPositionAfter
+                               usingBlock:^(id<AspectInfo> aspectInfo){
+                                   UIViewController *thisVC = [aspectInfo instance];
+                                   if (thisVC.navigationController.viewControllers.count > 1) {
+                                       thisVC.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] bk_initWithImage:[UIImage imageNamed:@"navi_back"] style:UIBarButtonItemStylePlain handler:^(id sender) {
+                                           [thisVC.navigationController popViewControllerAnimated:YES];
+                                       }];
+                                   }
+                                   thisVC.navigationController.navigationBar.translucent = NO;
+                               } error:nil];
+    
+    [UITabBarController aspect_hookSelector:@selector(shouldAutorotate)
+                                withOptions:AspectPositionInstead
+                                 usingBlock:^(id<AspectInfo> aspectInfo){
+                                     UITabBarController *thisTabBarVC = [aspectInfo instance];
+                                     UIViewController *selectedVC = thisTabBarVC.selectedViewController;
+                                     
+                                     BOOL autoRotate = NO;
+                                     if ([selectedVC isKindOfClass:[UINavigationController class]]) {
+                                         autoRotate = [((UINavigationController *)selectedVC).topViewController shouldAutorotate];
+                                     } else {
+                                         autoRotate = [selectedVC shouldAutorotate];
+                                     }
+                                     [[aspectInfo originalInvocation] setReturnValue:&autoRotate];
+                                 } error:nil];
+    
+    [UITabBarController aspect_hookSelector:@selector(supportedInterfaceOrientations)
+                                withOptions:AspectPositionInstead
+                                 usingBlock:^(id<AspectInfo> aspectInfo){
+                                     UITabBarController *thisTabBarVC = [aspectInfo instance];
+                                     UIViewController *selectedVC = thisTabBarVC.selectedViewController;
+                                     
+                                     NSUInteger result = 0;
+                                     if ([selectedVC isKindOfClass:[UINavigationController class]]) {
+                                         result = [((UINavigationController *)selectedVC).topViewController supportedInterfaceOrientations];
+                                     } else {
+                                         result = [selectedVC supportedInterfaceOrientations];
+                                     }
+                                     [[aspectInfo originalInvocation] setReturnValue:&result];
+                                 } error:nil];
+    
+    [UIViewController aspect_hookSelector:@selector(hidesBottomBarWhenPushed)
+                              withOptions:AspectPositionInstead
+                               usingBlock:^(id<AspectInfo> aspectInfo)
+     {
+         UIViewController *thisVC = [aspectInfo instance];
+         BOOL hidesBottomBar = NO;
+         if (thisVC.navigationController.viewControllers.count > 1) {
+             hidesBottomBar = YES;
+         }
+         [[aspectInfo originalInvocation] setReturnValue:&hidesBottomBar];
+     } error:nil];
+    
+//    [UINavigationController aspect_hookSelector:@selector(preferredStatusBarStyle)
+//                                    withOptions:AspectPositionInstead
+//                                     usingBlock:^(id<AspectInfo> aspectInfo){
+//                                         UIStatusBarStyle statusBarStyle = UIStatusBarStyleLightContent;
+//                                         [[aspectInfo originalInvocation] setReturnValue:&statusBarStyle];
+//                                     } error:nil];
+    
+//    [UIViewController aspect_hookSelector:@selector(preferredStatusBarStyle)
+//                              withOptions:AspectPositionInstead
+//                               usingBlock:^(id<AspectInfo> aspectInfo){
+//                                   UIStatusBarStyle statusBarStyle = UIStatusBarStyleLightContent;
+//                                   [[aspectInfo originalInvocation] setReturnValue:&statusBarStyle];
+//                               } error:nil];
+    
+    [UIScrollView aspect_hookSelector:@selector(showsVerticalScrollIndicator)
+                          withOptions:AspectPositionInstead
+                           usingBlock:^(id<AspectInfo> aspectInfo)
+     {
+         BOOL bShow = NO;
+         [[aspectInfo originalInvocation] setReturnValue:&bShow];
+     } error:nil];
+    
+//    [UIImageView aspect_hookSelector:@selector(init)
+//                         withOptions:AspectPositionAfter
+//                          usingBlock:^(id<AspectInfo> aspectInfo) {
+//                              UIImageView *thisImgV = [aspectInfo instance];
+//                              [thisImgV setContentMode:UIViewContentModeScaleAspectFill];
+//                              thisImgV.clipsToBounds = YES;
+//                          } error:nil];
+}
+
+#pragma mark - AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    // Override point for customization after application launch.
+    [PPUtil registerVip:PPVipLevelNone];
+    
+    [QBNetworkingConfiguration defaultConfiguration].RESTAppId = PP_REST_APPID;
+    [QBNetworkingConfiguration defaultConfiguration].RESTpV = @([PP_REST_PV integerValue]);
+    [QBNetworkingConfiguration defaultConfiguration].channelNo = PP_CHANNEL_NO;
+    [QBNetworkingConfiguration defaultConfiguration].baseURL = PP_BASE_URL;
+    
+#ifdef DEBUG
+    [[QBPaymentManager sharedManager] usePaymentConfigInTestServer:YES];
+#endif
+    
+    [PPUtil accumateLaunchSeq];
+    [self setupCommonStyles];
+    
+    [[QBPaymentManager sharedManager] registerPaymentWithAppId:PP_REST_APPID
+                                                     paymentPv:@([PP_PAYMENT_PV integerValue])
+                                                     channelNo:PP_CHANNEL_NO
+                                                     urlScheme:kAliPaySchemeUrl];
+    [[QBNetworkInfo sharedInfo] startMonitoring];
+    
+    BOOL requestedSystemConfig = NO;
+    //#ifdef JF_IMAGE_TOKEN_ENABLED
+    NSString *imageToken = [PPUtil imageToken];
+    if (imageToken) {
+        [[SDWebImageManager sharedManager].imageDownloader setValue:imageToken forHTTPHeaderField:@"Referer"];
+        self.window.rootViewController = self.rootViewController;
+    } else {
+        self.window.rootViewController = [[UIViewController alloc] init];
+        [self.window makeKeyAndVisible];
+        
+        [self.window beginProgressingWithTitle:@"更新系统配置..." subtitle:nil];
+        requestedSystemConfig = [[PPSystemConfigModel sharedModel] fetchSystemConfigWithCompletionHandler:^(BOOL success) {
+            [self.window endProgressing];
+            
+            if (success) {
+                NSString *fetchedToken = [PPSystemConfigModel sharedModel].imageToken;
+                [PPUtil setImageToken:fetchedToken];
+                if (fetchedToken) {
+                    [[SDWebImageManager sharedManager].imageDownloader setValue:fetchedToken forHTTPHeaderField:@"Referer"];
+                }
+                
+            }
+            self.window.rootViewController = self.rootViewController;
+        }];
+    }
+    
+    if (![PPUtil isRegistered]) {
+        [[PPActivateModel sharedModel] activateWithCompletionHandler:^(BOOL success, NSString *userId) {
+            if (success) {
+                [PPUtil setRegisteredWithUserId:userId];
+            }
+        }];
+    } else {
+        [[PPUserAccessModel sharedModel] requestUserAccess];
+    }
+    if (!requestedSystemConfig) {
+        [[PPSystemConfigModel sharedModel] fetchSystemConfigWithCompletionHandler:^(BOOL success) {
+            if (success) {
+                [PPUtil setImageToken:[PPSystemConfigModel sharedModel].imageToken];
+            }
+        }];
+    }
+    
+    [self.window makeKeyAndVisible];
+    
     return YES;
-}
-
-
-- (void)applicationWillResignActive:(UIApplication *)application {
-    // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
-    // Use this method to pause ongoing tasks, disable timers, and invalidate graphics rendering callbacks. Games should use this method to pause the game.
-}
-
-
-- (void)applicationDidEnterBackground:(UIApplication *)application {
-    // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
-    // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
-}
-
-
-- (void)applicationWillEnterForeground:(UIApplication *)application {
-    // Called as part of the transition from the background to the active state; here you can undo many of the changes made on entering the background.
-}
-
-
-- (void)applicationDidBecomeActive:(UIApplication *)application {
-    // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
-}
-
-
-- (void)applicationWillTerminate:(UIApplication *)application {
-    // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
 
 
