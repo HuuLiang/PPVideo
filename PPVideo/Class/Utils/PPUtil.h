@@ -18,11 +18,10 @@ extern NSString *const kPaymentInfoKeyName;
 + (void)setRegisteredWithUserId:(NSString *)userId;
 + (void)accumateLaunchSeq;
 
-+ (BOOL)isIpad;
-
 + (NSString *)imageToken;
 + (void)setImageToken:(NSString *)imageToken;
 
++ (BOOL)isIpad;
 + (NSString *)appVersion;
 + (NSString *)deviceName;
 + (PPDeviceType)deviceType;
@@ -30,5 +29,9 @@ extern NSString *const kPaymentInfoKeyName;
 + (void)registerVip:(PPVipLevel)vipLevel;
 + (BOOL)isVip;
 + (PPVipLevel)currentVipLevel;
+
++ (NSDate *)dateFromString:(NSString *)dateString;
++ (NSString *)currentTimeString;
++ (NSString *)UTF8DateStringFromString:(NSString *)dateString;
 
 @end

@@ -7,6 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		EC4C6A671DB464AA0009771A /* PPTrailFreeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EC4C6A661DB464AA0009771A /* PPTrailFreeCell.m */; };
+		EC4C6A6A1DB467F00009771A /* PPTrailModel.m in Sources */ = {isa = PBXBuildFile; fileRef = EC4C6A691DB467F00009771A /* PPTrailModel.m */; };
+		EC4C6A6D1DB46CE80009771A /* PPTrailHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = EC4C6A6C1DB46CE80009771A /* PPTrailHeaderView.m */; };
+		EC4C6A701DB470550009771A /* PPGraphicButton.m in Sources */ = {isa = PBXBuildFile; fileRef = EC4C6A6F1DB470550009771A /* PPGraphicButton.m */; };
+		EC4C6A731DB472470009771A /* PPTrailNormalCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EC4C6A721DB472470009771A /* PPTrailNormalCell.m */; };
+		EC4C6A761DB473570009771A /* PPTrailAdCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EC4C6A751DB473570009771A /* PPTrailAdCell.m */; };
+		EC4C6A791DB4BA2D0009771A /* PPVipModel.m in Sources */ = {isa = PBXBuildFile; fileRef = EC4C6A781DB4BA2D0009771A /* PPVipModel.m */; };
+		EC4C6A7C1DB4BE100009771A /* PPSexCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EC4C6A7B1DB4BE100009771A /* PPSexCell.m */; };
+		EC4C6A7F1DB4BE2C0009771A /* PPSexFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = EC4C6A7E1DB4BE2C0009771A /* PPSexFooterView.m */; };
+		EC4C6A861DB4E87D0009771A /* PPSectionBackgroundFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = EC4C6A851DB4E87D0009771A /* PPSectionBackgroundFlowLayout.m */; };
 		ECC097551DB1C8AA00875D56 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = ECC097541DB1C8AA00875D56 /* main.m */; };
 		ECC097581DB1C8AA00875D56 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = ECC097571DB1C8AA00875D56 /* AppDelegate.m */; };
 		ECC0975E1DB1C8AA00875D56 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ECC0975C1DB1C8AA00875D56 /* Main.storyboard */; };
@@ -43,6 +53,26 @@
 /* Begin PBXFileReference section */
 		023420A73BCDB4EDC186B735 /* libPods-PPVideo.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-PPVideo.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D1AEB812654C461832824D5D /* Pods-PPVideo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PPVideo.release.xcconfig"; path = "Pods/Target Support Files/Pods-PPVideo/Pods-PPVideo.release.xcconfig"; sourceTree = "<group>"; };
+		EC4C6A651DB464AA0009771A /* PPTrailFreeCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPTrailFreeCell.h; sourceTree = "<group>"; };
+		EC4C6A661DB464AA0009771A /* PPTrailFreeCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPTrailFreeCell.m; sourceTree = "<group>"; };
+		EC4C6A681DB467F00009771A /* PPTrailModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPTrailModel.h; sourceTree = "<group>"; };
+		EC4C6A691DB467F00009771A /* PPTrailModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPTrailModel.m; sourceTree = "<group>"; };
+		EC4C6A6B1DB46CE80009771A /* PPTrailHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPTrailHeaderView.h; sourceTree = "<group>"; };
+		EC4C6A6C1DB46CE80009771A /* PPTrailHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPTrailHeaderView.m; sourceTree = "<group>"; };
+		EC4C6A6E1DB470550009771A /* PPGraphicButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPGraphicButton.h; sourceTree = "<group>"; };
+		EC4C6A6F1DB470550009771A /* PPGraphicButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPGraphicButton.m; sourceTree = "<group>"; };
+		EC4C6A711DB472470009771A /* PPTrailNormalCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPTrailNormalCell.h; sourceTree = "<group>"; };
+		EC4C6A721DB472470009771A /* PPTrailNormalCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPTrailNormalCell.m; sourceTree = "<group>"; };
+		EC4C6A741DB473570009771A /* PPTrailAdCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPTrailAdCell.h; sourceTree = "<group>"; };
+		EC4C6A751DB473570009771A /* PPTrailAdCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPTrailAdCell.m; sourceTree = "<group>"; };
+		EC4C6A771DB4BA2D0009771A /* PPVipModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPVipModel.h; sourceTree = "<group>"; };
+		EC4C6A781DB4BA2D0009771A /* PPVipModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPVipModel.m; sourceTree = "<group>"; };
+		EC4C6A7A1DB4BE100009771A /* PPSexCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPSexCell.h; sourceTree = "<group>"; };
+		EC4C6A7B1DB4BE100009771A /* PPSexCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPSexCell.m; sourceTree = "<group>"; };
+		EC4C6A7D1DB4BE2C0009771A /* PPSexFooterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPSexFooterView.h; sourceTree = "<group>"; };
+		EC4C6A7E1DB4BE2C0009771A /* PPSexFooterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPSexFooterView.m; sourceTree = "<group>"; };
+		EC4C6A841DB4E87D0009771A /* PPSectionBackgroundFlowLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPSectionBackgroundFlowLayout.h; sourceTree = "<group>"; };
+		EC4C6A851DB4E87D0009771A /* PPSectionBackgroundFlowLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPSectionBackgroundFlowLayout.m; sourceTree = "<group>"; };
 		ECC097501DB1C8AA00875D56 /* PPVideo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PPVideo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		ECC097541DB1C8AA00875D56 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		ECC097561DB1C8AA00875D56 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -136,6 +166,15 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		EC4C6A801DB4E22C0009771A /* Layout */ = {
+			isa = PBXGroup;
+			children = (
+				EC4C6A841DB4E87D0009771A /* PPSectionBackgroundFlowLayout.h */,
+				EC4C6A851DB4E87D0009771A /* PPSectionBackgroundFlowLayout.m */,
+			);
+			path = Layout;
+			sourceTree = "<group>";
+		};
 		ECC097471DB1C8AA00875D56 = {
 			isa = PBXGroup;
 			children = (
@@ -207,6 +246,7 @@
 		ECC0976C1DB1D97A00875D56 /* Base */ = {
 			isa = PBXGroup;
 			children = (
+				EC4C6A801DB4E22C0009771A /* Layout */,
 				ECC0976D1DB1D97A00875D56 /* Controller */,
 				ECC0976E1DB1D97A00875D56 /* Model */,
 				ECC0976F1DB1D97A00875D56 /* View */,
@@ -237,6 +277,8 @@
 		ECC0976F1DB1D97A00875D56 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				EC4C6A6E1DB470550009771A /* PPGraphicButton.h */,
+				EC4C6A6F1DB470550009771A /* PPGraphicButton.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -386,6 +428,10 @@
 		ECC097AE1DB20C9200875D56 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				EC4C6A7A1DB4BE100009771A /* PPSexCell.h */,
+				EC4C6A7B1DB4BE100009771A /* PPSexCell.m */,
+				EC4C6A7D1DB4BE2C0009771A /* PPSexFooterView.h */,
+				EC4C6A7E1DB4BE2C0009771A /* PPSexFooterView.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -412,6 +458,8 @@
 		ECC097B11DB20C9200875D56 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				EC4C6A681DB467F00009771A /* PPTrailModel.h */,
+				EC4C6A691DB467F00009771A /* PPTrailModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -419,6 +467,14 @@
 		ECC097B21DB20C9200875D56 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				EC4C6A651DB464AA0009771A /* PPTrailFreeCell.h */,
+				EC4C6A661DB464AA0009771A /* PPTrailFreeCell.m */,
+				EC4C6A6B1DB46CE80009771A /* PPTrailHeaderView.h */,
+				EC4C6A6C1DB46CE80009771A /* PPTrailHeaderView.m */,
+				EC4C6A711DB472470009771A /* PPTrailNormalCell.h */,
+				EC4C6A721DB472470009771A /* PPTrailNormalCell.m */,
+				EC4C6A741DB473570009771A /* PPTrailAdCell.h */,
+				EC4C6A751DB473570009771A /* PPTrailAdCell.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -445,6 +501,8 @@
 		ECC097B51DB20C9200875D56 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				EC4C6A771DB4BA2D0009771A /* PPVipModel.h */,
+				EC4C6A781DB4BA2D0009771A /* PPVipModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -610,18 +668,26 @@
 			buildActionMask = 2147483647;
 			files = (
 				ECC097991DB2059900875D56 /* PPUserAccessModel.m in Sources */,
+				EC4C6A7F1DB4BE2C0009771A /* PPSexFooterView.m in Sources */,
 				ECC097B91DB20CD600875D56 /* PPTrialViewController.m in Sources */,
 				ECC097DA1DB23ECD00875D56 /* SDCollectionViewCell.m in Sources */,
 				ECC0978F1DB1F84C00875D56 /* PPUtil.m in Sources */,
 				ECC0978C1DB1F1F400875D56 /* PPConfiguration.m in Sources */,
 				ECC097581DB1C8AA00875D56 /* AppDelegate.m in Sources */,
+				EC4C6A671DB464AA0009771A /* PPTrailFreeCell.m in Sources */,
 				ECC097BC1DB20CE700875D56 /* PPVipViewController.m in Sources */,
 				ECC097E21DB2411500875D56 /* UITableView+Separator.m in Sources */,
 				ECC097DB1DB23ECD00875D56 /* SDCycleScrollView.m in Sources */,
+				EC4C6A701DB470550009771A /* PPGraphicButton.m in Sources */,
+				EC4C6A761DB473570009771A /* PPTrailAdCell.m in Sources */,
+				EC4C6A6D1DB46CE80009771A /* PPTrailHeaderView.m in Sources */,
+				EC4C6A6A1DB467F00009771A /* PPTrailModel.m in Sources */,
 				ECC097C21DB20D0300875D56 /* PPHotViewController.m in Sources */,
 				ECC0979F1DB2065300875D56 /* PPSystemConfigModel.m in Sources */,
+				EC4C6A7C1DB4BE100009771A /* PPSexCell.m in Sources */,
 				ECC097D71DB23ECD00875D56 /* TAAnimatedDotView.m in Sources */,
 				ECC097D61DB23ECD00875D56 /* TAAbstractDotView.m in Sources */,
+				EC4C6A791DB4BA2D0009771A /* PPVipModel.m in Sources */,
 				ECC097D81DB23ECD00875D56 /* TADotView.m in Sources */,
 				ECC097551DB1C8AA00875D56 /* main.m in Sources */,
 				ECC097C51DB20D1300875D56 /* PPMineViewController.m in Sources */,
@@ -633,6 +699,8 @@
 				ECC0979C1DB2061800875D56 /* PPSystemConfig.m in Sources */,
 				ECC097D91DB23ECD00875D56 /* TAPageControl.m in Sources */,
 				ECC097961DB2038C00875D56 /* PPActivateModel.m in Sources */,
+				EC4C6A731DB472470009771A /* PPTrailNormalCell.m in Sources */,
+				EC4C6A861DB4E87D0009771A /* PPSectionBackgroundFlowLayout.m in Sources */,
 				ECC097931DB2026C00875D56 /* UIView+Loading.m in Sources */,
 				ECC097E51DB2423F00875D56 /* UIScrollView+Refresh.m in Sources */,
 			);

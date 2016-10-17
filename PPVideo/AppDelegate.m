@@ -45,12 +45,12 @@ static NSString *const kAliPaySchemeUrl = @"paoPaoYingyuanAliPayUrlScheme";
 
 - (void)setupCommonStyles {
     
-    [[UITabBar appearance] setBarTintColor:[UIColor colorWithHexString:@"#212121"]];
+    [[UITabBar appearance] setBarTintColor:[UIColor colorWithHexString:@"#21243F"]];
     [[UITabBar appearance] setTintColor:[UIColor redColor]];
     [[UITabBar appearance] setBarStyle:UIBarStyleBlack];
     [[UITabBarItem appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]} forState:UIControlStateNormal];
     [[UITabBarItem appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]} forState:UIControlStateSelected];
-    [[UINavigationBar appearance] setBarTintColor:[UIColor colorWithHexString:@"#ffe100"]];
+    [[UINavigationBar appearance] setBarTintColor:[UIColor colorWithHexString:@"#1F233E"]];
     [[UINavigationBar appearance] setTintColor:[UIColor blackColor]];
     [[UINavigationBar appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont boldSystemFontOfSize:[PPUtil isIpad] ? 21 : kWidth(36)],
                                                            NSForegroundColorAttributeName:[UIColor colorWithHexString:@"#222222"]}];

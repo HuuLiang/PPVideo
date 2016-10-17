@@ -36,6 +36,7 @@
 @implementation SDCollectionViewCell
 {
     __weak UILabel *_titleLabel;
+    UIView *_shadowView;
 }
 
 
@@ -43,6 +44,11 @@
 {
     if (self = [super initWithFrame:frame]) {
         [self setupImageView];
+        
+        _shadowView = [[UIView alloc] init];
+        _shadowView.backgroundColor = [[UIColor colorWithHexString:@"#000000"] colorWithAlphaComponent:0.3];
+        [self.contentView addSubview:_shadowView];
+        
         [self setupTitleLabel];
     }
     
@@ -77,6 +83,7 @@
 - (void)setupTitleLabel
 {
     UILabel *titleLabel = [[UILabel alloc] init];
+    titleLabel.textAlignment = NSTextAlignmentCenter;
     _titleLabel = titleLabel;
     _titleLabel.hidden = YES;
     [self.contentView addSubview:titleLabel];
@@ -100,11 +107,13 @@
         _titleLabel.frame = self.bounds;
     } else {
         _imageView.frame = self.bounds;
+        _shadowView.frame = self.bounds;
         CGFloat titleLabelW = self.sd_width;
         CGFloat titleLabelH = _titleLabelHeight;
         CGFloat titleLabelX = 0;
-        CGFloat titleLabelY = self.sd_height - titleLabelH;
+        CGFloat titleLabelY = self.sd_height - titleLabelH * 1.5;
         _titleLabel.frame = CGRectMake(titleLabelX, titleLabelY, titleLabelW, titleLabelH);
+//        _titleLabel.center = CGPointMake(self.sd_width/2, titleLabelY + titleLabelH/2);
     }
 }
 

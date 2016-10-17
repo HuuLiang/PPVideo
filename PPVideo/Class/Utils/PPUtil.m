@@ -23,6 +23,8 @@ static NSString *const kVipUserKeyName          = @"PPVideo_Vip_UserKey";
 
 @implementation PPUtil
 
+#pragma mark -- 注册激活
+
 + (NSString *)accessId {
     NSString *accessIdInKeyChain = [SFHFKeychainUtils getPasswordForUsername:kUserAccessUsername andServiceName:kUserAccessServicename error:nil];
     if (accessIdInKeyChain) {
@@ -57,9 +59,7 @@ static NSString *const kVipUserKeyName          = @"PPVideo_Vip_UserKey";
     [[NSUserDefaults standardUserDefaults] setObject:@(launchSeq+1) forKey:kLaunchSeqKeyName];
 }
 
-+ (BOOL)isIpad {
-    return UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad;
-}
+#pragma mark - 图片加密
 
 + (NSString *)imageToken {
     NSString *imageToken = [[NSUserDefaults standardUserDefaults] objectForKey:kImageTokenKeyName];
@@ -79,6 +79,12 @@ static NSString *const kVipUserKeyName          = @"PPVideo_Vip_UserKey";
     }
     
     [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
+#pragma mark - 设备类型
+
++ (BOOL)isIpad {
+    return UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad;
 }
 
 + (NSString *)appVersion {
@@ -129,6 +135,8 @@ static NSString *const kVipUserKeyName          = @"PPVideo_Vip_UserKey";
     }
 }
 
+#pragma mark - 会员等级
+
 + (void)registerVip:(PPVipLevel)vipLevel {
     [[NSUserDefaults standardUserDefaults] setObject:@(vipLevel) forKey:kVipUserKeyName];
     [[NSUserDefaults standardUserDefaults] synchronize];
@@ -140,6 +148,33 @@ static NSString *const kVipUserKeyName          = @"PPVideo_Vip_UserKey";
 
 + (PPVipLevel)currentVipLevel {
     return [self isVip] ? [[[NSUserDefaults standardUserDefaults] objectForKey:kVipUserKeyName] integerValue] : PPVipLevelNone;
+}
+
++ (NSDate *)dateFromString:(NSString *)dateString {
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+    return [dateFormatter dateFromString:dateString];
+}
+
+#pragma mark - 时间格式转换
+
++ (NSString *)currentTimeString {
+    NSDateFormatter *fomatter =[[NSDateFormatter alloc] init];
+    [fomatter setDateFormat:@"yyyyMMddHHmmss"];
+    return [fomatter stringFromDate:[NSDate date]];
+}
+
++ (NSString *)UTF8DateStringFromString:(NSString *)dateString {
+    NSDateFormatter *dateFormatterA = [[NSDateFormatter alloc] init];
+    [dateFormatterA setDateFormat:@"yyyy-MM-dd"];
+    
+    NSDateFormatter *dataFormatterB = [[NSDateFormatter alloc] init];
+    [dataFormatterB setDateFormat:@"yyyy年MM月dd日"];
+    
+    QBLog(@"%@",[dateFormatterA dateFromString:dateString]);
+    QBLog(@"%@",[dataFormatterB stringFromDate:[dateFormatterA dateFromString:dateString]]);
+    
+    return [dataFormatterB stringFromDate:[dateFormatterA dateFromString:dateString]];
 }
 
 @end
