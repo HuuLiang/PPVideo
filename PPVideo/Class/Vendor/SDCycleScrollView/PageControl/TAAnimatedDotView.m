@@ -73,7 +73,8 @@ static CGFloat const kAnimateDuration = 1;
 {
     [UIView animateWithDuration:kAnimateDuration delay:0 usingSpringWithDamping:.5 initialSpringVelocity:-20 options:UIViewAnimationOptionCurveLinear animations:^{
         self.backgroundColor = _dotColor;
-        self.transform = CGAffineTransformMakeScale(1.4, 1.4);
+//        self.transform = CGAffineTransformMakeScale(1.4, 1.4);
+        self.frame = CGRectMake(self.frame.origin.x - 6, self.frame.origin.y, 20, 10);
     } completion:nil];
 }
 
@@ -82,6 +83,7 @@ static CGFloat const kAnimateDuration = 1;
     [UIView animateWithDuration:kAnimateDuration delay:0 usingSpringWithDamping:.5 initialSpringVelocity:0 options:UIViewAnimationOptionCurveLinear animations:^{
         self.backgroundColor = [UIColor clearColor];
         self.transform = CGAffineTransformIdentity;
+        self.frame = CGRectMake(self.frame.origin.x + 6, self.frame.origin.y, 10, 10);
     } completion:nil];
 }
 

@@ -34,7 +34,7 @@ static BOOL const kDefaultShouldResizeFromCenter = YES;
 /**
  *  Default spacing between dots
  */
-static NSInteger const kDefaultSpacingBetweenDots = 8;
+static NSInteger const kDefaultSpacingBetweenDots = 10;
 
 /**
  *  Default dot size

@@ -30,7 +30,7 @@ typedef NS_ENUM(NSInteger ,PPTrailSection) {
     PPTrailSectionCount
 };
 
-@interface PPTrialViewController () <UICollectionViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout,SDCycleScrollViewDelegate>
+@interface PPTrialViewController () <UICollectionViewDataSource,UICollectionViewDelegate,PPSectionBackgroundFlowLayoutDelegate,SDCycleScrollViewDelegate>
 {
     UICollectionView *_layoutCollectionView;
     
@@ -56,7 +56,8 @@ QBDefineLazyPropertyInitialization(PPTrailModel, trailModel)
     _bannerView.titleLabelTextFont = [UIFont systemFontOfSize:kWidth(32)];
     _bannerView.titleLabelTextColor = [UIColor colorWithHexString:@"#ffffff"];
     _bannerView.pageControlAliment = SDCycleScrollViewPageContolAlimentCenter;
-    _bannerView.pageControlStyle = SDCycleScrollViewPageContolStyleClassic;
+    _bannerView.pageControlDotSize = CGSizeMake(10, 10);
+    _bannerView.pageControlStyle = SDCycleScrollViewPageContolStyleAnimated;
     _bannerView.delegate = self;
     _bannerView.backgroundColor = [UIColor colorWithHexString:@"#000000"];
     
@@ -233,7 +234,6 @@ QBDefineLazyPropertyInitialization(PPTrailModel, trailModel)
 };
 
 - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath {
-    
     if (kind == UICollectionElementKindSectionHeader) {
         if (indexPath.section == PPTrailSectionAd) {
             PPTrailHeaderView *headerView = [collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:kPPTrailHeaderViewReusableIdentifier forIndexPath:indexPath];
@@ -243,7 +243,6 @@ QBDefineLazyPropertyInitialization(PPTrailModel, trailModel)
                 self->_refreshFree = !self->_refreshFree;
                 [self->_layoutCollectionView reloadSections:[NSIndexSet indexSetWithIndex:PPTrailSectionFree]];
             };
-            
             return headerView;
         }
     } else if (kind == PPElementKindSectionBackground) {
@@ -257,7 +256,6 @@ QBDefineLazyPropertyInitialization(PPTrailModel, trailModel)
         }
         return sectionBgView;
     }
-
     return nil;
 };
 

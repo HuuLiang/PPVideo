@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		EC35F1BF1DB5C40800523F6F /* PPHotTagHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = EC35F1BE1DB5C40800523F6F /* PPHotTagHeaderView.m */; };
+		EC35F1C21DB5C41F00523F6F /* PPHotContentHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = EC35F1C11DB5C41F00523F6F /* PPHotContentHeaderView.m */; };
+		EC35F1C51DB5C49000523F6F /* PPHotTagCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EC35F1C41DB5C49000523F6F /* PPHotTagCell.m */; };
 		EC4C6A671DB464AA0009771A /* PPTrailFreeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EC4C6A661DB464AA0009771A /* PPTrailFreeCell.m */; };
 		EC4C6A6A1DB467F00009771A /* PPTrailModel.m in Sources */ = {isa = PBXBuildFile; fileRef = EC4C6A691DB467F00009771A /* PPTrailModel.m */; };
 		EC4C6A6D1DB46CE80009771A /* PPTrailHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = EC4C6A6C1DB46CE80009771A /* PPTrailHeaderView.m */; };
@@ -53,6 +56,12 @@
 /* Begin PBXFileReference section */
 		023420A73BCDB4EDC186B735 /* libPods-PPVideo.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-PPVideo.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D1AEB812654C461832824D5D /* Pods-PPVideo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PPVideo.release.xcconfig"; path = "Pods/Target Support Files/Pods-PPVideo/Pods-PPVideo.release.xcconfig"; sourceTree = "<group>"; };
+		EC35F1BD1DB5C40800523F6F /* PPHotTagHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPHotTagHeaderView.h; sourceTree = "<group>"; };
+		EC35F1BE1DB5C40800523F6F /* PPHotTagHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPHotTagHeaderView.m; sourceTree = "<group>"; };
+		EC35F1C01DB5C41F00523F6F /* PPHotContentHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPHotContentHeaderView.h; sourceTree = "<group>"; };
+		EC35F1C11DB5C41F00523F6F /* PPHotContentHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPHotContentHeaderView.m; sourceTree = "<group>"; };
+		EC35F1C31DB5C49000523F6F /* PPHotTagCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPHotTagCell.h; sourceTree = "<group>"; };
+		EC35F1C41DB5C49000523F6F /* PPHotTagCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPHotTagCell.m; sourceTree = "<group>"; };
 		EC4C6A651DB464AA0009771A /* PPTrailFreeCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPTrailFreeCell.h; sourceTree = "<group>"; };
 		EC4C6A661DB464AA0009771A /* PPTrailFreeCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPTrailFreeCell.m; sourceTree = "<group>"; };
 		EC4C6A681DB467F00009771A /* PPTrailModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPTrailModel.h; sourceTree = "<group>"; };
@@ -362,6 +371,12 @@
 		ECC097A61DB20C9200875D56 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				EC35F1BD1DB5C40800523F6F /* PPHotTagHeaderView.h */,
+				EC35F1BE1DB5C40800523F6F /* PPHotTagHeaderView.m */,
+				EC35F1C01DB5C41F00523F6F /* PPHotContentHeaderView.h */,
+				EC35F1C11DB5C41F00523F6F /* PPHotContentHeaderView.m */,
+				EC35F1C31DB5C49000523F6F /* PPHotTagCell.h */,
+				EC35F1C41DB5C49000523F6F /* PPHotTagCell.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -675,6 +690,7 @@
 				ECC0978C1DB1F1F400875D56 /* PPConfiguration.m in Sources */,
 				ECC097581DB1C8AA00875D56 /* AppDelegate.m in Sources */,
 				EC4C6A671DB464AA0009771A /* PPTrailFreeCell.m in Sources */,
+				EC35F1BF1DB5C40800523F6F /* PPHotTagHeaderView.m in Sources */,
 				ECC097BC1DB20CE700875D56 /* PPVipViewController.m in Sources */,
 				ECC097E21DB2411500875D56 /* UITableView+Separator.m in Sources */,
 				ECC097DB1DB23ECD00875D56 /* SDCycleScrollView.m in Sources */,
@@ -685,6 +701,7 @@
 				ECC097C21DB20D0300875D56 /* PPHotViewController.m in Sources */,
 				ECC0979F1DB2065300875D56 /* PPSystemConfigModel.m in Sources */,
 				EC4C6A7C1DB4BE100009771A /* PPSexCell.m in Sources */,
+				EC35F1C51DB5C49000523F6F /* PPHotTagCell.m in Sources */,
 				ECC097D71DB23ECD00875D56 /* TAAnimatedDotView.m in Sources */,
 				ECC097D61DB23ECD00875D56 /* TAAbstractDotView.m in Sources */,
 				EC4C6A791DB4BA2D0009771A /* PPVipModel.m in Sources */,
@@ -700,6 +717,7 @@
 				ECC097D91DB23ECD00875D56 /* TAPageControl.m in Sources */,
 				ECC097961DB2038C00875D56 /* PPActivateModel.m in Sources */,
 				EC4C6A731DB472470009771A /* PPTrailNormalCell.m in Sources */,
+				EC35F1C21DB5C41F00523F6F /* PPHotContentHeaderView.m in Sources */,
 				EC4C6A861DB4E87D0009771A /* PPSectionBackgroundFlowLayout.m in Sources */,
 				ECC097931DB2026C00875D56 /* UIView+Loading.m in Sources */,
 				ECC097E51DB2423F00875D56 /* UIScrollView+Refresh.m in Sources */,

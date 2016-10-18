@@ -53,7 +53,7 @@ static NSString *const kAliPaySchemeUrl = @"paoPaoYingyuanAliPayUrlScheme";
     [[UINavigationBar appearance] setBarTintColor:[UIColor colorWithHexString:@"#1F233E"]];
     [[UINavigationBar appearance] setTintColor:[UIColor blackColor]];
     [[UINavigationBar appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont boldSystemFontOfSize:[PPUtil isIpad] ? 21 : kWidth(36)],
-                                                           NSForegroundColorAttributeName:[UIColor colorWithHexString:@"#222222"]}];
+                                                           NSForegroundColorAttributeName:[UIColor colorWithHexString:@"#ffffff"]}];
     
     [UIViewController aspect_hookSelector:@selector(viewDidLoad)
                               withOptions:AspectPositionAfter
@@ -109,19 +109,19 @@ static NSString *const kAliPaySchemeUrl = @"paoPaoYingyuanAliPayUrlScheme";
          [[aspectInfo originalInvocation] setReturnValue:&hidesBottomBar];
      } error:nil];
     
-//    [UINavigationController aspect_hookSelector:@selector(preferredStatusBarStyle)
-//                                    withOptions:AspectPositionInstead
-//                                     usingBlock:^(id<AspectInfo> aspectInfo){
-//                                         UIStatusBarStyle statusBarStyle = UIStatusBarStyleLightContent;
-//                                         [[aspectInfo originalInvocation] setReturnValue:&statusBarStyle];
-//                                     } error:nil];
+    [UINavigationController aspect_hookSelector:@selector(preferredStatusBarStyle)
+                                    withOptions:AspectPositionInstead
+                                     usingBlock:^(id<AspectInfo> aspectInfo){
+                                         UIStatusBarStyle statusBarStyle = UIStatusBarStyleLightContent;
+                                         [[aspectInfo originalInvocation] setReturnValue:&statusBarStyle];
+                                     } error:nil];
     
-//    [UIViewController aspect_hookSelector:@selector(preferredStatusBarStyle)
-//                              withOptions:AspectPositionInstead
-//                               usingBlock:^(id<AspectInfo> aspectInfo){
-//                                   UIStatusBarStyle statusBarStyle = UIStatusBarStyleLightContent;
-//                                   [[aspectInfo originalInvocation] setReturnValue:&statusBarStyle];
-//                               } error:nil];
+    [UIViewController aspect_hookSelector:@selector(preferredStatusBarStyle)
+                              withOptions:AspectPositionInstead
+                               usingBlock:^(id<AspectInfo> aspectInfo){
+                                   UIStatusBarStyle statusBarStyle = UIStatusBarStyleLightContent;
+                                   [[aspectInfo originalInvocation] setReturnValue:&statusBarStyle];
+                               } error:nil];
     
     [UIScrollView aspect_hookSelector:@selector(showsVerticalScrollIndicator)
                           withOptions:AspectPositionInstead
