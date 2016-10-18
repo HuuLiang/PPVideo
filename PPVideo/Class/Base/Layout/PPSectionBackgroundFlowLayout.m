@@ -54,7 +54,7 @@ NSString *const PPElementKindSectionBackground = @"PPElementKindSectionBackgroun
 
 - (UICollectionViewLayoutAttributes *)layoutAttributesForBackgroundAtSection:(NSUInteger)section
 {
-    NSIndexPath * indexPath =[NSIndexPath indexPathForItem:0
+    NSIndexPath * indexPath =[NSIndexPath indexPathForItem:-1
                                                  inSection:section];
     UICollectionViewLayoutAttributes * attr = [UICollectionViewLayoutAttributes layoutAttributesForSupplementaryViewOfKind:PPElementKindSectionBackground
                                                                                                              withIndexPath:indexPath];
