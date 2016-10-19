@@ -40,10 +40,12 @@ typedef NS_ENUM(NSInteger ,PPTrailSection) {
     BOOL _refreshFree;
 }
 @property (nonatomic) PPTrailModel *trailModel;
+@property (nonatomic) NSMutableArray *dataSource;
 @end
 
 @implementation PPTrialViewController
 QBDefineLazyPropertyInitialization(PPTrailModel, trailModel)
+QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -53,7 +55,7 @@ QBDefineLazyPropertyInitialization(PPTrailModel, trailModel)
     _bannerView.bannerImageViewContentMode = UIViewContentModeScaleAspectFill;
     _bannerView.autoScrollTimeInterval = 3;
     _bannerView.titleLabelBackgroundColor = [UIColor clearColor];
-    _bannerView.titleLabelTextFont = [UIFont systemFontOfSize:kWidth(32)];
+    _bannerView.titleLabelTextFont = [UIFont systemFontOfSize:[PPUtil isIpad] ? 20 : kWidth(32)];
     _bannerView.titleLabelTextColor = [UIColor colorWithHexString:@"#ffffff"];
     _bannerView.pageControlAliment = SDCycleScrollViewPageContolAlimentCenter;
     _bannerView.pageControlDotSize = CGSizeMake(10, 10);
@@ -90,38 +92,36 @@ QBDefineLazyPropertyInitialization(PPTrailModel, trailModel)
     @weakify(self);
     [_layoutCollectionView PP_addPullToRefreshWithHandler:^{
         @strongify(self);
-//        [self loadChannels];
         [self loadData];
     }];
     [_layoutCollectionView PP_triggerPullToRefresh];
     
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-//        if (self.dataSource.count == 0) {
-//            [self addRefreshBtnWithCurrentView:self.view withAction:^(id obj) {
-//                @strongify(self);
-//                [self->_layoutCollectionView LSJ_triggerPullToRefresh];
-//            }];
-//        }
+        if (self.dataSource.count == 0) {
+            [self addRefreshBtnWithCurrentView:self.view withAction:^(id obj) {
+                @strongify(self);
+                [self->_layoutCollectionView PP_triggerPullToRefresh];
+            }];
+        }
     });
 
 }
 
 - (void)loadData {
-//    @weakify(self);
-//    [self.trailModel fetchTrailInfoWithCompletionHandler:^(BOOL success, id obj) {
-//        @strongify(self);
-//        if (success) {
-//            _refreshFree = NO;
-//            
-//        } else {
-//            
-//        }
-//    }];
-    _refreshFree = NO;
-    
-    [_layoutCollectionView reloadData];
-    [self refreshBannerView];
-    [_layoutCollectionView PP_endPullToRefresh];
+    @weakify(self);
+    [self.trailModel fetchTrailInfoWithCompletionHandler:^(BOOL success, id obj) {
+        @strongify(self);
+        if (success) {
+            [self.dataSource removeAllObjects];
+            [self removeCurrentRefreshBtn];
+            _refreshFree = NO;
+            [self.dataSource addObjectsFromArray:obj];
+            [self refreshBannerView];
+            [_layoutCollectionView reloadData];
+            [_layoutCollectionView PP_endPullToRefresh];
+        }
+    }];
+
 
 }
 
@@ -129,14 +129,16 @@ QBDefineLazyPropertyInitialization(PPTrailModel, trailModel)
     NSMutableArray *imageUrlGroup = [NSMutableArray array];
     NSMutableArray *titlesGroup = [NSMutableArray array];
     
-    for (int i = 0; i < 5; i ++) {
-        [imageUrlGroup addObject:@"http://www.1tong.com/uploads/wallpaper/anime/209-3-1920x1200.jpg"];
-        [titlesGroup addObject:@"神舟十一号载人飞船发射成功"];
+    for (PPColumnModel *column in self.dataSource) {
+        if (column.type == 4) {
+            for (PPProgramModel *program in column.programList) {
+                [imageUrlGroup addObject:program.coverImg];
+                [titlesGroup addObject:program.title];
+            }
+        }
     }
-    
     _bannerView.imageURLStringsGroup = imageUrlGroup;
     _bannerView.titlesGroup = titlesGroup;
-    
 }
 
 
@@ -151,21 +153,27 @@ QBDefineLazyPropertyInitialization(PPTrailModel, trailModel)
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    if (section == PPTrailSectionBanner || section == PPTrailSectionAd) {
-        return 1;
-    } else if (section == PPTrailSectionContent) {
-        return 12;
-    } else if (section == PPTrailSectionFree) {
-        if (_refreshFree) {
-            return 8;
-        } else {
-            return 4;
+    if (self.dataSource.count > 0) {
+        PPColumnModel *column = self.dataSource[section];
+        
+        if (section == PPTrailSectionBanner || section == PPTrailSectionAd) {
+            return 1;
+        } else if (section == PPTrailSectionContent) {
+            return column.programList.count;
+        } else if (section == PPTrailSectionFree) {
+            if (_refreshFree) {
+                return column.programList.count;
+            } else {
+                return column.programList.count/2;
+            }
         }
     }
+
     return 0;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
+    PPColumnModel *column = self.dataSource[indexPath.section];
     
     if (indexPath.section == PPTrailSectionBanner) {
         if (!_bannerCell) {
@@ -180,21 +188,27 @@ QBDefineLazyPropertyInitialization(PPTrailModel, trailModel)
         return _bannerCell;
     } else if (indexPath.section == PPTrailSectionFree) {
         PPTrailFreeCell *freeCell = [collectionView dequeueReusableCellWithReuseIdentifier:kPPTrailFreeCellReusableIdentifier forIndexPath:indexPath];
-        freeCell.imgUrlStr = @"http://www.1tong.com/uploads/wallpaper/anime/209-3-1920x1200.jpg";
-        freeCell.titleStr = @"神舟十一号载人飞船发射成功";
-        freeCell.playCount = 1234;
-        freeCell.commentCount = 2345;
+        if (indexPath.item < column.programList.count) {
+            PPProgramModel *program = column.programList[indexPath.row];
+            freeCell.imgUrlStr = program.coverImg;
+            freeCell.titleStr = program.title;
+            freeCell.playCount = 1234;
+            freeCell.commentCount = 2345;
+        }
         return freeCell;
     } else if (indexPath.section == PPTrailSectionAd) {
         PPTrailAdCell *adCell = [collectionView dequeueReusableCellWithReuseIdentifier:kPPTrailAdCellReusableIdentifier forIndexPath:indexPath];
-        adCell.adUrlStr = @"http://www.1tong.com/uploads/wallpaper/anime/209-3-1920x1200.jpg";
+        adCell.adUrlStr = column.columnImg;
         return adCell;
     } else if (indexPath.section == PPTrailSectionContent) {
         PPTrailNormalCell *normalCell = [collectionView dequeueReusableCellWithReuseIdentifier:kPPTrailNormalCellReusableIdentifier forIndexPath:indexPath];
-        normalCell.imgUrlStr = @"http://www.1tong.com/uploads/wallpaper/anime/209-3-1920x1200.jpg";
-        normalCell.titleStr = @"神舟十一号载人飞船发射成功";
-        normalCell.playCount = 1234;
-        normalCell.commentCount = 2345;
+        if (indexPath.item < column.programList.count) {
+            PPProgramModel *program = column.programList[indexPath.row];
+            normalCell.imgUrlStr = program.coverImg;
+            normalCell.titleStr = program.title;
+            normalCell.playCount = 1234;
+            normalCell.commentCount = 2345;
+        }
         return normalCell;
     }
     return nil;
@@ -271,6 +285,33 @@ QBDefineLazyPropertyInitialization(PPTrailModel, trailModel)
                 layout:(UICollectionViewLayout *)collectionViewLayout
 shouldDisplaySectionBackgroundInSection:(NSUInteger)section {
     return YES;
+}
+
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.section < self.dataSource.count) {
+        PPColumnModel *column = self.dataSource[indexPath.section];
+        
+        if (indexPath.section != PPTrailSectionAd) {
+            if (indexPath.item < column.programList.count) {
+                PPProgramModel *program = column.programList[indexPath.item];
+                
+                
+            }
+        } else {
+            if ([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:column.spreadUrl]]) {
+                [[UIApplication sharedApplication] openURL:[NSURL URLWithString:column.spreadUrl]];
+            }
+        }
+        
+        
+    }
+}
+
+- (void)cycleScrollView:(SDCycleScrollView *)cycleScrollView didSelectItemAtIndex:(NSInteger)index {
+    PPColumnModel *column = [self.dataSource firstObject];
+    if (index < column.programList.count) {
+        PPProgramModel *program = column.programList[index];
+    }
 }
 
 @end

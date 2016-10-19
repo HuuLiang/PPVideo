@@ -7,10 +7,10 @@
 //
 
 #import <QBEncryptedURLRequest.h>
-
+#import "PPColumnModel.h"
 
 @interface PPTrailReponse : QBURLResponse
-
+@property (nonatomic) NSArray <PPColumnModel *> *columnList;
 @end
 
 @interface PPTrailModel : QBEncryptedURLRequest

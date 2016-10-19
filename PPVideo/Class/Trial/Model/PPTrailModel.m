@@ -10,7 +10,9 @@
 
 @implementation PPTrailReponse
 
-
+- (Class)columnListElementClass {
+    return [PPColumnModel class];
+}
 
 @end
 
@@ -21,17 +23,20 @@
 }
 
 - (BOOL)fetchTrailInfoWithCompletionHandler:(QBCompletionHandler)handler {
-    
-    BOOL success = [self requestURLPath:nil
+    @weakify(self);
+    BOOL success = [self requestURLPath:PP_TRAIL_URL
                              withParams:nil
                         responseHandler:^(QBURLResponseStatus respStatus, NSString *errorMessage)
     {
+        @strongify(self);
+        
+        PPTrailReponse *resp = nil;
         if (respStatus == QBURLResponseSuccess) {
-            
+            resp = self.response;
         }
         
         if (handler) {
-            handler(respStatus == QBURLResponseSuccess,nil);
+            handler(respStatus == QBURLResponseSuccess,resp.columnList);
         }
         
     }];

@@ -9,7 +9,7 @@
 #import "PPUtil.h"
 #import <SFHFKeychainUtils.h>
 #import <sys/sysctl.h>
-
+#import "JQKApplicationManager.h"
 
 static NSString *const kRegisterKeyName         = @"PP_register_keyname";
 static NSString *const kUserAccessUsername      = @"PP_user_access_username";
@@ -150,23 +150,23 @@ static NSString *const kVipUserKeyName          = @"PPVideo_Vip_UserKey";
     return [self isVip] ? [[[NSUserDefaults standardUserDefaults] objectForKey:kVipUserKeyName] integerValue] : PPVipLevelNone;
 }
 
+#pragma mark - 时间格式转换
+
 + (NSDate *)dateFromString:(NSString *)dateString {
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
     return [dateFormatter dateFromString:dateString];
 }
 
-#pragma mark - 时间格式转换
-
-+ (NSString *)currentTimeString {
++ (NSString *)currentTimeStringWithFormat:(NSString *)timeFormat {
     NSDateFormatter *fomatter =[[NSDateFormatter alloc] init];
-    [fomatter setDateFormat:@"yyyyMMddHHmmss"];
+    [fomatter setDateFormat:timeFormat];
     return [fomatter stringFromDate:[NSDate date]];
 }
 
 + (NSString *)UTF8DateStringFromString:(NSString *)dateString {
     NSDateFormatter *dateFormatterA = [[NSDateFormatter alloc] init];
-    [dateFormatterA setDateFormat:@"yyyy-MM-dd"];
+    [dateFormatterA setDateFormat:@"yyyyMMdd"];
     
     NSDateFormatter *dataFormatterB = [[NSDateFormatter alloc] init];
     [dataFormatterB setDateFormat:@"yyyy年MM月dd日"];
@@ -175,6 +175,21 @@ static NSString *const kVipUserKeyName          = @"PPVideo_Vip_UserKey";
     QBLog(@"%@",[dataFormatterB stringFromDate:[dateFormatterA dateFromString:dateString]]);
     
     return [dataFormatterB stringFromDate:[dateFormatterA dateFromString:dateString]];
+}
+
+#pragma mark - app检查
+
++ (void)checkAppInstalledWithBundleId:(NSString *)bundleId completionHandler:(void (^)(BOOL))handler {
+    dispatch_async(dispatch_get_global_queue(0, 0), ^{
+        BOOL installed = [[[JQKApplicationManager defaultManager] allInstalledAppIdentifiers] bk_any:^BOOL(id obj) {
+            return [bundleId isEqualToString:obj];
+        }];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (handler) {
+                handler(installed);
+            }
+        });
+    });
 }
 
 @end

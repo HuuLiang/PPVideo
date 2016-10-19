@@ -38,11 +38,14 @@
         _tagLabel = [[UILabel alloc] init];
         _tagLabel.font = [UIFont systemFontOfSize:kWidth(24)];
         _tagLabel.textAlignment = NSTextAlignmentCenter;
+        _tagLabel.textColor = [UIColor colorWithHexString:@"#ffffff"];
+        _tagLabel.layer.cornerRadius = kWidth(8);
+        _tagLabel.layer.masksToBounds = YES;
         [self addSubview:_tagLabel];
         
         _titleLabel = [[UILabel alloc] init];
         _titleLabel.textColor = [UIColor colorWithHexString:@"#666666"];
-        _titleLabel.font = [UIFont systemFontOfSize:kWidth(32)];
+        _titleLabel.font = [UIFont systemFontOfSize:[PPUtil isIpad] ? 24 : kWidth(32)];
         [self addSubview:_titleLabel];
         
         UIImage *playImg = [UIImage imageNamed:@"trail_free_play"];

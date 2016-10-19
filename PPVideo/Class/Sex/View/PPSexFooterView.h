@@ -12,7 +12,7 @@ typedef void(^moreAction)(void);
 
 @interface PPSexFooterView : UICollectionReusableView
 
-@property (nonatomic) NSString *timeStr;
+@property (nonatomic) NSInteger time;
 @property (nonatomic) moreAction moreAction;
 
 @end

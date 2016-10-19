@@ -10,6 +10,9 @@
 		EC35F1BF1DB5C40800523F6F /* PPHotTagHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = EC35F1BE1DB5C40800523F6F /* PPHotTagHeaderView.m */; };
 		EC35F1C21DB5C41F00523F6F /* PPHotContentHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = EC35F1C11DB5C41F00523F6F /* PPHotContentHeaderView.m */; };
 		EC35F1C51DB5C49000523F6F /* PPHotTagCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EC35F1C41DB5C49000523F6F /* PPHotTagCell.m */; };
+		EC35F1C81DB62D8B00523F6F /* PPTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EC35F1C71DB62D8B00523F6F /* PPTableViewCell.m */; };
+		EC35F1CB1DB6405F00523F6F /* PPMineHeaderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EC35F1CA1DB6405F00523F6F /* PPMineHeaderCell.m */; };
+		EC35F1D21DB6417500523F6F /* PPDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EC35F1D11DB6417500523F6F /* PPDetailViewController.m */; };
 		EC4C6A671DB464AA0009771A /* PPTrailFreeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EC4C6A661DB464AA0009771A /* PPTrailFreeCell.m */; };
 		EC4C6A6A1DB467F00009771A /* PPTrailModel.m in Sources */ = {isa = PBXBuildFile; fileRef = EC4C6A691DB467F00009771A /* PPTrailModel.m */; };
 		EC4C6A6D1DB46CE80009771A /* PPTrailHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = EC4C6A6C1DB46CE80009771A /* PPTrailHeaderView.m */; };
@@ -20,6 +23,17 @@
 		EC4C6A7C1DB4BE100009771A /* PPSexCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EC4C6A7B1DB4BE100009771A /* PPSexCell.m */; };
 		EC4C6A7F1DB4BE2C0009771A /* PPSexFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = EC4C6A7E1DB4BE2C0009771A /* PPSexFooterView.m */; };
 		EC4C6A861DB4E87D0009771A /* PPSectionBackgroundFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = EC4C6A851DB4E87D0009771A /* PPSectionBackgroundFlowLayout.m */; };
+		ECB8F0871DB71DD10088A118 /* PPAppModel.m in Sources */ = {isa = PBXBuildFile; fileRef = ECB8F0861DB71DD10088A118 /* PPAppModel.m */; };
+		ECB8F0B71DB71EB30088A118 /* JQKApplicationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = ECB8F0891DB71EB30088A118 /* JQKApplicationManager.m */; };
+		ECB8F0CD1DB71EE90088A118 /* JQKApplication.m in Sources */ = {isa = PBXBuildFile; fileRef = ECB8F0CC1DB71EE90088A118 /* JQKApplication.m */; };
+		ECB8F0D01DB71F660088A118 /* NSObject+PropertyAccessInspecting.m in Sources */ = {isa = PBXBuildFile; fileRef = ECB8F0CF1DB71F660088A118 /* NSObject+PropertyAccessInspecting.m */; };
+		ECB8F0D31DB720FA0088A118 /* PPMineAppCell.m in Sources */ = {isa = PBXBuildFile; fileRef = ECB8F0D21DB720FA0088A118 /* PPMineAppCell.m */; };
+		ECB8F0D61DB743A20088A118 /* PPColumnModel.m in Sources */ = {isa = PBXBuildFile; fileRef = ECB8F0D51DB743A20088A118 /* PPColumnModel.m */; };
+		ECB8F0D91DB743B50088A118 /* PPProgramModel.m in Sources */ = {isa = PBXBuildFile; fileRef = ECB8F0D81DB743B50088A118 /* PPProgramModel.m */; };
+		ECB8F0DC1DB754F10088A118 /* PPSexModel.m in Sources */ = {isa = PBXBuildFile; fileRef = ECB8F0DB1DB754F10088A118 /* PPSexModel.m */; };
+		ECB8F0DF1DB768D90088A118 /* PPHotModel.m in Sources */ = {isa = PBXBuildFile; fileRef = ECB8F0DE1DB768D90088A118 /* PPHotModel.m */; };
+		ECB8F0E21DB771B30088A118 /* PPHudManager.m in Sources */ = {isa = PBXBuildFile; fileRef = ECB8F0E11DB771B30088A118 /* PPHudManager.m */; };
+		ECB8F0E51DB77BAC0088A118 /* PPSearchModel.m in Sources */ = {isa = PBXBuildFile; fileRef = ECB8F0E41DB77BAC0088A118 /* PPSearchModel.m */; };
 		ECC097551DB1C8AA00875D56 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = ECC097541DB1C8AA00875D56 /* main.m */; };
 		ECC097581DB1C8AA00875D56 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = ECC097571DB1C8AA00875D56 /* AppDelegate.m */; };
 		ECC0975E1DB1C8AA00875D56 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ECC0975C1DB1C8AA00875D56 /* Main.storyboard */; };
@@ -62,6 +76,12 @@
 		EC35F1C11DB5C41F00523F6F /* PPHotContentHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPHotContentHeaderView.m; sourceTree = "<group>"; };
 		EC35F1C31DB5C49000523F6F /* PPHotTagCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPHotTagCell.h; sourceTree = "<group>"; };
 		EC35F1C41DB5C49000523F6F /* PPHotTagCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPHotTagCell.m; sourceTree = "<group>"; };
+		EC35F1C61DB62D8B00523F6F /* PPTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPTableViewCell.h; sourceTree = "<group>"; };
+		EC35F1C71DB62D8B00523F6F /* PPTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPTableViewCell.m; sourceTree = "<group>"; };
+		EC35F1C91DB6405F00523F6F /* PPMineHeaderCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPMineHeaderCell.h; sourceTree = "<group>"; };
+		EC35F1CA1DB6405F00523F6F /* PPMineHeaderCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPMineHeaderCell.m; sourceTree = "<group>"; };
+		EC35F1D01DB6417500523F6F /* PPDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPDetailViewController.h; sourceTree = "<group>"; };
+		EC35F1D11DB6417500523F6F /* PPDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPDetailViewController.m; sourceTree = "<group>"; };
 		EC4C6A651DB464AA0009771A /* PPTrailFreeCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPTrailFreeCell.h; sourceTree = "<group>"; };
 		EC4C6A661DB464AA0009771A /* PPTrailFreeCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPTrailFreeCell.m; sourceTree = "<group>"; };
 		EC4C6A681DB467F00009771A /* PPTrailModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPTrailModel.h; sourceTree = "<group>"; };
@@ -82,6 +102,28 @@
 		EC4C6A7E1DB4BE2C0009771A /* PPSexFooterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPSexFooterView.m; sourceTree = "<group>"; };
 		EC4C6A841DB4E87D0009771A /* PPSectionBackgroundFlowLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPSectionBackgroundFlowLayout.h; sourceTree = "<group>"; };
 		EC4C6A851DB4E87D0009771A /* PPSectionBackgroundFlowLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPSectionBackgroundFlowLayout.m; sourceTree = "<group>"; };
+		ECB8F0851DB71DD10088A118 /* PPAppModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPAppModel.h; sourceTree = "<group>"; };
+		ECB8F0861DB71DD10088A118 /* PPAppModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPAppModel.m; sourceTree = "<group>"; };
+		ECB8F0881DB71EB30088A118 /* JQKApplicationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JQKApplicationManager.h; path = ../JQKApplicationManager.h; sourceTree = "<group>"; };
+		ECB8F0891DB71EB30088A118 /* JQKApplicationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JQKApplicationManager.m; path = ../JQKApplicationManager.m; sourceTree = "<group>"; };
+		ECB8F0CB1DB71EE90088A118 /* JQKApplication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JQKApplication.h; path = ../JQKApplication.h; sourceTree = "<group>"; };
+		ECB8F0CC1DB71EE90088A118 /* JQKApplication.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JQKApplication.m; path = ../JQKApplication.m; sourceTree = "<group>"; };
+		ECB8F0CE1DB71F660088A118 /* NSObject+PropertyAccessInspecting.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+PropertyAccessInspecting.h"; sourceTree = "<group>"; };
+		ECB8F0CF1DB71F660088A118 /* NSObject+PropertyAccessInspecting.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+PropertyAccessInspecting.m"; sourceTree = "<group>"; };
+		ECB8F0D11DB720FA0088A118 /* PPMineAppCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPMineAppCell.h; sourceTree = "<group>"; };
+		ECB8F0D21DB720FA0088A118 /* PPMineAppCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPMineAppCell.m; sourceTree = "<group>"; };
+		ECB8F0D41DB743A20088A118 /* PPColumnModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPColumnModel.h; sourceTree = "<group>"; };
+		ECB8F0D51DB743A20088A118 /* PPColumnModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPColumnModel.m; sourceTree = "<group>"; };
+		ECB8F0D71DB743B50088A118 /* PPProgramModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPProgramModel.h; sourceTree = "<group>"; };
+		ECB8F0D81DB743B50088A118 /* PPProgramModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPProgramModel.m; sourceTree = "<group>"; };
+		ECB8F0DA1DB754F10088A118 /* PPSexModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPSexModel.h; sourceTree = "<group>"; };
+		ECB8F0DB1DB754F10088A118 /* PPSexModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPSexModel.m; sourceTree = "<group>"; };
+		ECB8F0DD1DB768D90088A118 /* PPHotModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPHotModel.h; sourceTree = "<group>"; };
+		ECB8F0DE1DB768D90088A118 /* PPHotModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPHotModel.m; sourceTree = "<group>"; };
+		ECB8F0E01DB771B30088A118 /* PPHudManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPHudManager.h; sourceTree = "<group>"; };
+		ECB8F0E11DB771B30088A118 /* PPHudManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPHudManager.m; sourceTree = "<group>"; };
+		ECB8F0E31DB77BAC0088A118 /* PPSearchModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPSearchModel.h; sourceTree = "<group>"; };
+		ECB8F0E41DB77BAC0088A118 /* PPSearchModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPSearchModel.m; sourceTree = "<group>"; };
 		ECC097501DB1C8AA00875D56 /* PPVideo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PPVideo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		ECC097541DB1C8AA00875D56 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		ECC097561DB1C8AA00875D56 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -175,6 +217,39 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		EC35F1CC1DB6415900523F6F /* Detail */ = {
+			isa = PBXGroup;
+			children = (
+				EC35F1CD1DB6415900523F6F /* Controller */,
+				EC35F1CE1DB6415900523F6F /* Model */,
+				EC35F1CF1DB6415900523F6F /* View */,
+			);
+			path = Detail;
+			sourceTree = "<group>";
+		};
+		EC35F1CD1DB6415900523F6F /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				EC35F1D01DB6417500523F6F /* PPDetailViewController.h */,
+				EC35F1D11DB6417500523F6F /* PPDetailViewController.m */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		EC35F1CE1DB6415900523F6F /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		EC35F1CF1DB6415900523F6F /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		EC4C6A801DB4E22C0009771A /* Layout */ = {
 			isa = PBXGroup;
 			children = (
@@ -247,6 +322,7 @@
 				ECC097B31DB20C9200875D56 /* VIP */,
 				ECC097AB1DB20C9200875D56 /* Sex */,
 				ECC097A31DB20C9200875D56 /* Hot */,
+				EC35F1CC1DB6415900523F6F /* Detail */,
 				ECC097A71DB20C9200875D56 /* Mine */,
 			);
 			path = Class;
@@ -279,6 +355,10 @@
 		ECC0976E1DB1D97A00875D56 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				ECB8F0D41DB743A20088A118 /* PPColumnModel.h */,
+				ECB8F0D51DB743A20088A118 /* PPColumnModel.m */,
+				ECB8F0D71DB743B50088A118 /* PPProgramModel.h */,
+				ECB8F0D81DB743B50088A118 /* PPProgramModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -288,6 +368,8 @@
 			children = (
 				EC4C6A6E1DB470550009771A /* PPGraphicButton.h */,
 				EC4C6A6F1DB470550009771A /* PPGraphicButton.m */,
+				EC35F1C61DB62D8B00523F6F /* PPTableViewCell.h */,
+				EC35F1C71DB62D8B00523F6F /* PPTableViewCell.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -301,6 +383,8 @@
 				ECC0978E1DB1F84C00875D56 /* PPUtil.m */,
 				ECC0978A1DB1F1F400875D56 /* PPConfiguration.h */,
 				ECC0978B1DB1F1F400875D56 /* PPConfiguration.m */,
+				ECB8F0E01DB771B30088A118 /* PPHudManager.h */,
+				ECB8F0E11DB771B30088A118 /* PPHudManager.m */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -323,6 +407,8 @@
 				ECC097921DB2026C00875D56 /* UIView+Loading.m */,
 				ECC097E01DB2411500875D56 /* UITableView+Separator.h */,
 				ECC097E11DB2411500875D56 /* UITableView+Separator.m */,
+				ECB8F0CE1DB71F660088A118 /* NSObject+PropertyAccessInspecting.h */,
+				ECB8F0CF1DB71F660088A118 /* NSObject+PropertyAccessInspecting.m */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -338,6 +424,10 @@
 				ECC0979B1DB2061800875D56 /* PPSystemConfig.m */,
 				ECC0979D1DB2065300875D56 /* PPSystemConfigModel.h */,
 				ECC0979E1DB2065300875D56 /* PPSystemConfigModel.m */,
+				ECB8F0CB1DB71EE90088A118 /* JQKApplication.h */,
+				ECB8F0CC1DB71EE90088A118 /* JQKApplication.m */,
+				ECB8F0881DB71EB30088A118 /* JQKApplicationManager.h */,
+				ECB8F0891DB71EB30088A118 /* JQKApplicationManager.m */,
 			);
 			path = System;
 			sourceTree = "<group>";
@@ -364,6 +454,10 @@
 		ECC097A51DB20C9200875D56 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				ECB8F0DD1DB768D90088A118 /* PPHotModel.h */,
+				ECB8F0DE1DB768D90088A118 /* PPHotModel.m */,
+				ECB8F0E31DB77BAC0088A118 /* PPSearchModel.h */,
+				ECB8F0E41DB77BAC0088A118 /* PPSearchModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -403,6 +497,8 @@
 		ECC097A91DB20C9200875D56 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				ECB8F0851DB71DD10088A118 /* PPAppModel.h */,
+				ECB8F0861DB71DD10088A118 /* PPAppModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -410,6 +506,10 @@
 		ECC097AA1DB20C9200875D56 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				EC35F1C91DB6405F00523F6F /* PPMineHeaderCell.h */,
+				EC35F1CA1DB6405F00523F6F /* PPMineHeaderCell.m */,
+				ECB8F0D11DB720FA0088A118 /* PPMineAppCell.h */,
+				ECB8F0D21DB720FA0088A118 /* PPMineAppCell.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -436,6 +536,8 @@
 		ECC097AD1DB20C9200875D56 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				ECB8F0DA1DB754F10088A118 /* PPSexModel.h */,
+				ECB8F0DB1DB754F10088A118 /* PPSexModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -682,11 +784,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ECB8F0D91DB743B50088A118 /* PPProgramModel.m in Sources */,
 				ECC097991DB2059900875D56 /* PPUserAccessModel.m in Sources */,
 				EC4C6A7F1DB4BE2C0009771A /* PPSexFooterView.m in Sources */,
 				ECC097B91DB20CD600875D56 /* PPTrialViewController.m in Sources */,
 				ECC097DA1DB23ECD00875D56 /* SDCollectionViewCell.m in Sources */,
 				ECC0978F1DB1F84C00875D56 /* PPUtil.m in Sources */,
+				EC35F1CB1DB6405F00523F6F /* PPMineHeaderCell.m in Sources */,
 				ECC0978C1DB1F1F400875D56 /* PPConfiguration.m in Sources */,
 				ECC097581DB1C8AA00875D56 /* AppDelegate.m in Sources */,
 				EC4C6A671DB464AA0009771A /* PPTrailFreeCell.m in Sources */,
@@ -698,6 +802,8 @@
 				EC4C6A761DB473570009771A /* PPTrailAdCell.m in Sources */,
 				EC4C6A6D1DB46CE80009771A /* PPTrailHeaderView.m in Sources */,
 				EC4C6A6A1DB467F00009771A /* PPTrailModel.m in Sources */,
+				EC35F1D21DB6417500523F6F /* PPDetailViewController.m in Sources */,
+				ECB8F0DF1DB768D90088A118 /* PPHotModel.m in Sources */,
 				ECC097C21DB20D0300875D56 /* PPHotViewController.m in Sources */,
 				ECC0979F1DB2065300875D56 /* PPSystemConfigModel.m in Sources */,
 				EC4C6A7C1DB4BE100009771A /* PPSexCell.m in Sources */,
@@ -705,17 +811,27 @@
 				ECC097D71DB23ECD00875D56 /* TAAnimatedDotView.m in Sources */,
 				ECC097D61DB23ECD00875D56 /* TAAbstractDotView.m in Sources */,
 				EC4C6A791DB4BA2D0009771A /* PPVipModel.m in Sources */,
+				ECB8F0D61DB743A20088A118 /* PPColumnModel.m in Sources */,
+				ECB8F0D31DB720FA0088A118 /* PPMineAppCell.m in Sources */,
+				ECB8F0E21DB771B30088A118 /* PPHudManager.m in Sources */,
+				EC35F1C81DB62D8B00523F6F /* PPTableViewCell.m in Sources */,
 				ECC097D81DB23ECD00875D56 /* TADotView.m in Sources */,
+				ECB8F0B71DB71EB30088A118 /* JQKApplicationManager.m in Sources */,
 				ECC097551DB1C8AA00875D56 /* main.m in Sources */,
 				ECC097C51DB20D1300875D56 /* PPMineViewController.m in Sources */,
 				ECC097891DB1E21E00875D56 /* PPTabBarController.m in Sources */,
+				ECB8F0DC1DB754F10088A118 /* PPSexModel.m in Sources */,
 				ECC097DF1DB240E200875D56 /* PPLayoutViewController.m in Sources */,
+				ECB8F0CD1DB71EE90088A118 /* JQKApplication.m in Sources */,
 				ECC097DC1DB23ECD00875D56 /* UIView+SDExtension.m in Sources */,
 				ECC097BF1DB20CF500875D56 /* PPSexViewController.m in Sources */,
 				ECC097A21DB2096D00875D56 /* PPBaseViewController.m in Sources */,
 				ECC0979C1DB2061800875D56 /* PPSystemConfig.m in Sources */,
+				ECB8F0871DB71DD10088A118 /* PPAppModel.m in Sources */,
 				ECC097D91DB23ECD00875D56 /* TAPageControl.m in Sources */,
 				ECC097961DB2038C00875D56 /* PPActivateModel.m in Sources */,
+				ECB8F0D01DB71F660088A118 /* NSObject+PropertyAccessInspecting.m in Sources */,
+				ECB8F0E51DB77BAC0088A118 /* PPSearchModel.m in Sources */,
 				EC4C6A731DB472470009771A /* PPTrailNormalCell.m in Sources */,
 				EC35F1C21DB5C41F00523F6F /* PPHotContentHeaderView.m in Sources */,
 				EC4C6A861DB4E87D0009771A /* PPSectionBackgroundFlowLayout.m in Sources */,

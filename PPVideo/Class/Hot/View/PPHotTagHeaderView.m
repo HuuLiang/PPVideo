@@ -21,6 +21,8 @@
     self = [super initWithFrame:frame];
     if (self) {
         
+        self.backgroundColor = [UIColor colorWithHexString:@"#ffffff"];
+        
         _titleLabel = [[UILabel alloc] init];
         _titleLabel.font = [UIFont systemFontOfSize:kWidth(34)];
         _titleLabel.textAlignment = NSTextAlignmentCenter;

@@ -8,41 +8,38 @@
 
 #import "PPVipModel.h"
 
-@implementation PPVipReponse
-
-
-
-@end
-
 @implementation PPVipModel
 
 + (Class)responseClass {
-    return [PPVipReponse class];
+    return [PPColumnModel class];
 }
 
 - (BOOL)fetchVipInfoWithVipLevel:(PPVipLevel)vipLevel CompletionHandler:(QBCompletionHandler)handler {
     NSString *urlStr = nil;
     if (vipLevel == PPVipLevelVipA) {
-        urlStr = @"";
+        urlStr = PP_VIPA_URL;
     } else if (vipLevel == PPVipLevelVipB) {
-        urlStr = @"";
+        urlStr = PP_VIPB_URL;
     } else if (vipLevel == PPVipLevelVipC) {
-        urlStr = @"";
+        urlStr = PP_VIPC_URL;
     }
-    
-    BOOL success = [self requestURLPath:nil
+    @weakify(self);
+    BOOL success = [self requestURLPath:urlStr
                              withParams:nil
                         responseHandler:^(QBURLResponseStatus respStatus, NSString *errorMessage)
-                    {
-                        if (respStatus == QBURLResponseSuccess) {
-                            
-                        }
+    {
+        @strongify(self);
+        
+        PPColumnModel *resp = nil;
+        if (respStatus == QBURLResponseSuccess) {
+            resp = self.response;
+        }
                         
-                        if (handler) {
-                            handler(respStatus == QBURLResponseSuccess,nil);
-                        }
+        if (handler) {
+            handler(respStatus == QBURLResponseSuccess,resp);
+        }
                         
-                    }];
+    }];
     
     return success;
 }

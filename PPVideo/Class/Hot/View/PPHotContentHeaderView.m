@@ -13,6 +13,7 @@
 @interface PPHotContentHeaderView ()
 {
     PPGraphicButton *_graphicBtn;
+    UILabel *_titleLabel;
 }
 
 @end
@@ -23,6 +24,8 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
+        
+        self.backgroundColor = [UIColor colorWithHexString:@"#ffffff"];
         
         @weakify(self);
         _graphicBtn = [[PPGraphicButton alloc] initWithNormalTitle:@"查看更多"
@@ -44,7 +47,13 @@
         
         [self addSubview:_graphicBtn];
         
-
+        
+        _titleLabel = [[UILabel alloc] init];
+        _titleLabel.font = [UIFont systemFontOfSize:kWidth(34)];
+        _titleLabel.textAlignment = NSTextAlignmentCenter;
+        _titleLabel.backgroundColor = [UIColor colorWithHexString:@"#efefef"];
+        [self addSubview:_titleLabel];
+        
         
     }
     
@@ -56,28 +65,42 @@
     
     {
         [_graphicBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.center.equalTo(self);
+            make.centerX.equalTo(self);
+            make.top.equalTo(self).offset(kWidth(20));
             make.size.mas_equalTo(CGSizeMake(kWidth(166), kWidth(42)));
         }];
         
         [_lineLeft mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.centerY.equalTo(self);
+            make.centerY.equalTo(_graphicBtn);
             make.left.equalTo(self).offset(kWidth(20));
             make.right.equalTo(_graphicBtn.mas_left).offset(-kWidth(20));
             make.height.mas_equalTo(kWidth(4));
         }];
         
         [_lineRight mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.centerY.equalTo(self);
+            make.centerY.equalTo(_graphicBtn);
             make.left.equalTo(_graphicBtn.mas_right).offset(kWidth(20));
             make.right.equalTo(self.mas_right).offset(-kWidth(20));
             make.height.mas_equalTo(kWidth(4));
+        }];
+        
+        [_titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.right.bottom.equalTo(self);
+            make.top.equalTo(_graphicBtn.mas_bottom).offset(kWidth(20));
         }];
         
     }
     
     
     return self;
+}
+
+- (void)setTitleStr:(NSString *)titleStr {
+    _titleLabel.text = titleStr;
+}
+
+- (void)setTitleColorStr:(NSString *)titleColorStr {
+    _titleLabel.textColor = [UIColor colorWithHexString:titleColorStr];
 }
 
 @end

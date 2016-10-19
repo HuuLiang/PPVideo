@@ -61,7 +61,7 @@ NSString *const PPElementKindSectionBackground = @"PPElementKindSectionBackgroun
     attr.hidden = NO;
     attr.zIndex = -1; // to send them behind
     
-    UICollectionViewLayoutAttributes * firstAttr = [self layoutAttributesForItemAtIndexPath:indexPath]; // it will be already (section,0)
+    UICollectionViewLayoutAttributes * firstAttr = [self layoutAttributesForItemAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:section]]; // it will be already (section,0)
     
     UIEdgeInsets sectionInsets = self.sectionInset;
     if ([self.collectionView.delegate respondsToSelector:@selector(collectionView:layout:insetForSectionAtIndex:)]) {
@@ -84,7 +84,4 @@ NSString *const PPElementKindSectionBackground = @"PPElementKindSectionBackgroun
     
     return attr;
 }
-
-
-
 @end

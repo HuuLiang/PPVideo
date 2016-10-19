@@ -21,6 +21,9 @@
     self = [super initWithFrame:frame];
     if (self) {
         
+        self.layer.cornerRadius = kWidth(8);
+        self.layer.masksToBounds = YES;
+        
         _tagLabel = [[UILabel alloc] init];
         _tagLabel.textColor = [UIColor colorWithHexString:@"#ffffff"];
         _tagLabel.font = [UIFont systemFontOfSize:kWidth(30)];

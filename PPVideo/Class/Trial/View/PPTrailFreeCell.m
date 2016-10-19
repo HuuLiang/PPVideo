@@ -35,7 +35,7 @@
         
         _titleLabel = [[UILabel alloc] init];
         _titleLabel.textColor = [UIColor colorWithHexString:@"#666666"];
-        _titleLabel.font = [UIFont systemFontOfSize:kWidth(32)];
+        _titleLabel.font = [UIFont systemFontOfSize:[PPUtil isIpad] ? 24 : kWidth(32)];
         [self addSubview:_titleLabel];
         
         UIImage *playImg = [UIImage imageNamed:@"trail_free_play"];

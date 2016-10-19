@@ -61,7 +61,7 @@
                                     if ([config.name isEqualToString:PP_SYSTEM_IMAGE_TOKEN]) {
                                     [PPSystemConfigModel sharedModel].imageToken = config.value;
                                 } else if ([config.name isEqualToString:PP_SYSTEM_CONTACT_NAME]) {
-                                    [PPSystemConfigModel sharedModel].contacName = config.value;
+                                    [PPSystemConfigModel sharedModel].contactName = config.value;
                                 } else if ([config.name isEqualToString:PP_SYSTEM_CONTACT_SCHEME]) {
                                     [PPSystemConfigModel sharedModel].contactScheme = config.value;
                                 }

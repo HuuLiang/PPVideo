@@ -6,8 +6,8 @@
 //  Copyright © 2016年 Liang. All rights reserved.
 //
 
-#import "PPBaseViewController.h"
+#import "PPLayoutViewController.h"
 
-@interface PPMineViewController : PPBaseViewController
+@interface PPMineViewController : PPLayoutViewController
 
 @end

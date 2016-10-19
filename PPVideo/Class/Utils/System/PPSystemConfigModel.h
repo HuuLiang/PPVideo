@@ -25,7 +25,7 @@ typedef void (^PPFetchSystemConfigCompletionHandler)(BOOL success);
 @property (nonatomic) NSString *vipImg;
 @property (nonatomic) NSString *sVipImg;
 
-@property (nonatomic) NSString *contacName;
+@property (nonatomic) NSString *contactName;
 @property (nonatomic) NSString *contactScheme;
 @property (nonatomic) NSString *imageToken;
 @property (nonatomic,readonly) BOOL loaded;

@@ -14,4 +14,8 @@ typedef void(^isSelected)(void);
 
 @property (nonatomic) isSelected isSelected;
 
+@property (nonatomic) NSString *titleStr;
+@property (nonatomic) NSString *titleColorStr;
+
+
 @end

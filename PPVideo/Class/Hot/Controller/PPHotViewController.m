@@ -13,6 +13,9 @@
 #import "PPHotContentHeaderView.h"
 #import "PPSexCell.h"
 
+#import "PPHotModel.h"
+#import "PPSearchModel.h"
+
 static NSString *const kSectionBackgroundReusableIdentifier         = @"SectionBackgroundReusableIdentifier";
 static NSString *const kPPHotTagHeaderViewReusableIdentifier        = @"PPHotTagHeaderViewReusableIdentifier";
 static NSString *const kPPHotContentHeaderViewReusableIdentifier    = @"PPHotContentHeaderViewReusableIdentifier";
@@ -25,18 +28,43 @@ typedef NS_ENUM(NSInteger ,PPHotSection) {
     PPHotSectionCount
 };
 
-@interface PPHotViewController () <UICollectionViewDataSource,UICollectionViewDelegate,PPSectionBackgroundFlowLayoutDelegate>
+@interface PPHotViewController () <UICollectionViewDataSource,UICollectionViewDelegate,PPSectionBackgroundFlowLayoutDelegate,UISearchBarDelegate>
 {
     UICollectionView *_layoutCollectionView;
-    
+    UISearchBar *_searchBar;
     BOOL _loadMoreTags;
 }
+@property (nonatomic) PPHotModel *hotModel;
+@property (nonatomic) PPHotReponse *response;
+@property (nonatomic) PPSearchModel *searchModel;
 @end
 
 @implementation PPHotViewController
+QBDefineLazyPropertyInitialization(PPHotModel, hotModel)
+QBDefineLazyPropertyInitialization(PPHotReponse, response)
+QBDefineLazyPropertyInitialization(PPSearchModel, searchModel)
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.title = nil;
+    
+    _searchBar = [[UISearchBar alloc] init];
+    _searchBar.placeholder = @"关键字搜索";
+    _searchBar.searchBarStyle = UISearchBarStyleDefault;
+    _searchBar.barStyle = UIBarStyleBlack;
+    _searchBar.delegate = self;
+    _searchBar.tintColor = [UIColor colorWithHexString:@"#efefef"];
+    _searchBar.barTintColor = [UIColor colorWithHexString:@"#efefef"];
+    
+    const CGFloat fullBarWidth = CGRectGetWidth(self.navigationController.navigationBar.bounds);
+    const CGFloat fullBarHeight = CGRectGetHeight(self.navigationController.navigationBar.bounds);
+    
+    const CGFloat searchBarWidth = fullBarWidth/1.5;
+    const CGFloat searchBarHeight = fullBarHeight * 0.8;
+    const CGFloat searchBarY = (fullBarHeight - searchBarHeight)/2;
+    const CGFloat searchBarX = (fullBarWidth - searchBarWidth)/2;
+    _searchBar.frame = CGRectMake(searchBarX, searchBarY, searchBarWidth, searchBarHeight);
+    [self.navigationController.navigationBar addSubview:_searchBar];
     
     PPSectionBackgroundFlowLayout *mainLayout = [[PPSectionBackgroundFlowLayout alloc] init];
 //    mainLayout.minimumLineSpacing = kWidth(20);
@@ -61,26 +89,34 @@ typedef NS_ENUM(NSInteger ,PPHotSection) {
     @weakify(self);
     [_layoutCollectionView PP_addPullToRefreshWithHandler:^{
         @strongify(self);
-        //        [self loadChannels];
         [self loadData];
     }];
     [_layoutCollectionView PP_triggerPullToRefresh];
     
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        //        if (self.dataSource.count == 0) {
-        //            [self addRefreshBtnWithCurrentView:self.view withAction:^(id obj) {
-        //                @strongify(self);
-        //                [self->_layoutCollectionView LSJ_triggerPullToRefresh];
-        //            }];
-        //        }
+        if (self.response.tags.count == 0) {
+            [self addRefreshBtnWithCurrentView:self.view withAction:^(id obj) {
+                @strongify(self);
+                [self->_layoutCollectionView PP_triggerPullToRefresh];
+            }];
+        }
     });
 }
 
 - (void)loadData {
-    _loadMoreTags = NO;
-    
-    [_layoutCollectionView reloadData];
-    [_layoutCollectionView PP_endPullToRefresh];
+    @weakify(self);
+    [self.hotModel fetchHotInfoWithCompletionHandler:^(BOOL success, id obj) {
+        @strongify(self);
+        if (success) {
+            [self removeCurrentRefreshBtn];
+            self.response = obj;
+            _loadMoreTags = NO;
+            [_layoutCollectionView reloadData];
+            [_layoutCollectionView PP_endPullToRefresh];
+        }
+        
+    }];
+
 }
 
 
@@ -92,18 +128,18 @@ typedef NS_ENUM(NSInteger ,PPHotSection) {
 #pragma mark - UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
-    return PPHotSectionContent;
+    return PPHotSectionCount;
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     if (section == PPHotSectionTag) {
-        if (_loadMoreTags) {
+        if (!_loadMoreTags) {
             return 6;
         }else {
-            return 12;
+            return self.response.tags.count;
         }
     } else if (section == PPHotSectionContent) {
-        return 4;
+        return self.response.hotSearch.count;
     }
     return 0;
 }
@@ -111,14 +147,27 @@ typedef NS_ENUM(NSInteger ,PPHotSection) {
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == PPHotSectionTag) {
         PPHotTagCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kPPHotTagCellReusableIdentifier forIndexPath:indexPath];;
-        cell.titleStr = @"神舟";
+        if (indexPath.item < self.response.tags.count) {
+            cell.titleStr = self.response.tags[indexPath.item];
+        }
         return cell;
     } else if (indexPath.section == PPHotSectionContent) {
         PPSexCell *normalCell = [collectionView dequeueReusableCellWithReuseIdentifier:kPPHotNormalCellReusableIdentifier forIndexPath:indexPath];
-        normalCell.imgUrlStr = @"http://www.1tong.com/uploads/wallpaper/anime/209-3-1920x1200.jpg";
-        normalCell.titleStr = @"神舟十一号载人飞船发射成功";
-        normalCell.playCount = 1234;
-        normalCell.commentCount = 2345;
+        if (indexPath.item < self.response.hotSearch.count) {
+            PPProgramModel *program = self.response.hotSearch[indexPath.item];
+            normalCell.imgUrlStr = program.coverImg;
+            normalCell.titleStr = program.title;
+            NSArray *countArr = [program.spare componentsSeparatedByString:@"|"];
+            if (countArr.count > 0) {
+                normalCell.playCount = [[countArr firstObject] integerValue];
+                normalCell.commentCount = [[countArr lastObject] integerValue];
+            }
+            NSArray *tagArr = [program.tag componentsSeparatedByString:@"|"];
+            if (tagArr.count > 0) {
+                normalCell.tagStr = [tagArr lastObject];
+                normalCell.tagHexStr = [tagArr firstObject];
+            }
+        }
         return normalCell;
     }
     return nil;
@@ -134,7 +183,7 @@ typedef NS_ENUM(NSInteger ,PPHotSection) {
         CGFloat width = (fullWidth - insets.left - insets.right - itemSpacing * 2) / 3;
         CGFloat height = width * 28 / 83;
         return CGSizeMake((long)width, height);
-    } else if (indexPath.section == PPHotSectionCount) {
+    } else if (indexPath.section == PPHotSectionContent) {
         CGFloat width = (fullWidth - insets.left - insets.right -  itemSpacing) / 2;
         CGFloat height = width * 0.6 + kWidth(88);
         return CGSizeMake(width, height);
@@ -174,17 +223,25 @@ typedef NS_ENUM(NSInteger ,PPHotSection) {
 - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath {
     if (kind == UICollectionElementKindSectionHeader) {
         if (indexPath.section < PPHotSectionCount) {
-            PPHotTagHeaderView *headerView = [collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:kPPHotTagHeaderViewReusableIdentifier forIndexPath:indexPath];
             if (indexPath.section == PPHotSectionTag) {
+                PPHotTagHeaderView *headerView = [collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:kPPHotTagHeaderViewReusableIdentifier forIndexPath:indexPath];
                 headerView.titleStr = @"热搜标签";
                 headerView.titleColorStr = @"#666666";
-                headerView.backgroundColor = [UIColor colorWithHexString:@"#ffffff"];
+                return headerView;
             } else if (indexPath.section == PPHotSectionContent) {
+                PPHotContentHeaderView *headerView = [collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:kPPHotContentHeaderViewReusableIdentifier forIndexPath:indexPath];
                 headerView.titleStr = @"精品推荐";
                 headerView.titleColorStr = @"#333333";
-                headerView.backgroundColor = [UIColor colorWithHexString:@"#efefef"];
+                @weakify(self);
+                headerView.isSelected = ^ {
+                    @strongify(self);
+                    self->_loadMoreTags = !self->_loadMoreTags;
+                    [self->_layoutCollectionView reloadSections:[NSIndexSet indexSetWithIndex:PPHotSectionTag]];
+                };
+                
+                return headerView;
             }
-            return headerView;
+            return nil;
         }
     } else if (kind == PPElementKindSectionBackground) {
         UICollectionReusableView *sectionBgView = [collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:kSectionBackgroundReusableIdentifier forIndexPath:indexPath];
@@ -197,13 +254,14 @@ typedef NS_ENUM(NSInteger ,PPHotSection) {
         }
         return sectionBgView;
     }
-    
     return nil;
 };
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section {
-    if (section == PPHotSectionTag || section == PPHotSectionContent) {
+    if (section == PPHotSectionTag) {
         return CGSizeMake(kScreenWidth, kWidth(80));
+    } else if (section == PPHotSectionContent) {
+        return CGSizeMake(kScreenWidth, kWidth(180));
     } else {
         return CGSizeZero;
     }
@@ -215,10 +273,64 @@ typedef NS_ENUM(NSInteger ,PPHotSection) {
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == PPHotSectionTag) {
-        [_layoutCollectionView reloadSections:[NSIndexSet indexSetWithIndex:PPHotSectionContent]];
+        if (indexPath.item < self.response.tags.count) {
+            [self searchTagWithStr:self.response.tags[indexPath.item]];
+        }
     } else if (indexPath.section == PPHotSectionContent) {
-        return;
+        if (indexPath.item < self.response.hotSearch.count) {
+            PPProgramModel *program = self.response.hotSearch[indexPath.item];
+            
+        }
     }
+}
+
+- (void)searchTagWithStr:(NSString *)tagStr {
+    @weakify(self);
+    [self.searchModel fetchSearchInfoWithTagStr:tagStr CompletionHandler:^(BOOL success, id obj) {
+        @strongify(self);
+        if (success) {
+            
+        }
+    }];
+}
+
+- (void)showAlert {
+    [UIAlertView bk_showAlertViewWithTitle:@"很抱歉!" message:@"此区域只针对视频VIP用户开放" cancelButtonTitle:@"再考虑看看" otherButtonTitles:@[@"立即开通"] handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
+        if (buttonIndex == 1) {
+//            [self popPayViewWithPayTyep:LTPayPointVideo IsPaid:[LTUtil isVideoVip]];
+        }
+    }];
+}
+
+#pragma mark UISearchBarDelegate
+
+- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
+    if ([PPUtil currentVipLevel] == PPVipLevelNone) {
+        searchBar.text = @"";
+        [searchBar resignFirstResponder];
+        [self showAlert];
+        return ;
+    }
+    
+    if (searchBar.text.length == 0) {
+        [[PPHudManager manager] showHudWithText:@"请输入关键字"];
+        return ;
+    }
+    
+    [self searchTagWithStr:searchBar.text];
+    
+}
+
+- (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar {
+    [searchBar setShowsCancelButton:YES animated:YES];
+}
+
+- (void)searchBarTextDidEndEditing:(UISearchBar *)searchBar {
+    [searchBar setShowsCancelButton:NO animated:YES];
+}
+
+- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
+    [searchBar resignFirstResponder];
 }
 
 @end

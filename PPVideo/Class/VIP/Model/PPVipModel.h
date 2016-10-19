@@ -7,11 +7,7 @@
 //
 
 #import <QBEncryptedURLRequest.h>
-
-
-@interface PPVipReponse : QBURLResponse
-
-@end
+#import "PPColumnModel.h"
 
 @interface PPVipModel : QBEncryptedURLRequest
 

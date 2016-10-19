@@ -13,4 +13,7 @@
 - (instancetype)initWithTitle:(NSString *)title;
 
 - (instancetype)initWithTitle:(NSString *)title vipLevel:(PPVipLevel)vipLevel;
+
+- (void)addRefreshBtnWithCurrentView:(UIView *)view withAction:(QBAction) action;
+- (void)removeCurrentRefreshBtn;
 @end

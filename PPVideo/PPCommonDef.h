@@ -35,7 +35,8 @@ typedef NS_ENUM(NSInteger ,PPVipLevel) {
 
 #define kPaidNotificationName             @"PPVideoPaidNotification"
 
-
+#define kTimeFormatShort                  @"yyyyMMdd"
+#define KTimeFormatLong                   @"yyyyMMddHHmmss"
 #define kWidth(width)                     kScreenWidth  * width  / 750
 #define kHeight(height)                   kScreenHeight * height / 1334.
 

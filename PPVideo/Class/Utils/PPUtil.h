@@ -31,7 +31,10 @@ extern NSString *const kPaymentInfoKeyName;
 + (PPVipLevel)currentVipLevel;
 
 + (NSDate *)dateFromString:(NSString *)dateString;
-+ (NSString *)currentTimeString;
++ (NSString *)currentTimeStringWithFormat:(NSString *)timeFormat;
 + (NSString *)UTF8DateStringFromString:(NSString *)dateString;
+
++ (void)checkAppInstalledWithBundleId:(NSString *)bundleId completionHandler:(void (^)(BOOL))handler;
+
 
 @end
