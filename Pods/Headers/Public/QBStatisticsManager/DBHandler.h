@@ -1,0 +1,1 @@
+../../../QBStatisticsManager/QBStatisticsManager/Classes/DBHandler.h

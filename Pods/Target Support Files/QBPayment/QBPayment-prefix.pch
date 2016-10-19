@@ -1,0 +1,5 @@
+#ifdef __OBJC__
+#import <UIKit/UIKit.h>
+#endif
+
+#define QBPAYMENT_IAPPPAY_ENABLED

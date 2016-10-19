@@ -1,6 +1,6 @@
 source 'https://github.com/CocoaPods/Specs.git'
 source 'https://git.coding.net/seanyue/QBPodRepo.git'
-
+source 'https://git.coding.net/Liang-_-/QBStatisticsRepo.git'
 platform :ios, '7.0'
 
 target 'PPVideo' do
@@ -12,6 +12,6 @@ pod 'BlocksKit', '~> 2.2.5'
 pod 'MBProgressHUD', '~> 0.9.2'
 pod 'SFHFKeychainUtils', '~> 0.0.1'
 pod 'QBPayment', '~> 0.0.24' ,:subspecs => ['IappPay']
-#pod 'QBStatisticsManager'
+pod 'QBStatisticsManager', '~> 0.0.2'
 
 end
