@@ -10,4 +10,6 @@
 
 @interface PPDetailViewController : PPLayoutViewController
 
+- (instancetype)initWithBaseModelInfo:(QBBaseModel *)baseModel ColumnId:(NSInteger)columnId programInfo:(PPProgramModel *)programModel;
+
 @end

@@ -21,6 +21,7 @@
 #import "QBNetworkInfo.h"
 #import <QBPaymentDefines.h>
 #import <QBDefines.h>
+#import <QBStatsManager.h>
 
 #import "PPExtensions.h"
 #import "PPConfig.h"
@@ -28,5 +29,6 @@
 #import "PPConfiguration.h"
 #import "PPUtil.h"
 #import "PPHudManager.h"
+#import "PPColumnModel.h"
 
 #endif /* PPPrefixHeader_pch */

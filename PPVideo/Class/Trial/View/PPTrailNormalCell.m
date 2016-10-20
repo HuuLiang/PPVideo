@@ -81,7 +81,8 @@
             [_playImgV mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.left.equalTo(_shadewImgV).offset(kWidth(14));
                 make.bottom.equalTo(_shadewImgV.mas_bottom).offset(-kWidth(8));
-                make.size.mas_equalTo(CGSizeMake(playImg.size.width, playImg.size.height));
+//                make.size.mas_equalTo(CGSizeMake(playImg.size.width, playImg.size.height));
+                make.size.mas_equalTo(CGSizeMake(kWidth(22), kWidth(22)));
             }];
             
             [_playLabel mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -93,7 +94,8 @@
             [_commentImgV mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.centerY.equalTo(_playLabel);
                 make.left.equalTo(_playLabel.mas_right).offset(kWidth(20));
-                make.size.mas_equalTo(CGSizeMake(commentImg.size.width, commentImg.size.height));
+//                make.size.mas_equalTo(CGSizeMake(commentImg.size.width, commentImg.size.height));
+                make.size.mas_equalTo(CGSizeMake(kWidth(22), kWidth(20)));
             }];
             
             [_commentLabel mas_makeConstraints:^(MASConstraintMaker *make) {

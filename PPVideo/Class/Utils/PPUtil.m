@@ -10,6 +10,7 @@
 #import <SFHFKeychainUtils.h>
 #import <sys/sysctl.h>
 #import "JQKApplicationManager.h"
+#import "PPBaseViewController.h"
 
 static NSString *const kRegisterKeyName         = @"PP_register_keyname";
 static NSString *const kUserAccessUsername      = @"PP_user_access_username";
@@ -171,10 +172,45 @@ static NSString *const kVipUserKeyName          = @"PPVideo_Vip_UserKey";
     NSDateFormatter *dataFormatterB = [[NSDateFormatter alloc] init];
     [dataFormatterB setDateFormat:@"yyyy年MM月dd日"];
     
-    QBLog(@"%@",[dateFormatterA dateFromString:dateString]);
-    QBLog(@"%@",[dataFormatterB stringFromDate:[dateFormatterA dateFromString:dateString]]);
+//    QBLog(@"%@",[dateFormatterA dateFromString:dateString]);
+//    QBLog(@"%@",[dataFormatterB stringFromDate:[dateFormatterA dateFromString:dateString]]);
     
     return [dataFormatterB stringFromDate:[dateFormatterA dateFromString:dateString]];
+}
+
++ (NSString *)compareCurrentTime:(NSString *)compareDateString
+{
+    NSDate *compareDate = [self dateFromString:compareDateString];
+    
+    NSTimeInterval  timeInterval = [compareDate timeIntervalSinceNow];
+    
+    timeInterval = -timeInterval;
+    long temp = 0;
+    NSString *result;
+    if (timeInterval < 60) {
+        result = [NSString stringWithFormat:@"刚刚"];
+    }
+    else if((temp = timeInterval/60) <60){
+        result = [NSString stringWithFormat:@"%ld分前",temp];
+    }
+    
+    else if((temp = temp/60) <24){
+        result = [NSString stringWithFormat:@"%ld小前",temp];
+    }
+    
+    else if((temp = temp/24) <30){
+        result = [NSString stringWithFormat:@"%ld天前",temp];
+    }
+    
+    else if((temp = temp/30) <12){
+        result = [NSString stringWithFormat:@"%ld月前",temp];
+    }
+    else{
+        temp = temp/12;
+        result = [NSString stringWithFormat:@"%ld年前",temp];
+    }
+    
+    return  result;
 }
 
 #pragma mark - app检查
@@ -190,6 +226,73 @@ static NSString *const kVipUserKeyName          = @"PPVideo_Vip_UserKey";
             }
         });
     });
+}
+
+#pragma makr - 订单检查
++ (NSArray<QBPaymentInfo *> *)allPaymentInfos {
+    return [QBPaymentInfo allPaymentInfos];
+}
+
++ (NSArray<QBPaymentInfo *> *)payingPaymentInfos {
+    return [self.allPaymentInfos bk_select:^BOOL(id obj) {
+        QBPaymentInfo *paymentInfo = obj;
+        return paymentInfo.paymentStatus == QBPayStatusPaying;
+    }];
+}
+
++ (NSArray<QBPaymentInfo *> *)paidNotProcessedPaymentInfos {
+    return [self.allPaymentInfos bk_select:^BOOL(id obj) {
+        QBPaymentInfo *paymentInfo = obj;
+        return paymentInfo.paymentStatus == QBPayStatusNotProcessed;
+    }];
+}
+
++ (NSArray<QBPaymentInfo *> *)allSuccessfulPaymentInfos {
+    return [self.allPaymentInfos bk_select:^BOOL(id obj) {
+        QBPaymentInfo *paymentInfo = obj;
+        if (paymentInfo.paymentResult == QBPayResultSuccess) {
+            return YES;
+        }
+        return NO;
+    }];
+}
+
++ (NSArray<QBPaymentInfo *> *)allUnsuccessfulPaymentInfos {
+    return [self.allPaymentInfos bk_select:^BOOL(id obj) {
+        QBPaymentInfo *paymentInfo = obj;
+        if (paymentInfo.paymentResult != QBPayResultSuccess) {
+            return YES;
+        }
+        return NO;
+    }];
+}
+
+#pragma mark - ...
++ (NSString *)paymentReservedData {
+    return [NSString stringWithFormat:@"%@$%@", PP_REST_APPID, PP_CHANNEL_NO];
+}
+
++ (NSUInteger)currentTabPageIndex {
+    UIViewController *rootVC = [UIApplication sharedApplication].keyWindow.rootViewController;
+    if ([rootVC isKindOfClass:[UITabBarController class]]) {
+        UITabBarController *tabVC = (UITabBarController *)rootVC;
+        return tabVC.selectedIndex;
+    }
+    return 0;
+}
+
++ (NSUInteger)currentSubTabPageIndex {
+    UIViewController *rootVC = [UIApplication sharedApplication].keyWindow.rootViewController;
+    if ([rootVC isKindOfClass:[UITabBarController class]]) {
+        UITabBarController *tabVC = (UITabBarController *)rootVC;
+        if ([tabVC.selectedViewController isKindOfClass:[UINavigationController class]]) {
+            UINavigationController *navVC = (UINavigationController *)tabVC.selectedViewController;
+            if ([navVC.visibleViewController isKindOfClass:[PPBaseViewController class]]) {
+                return NSNotFound;
+            }
+        }
+    }
+    return NSNotFound;
 }
 
 @end

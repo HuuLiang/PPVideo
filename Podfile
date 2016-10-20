@@ -12,6 +12,6 @@ pod 'BlocksKit', '~> 2.2.5'
 pod 'MBProgressHUD', '~> 0.9.2'
 pod 'SFHFKeychainUtils', '~> 0.0.1'
 pod 'QBPayment', '~> 0.0.24' ,:subspecs => ['IappPay']
-pod 'QBStatisticsManager', '~> 0.0.2'
+pod 'QBStatisticsManager', '~> 0.0.3'
 
 end

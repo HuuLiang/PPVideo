@@ -17,6 +17,6 @@
 #import "UITableView+Separator.h"
 #import "UIScrollView+Refresh.h"
 #import "UIView+Loading.h"
-
+#import "NSString+StringHeight.h"
 
 #endif /* PPExtensions_h */

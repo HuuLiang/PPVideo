@@ -64,7 +64,11 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
     _bannerView.backgroundColor = [UIColor colorWithHexString:@"#000000"];
     
     [_bannerView aspect_hookSelector:@selector(scrollViewDidEndDragging:willDecelerate:) withOptions:AspectPositionAfter usingBlock:^(id<AspectInfo> aspectInfo, UIScrollView *scrollView, BOOL decelerate){
-//        [[LSJStatsManager sharedManager] statsTabIndex:self.tabBarController.selectedIndex subTabIndex:1 forBanner:@(self.bannerColoumnModel.columnId) withSlideCount:1];
+        PPColumnModel *column = [self.dataSource firstObject];
+        [[QBStatsManager sharedManager] statsTabIndex:self.tabBarController.selectedIndex
+                                          subTabIndex:NSNotFound
+                                            forBanner:[NSNumber numberWithInteger:column.columnId]
+                                       withSlideCount:1];
     } error:nil];
 
     
@@ -294,16 +298,19 @@ shouldDisplaySectionBackgroundInSection:(NSUInteger)section {
         if (indexPath.section != PPTrailSectionAd) {
             if (indexPath.item < column.programList.count) {
                 PPProgramModel *program = column.programList[indexPath.item];
-                
-                
+                [self pushDetailViewControllerWithColumnId:column.columnId RealColumnId:column.realColumnId columnType:column.type programLocation:indexPath.item andProgramInfo:program];
             }
         } else {
             if ([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:column.spreadUrl]]) {
+                QBBaseModel *baseModel = [QBBaseModel getBaseModelWithRealColoumId:[NSNumber numberWithInteger:column.realColumnId]
+                                                                       channelType:[NSNumber numberWithInteger:column.type]
+                                                                         programId:nil
+                                                                       programType:nil
+                                                                   programLocation:nil];
+                [[QBStatsManager sharedManager] statsCPCWithBaseModel:baseModel inTabIndex:self.tabBarController.selectedIndex];
                 [[UIApplication sharedApplication] openURL:[NSURL URLWithString:column.spreadUrl]];
             }
         }
-        
-        
     }
 }
 
@@ -311,7 +318,12 @@ shouldDisplaySectionBackgroundInSection:(NSUInteger)section {
     PPColumnModel *column = [self.dataSource firstObject];
     if (index < column.programList.count) {
         PPProgramModel *program = column.programList[index];
+        [self pushDetailViewControllerWithColumnId:column.columnId RealColumnId:column.realColumnId columnType:column.type programLocation:index andProgramInfo:program];
     }
+}
+
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
+    [[QBStatsManager sharedManager] statsTabIndex:self.tabBarController.selectedIndex subTabIndex:NSNotFound forSlideCount:1];
 }
 
 @end

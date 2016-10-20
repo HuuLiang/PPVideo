@@ -157,5 +157,19 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
     return CGSizeMake(kScreenWidth, section == 5 ? kWidth(70) : kWidth(60));
 }
 
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.section < self.dataSource.count) {
+        PPColumnModel *column = self.dataSource[indexPath.section];
+        if (indexPath.item < column.programList.count) {
+            PPProgramModel *program = column.programList[indexPath.item];
+            [self pushDetailViewControllerWithColumnId:column.columnId RealColumnId:column.realColumnId columnType:column.type programLocation:indexPath.item andProgramInfo:program];
+        }
+    }
+}
+
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
+    [[QBStatsManager sharedManager] statsTabIndex:self.tabBarController.selectedIndex subTabIndex:NSNotFound forSlideCount:1];
+}
+
 
 @end

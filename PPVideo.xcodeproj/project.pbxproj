@@ -7,6 +7,25 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		EC20D0041DB86FBD0089D8BF /* PPSearchResultViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EC20D0031DB86FBD0089D8BF /* PPSearchResultViewController.m */; };
+		EC20D0071DB8715A0089D8BF /* PPSearchCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EC20D0061DB8715A0089D8BF /* PPSearchCell.m */; };
+		EC20D00A1DB876B70089D8BF /* PPDetailHeaderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EC20D0091DB876B70089D8BF /* PPDetailHeaderCell.m */; };
+		EC20D00D1DB8770D0089D8BF /* PPDetailModel.m in Sources */ = {isa = PBXBuildFile; fileRef = EC20D00C1DB8770D0089D8BF /* PPDetailModel.m */; };
+		EC20D0101DB895E80089D8BF /* PPDetailFuncCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EC20D00F1DB895E70089D8BF /* PPDetailFuncCell.m */; };
+		EC20D0161DB89AA70089D8BF /* JKDBHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = EC20D0131DB89AA70089D8BF /* JKDBHelper.m */; };
+		EC20D0171DB89AA70089D8BF /* JKDBModel.m in Sources */ = {isa = PBXBuildFile; fileRef = EC20D0151DB89AA70089D8BF /* JKDBModel.m */; };
+		EC20D01A1DB89B2F0089D8BF /* PPCommentModel.m in Sources */ = {isa = PBXBuildFile; fileRef = EC20D0191DB89B2F0089D8BF /* PPCommentModel.m */; };
+		EC20D01D1DB8A4AE0089D8BF /* PPDetailPhotoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EC20D01C1DB8A4AE0089D8BF /* PPDetailPhotoCell.m */; };
+		EC20D0201DB8A9200089D8BF /* PPDetailCommentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EC20D01F1DB8A9200089D8BF /* PPDetailCommentCell.m */; };
+		EC20D0241DB8AC220089D8BF /* NSString+StringHeight.m in Sources */ = {isa = PBXBuildFile; fileRef = EC20D0231DB8AC220089D8BF /* NSString+StringHeight.m */; };
+		EC20D0271DB8BE170089D8BF /* PPDetailMoreCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EC20D0261DB8BE170089D8BF /* PPDetailMoreCell.m */; };
+		EC20D02A1DB8BFD60089D8BF /* PPDetailReportView.m in Sources */ = {isa = PBXBuildFile; fileRef = EC20D0291DB8BFD60089D8BF /* PPDetailReportView.m */; };
+		EC20D02D1DB8D7340089D8BF /* PPMineActVC.m in Sources */ = {isa = PBXBuildFile; fileRef = EC20D02C1DB8D7340089D8BF /* PPMineActVC.m */; };
+		EC20D0301DB8D7EF0089D8BF /* PPMineVipVC.m in Sources */ = {isa = PBXBuildFile; fileRef = EC20D02F1DB8D7EF0089D8BF /* PPMineVipVC.m */; };
+		EC20D0361DB8DDA30089D8BF /* PPAutoActManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EC20D0351DB8DDA30089D8BF /* PPAutoActManager.m */; };
+		EC20D0391DB8E0830089D8BF /* PPPaymentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EC20D0381DB8E0830089D8BF /* PPPaymentViewController.m */; };
+		EC20D03C1DB8E1A40089D8BF /* PPPaymentPopView.m in Sources */ = {isa = PBXBuildFile; fileRef = EC20D03B1DB8E1A40089D8BF /* PPPaymentPopView.m */; };
+		EC20D03F1DB8EA070089D8BF /* PPMineVipHeaderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EC20D03E1DB8EA070089D8BF /* PPMineVipHeaderCell.m */; };
 		EC35F1BF1DB5C40800523F6F /* PPHotTagHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = EC35F1BE1DB5C40800523F6F /* PPHotTagHeaderView.m */; };
 		EC35F1C21DB5C41F00523F6F /* PPHotContentHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = EC35F1C11DB5C41F00523F6F /* PPHotContentHeaderView.m */; };
 		EC35F1C51DB5C49000523F6F /* PPHotTagCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EC35F1C41DB5C49000523F6F /* PPHotTagCell.m */; };
@@ -70,6 +89,44 @@
 /* Begin PBXFileReference section */
 		023420A73BCDB4EDC186B735 /* libPods-PPVideo.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-PPVideo.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D1AEB812654C461832824D5D /* Pods-PPVideo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PPVideo.release.xcconfig"; path = "Pods/Target Support Files/Pods-PPVideo/Pods-PPVideo.release.xcconfig"; sourceTree = "<group>"; };
+		EC20D0021DB86FBD0089D8BF /* PPSearchResultViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPSearchResultViewController.h; sourceTree = "<group>"; };
+		EC20D0031DB86FBD0089D8BF /* PPSearchResultViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPSearchResultViewController.m; sourceTree = "<group>"; };
+		EC20D0051DB8715A0089D8BF /* PPSearchCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPSearchCell.h; sourceTree = "<group>"; };
+		EC20D0061DB8715A0089D8BF /* PPSearchCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPSearchCell.m; sourceTree = "<group>"; };
+		EC20D0081DB876B70089D8BF /* PPDetailHeaderCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPDetailHeaderCell.h; sourceTree = "<group>"; };
+		EC20D0091DB876B70089D8BF /* PPDetailHeaderCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPDetailHeaderCell.m; sourceTree = "<group>"; };
+		EC20D00B1DB8770D0089D8BF /* PPDetailModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPDetailModel.h; sourceTree = "<group>"; };
+		EC20D00C1DB8770D0089D8BF /* PPDetailModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPDetailModel.m; sourceTree = "<group>"; };
+		EC20D00E1DB895E70089D8BF /* PPDetailFuncCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPDetailFuncCell.h; sourceTree = "<group>"; };
+		EC20D00F1DB895E70089D8BF /* PPDetailFuncCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPDetailFuncCell.m; sourceTree = "<group>"; };
+		EC20D0121DB89AA70089D8BF /* JKDBHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JKDBHelper.h; sourceTree = "<group>"; };
+		EC20D0131DB89AA70089D8BF /* JKDBHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JKDBHelper.m; sourceTree = "<group>"; };
+		EC20D0141DB89AA70089D8BF /* JKDBModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JKDBModel.h; sourceTree = "<group>"; };
+		EC20D0151DB89AA70089D8BF /* JKDBModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JKDBModel.m; sourceTree = "<group>"; };
+		EC20D0181DB89B2F0089D8BF /* PPCommentModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPCommentModel.h; sourceTree = "<group>"; };
+		EC20D0191DB89B2F0089D8BF /* PPCommentModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPCommentModel.m; sourceTree = "<group>"; };
+		EC20D01B1DB8A4AE0089D8BF /* PPDetailPhotoCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPDetailPhotoCell.h; sourceTree = "<group>"; };
+		EC20D01C1DB8A4AE0089D8BF /* PPDetailPhotoCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPDetailPhotoCell.m; sourceTree = "<group>"; };
+		EC20D01E1DB8A9200089D8BF /* PPDetailCommentCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPDetailCommentCell.h; sourceTree = "<group>"; };
+		EC20D01F1DB8A9200089D8BF /* PPDetailCommentCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPDetailCommentCell.m; sourceTree = "<group>"; };
+		EC20D0221DB8AC220089D8BF /* NSString+StringHeight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+StringHeight.h"; sourceTree = "<group>"; };
+		EC20D0231DB8AC220089D8BF /* NSString+StringHeight.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+StringHeight.m"; sourceTree = "<group>"; };
+		EC20D0251DB8BE170089D8BF /* PPDetailMoreCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPDetailMoreCell.h; sourceTree = "<group>"; };
+		EC20D0261DB8BE170089D8BF /* PPDetailMoreCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPDetailMoreCell.m; sourceTree = "<group>"; };
+		EC20D0281DB8BFD60089D8BF /* PPDetailReportView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPDetailReportView.h; sourceTree = "<group>"; };
+		EC20D0291DB8BFD60089D8BF /* PPDetailReportView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPDetailReportView.m; sourceTree = "<group>"; };
+		EC20D02B1DB8D7340089D8BF /* PPMineActVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPMineActVC.h; sourceTree = "<group>"; };
+		EC20D02C1DB8D7340089D8BF /* PPMineActVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPMineActVC.m; sourceTree = "<group>"; };
+		EC20D02E1DB8D7EF0089D8BF /* PPMineVipVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPMineVipVC.h; sourceTree = "<group>"; };
+		EC20D02F1DB8D7EF0089D8BF /* PPMineVipVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPMineVipVC.m; sourceTree = "<group>"; };
+		EC20D0341DB8DDA30089D8BF /* PPAutoActManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPAutoActManager.h; sourceTree = "<group>"; };
+		EC20D0351DB8DDA30089D8BF /* PPAutoActManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPAutoActManager.m; sourceTree = "<group>"; };
+		EC20D0371DB8E0830089D8BF /* PPPaymentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPPaymentViewController.h; sourceTree = "<group>"; };
+		EC20D0381DB8E0830089D8BF /* PPPaymentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPPaymentViewController.m; sourceTree = "<group>"; };
+		EC20D03A1DB8E1A40089D8BF /* PPPaymentPopView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPPaymentPopView.h; sourceTree = "<group>"; };
+		EC20D03B1DB8E1A40089D8BF /* PPPaymentPopView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPPaymentPopView.m; sourceTree = "<group>"; };
+		EC20D03D1DB8EA070089D8BF /* PPMineVipHeaderCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPMineVipHeaderCell.h; sourceTree = "<group>"; };
+		EC20D03E1DB8EA070089D8BF /* PPMineVipHeaderCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPMineVipHeaderCell.m; sourceTree = "<group>"; };
 		EC35F1BD1DB5C40800523F6F /* PPHotTagHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPHotTagHeaderView.h; sourceTree = "<group>"; };
 		EC35F1BE1DB5C40800523F6F /* PPHotTagHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPHotTagHeaderView.m; sourceTree = "<group>"; };
 		EC35F1C01DB5C41F00523F6F /* PPHotContentHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPHotContentHeaderView.h; sourceTree = "<group>"; };
@@ -217,6 +274,17 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		EC20D0111DB89AA70089D8BF /* DBModel */ = {
+			isa = PBXGroup;
+			children = (
+				EC20D0121DB89AA70089D8BF /* JKDBHelper.h */,
+				EC20D0131DB89AA70089D8BF /* JKDBHelper.m */,
+				EC20D0141DB89AA70089D8BF /* JKDBModel.h */,
+				EC20D0151DB89AA70089D8BF /* JKDBModel.m */,
+			);
+			path = DBModel;
+			sourceTree = "<group>";
+		};
 		EC35F1CC1DB6415900523F6F /* Detail */ = {
 			isa = PBXGroup;
 			children = (
@@ -239,6 +307,8 @@
 		EC35F1CE1DB6415900523F6F /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				EC20D00B1DB8770D0089D8BF /* PPDetailModel.h */,
+				EC20D00C1DB8770D0089D8BF /* PPDetailModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -246,6 +316,18 @@
 		EC35F1CF1DB6415900523F6F /* View */ = {
 			isa = PBXGroup;
 			children = (
+				EC20D0081DB876B70089D8BF /* PPDetailHeaderCell.h */,
+				EC20D0091DB876B70089D8BF /* PPDetailHeaderCell.m */,
+				EC20D00E1DB895E70089D8BF /* PPDetailFuncCell.h */,
+				EC20D00F1DB895E70089D8BF /* PPDetailFuncCell.m */,
+				EC20D01B1DB8A4AE0089D8BF /* PPDetailPhotoCell.h */,
+				EC20D01C1DB8A4AE0089D8BF /* PPDetailPhotoCell.m */,
+				EC20D01E1DB8A9200089D8BF /* PPDetailCommentCell.h */,
+				EC20D01F1DB8A9200089D8BF /* PPDetailCommentCell.m */,
+				EC20D0251DB8BE170089D8BF /* PPDetailMoreCell.h */,
+				EC20D0261DB8BE170089D8BF /* PPDetailMoreCell.m */,
+				EC20D0281DB8BFD60089D8BF /* PPDetailReportView.h */,
+				EC20D0291DB8BFD60089D8BF /* PPDetailReportView.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -344,6 +426,8 @@
 			children = (
 				ECC097A01DB2096D00875D56 /* PPBaseViewController.h */,
 				ECC097A11DB2096D00875D56 /* PPBaseViewController.m */,
+				EC20D0371DB8E0830089D8BF /* PPPaymentViewController.h */,
+				EC20D0381DB8E0830089D8BF /* PPPaymentViewController.m */,
 				ECC097DD1DB240E200875D56 /* PPLayoutViewController.h */,
 				ECC097DE1DB240E200875D56 /* PPLayoutViewController.m */,
 				ECC097871DB1E21E00875D56 /* PPTabBarController.h */,
@@ -359,6 +443,8 @@
 				ECB8F0D51DB743A20088A118 /* PPColumnModel.m */,
 				ECB8F0D71DB743B50088A118 /* PPProgramModel.h */,
 				ECB8F0D81DB743B50088A118 /* PPProgramModel.m */,
+				EC20D0181DB89B2F0089D8BF /* PPCommentModel.h */,
+				EC20D0191DB89B2F0089D8BF /* PPCommentModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -366,6 +452,8 @@
 		ECC0976F1DB1D97A00875D56 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				EC20D03A1DB8E1A40089D8BF /* PPPaymentPopView.h */,
+				EC20D03B1DB8E1A40089D8BF /* PPPaymentPopView.m */,
 				EC4C6A6E1DB470550009771A /* PPGraphicButton.h */,
 				EC4C6A6F1DB470550009771A /* PPGraphicButton.m */,
 				EC35F1C61DB62D8B00523F6F /* PPTableViewCell.h */,
@@ -392,6 +480,7 @@
 		ECC097741DB1D97A00875D56 /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
+				EC20D0111DB89AA70089D8BF /* DBModel */,
 				ECC097C61DB23ECD00875D56 /* SDCycleScrollView */,
 			);
 			path = Vendor;
@@ -409,6 +498,8 @@
 				ECC097E11DB2411500875D56 /* UITableView+Separator.m */,
 				ECB8F0CE1DB71F660088A118 /* NSObject+PropertyAccessInspecting.h */,
 				ECB8F0CF1DB71F660088A118 /* NSObject+PropertyAccessInspecting.m */,
+				EC20D0221DB8AC220089D8BF /* NSString+StringHeight.h */,
+				EC20D0231DB8AC220089D8BF /* NSString+StringHeight.m */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -447,6 +538,8 @@
 			children = (
 				ECC097C01DB20D0300875D56 /* PPHotViewController.h */,
 				ECC097C11DB20D0300875D56 /* PPHotViewController.m */,
+				EC20D0021DB86FBD0089D8BF /* PPSearchResultViewController.h */,
+				EC20D0031DB86FBD0089D8BF /* PPSearchResultViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -471,6 +564,8 @@
 				EC35F1C11DB5C41F00523F6F /* PPHotContentHeaderView.m */,
 				EC35F1C31DB5C49000523F6F /* PPHotTagCell.h */,
 				EC35F1C41DB5C49000523F6F /* PPHotTagCell.m */,
+				EC20D0051DB8715A0089D8BF /* PPSearchCell.h */,
+				EC20D0061DB8715A0089D8BF /* PPSearchCell.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -490,6 +585,10 @@
 			children = (
 				ECC097C31DB20D1300875D56 /* PPMineViewController.h */,
 				ECC097C41DB20D1300875D56 /* PPMineViewController.m */,
+				EC20D02B1DB8D7340089D8BF /* PPMineActVC.h */,
+				EC20D02C1DB8D7340089D8BF /* PPMineActVC.m */,
+				EC20D02E1DB8D7EF0089D8BF /* PPMineVipVC.h */,
+				EC20D02F1DB8D7EF0089D8BF /* PPMineVipVC.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -499,6 +598,8 @@
 			children = (
 				ECB8F0851DB71DD10088A118 /* PPAppModel.h */,
 				ECB8F0861DB71DD10088A118 /* PPAppModel.m */,
+				EC20D0341DB8DDA30089D8BF /* PPAutoActManager.h */,
+				EC20D0351DB8DDA30089D8BF /* PPAutoActManager.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -510,6 +611,8 @@
 				EC35F1CA1DB6405F00523F6F /* PPMineHeaderCell.m */,
 				ECB8F0D11DB720FA0088A118 /* PPMineAppCell.h */,
 				ECB8F0D21DB720FA0088A118 /* PPMineAppCell.m */,
+				EC20D03D1DB8EA070089D8BF /* PPMineVipHeaderCell.h */,
+				EC20D03E1DB8EA070089D8BF /* PPMineVipHeaderCell.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -785,7 +888,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				ECB8F0D91DB743B50088A118 /* PPProgramModel.m in Sources */,
+				EC20D0041DB86FBD0089D8BF /* PPSearchResultViewController.m in Sources */,
+				EC20D0171DB89AA70089D8BF /* JKDBModel.m in Sources */,
 				ECC097991DB2059900875D56 /* PPUserAccessModel.m in Sources */,
+				EC20D00A1DB876B70089D8BF /* PPDetailHeaderCell.m in Sources */,
+				EC20D0241DB8AC220089D8BF /* NSString+StringHeight.m in Sources */,
 				EC4C6A7F1DB4BE2C0009771A /* PPSexFooterView.m in Sources */,
 				ECC097B91DB20CD600875D56 /* PPTrialViewController.m in Sources */,
 				ECC097DA1DB23ECD00875D56 /* SDCollectionViewCell.m in Sources */,
@@ -793,37 +900,50 @@
 				EC35F1CB1DB6405F00523F6F /* PPMineHeaderCell.m in Sources */,
 				ECC0978C1DB1F1F400875D56 /* PPConfiguration.m in Sources */,
 				ECC097581DB1C8AA00875D56 /* AppDelegate.m in Sources */,
+				EC20D02A1DB8BFD60089D8BF /* PPDetailReportView.m in Sources */,
+				EC20D01A1DB89B2F0089D8BF /* PPCommentModel.m in Sources */,
 				EC4C6A671DB464AA0009771A /* PPTrailFreeCell.m in Sources */,
 				EC35F1BF1DB5C40800523F6F /* PPHotTagHeaderView.m in Sources */,
+				EC20D03F1DB8EA070089D8BF /* PPMineVipHeaderCell.m in Sources */,
+				EC20D00D1DB8770D0089D8BF /* PPDetailModel.m in Sources */,
 				ECC097BC1DB20CE700875D56 /* PPVipViewController.m in Sources */,
 				ECC097E21DB2411500875D56 /* UITableView+Separator.m in Sources */,
 				ECC097DB1DB23ECD00875D56 /* SDCycleScrollView.m in Sources */,
 				EC4C6A701DB470550009771A /* PPGraphicButton.m in Sources */,
+				EC20D0201DB8A9200089D8BF /* PPDetailCommentCell.m in Sources */,
 				EC4C6A761DB473570009771A /* PPTrailAdCell.m in Sources */,
 				EC4C6A6D1DB46CE80009771A /* PPTrailHeaderView.m in Sources */,
 				EC4C6A6A1DB467F00009771A /* PPTrailModel.m in Sources */,
 				EC35F1D21DB6417500523F6F /* PPDetailViewController.m in Sources */,
 				ECB8F0DF1DB768D90088A118 /* PPHotModel.m in Sources */,
 				ECC097C21DB20D0300875D56 /* PPHotViewController.m in Sources */,
+				EC20D02D1DB8D7340089D8BF /* PPMineActVC.m in Sources */,
 				ECC0979F1DB2065300875D56 /* PPSystemConfigModel.m in Sources */,
 				EC4C6A7C1DB4BE100009771A /* PPSexCell.m in Sources */,
 				EC35F1C51DB5C49000523F6F /* PPHotTagCell.m in Sources */,
+				EC20D0071DB8715A0089D8BF /* PPSearchCell.m in Sources */,
 				ECC097D71DB23ECD00875D56 /* TAAnimatedDotView.m in Sources */,
 				ECC097D61DB23ECD00875D56 /* TAAbstractDotView.m in Sources */,
 				EC4C6A791DB4BA2D0009771A /* PPVipModel.m in Sources */,
 				ECB8F0D61DB743A20088A118 /* PPColumnModel.m in Sources */,
 				ECB8F0D31DB720FA0088A118 /* PPMineAppCell.m in Sources */,
+				EC20D0391DB8E0830089D8BF /* PPPaymentViewController.m in Sources */,
 				ECB8F0E21DB771B30088A118 /* PPHudManager.m in Sources */,
 				EC35F1C81DB62D8B00523F6F /* PPTableViewCell.m in Sources */,
 				ECC097D81DB23ECD00875D56 /* TADotView.m in Sources */,
+				EC20D0161DB89AA70089D8BF /* JKDBHelper.m in Sources */,
+				EC20D03C1DB8E1A40089D8BF /* PPPaymentPopView.m in Sources */,
 				ECB8F0B71DB71EB30088A118 /* JQKApplicationManager.m in Sources */,
 				ECC097551DB1C8AA00875D56 /* main.m in Sources */,
 				ECC097C51DB20D1300875D56 /* PPMineViewController.m in Sources */,
 				ECC097891DB1E21E00875D56 /* PPTabBarController.m in Sources */,
+				EC20D0271DB8BE170089D8BF /* PPDetailMoreCell.m in Sources */,
+				EC20D01D1DB8A4AE0089D8BF /* PPDetailPhotoCell.m in Sources */,
 				ECB8F0DC1DB754F10088A118 /* PPSexModel.m in Sources */,
 				ECC097DF1DB240E200875D56 /* PPLayoutViewController.m in Sources */,
 				ECB8F0CD1DB71EE90088A118 /* JQKApplication.m in Sources */,
 				ECC097DC1DB23ECD00875D56 /* UIView+SDExtension.m in Sources */,
+				EC20D0101DB895E80089D8BF /* PPDetailFuncCell.m in Sources */,
 				ECC097BF1DB20CF500875D56 /* PPSexViewController.m in Sources */,
 				ECC097A21DB2096D00875D56 /* PPBaseViewController.m in Sources */,
 				ECC0979C1DB2061800875D56 /* PPSystemConfig.m in Sources */,
@@ -835,7 +955,9 @@
 				EC4C6A731DB472470009771A /* PPTrailNormalCell.m in Sources */,
 				EC35F1C21DB5C41F00523F6F /* PPHotContentHeaderView.m in Sources */,
 				EC4C6A861DB4E87D0009771A /* PPSectionBackgroundFlowLayout.m in Sources */,
+				EC20D0301DB8D7EF0089D8BF /* PPMineVipVC.m in Sources */,
 				ECC097931DB2026C00875D56 /* UIView+Loading.m in Sources */,
+				EC20D0361DB8DDA30089D8BF /* PPAutoActManager.m in Sources */,
 				ECC097E51DB2423F00875D56 /* UIScrollView+Refresh.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

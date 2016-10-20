@@ -134,9 +134,12 @@ QBDefineLazyPropertyInitialization(PPColumnModel, response)
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.item < self.response.programList.count) {
         PPProgramModel *program = self.response.programList[indexPath.item];
-        
+        [self pushDetailViewControllerWithColumnId:self.response.columnId RealColumnId:self.response.realColumnId columnType:self.response.type programLocation:indexPath.item andProgramInfo:program];
     }
 }
 
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
+    [[QBStatsManager sharedManager] statsTabIndex:self.tabBarController.selectedIndex subTabIndex:NSNotFound forSlideCount:1];
+}
 
 @end

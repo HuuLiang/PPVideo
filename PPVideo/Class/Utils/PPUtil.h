@@ -16,6 +16,7 @@ extern NSString *const kPaymentInfoKeyName;
 + (NSString *)userId;
 + (BOOL)isRegistered;
 + (void)setRegisteredWithUserId:(NSString *)userId;
++ (NSUInteger)launchSeq;
 + (void)accumateLaunchSeq;
 
 + (NSString *)imageToken;
@@ -33,8 +34,20 @@ extern NSString *const kPaymentInfoKeyName;
 + (NSDate *)dateFromString:(NSString *)dateString;
 + (NSString *)currentTimeStringWithFormat:(NSString *)timeFormat;
 + (NSString *)UTF8DateStringFromString:(NSString *)dateString;
++ (NSString *)compareCurrentTime:(NSString *)compareDateString;
 
 + (void)checkAppInstalledWithBundleId:(NSString *)bundleId completionHandler:(void (^)(BOOL))handler;
+
++ (NSArray<QBPaymentInfo *> *)allPaymentInfos;
++ (NSArray<QBPaymentInfo *> *)payingPaymentInfos;
++ (NSArray<QBPaymentInfo *> *)paidNotProcessedPaymentInfos;
++ (NSArray<QBPaymentInfo *> *)allSuccessfulPaymentInfos;
++ (NSArray<QBPaymentInfo *> *)allUnsuccessfulPaymentInfos;;
+
++ (NSString *)paymentReservedData;
++ (NSUInteger)currentTabPageIndex;
++ (NSUInteger)currentSubTabPageIndex;
+
 
 
 @end

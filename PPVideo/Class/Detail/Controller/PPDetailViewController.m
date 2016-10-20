@@ -7,12 +7,50 @@
 //
 
 #import "PPDetailViewController.h"
+#import "PPDetailModel.h"
+
+#import "PPDetailHeaderCell.h"
+#import "PPDetailFuncCell.h"
+#import "PPCommentModel.h"
+#import "PPDetailPhotoCell.h"
+#import "PPDetailCommentCell.h"
+#import "PPDetailMoreCell.h"
+#import "PPDetailReportView.h"
 
 @interface PPDetailViewController ()
-
+{
+    QBBaseModel *_baseModel;
+    PPProgramModel *_programModel;
+    NSInteger _columnId;
+    
+    PPDetailHeaderCell *_headerCell;
+    PPDetailFuncCell   *_funcCell;
+    PPDetailPhotoCell  *_photoCell;
+    NSInteger currentSection;
+    PPDetailMoreCell   *_moreCell;
+    PPDetailReportView *_reportView;
+}
+@property (nonatomic) PPDetailModel *detailModel;
+@property (nonatomic) PPDetailResponse *response;
 @end
 
 @implementation PPDetailViewController
+QBDefineLazyPropertyInitialization(PPDetailModel ,detailModel)
+QBDefineLazyPropertyInitialization(PPDetailResponse, response)
+
+- (instancetype)initWithBaseModelInfo:(QBBaseModel *)baseModel
+                             ColumnId:(NSInteger)columnId
+                          programInfo:(PPProgramModel *)programModel
+{
+    if (self = [super init]) {
+        _baseModel = baseModel;
+        _columnId = columnId;
+        _programModel = programModel;
+        
+    }
+    return self;
+}
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -20,43 +58,188 @@
     self.layoutTableView.backgroundColor = [UIColor colorWithHexString:@"#efefef"];
     
     self.layoutTableView.hasRowSeparator = NO;
-//    [self.layoutTableView setSeparatorInset:UIEdgeInsetsMake(0, kWidth(30), 0, kWidth(30))];
     self.layoutTableView.hasSectionBorder = NO;
+    
+    _reportView = [[PPDetailReportView alloc] initWithFrame:CGRectMake(0, kScreenHeight - 64 - kWidth(88), kScreenWidth, kWidth(88))];
+    [self.view addSubview:_reportView];
+    
+    @weakify(self);
+    _reportView.endEditing = ^(NSString *text) {
+        @strongify(self);
+        if (text.length < 2) {
+            [[PPHudManager manager] showHudWithText:@"输入的评论过短"];
+        } else {
+            if ([PPUtil currentVipLevel] == PPVipLevelNone) {
+//                [self]
+            } else {
+                [[PPHudManager manager] showHudWithText:@"审核中..."];
+            }
+        }
+        
+    };
+    
     
     {
         [self.layoutTableView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.right.bottom.equalTo(self.view);
-            make.top.equalTo(self.view.mas_top).offset(-20);
+            make.left.top.right.bottom.equalTo(self.view);
+            make.bottom.equalTo(self.view.mas_bottom).offset(-kWidth(68));
         }];
     }
     
     [self.layoutTableView PP_addPullToRefreshWithHandler:^{
-//        [self loadAppData];
+        [self loadData];
     }];
     [self.layoutTableView PP_triggerPullToRefresh];
     
-    @weakify(self);
     self.layoutTableViewAction = ^(NSIndexPath *indexPath, UITableViewCell *cell) {
         @strongify(self);
-//        if (cell == self->_headerCell) {
-//            //            [self payWithInfo:nil];
-//        } else if (cell == self->_detailCell) {
-//            
-//        } else if (cell == self->_activateCell) {
-//            
-//        } else if (cell == self->_qqCell) {
-//            [self contactCustomerService];
-//        }
+        if ([self->_reportView.textField isFirstResponder]) {
+            [self->_reportView.textField resignFirstResponder];
+        }
+        if (cell == self->_headerCell) {
+            
+        }
     };
     
-    [self initCells];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onPaidNotification:) name:kPaidNotificationName object:nil];
+}
+
+- (void)onPaidNotification:(NSNotification *)notification {
+    
+}
+
+- (void)loadData {
+    @weakify(self);
+    [self.detailModel fetchDetailInfoWithColumnId:[NSNumber numberWithInteger:_columnId] ProgramId:_baseModel.programId CompletionHandler:^(BOOL success, id obj) {
+        @strongify(self);
+        if (success) {
+            self.response = obj;
+            [self initCells];
+            [self.layoutTableView PP_endPullToRefresh];
+        }
+    }];
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+- (void)initCells {
+    [self removeAllLayoutCells];
+    
+    NSInteger section = 0;
+    
+    [self initHeaderCellInSection:section++];
+    [self initFunctionCellInSection:section++];
+    if (self.response.programUrlList.count > 0) {
+        [self initPhotosInSection:section++];
+    }
+    if (self.response.commentJson.count > 0) {
+        [self initCommentsInSection:section++];
+    }
+    if ([PPUtil currentVipLevel] == PPVipLevelNone) {
+        [self initMoreCommentInSection:currentSection];
+    }
+    
+    
+    [self.layoutTableView reloadData];
+}
+
+- (void)initHeaderCellInSection:(NSInteger)section {
+    _headerCell = [[PPDetailHeaderCell alloc] init];
+    _headerCell.imgUrlStr = self.response.program.detailsCoverImg;
+    NSArray *array = [self.response.program.spare componentsSeparatedByString:@"|"];
+    if (array.count > 0) {
+        _headerCell.playCount = [array firstObject];
+    }
+    [self setLayoutCell:_headerCell cellHeight:kScreenWidth * 0.6 inRow:0 andSection:section];
+}
+
+- (void)initFunctionCellInSection:(NSInteger)section {
+    _funcCell = [[PPDetailFuncCell alloc] init];
+    PPCommentModel *comment = [PPCommentModel getCommentInfoWithProgramId:self.response.program.programId];
+    _funcCell.likeCount = comment.likeCount;
+    _funcCell.hateCount = comment.hateCount;
+    _funcCell.isChanged = comment.isChanged;
+    @weakify(self);
+    _funcCell.likeAction = ^(NSNumber * isChanged) {
+        @strongify(self);
+        if ([isChanged boolValue]) {
+            [[PPHudManager manager] showHudWithText:@"您已经👍/👎过了"];
+        } else {
+            self->_funcCell.isChanged = YES;
+            comment.isChanged = YES;
+            self->_funcCell.likeCount = ++comment.likeCount;
+            [comment saveOrUpdate];
+        }
+    };
+    
+    _funcCell.hateAction = ^(NSNumber * isChanged) {
+        @strongify(self);
+        if ([isChanged boolValue]) {
+            [[PPHudManager manager] showHudWithText:@"您已经👎/👍过了"];
+        } else {
+            self->_funcCell.isChanged = YES;
+            comment.isChanged = YES;
+            self->_funcCell.hateCount = ++comment.hateCount;
+            [comment saveOrUpdate];
+        }
+    };
+    
+    _funcCell.upAction = ^(id sender) {
+        @strongify(self);
+        //开通升级
+    };
+    
+    [self setLayoutCell:_funcCell cellHeight:kWidth(94) inRow:0 andSection:section];
+}
+
+- (void)initPhotosInSection:(NSInteger)section {
+    [self setHeaderHeight:kWidth(1) inSection:section];
+    
+    _photoCell = [[PPDetailPhotoCell alloc] init];
+    _photoCell.imgUrls = self.response.programUrlList;
+    [self setLayoutCell:_photoCell cellHeight:PPDetalCellHeight inRow:0 andSection:section];
+}
+
+- (void)initCommentsInSection:(NSInteger)section {
+    [self setHeaderHeight:kWidth(20) inSection:section];
+    UITableViewCell *shadowCell = [[UITableViewCell alloc] init];
+    shadowCell.selectionStyle = UITableViewCellSelectionStyleNone;
+    shadowCell.accessoryType = UITableViewCellAccessoryNone;
+    shadowCell.backgroundColor = [UIColor colorWithHexString:@"#ffffff"];
+    [self setLayoutCell:shadowCell cellHeight:kWidth(88) inRow:0 andSection:section++];
+    
+    
+    [self.response.commentJson enumerateObjectsUsingBlock:^(PPDetailCommentModel * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        [self setHeaderHeight:kWidth(1) inSection:section];
+        PPDetailCommentCell *commentCell = [[PPDetailCommentCell alloc] init];
+        commentCell.userImgUrlStr = obj.icon;
+        commentCell.timeStr = obj.createAt;
+        commentCell.userNameStr = obj.userName;
+        commentCell.commandAttriStr = [obj.content getAttriStringWithFont:[UIFont systemFontOfSize:[PPUtil isIpad] ? 30: kWidth(32)] lineSpace:kWidth(10) maxSize:CGSizeMake(kWidth(640), MAXFLOAT)];
+        CGFloat cellheith = [obj.content getStringHeightWithFont:[UIFont systemFontOfSize:[PPUtil isIpad] ? 30: kWidth(32)] lineSpace:kWidth(10) maxSize:CGSizeMake(kWidth(640), MAXFLOAT)] + kWidth(150);
+        currentSection = section + idx;
+        [self setLayoutCell:commentCell cellHeight:cellheith inRow:0 andSection:section+idx];
+    }];
+}
+
+- (void)initMoreCommentInSection:(NSInteger)section {
+    [self setHeaderHeight:kWidth(1) inSection:section];
+    
+    _moreCell = [[PPDetailMoreCell alloc] init];
+    @weakify(self);
+    _moreCell.moreAction = ^ (id sender) {
+        @strongify(self);
+//        []
+    };
+    
+    
+    [self setLayoutCell:_moreCell cellHeight:kWidth(80) inRow:0 andSection:section];
+}
+
+
 
 @end

@@ -9,8 +9,14 @@
 #import <QBEncryptedURLRequest.h>
 #import "PPColumnModel.h"
 
-@interface PPSearchResponse : QBURLResponse
+@interface PPSearchProgramModel : PPProgramModel
+//search
+@property (nonatomic) NSInteger columnId;
+@property (nonatomic) NSInteger realColumnId;
+@end
 
+@interface PPSearchResponse : QBURLResponse
+@property (nonatomic) NSArray <PPSearchProgramModel *> *programList;
 @end
 
 @interface PPSearchModel : QBEncryptedURLRequest

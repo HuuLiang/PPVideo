@@ -16,4 +16,11 @@
 
 - (void)addRefreshBtnWithCurrentView:(UIView *)view withAction:(QBAction) action;
 - (void)removeCurrentRefreshBtn;
+
+- (void)pushDetailViewControllerWithColumnId:(NSInteger)columnId
+                                RealColumnId:(NSInteger)RealColumnId
+                                  columnType:(NSInteger)columnType
+                             programLocation:(NSInteger)programLocation
+                              andProgramInfo:(PPProgramModel *)programModel;
+
 @end

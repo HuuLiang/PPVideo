@@ -8,6 +8,7 @@
 
 #import "PPBaseViewController.h"
 #import "PPSystemConfigModel.h"
+#import "PPDetailViewController.h"
 
 @interface PPBaseViewController ()
 @property (nonatomic,weak) UIButton *refreshBtn;
@@ -33,6 +34,22 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+- (void)pushDetailViewControllerWithColumnId:(NSInteger)columnId
+                                RealColumnId:(NSInteger)realColumnId
+                                  columnType:(NSInteger)columnType
+                             programLocation:(NSInteger)programLocation
+                              andProgramInfo:(PPProgramModel *)programModel {
+    QBBaseModel *baseModel = [QBBaseModel getBaseModelWithRealColoumId:[NSNumber numberWithInteger:realColumnId]
+                                                           channelType:[NSNumber numberWithInteger:columnType]
+                                                             programId:[NSNumber numberWithInteger:programModel.programId]
+                                                           programType:[NSNumber numberWithInteger:programModel.type]
+                                                       programLocation:[NSNumber numberWithInteger:programLocation]];
+    [[QBStatsManager sharedManager] statsCPCWithBaseModel:baseModel andTabIndex:self.tabBarController.selectedIndex subTabIndex:NSNotFound];
+    PPDetailViewController *detailVC = [[PPDetailViewController alloc] initWithBaseModelInfo:baseModel ColumnId:columnId programInfo:programModel];
+    [self.navigationController pushViewController:detailVC animated:YES];
+}
+
 
 
 - (void)addRefreshBtnWithCurrentView:(UIView *)view withAction:(QBAction) action;{

@@ -13,9 +13,12 @@
 #import "PPMineAppCell.h"
 
 #import "PPSystemConfigModel.h"
+#import "PPMineActVC.h"
+#import "PPMineVipVC.h"
 
 static NSString *const kMoreCellReusableIdentifier = @"MoreCellReusableIdentifier";
 #define appCellWidth (kScreenWidth-kWidth(20)*4)/3
+#define height  MAX(kScreenHeight*0.06,44)
 
 @interface PPMineViewController () <UICollectionViewDataSource,UICollectionViewDelegate>
 {
@@ -40,7 +43,6 @@ QBDefineLazyPropertyInitialization(PPAppModel, appModel)
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.navigationController.navigationBar.hidden = YES;
     
     self.layoutTableView.backgroundColor = [UIColor colorWithHexString:@"#efefef"];
     
@@ -65,10 +67,12 @@ QBDefineLazyPropertyInitialization(PPAppModel, appModel)
         @strongify(self);
         if (cell == self->_headerCell) {
 //            [self payWithInfo:nil];
-        } else if (cell == self->_detailCell) {
-            
+        } else if (cell == self->_vipCell) {
+            PPMineVipVC *vipVC = [[PPMineVipVC alloc] init];
+            [self.navigationController pushViewController:vipVC animated:YES];
         } else if (cell == self->_activateCell) {
-            
+            PPMineActVC *actVC = [[PPMineActVC alloc] init];
+            [self.navigationController pushViewController:actVC animated:YES];
         } else if (cell == self->_qqCell) {
             [self contactCustomerService];
         }
@@ -83,6 +87,16 @@ QBDefineLazyPropertyInitialization(PPAppModel, appModel)
 //        [[CRKHudManager manager] showHudWithText:[NSString stringWithFormat:@"Server:%@\nChannelNo:%@\nPackageCertificate:%@\npV:%@/%@", baseURLString, JF_CHANNEL_NO, JF_PACKAGE_CERTIFICATE, JF_REST_PV, JF_PAYMENT_PV]];
 //    }];
     
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    self.navigationController.navigationBar.hidden = YES;
+
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    self.navigationController.navigationBar.hidden = NO;
+
 }
 
 - (void)contactCustomerService {
@@ -132,7 +146,7 @@ QBDefineLazyPropertyInitialization(PPAppModel, appModel)
     NSInteger section = 0;
     
     [self initHeaderCellInSection:section++];
-    [self initDetailCellInSection:section++];
+//    [self initDetailCellInSection:section++];
     [self initVipInSection:section++];
     
     if ([PPUtil currentVipLevel] != PPVipLevelNone) {
@@ -154,7 +168,7 @@ QBDefineLazyPropertyInitialization(PPAppModel, appModel)
     _detailCell = [[PPTableViewCell alloc] initWithImage:[UIImage imageNamed:@"mine_detail"] title:@"个人资料"];
     _detailCell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     _detailCell.selectionStyle = UITableViewCellSelectionStyleNone;
-    [self setLayoutCell:_detailCell cellHeight:44 inRow:0 andSection:section];
+    [self setLayoutCell:_detailCell cellHeight:height inRow:0 andSection:section];
 }
 
 - (void)initVipInSection:(NSInteger)section {
@@ -163,12 +177,12 @@ QBDefineLazyPropertyInitialization(PPAppModel, appModel)
     _activateCell = [[PPTableViewCell alloc] initWithImage:[UIImage imageNamed:@"mine_activate"] title:@"自助激活"];
     _activateCell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     _activateCell.selectionStyle = UITableViewCellSelectionStyleNone;
-    [self setLayoutCell:_activateCell cellHeight:44 inRow:0 andSection:section];
+    [self setLayoutCell:_activateCell cellHeight:height inRow:0 andSection:section];
     
     _vipCell = [[PPTableViewCell alloc] initWithImage:[UIImage imageNamed:@"mine_vip"] title:@"会员特权"];
     _vipCell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     _vipCell.selectionStyle = UITableViewCellSelectionStyleNone;
-    [self setLayoutCell:_vipCell cellHeight:44 inRow:1 andSection:section];
+    [self setLayoutCell:_vipCell cellHeight:height inRow:1 andSection:section];
 }
 
 - (void)initQQCellInSection:(NSInteger)section {
@@ -177,7 +191,7 @@ QBDefineLazyPropertyInitialization(PPAppModel, appModel)
     _qqCell = [[PPTableViewCell alloc] initWithImage:[UIImage imageNamed:@"mine_qq"] title:@"在线客服"];
     _qqCell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     _qqCell.selectionStyle = UITableViewCellSelectionStyleNone;
-    [self setLayoutCell:_qqCell cellHeight:44 inRow:1 andSection:section];
+    [self setLayoutCell:_qqCell cellHeight:height inRow:1 andSection:section];
 }
 
 - (UICollectionViewLayout *)createLayout {

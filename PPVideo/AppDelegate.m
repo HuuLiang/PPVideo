@@ -51,7 +51,7 @@ static NSString *const kAliPaySchemeUrl = @"paoPaoYingyuanAliPayUrlScheme";
     [[UITabBarItem appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]} forState:UIControlStateNormal];
     [[UITabBarItem appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]} forState:UIControlStateSelected];
     [[UINavigationBar appearance] setBarTintColor:[UIColor colorWithHexString:@"#1F233E"]];
-    [[UINavigationBar appearance] setTintColor:[UIColor blackColor]];
+    [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
     [[UINavigationBar appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont boldSystemFontOfSize:[PPUtil isIpad] ? 21 : kWidth(36)],
                                                            NSForegroundColorAttributeName:[UIColor colorWithHexString:@"#ffffff"]}];
     
@@ -60,7 +60,7 @@ static NSString *const kAliPaySchemeUrl = @"paoPaoYingyuanAliPayUrlScheme";
                                usingBlock:^(id<AspectInfo> aspectInfo){
                                    UIViewController *thisVC = [aspectInfo instance];
                                    if (thisVC.navigationController.viewControllers.count > 1) {
-                                       thisVC.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] bk_initWithImage:[UIImage imageNamed:@"navi_back"] style:UIBarButtonItemStylePlain handler:^(id sender) {
+                                       thisVC.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] bk_initWithImage:[UIImage imageNamed:@"navi_back"] style:UIBarButtonItemStyleBordered handler:^(id sender) {
                                            [thisVC.navigationController popViewControllerAnimated:YES];
                                        }];
                                    }
@@ -131,6 +131,13 @@ static NSString *const kAliPaySchemeUrl = @"paoPaoYingyuanAliPayUrlScheme";
          [[aspectInfo originalInvocation] setReturnValue:&bShow];
      } error:nil];
     
+    [[PPUserAccessModel sharedModel] aspect_hookSelector:@selector(requestUserAccess)
+                                             withOptions:AspectPositionAfter
+                                              usingBlock:^(id<AspectInfo> aspetInfo)
+    {
+        [[QBStatsManager sharedManager] registStatsManagerWithUserId:[PPUtil userId] restAppId:PP_REST_APPID restPv:PP_REST_PV launchSeq:[PPUtil launchSeq]];
+    }error:nil];
+    
 //    [UIImageView aspect_hookSelector:@selector(init)
 //                         withOptions:AspectPositionAfter
 //                          usingBlock:^(id<AspectInfo> aspectInfo) {
@@ -155,6 +162,7 @@ static NSString *const kAliPaySchemeUrl = @"paoPaoYingyuanAliPayUrlScheme";
 #endif
     
     [PPUtil accumateLaunchSeq];
+    
     [self setupCommonStyles];
     
     [[QBPaymentManager sharedManager] registerPaymentWithAppId:PP_REST_APPID
@@ -162,6 +170,36 @@ static NSString *const kAliPaySchemeUrl = @"paoPaoYingyuanAliPayUrlScheme";
                                                      channelNo:PP_CHANNEL_NO
                                                      urlScheme:kAliPaySchemeUrl];
     [[QBNetworkInfo sharedInfo] startMonitoring];
+    
+    [QBNetworkInfo sharedInfo].reachabilityChangedAction = ^(BOOL reachable) {
+        if (reachable && ![PPSystemConfigModel sharedModel].loaded) {
+            [self fetchSystemConfigWithCompletionHandler:nil];
+        }
+        if (reachable && ![PPUtil isRegistered]) {
+            [[PPActivateModel sharedModel] activateWithCompletionHandler:^(BOOL success, NSString *userId) {
+                if (success) {
+                    [PPUtil setRegisteredWithUserId:userId];
+                    [[PPUserAccessModel sharedModel] requestUserAccess];
+                }
+            }];
+        } else {
+            [[PPUserAccessModel sharedModel] requestUserAccess];
+        }
+        if ([QBNetworkInfo sharedInfo].networkStatus <= QBNetworkStatusNotReachable && (![PPUtil isRegistered] || ![PPSystemConfigModel sharedModel].loaded)) {
+            if ([PPUtil isIpad]) {
+                [UIAlertView bk_showAlertViewWithTitle:@"请检查您的网络连接!" message:nil cancelButtonTitle:@"确认" otherButtonTitles:nil handler:nil];
+            }else{
+                [UIAlertView bk_showAlertViewWithTitle:@"很抱歉!" message:@"您的应用未连接到网络,请检查您的网络设置" cancelButtonTitle:@"稍后" otherButtonTitles:@[@"设置"] handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
+                    if (buttonIndex == 1) {
+                        NSURL *url = [NSURL URLWithString:UIApplicationOpenSettingsURLString];
+                        if([[UIApplication sharedApplication] canOpenURL:url]) {
+                            [[UIApplication sharedApplication] openURL:url];
+                        }
+                    }
+                }];
+            }}
+    };
+    
     
     BOOL requestedSystemConfig = NO;
     //#ifdef JF_IMAGE_TOKEN_ENABLED
@@ -174,42 +212,42 @@ static NSString *const kAliPaySchemeUrl = @"paoPaoYingyuanAliPayUrlScheme";
         [self.window makeKeyAndVisible];
         
         [self.window beginProgressingWithTitle:@"更新系统配置..." subtitle:nil];
-        requestedSystemConfig = [[PPSystemConfigModel sharedModel] fetchSystemConfigWithCompletionHandler:^(BOOL success) {
+        
+        requestedSystemConfig = [self fetchSystemConfigWithCompletionHandler:^(BOOL success) {
             [self.window endProgressing];
-            
-            if (success) {
-                NSString *fetchedToken = [PPSystemConfigModel sharedModel].imageToken;
-                [PPUtil setImageToken:fetchedToken];
-                if (fetchedToken) {
-                    [[SDWebImageManager sharedManager].imageDownloader setValue:fetchedToken forHTTPHeaderField:@"Referer"];
-                }
-                
-            }
             self.window.rootViewController = self.rootViewController;
         }];
+        
     }
     
-    if (![PPUtil isRegistered]) {
-        [[PPActivateModel sharedModel] activateWithCompletionHandler:^(BOOL success, NSString *userId) {
-            if (success) {
-                [PPUtil setRegisteredWithUserId:userId];
-            }
-        }];
-    } else {
-        [[PPUserAccessModel sharedModel] requestUserAccess];
-    }
     if (!requestedSystemConfig) {
         [[PPSystemConfigModel sharedModel] fetchSystemConfigWithCompletionHandler:^(BOOL success) {
             if (success) {
                 [PPUtil setImageToken:[PPSystemConfigModel sharedModel].imageToken];
             }
+            NSUInteger statsTimeInterval = 180;
+            [[QBStatsManager sharedManager] scheduleStatsUploadWithTimeInterval:statsTimeInterval];
         }];
     }
     
     [self.window makeKeyAndVisible];
-    
     return YES;
 }
 
+- (BOOL)fetchSystemConfigWithCompletionHandler:(void (^)(BOOL success))completionHandler {
+    return [[PPSystemConfigModel sharedModel] fetchSystemConfigWithCompletionHandler:^(BOOL success) {
+        if (success) {
+            NSString *fetchedToken = [PPSystemConfigModel sharedModel].imageToken;
+            [PPUtil setImageToken:fetchedToken];
+            if (fetchedToken) {
+                [[SDWebImageManager sharedManager].imageDownloader setValue:fetchedToken forHTTPHeaderField:@"Referer"];
+            }
+        }
+        NSUInteger statsTimeInterval = 180;
+        [[QBStatsManager sharedManager] scheduleStatsUploadWithTimeInterval:statsTimeInterval];
+        
+        QBSafelyCallBlock(completionHandler, success);
+    }];
+}
 
 @end

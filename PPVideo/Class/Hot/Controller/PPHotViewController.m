@@ -15,6 +15,7 @@
 
 #import "PPHotModel.h"
 #import "PPSearchModel.h"
+#import "PPSearchResultViewController.h"
 
 static NSString *const kSectionBackgroundReusableIdentifier         = @"SectionBackgroundReusableIdentifier";
 static NSString *const kPPHotTagHeaderViewReusableIdentifier        = @"PPHotTagHeaderViewReusableIdentifier";
@@ -46,7 +47,7 @@ QBDefineLazyPropertyInitialization(PPSearchModel, searchModel)
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.title = nil;
+    self.navigationItem.title = @"";
     
     _searchBar = [[UISearchBar alloc] init];
     _searchBar.placeholder = @"关键字搜索";
@@ -119,6 +120,14 @@ QBDefineLazyPropertyInitialization(PPSearchModel, searchModel)
 
 }
 
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    _searchBar.hidden = YES;
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    _searchBar.hidden = NO;
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -275,21 +284,32 @@ QBDefineLazyPropertyInitialization(PPSearchModel, searchModel)
     if (indexPath.section == PPHotSectionTag) {
         if (indexPath.item < self.response.tags.count) {
             [self searchTagWithStr:self.response.tags[indexPath.item]];
+            QBBaseModel *baseModel = [QBBaseModel getBaseModelWithRealColoumId:[NSNumber numberWithInteger:self.response.realColumnId]
+                                                                   channelType:nil
+                                                                     programId:nil
+                                                                   programType:nil
+                                                               programLocation:nil];
+            [[QBStatsManager sharedManager] statsCPCWithBaseModel:baseModel inTabIndex:self.tabBarController.selectedIndex];
         }
     } else if (indexPath.section == PPHotSectionContent) {
         if (indexPath.item < self.response.hotSearch.count) {
             PPProgramModel *program = self.response.hotSearch[indexPath.item];
-            
+            [self pushDetailViewControllerWithColumnId:self.response.columnId RealColumnId:self.response.hsRealColumnId columnType:NSNotFound programLocation:indexPath.item andProgramInfo:program];
         }
     }
 }
 
 - (void)searchTagWithStr:(NSString *)tagStr {
     @weakify(self);
-    [self.searchModel fetchSearchInfoWithTagStr:tagStr CompletionHandler:^(BOOL success, id obj) {
+    [self.searchModel fetchSearchInfoWithTagStr:tagStr CompletionHandler:^(BOOL success, NSArray * obj) {
         @strongify(self);
         if (success) {
-            
+            if (obj.count > 0) {
+                PPSearchResultViewController *resultVC = [[PPSearchResultViewController alloc] initWithProgramList:obj searchWords:tagStr ColumnId:self.response.columnId];
+                [self.navigationController pushViewController:resultVC animated:YES];
+            } else {
+                [[PPHudManager manager] showHudWithText:@"未找到相关资源"];
+            }
         }
     }];
 }

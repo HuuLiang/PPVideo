@@ -8,10 +8,22 @@
 
 #import "PPSearchModel.h"
 
+@implementation PPSearchProgramModel
+
+
+@end
+
+@implementation PPSearchResponse
+
+- (Class)programListElementClass {
+    return [PPSearchProgramModel class];
+}
+@end
+
 @implementation PPSearchModel
 
 + (Class)responseClass {
-    return [PPColumnModel class];
+    return [PPSearchResponse class];
 }
 
 - (BOOL)fetchSearchInfoWithTagStr:(NSString *)tagStr CompletionHandler:(QBCompletionHandler)handler {
@@ -30,9 +42,8 @@
                         }
                         
                         if (handler) {
-                            handler(respStatus == QBURLResponseSuccess,resp);
+                            handler(respStatus == QBURLResponseSuccess,resp.programList);
                         }
-                        
                     }];
     
     return success;
