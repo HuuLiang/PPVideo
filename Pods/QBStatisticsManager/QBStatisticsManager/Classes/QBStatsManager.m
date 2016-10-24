@@ -44,6 +44,9 @@ QBDefineLazyPropertyInitialization(QBPayStatsModel, payStats)
 
 }
 
+- (void)statsUseTestServe:(BOOL)useTestServe {
+    [QBRegistStats shareStats].testServe = useTestServe;
+}
 
 - (dispatch_queue_t)queue {
     if (_queue) {

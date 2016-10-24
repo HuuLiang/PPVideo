@@ -259,7 +259,7 @@ static NSString *const kStatsInfoFileName = @"stats";
 }
 
 - (NSURL *)baseURL {
-    return [NSURL URLWithString:QB_STATS_BASE_URL];
+    return [NSURL URLWithString:[QBRegistStats shareStats].testServe ? QB_STATS_TEST_BASE_URL: QB_STATS_BASE_URL];
 }
 
 - (QBURLRequestMethod)requestMethod {

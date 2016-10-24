@@ -37,7 +37,9 @@
         [[UIApplication sharedApplication].keyWindow endLoading];
         if (success) {
             [UIAlertView bk_showAlertViewWithTitle:@"激活成功" message:nil cancelButtonTitle:@"确定" otherButtonTitles:nil handler:nil];
-            [[PPPaymentViewController sharedPaymentVC] notifyPaymentResult:QBPayResultSuccess withPaymentInfo:obj];
+//            [[PPPaymentViewController sharedPaymentVC] notifyPaymentResult:QBPayResultSuccess withPaymentInfo:obj];
+            PPPaymentViewController *paymentVC = [[PPPaymentViewController alloc] initWithBaseModel:nil];
+            [paymentVC notifyPaymentResult:QBPayResultSuccess withPaymentInfo:obj];
         } else {
             [UIAlertView bk_showAlertViewWithTitle:@"未找到支付成功的订单" message:nil cancelButtonTitle:@"确定" otherButtonTitles:nil handler:nil];
         }

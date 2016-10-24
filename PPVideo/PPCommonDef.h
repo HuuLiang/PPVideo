@@ -33,6 +33,7 @@ typedef NS_ENUM(NSInteger ,PPVipLevel) {
     PPVipLevelVipC
 };
 
+#define tableViewCellheight  MAX(kScreenHeight*0.06,44)
 #define kPaidNotificationName             @"PPVideoPaidNotification"
 
 #define kTimeFormatShort                  @"yyyyMMdd"
@@ -43,9 +44,12 @@ typedef NS_ENUM(NSInteger ,PPVipLevel) {
 #define PP_SYSTEM_CONTACT_NAME            @"CONTACT_NAME"
 #define PP_SYSTEM_CONTACT_SCHEME          @"CONTACT_SCHEME"
 #define PP_SYSTEM_IMAGE_TOKEN             @"IMG_REFERER"
+#define PP_SYSTEM_PAY_HJ_AMOUNT           @"PAY_HJ_AMOUNT"
+#define PP_SYSTEM_PAY_ZS_AMOUNT           @"PAY_ZS_AMOUNT"
+#define PP_SYSTEM_PAY_AMOUNT              @"PAY_AMOUNT"
+
 
 //#define PP_SYSTEM_MINE_IMG                @"MINE_IMG"
-//#define PP_SYSTEM_PAY_AMOUNT              @"PAY_AMOUNT"
 //#define PP_SYSTEM_SVIP_PAY_AMOUNT         @"SVIP_PAY_AMOUNT"
 //#define PP_SYSTEM_PAY_IMG                 @"PAY_IMG"
 //#define PP_SYSTEM_SVIP_PAY_IMG            @"SVIP_PAY_IMG"

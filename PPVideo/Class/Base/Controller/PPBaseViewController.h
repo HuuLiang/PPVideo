@@ -12,7 +12,7 @@
 
 - (instancetype)initWithTitle:(NSString *)title;
 
-- (instancetype)initWithTitle:(NSString *)title vipLevel:(PPVipLevel)vipLevel;
+//- (instancetype)initWithTitle:(NSString *)title vipLevel:(PPVipLevel)vipLevel;
 
 - (void)addRefreshBtnWithCurrentView:(UIView *)view withAction:(QBAction) action;
 - (void)removeCurrentRefreshBtn;
@@ -22,5 +22,9 @@
                                   columnType:(NSInteger)columnType
                              programLocation:(NSInteger)programLocation
                               andProgramInfo:(PPProgramModel *)programModel;
+
+- (void)presentPayViewControllerWithBaseModel:(QBBaseModel *)baseModel;
+
+- (void)playVideoWithUrl:(PPProgramModel *)programModel baseModel:(QBBaseModel *)baseModel vipLevel:(PPVipLevel)vipLevel hasTomeControl:(BOOL)hasTomeControl;
 
 @end

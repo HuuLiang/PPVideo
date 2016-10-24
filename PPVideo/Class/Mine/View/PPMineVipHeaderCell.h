@@ -10,4 +10,6 @@
 
 @interface PPMineVipHeaderCell : UITableViewCell
 
+@property (nonatomic) NSString *bgImgUrl;
+
 @end

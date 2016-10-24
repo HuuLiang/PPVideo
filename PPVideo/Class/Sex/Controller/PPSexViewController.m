@@ -17,15 +17,17 @@ static NSString *const kPPSexCellReusableIdentifier = @"PPSexCellReusableIdentif
 @interface PPSexViewController () <UICollectionViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout>
 {
     UICollectionView *_layoutCollectionView;
-    NSInteger refreshSection;
+    PPSexFooterView *_footerView;
 }
 @property (nonatomic) PPSexModel *sexModel;
 @property (nonatomic) NSMutableArray *dataSource;
+@property (nonatomic) NSMutableDictionary *reloadDic;
 @end
 
 @implementation PPSexViewController
 QBDefineLazyPropertyInitialization(PPSexModel, sexModel)
 QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
+QBDefineLazyPropertyInitialization(NSMutableDictionary, reloadDic)
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -50,7 +52,6 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
     @weakify(self);
     [_layoutCollectionView PP_addPullToRefreshWithHandler:^{
         @strongify(self);
-        //        [self loadChannels];
         [self loadData];
     }];
     [_layoutCollectionView PP_triggerPullToRefresh];
@@ -73,7 +74,10 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
         [self removeCurrentRefreshBtn];
         [self.dataSource removeAllObjects];
         [self.dataSource addObjectsFromArray:obj];
-        refreshSection = self.dataSource.count;
+        [self.reloadDic removeAllObjects];
+        for (NSInteger i = 0; i < self.dataSource.count; i++) {
+            [self.reloadDic setValue:[NSNumber numberWithBool:NO] forKey:[NSString stringWithFormat:@"%ld",i]];
+        }
         [_layoutCollectionView reloadData];
         [_layoutCollectionView PP_endPullToRefresh];
     }];
@@ -92,10 +96,10 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     PPColumnModel *column = self.dataSource[section];
-    if (([PPUtil currentVipLevel] == PPVipLevelNone || [PPUtil currentVipLevel] == PPVipLevelVipA) && refreshSection != section) {
+    BOOL isReload = [[self.reloadDic valueForKey:[NSString stringWithFormat:@"%ld",section]] boolValue];
+    if (([PPUtil currentVipLevel] == PPVipLevelNone || [PPUtil currentVipLevel] == PPVipLevelVipA) && isReload == NO) {
         return 4;
     } else {
-        refreshSection = self.dataSource.count;
         return column.programList.count;
     }
     
@@ -138,19 +142,26 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
 };
 
 - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath {
-    PPSexFooterView *footerView = [collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:kPPSexFooterViewReusableIdentifier forIndexPath:indexPath];
-    footerView.time = indexPath.section;
+    _footerView = [collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:kPPSexFooterViewReusableIdentifier forIndexPath:indexPath];
+    _footerView.time = indexPath.section;
     @weakify(self);
-    footerView.moreAction = ^{
+    _footerView.moreAction = ^{
         @strongify(self);
         if ([PPUtil currentVipLevel] == PPVipLevelNone) {
-            //支付弹窗
+            PPColumnModel *column = self.dataSource[indexPath.section];
+            QBBaseModel *baseModel = [QBBaseModel getBaseModelWithRealColoumId:[NSNumber numberWithInteger:column.realColumnId]
+                                                                   channelType:[NSNumber numberWithInteger:column.type]
+                                                                     programId:nil
+                                                                   programType:nil
+                                                               programLocation:nil];
+            [self presentPayViewControllerWithBaseModel:baseModel];
         } else if ([PPUtil currentVipLevel] == PPVipLevelVipA) {
-            self->refreshSection = indexPath.section;
+            [self.reloadDic setValue:[NSNumber numberWithBool:YES] forKey:[NSString stringWithFormat:@"%ld",indexPath.section]];
             [self->_layoutCollectionView reloadSections:[NSIndexSet indexSetWithIndex:indexPath.section]];
+            self->_footerView.hideBtn = YES;
         }
     };
-    return footerView;
+    return _footerView;
 };
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForFooterInSection:(NSInteger)section {
@@ -162,6 +173,7 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
         PPColumnModel *column = self.dataSource[indexPath.section];
         if (indexPath.item < column.programList.count) {
             PPProgramModel *program = column.programList[indexPath.item];
+            program.hasTimeControl = YES;
             [self pushDetailViewControllerWithColumnId:column.columnId RealColumnId:column.realColumnId columnType:column.type programLocation:indexPath.item andProgramInfo:program];
         }
     }
@@ -170,6 +182,5 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
     [[QBStatsManager sharedManager] statsTabIndex:self.tabBarController.selectedIndex subTabIndex:NSNotFound forSlideCount:1];
 }
-
 
 @end

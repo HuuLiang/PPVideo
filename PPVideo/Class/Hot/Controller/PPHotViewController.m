@@ -283,18 +283,22 @@ QBDefineLazyPropertyInitialization(PPSearchModel, searchModel)
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == PPHotSectionTag) {
         if (indexPath.item < self.response.tags.count) {
-            [self searchTagWithStr:self.response.tags[indexPath.item]];
             QBBaseModel *baseModel = [QBBaseModel getBaseModelWithRealColoumId:[NSNumber numberWithInteger:self.response.realColumnId]
                                                                    channelType:nil
                                                                      programId:nil
                                                                    programType:nil
                                                                programLocation:nil];
-            [[QBStatsManager sharedManager] statsCPCWithBaseModel:baseModel inTabIndex:self.tabBarController.selectedIndex];
+            if ([PPUtil currentVipLevel] == PPVipLevelNone) {
+                [self presentPayViewControllerWithBaseModel:baseModel];
+            } else {
+                [self searchTagWithStr:self.response.tags[indexPath.item]];
+                [[QBStatsManager sharedManager] statsCPCWithBaseModel:baseModel inTabIndex:self.tabBarController.selectedIndex];
+            }
         }
     } else if (indexPath.section == PPHotSectionContent) {
         if (indexPath.item < self.response.hotSearch.count) {
             PPProgramModel *program = self.response.hotSearch[indexPath.item];
-            [self pushDetailViewControllerWithColumnId:self.response.columnId RealColumnId:self.response.hsRealColumnId columnType:NSNotFound programLocation:indexPath.item andProgramInfo:program];
+            [self pushDetailViewControllerWithColumnId:self.response.hsColumnId RealColumnId:self.response.hsRealColumnId columnType:NSNotFound programLocation:indexPath.item andProgramInfo:program];
         }
     }
 }
@@ -317,7 +321,7 @@ QBDefineLazyPropertyInitialization(PPSearchModel, searchModel)
 - (void)showAlert {
     [UIAlertView bk_showAlertViewWithTitle:@"很抱歉!" message:@"此区域只针对视频VIP用户开放" cancelButtonTitle:@"再考虑看看" otherButtonTitles:@[@"立即开通"] handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
         if (buttonIndex == 1) {
-//            [self popPayViewWithPayTyep:LTPayPointVideo IsPaid:[LTUtil isVideoVip]];
+            [self presentPayViewControllerWithBaseModel:nil];
         }
     }];
 }

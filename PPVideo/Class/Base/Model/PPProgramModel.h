@@ -21,4 +21,6 @@
 @property (nonatomic) NSInteger type;
 @property (nonatomic) NSString *videoUrl;
 
+@property (nonatomic) BOOL hasTimeControl;
+@property (nonatomic) BOOL isFree;
 @end

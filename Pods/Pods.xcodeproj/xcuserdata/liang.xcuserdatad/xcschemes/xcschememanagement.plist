@@ -8,105 +8,76 @@
 		<dict>
 			<key>isShown</key>
 			<false/>
-			<key>orderHint</key>
-			<integer>1</integer>
 		</dict>
 		<key>Aspects.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
-			<key>orderHint</key>
-			<integer>2</integer>
 		</dict>
 		<key>BlocksKit.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
-			<key>orderHint</key>
-			<integer>3</integer>
 		</dict>
 		<key>FMDB.xcscheme</key>
 		<dict>
-			<key>orderHint</key>
-			<integer>13</integer>
+			<key>isShown</key>
+			<false/>
 		</dict>
 		<key>MBProgressHUD.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
-			<key>orderHint</key>
-			<integer>5</integer>
 		</dict>
 		<key>MJRefresh.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
-			<key>orderHint</key>
-			<integer>6</integer>
 		</dict>
 		<key>Masonry.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
-			<key>orderHint</key>
-			<integer>4</integer>
 		</dict>
 		<key>Pods-PPVideo.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
-			<key>orderHint</key>
-			<integer>7</integer>
 		</dict>
 		<key>QBExtensions.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
-			<key>orderHint</key>
-			<integer>8</integer>
 		</dict>
 		<key>QBNetworking.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
-			<key>orderHint</key>
-			<integer>9</integer>
 		</dict>
 		<key>QBPayment.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
-			<key>orderHint</key>
-			<integer>10</integer>
 		</dict>
 		<key>QBStatisticsManager.xcscheme</key>
 		<dict>
-			<key>orderHint</key>
-			<integer>14</integer>
+			<key>isShown</key>
+			<false/>
 		</dict>
 		<key>SDWebImage.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
-			<key>orderHint</key>
-			<integer>11</integer>
 		</dict>
 		<key>SFHFKeychainUtils.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
-			<key>orderHint</key>
-			<integer>12</integer>
 		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
 		<key>03B641DD5F5FD9D00A3A0C1D928506AC</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>24681A1982F996E5FEB1E6C61DFBC535</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -121,22 +92,7 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>475B9800D884E033F5281721F34DD4B8</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
 		<key>53480ED0BE09FF49E34B1702D485CAAB</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>58E26BE35386A916797BE29168139897</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>7BFF7C20F9086B82732DF31DDF31AB64</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -161,17 +117,7 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>AC6FAAA27FC70D982FC5270523ABE16A</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
 		<key>CF999CA838DFA96AE2FD186ADDADEE1F</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>D1763B8447262FA184B8858C675F8D8A</key>
 		<dict>
 			<key>primary</key>
 			<true/>

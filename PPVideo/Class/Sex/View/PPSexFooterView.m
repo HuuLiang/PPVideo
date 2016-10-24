@@ -80,4 +80,10 @@
     _timeLabel.text = [NSString stringWithFormat:@"%@上传",[PPUtil UTF8DateStringFromString:timeStr]]; 
 }
 
+- (void)setHideBtn:(BOOL)hideBtn {
+    if (self->_moreBtn) {
+        _moreBtn.hidden = hideBtn;
+    }
+}
+
 @end

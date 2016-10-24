@@ -6,18 +6,12 @@
 //  Copyright © 2016年 Liang. All rights reserved.
 //
 
-#import "PPBaseViewController.h"
+#import "PPLayoutViewController.h"
 
-@interface PPPaymentViewController : PPBaseViewController
+@interface PPPaymentViewController : PPLayoutViewController
 
-+ (instancetype)sharedPaymentVC;
+- (instancetype)initWithBaseModel:(QBBaseModel *)baseModel;
 
-//- (void)popupPaymentInView:(UIView *)view
-//                forProgram:(YYKProgram *)program
-//           programLocation:(NSUInteger)programLocation
-//                 inChannel:(YYKChannel *)channel
-//     withCompletionHandler:(void (^)(void))completionHandler
-//              footerAction:(YYKAction)footerAction;
 - (void)hidePayment;
 
 - (void)notifyPaymentResult:(QBPayResult)result withPaymentInfo:(QBPaymentInfo *)paymentInfo;

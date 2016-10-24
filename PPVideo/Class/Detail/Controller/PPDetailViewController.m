@@ -51,7 +51,6 @@ QBDefineLazyPropertyInitialization(PPDetailResponse, response)
     return self;
 }
 
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -70,14 +69,14 @@ QBDefineLazyPropertyInitialization(PPDetailResponse, response)
             [[PPHudManager manager] showHudWithText:@"输入的评论过短"];
         } else {
             if ([PPUtil currentVipLevel] == PPVipLevelNone) {
-//                [self]
+                [self presentPayViewControllerWithBaseModel:self->_baseModel];
             } else {
                 [[PPHudManager manager] showHudWithText:@"审核中..."];
+                self->_reportView.textField.text = @"";
+                [self->_reportView.textField resignFirstResponder];
             }
         }
-        
     };
-    
     
     {
         [self.layoutTableView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -97,7 +96,10 @@ QBDefineLazyPropertyInitialization(PPDetailResponse, response)
             [self->_reportView.textField resignFirstResponder];
         }
         if (cell == self->_headerCell) {
-            
+            if (self->_programModel.isFree) {
+                self.response.program.isFree = YES;
+            }
+            [self playVideoWithUrl:self.response.program baseModel:self->_baseModel vipLevel:NSNotFound hasTomeControl:self->_programModel.hasTimeControl];
         }
     };
     
@@ -106,7 +108,7 @@ QBDefineLazyPropertyInitialization(PPDetailResponse, response)
 }
 
 - (void)onPaidNotification:(NSNotification *)notification {
-    
+    [self.layoutTableView PP_triggerPullToRefresh];
 }
 
 - (void)loadData {
@@ -190,7 +192,7 @@ QBDefineLazyPropertyInitialization(PPDetailResponse, response)
     
     _funcCell.upAction = ^(id sender) {
         @strongify(self);
-        //开通升级
+        [self presentPayViewControllerWithBaseModel:self->_baseModel];
     };
     
     [self setLayoutCell:_funcCell cellHeight:kWidth(94) inRow:0 andSection:section];
@@ -233,7 +235,11 @@ QBDefineLazyPropertyInitialization(PPDetailResponse, response)
     @weakify(self);
     _moreCell.moreAction = ^ (id sender) {
         @strongify(self);
-//        []
+        if ([PPUtil currentVipLevel] == PPVipLevelNone) {
+            [self presentPayViewControllerWithBaseModel:self->_baseModel];
+        } else {
+            [[PPHudManager manager] showHudWithText:@"已全部加载完成"];
+        }
     };
     
     

@@ -150,7 +150,7 @@ static NSString *const kAliPaySchemeUrl = @"paoPaoYingyuanAliPayUrlScheme";
 #pragma mark - AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    [PPUtil registerVip:PPVipLevelNone];
+//    [PPUtil registerVip:PPVipLevelNone];
     
     [QBNetworkingConfiguration defaultConfiguration].RESTAppId = PP_REST_APPID;
     [QBNetworkingConfiguration defaultConfiguration].RESTpV = @([PP_REST_PV integerValue]);
@@ -162,7 +162,7 @@ static NSString *const kAliPaySchemeUrl = @"paoPaoYingyuanAliPayUrlScheme";
 #endif
     
     [PPUtil accumateLaunchSeq];
-    
+    [[QBPaymentManager sharedManager] registerPaymentWithAppId:PP_REST_APPID paymentPv:@([PP_PAYMENT_PV integerValue]) channelNo:PP_CHANNEL_NO urlScheme:kAliPaySchemeUrl];
     [self setupCommonStyles];
     
     [[QBPaymentManager sharedManager] registerPaymentWithAppId:PP_REST_APPID
@@ -249,5 +249,44 @@ static NSString *const kAliPaySchemeUrl = @"paoPaoYingyuanAliPayUrlScheme";
         QBSafelyCallBlock(completionHandler, success);
     }];
 }
+
+- (BOOL)application:(UIApplication *)application
+      handleOpenURL:(NSURL *)url {
+    [[QBPaymentManager sharedManager] handleOpenUrl:url];
+    return YES;
+}
+
+- (BOOL)application:(UIApplication *)application
+            openURL:(NSURL *)url
+  sourceApplication:(NSString *)sourceApplication
+         annotation:(id)annotation {
+    [[QBPaymentManager sharedManager] handleOpenUrl:url];
+    return YES;
+}
+- (BOOL)application:(UIApplication *)app
+            openURL:(NSURL *)url
+            options:(NSDictionary<NSString *,id> *)options {
+    [[QBPaymentManager sharedManager] handleOpenUrl:url];
+    return YES;
+}
+
+- (void)applicationWillEnterForeground:(UIApplication *)application {
+    [[QBPaymentManager sharedManager] applicationWillEnterForeground:application];
+}
+
+- (UIInterfaceOrientationMask)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window {
+    return UIInterfaceOrientationMaskPortrait;
+}
+#pragma mark - UITabBarControllerDelegate
+
+- (void)tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController {
+    [[QBStatsManager sharedManager] statsTabIndex:tabBarController.selectedIndex subTabIndex:[PPUtil currentSubTabPageIndex] forClickCount:1];
+}
+
+- (BOOL)tabBarController:(UITabBarController *)tabBarController shouldSelectViewController:(UIViewController *)viewController {
+    [[QBStatsManager sharedManager] statsStopDurationAtTabIndex:tabBarController.selectedIndex subTabIndex:[PPUtil currentSubTabPageIndex]];
+    return YES;
+}
+
 
 @end

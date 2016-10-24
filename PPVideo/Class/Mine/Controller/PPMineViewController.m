@@ -18,12 +18,10 @@
 
 static NSString *const kMoreCellReusableIdentifier = @"MoreCellReusableIdentifier";
 #define appCellWidth (kScreenWidth-kWidth(20)*4)/3
-#define height  MAX(kScreenHeight*0.06,44)
 
 @interface PPMineViewController () <UICollectionViewDataSource,UICollectionViewDelegate>
 {
     PPMineHeaderCell *_headerCell;
-    PPTableViewCell *_detailCell;
     PPTableViewCell *_activateCell;
     PPTableViewCell *_vipCell;
     PPTableViewCell *_qqCell;
@@ -42,7 +40,9 @@ QBDefineLazyPropertyInitialization(PPAppModel, appModel)
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    self.navigationItem.title = @"";
+
+    self.navigationController.navigationBar.hidden = YES;
     
     self.layoutTableView.backgroundColor = [UIColor colorWithHexString:@"#efefef"];
     
@@ -53,7 +53,7 @@ QBDefineLazyPropertyInitialization(PPAppModel, appModel)
     {
         [self.layoutTableView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.right.bottom.equalTo(self.view);
-            make.top.equalTo(self.view.mas_top).offset(-20);
+            make.top.equalTo(self.view).offset(-20);
         }];
     }
     
@@ -66,12 +66,12 @@ QBDefineLazyPropertyInitialization(PPAppModel, appModel)
     self.layoutTableViewAction = ^(NSIndexPath *indexPath, UITableViewCell *cell) {
         @strongify(self);
         if (cell == self->_headerCell) {
-//            [self payWithInfo:nil];
+            [self presentPayViewControllerWithBaseModel:nil];
         } else if (cell == self->_vipCell) {
-            PPMineVipVC *vipVC = [[PPMineVipVC alloc] init];
+            PPMineVipVC *vipVC = [[PPMineVipVC alloc] initWithTitle:@"会员特权"];
             [self.navigationController pushViewController:vipVC animated:YES];
         } else if (cell == self->_activateCell) {
-            PPMineActVC *actVC = [[PPMineActVC alloc] init];
+            PPMineActVC *actVC = [[PPMineActVC alloc] initWithTitle:@"自助激活"];
             [self.navigationController pushViewController:actVC animated:YES];
         } else if (cell == self->_qqCell) {
             [self contactCustomerService];
@@ -90,13 +90,13 @@ QBDefineLazyPropertyInitialization(PPAppModel, appModel)
 }
 
 - (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
     self.navigationController.navigationBar.hidden = YES;
-
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
     self.navigationController.navigationBar.hidden = NO;
-
 }
 
 - (void)contactCustomerService {
@@ -162,27 +162,18 @@ QBDefineLazyPropertyInitialization(PPAppModel, appModel)
     [self setLayoutCell:_headerCell cellHeight:kScreenWidth/2 inRow:0 andSection:section];
 }
 
-- (void)initDetailCellInSection:(NSUInteger)section {
-    [self setHeaderHeight:kWidth(20) inSection:section];
-    
-    _detailCell = [[PPTableViewCell alloc] initWithImage:[UIImage imageNamed:@"mine_detail"] title:@"个人资料"];
-    _detailCell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-    _detailCell.selectionStyle = UITableViewCellSelectionStyleNone;
-    [self setLayoutCell:_detailCell cellHeight:height inRow:0 andSection:section];
-}
-
 - (void)initVipInSection:(NSInteger)section {
     [self setHeaderHeight:kWidth(20) inSection:section];
     
     _activateCell = [[PPTableViewCell alloc] initWithImage:[UIImage imageNamed:@"mine_activate"] title:@"自助激活"];
     _activateCell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     _activateCell.selectionStyle = UITableViewCellSelectionStyleNone;
-    [self setLayoutCell:_activateCell cellHeight:height inRow:0 andSection:section];
+    [self setLayoutCell:_activateCell cellHeight:tableViewCellheight inRow:0 andSection:section];
     
     _vipCell = [[PPTableViewCell alloc] initWithImage:[UIImage imageNamed:@"mine_vip"] title:@"会员特权"];
     _vipCell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     _vipCell.selectionStyle = UITableViewCellSelectionStyleNone;
-    [self setLayoutCell:_vipCell cellHeight:height inRow:1 andSection:section];
+    [self setLayoutCell:_vipCell cellHeight:tableViewCellheight inRow:1 andSection:section];
 }
 
 - (void)initQQCellInSection:(NSInteger)section {
@@ -191,7 +182,7 @@ QBDefineLazyPropertyInitialization(PPAppModel, appModel)
     _qqCell = [[PPTableViewCell alloc] initWithImage:[UIImage imageNamed:@"mine_qq"] title:@"在线客服"];
     _qqCell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     _qqCell.selectionStyle = UITableViewCellSelectionStyleNone;
-    [self setLayoutCell:_qqCell cellHeight:height inRow:1 andSection:section];
+    [self setLayoutCell:_qqCell cellHeight:tableViewCellheight inRow:0 andSection:section];
 }
 
 - (UICollectionViewLayout *)createLayout {

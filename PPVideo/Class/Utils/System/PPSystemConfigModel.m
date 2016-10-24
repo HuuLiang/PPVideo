@@ -47,18 +47,13 @@
                             [resp.confis enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
                                 PPSystemConfig *config = obj;
                                 
-//                                if ([config.name isEqualToString:PP_SYSTEM_PAY_AMOUNT]) {
-//                                    [PPSystemConfigModel sharedModel].payAmount = [config.value integerValue];
-//                                } else if ([config.name isEqualToString:PP_SYSTEM_SVIP_PAY_AMOUNT]) {
-//                                    [PPSystemConfigModel sharedModel].svipPayAmount = [config.value integerValue];
-//                                }  else if ([config.name isEqualToString:PP_SYSTEM_MINE_IMG]) {
-//                                    [PPSystemConfigModel sharedModel].mineImgUrl = config.value;
-//                                } else if ([config.name isEqualToString:PP_SYSTEM_PAY_IMG]) {
-//                                    [PPSystemConfigModel sharedModel].vipImg = config.value;
-//                                } else if ([config.name isEqualToString:PP_SYSTEM_SVIP_PAY_IMG]) {
-//                                    [PPSystemConfigModel sharedModel].sVipImg = config.value;
-//                                } else
-                                    if ([config.name isEqualToString:PP_SYSTEM_IMAGE_TOKEN]) {
+                                if ([config.name isEqualToString:PP_SYSTEM_PAY_AMOUNT]) {
+                                    [PPSystemConfigModel sharedModel].payAmount = [config.value integerValue];
+                                } else if ([config.name isEqualToString:PP_SYSTEM_PAY_HJ_AMOUNT]) {
+                                    [PPSystemConfigModel sharedModel].payhjAmount = [config.value integerValue];
+                                } else if ([config.name isEqualToString:PP_SYSTEM_PAY_ZS_AMOUNT]) {
+                                    [PPSystemConfigModel sharedModel].payzsAmount = [config.value integerValue];
+                                } else if ([config.name isEqualToString:PP_SYSTEM_IMAGE_TOKEN]) {
                                     [PPSystemConfigModel sharedModel].imageToken = config.value;
                                 } else if ([config.name isEqualToString:PP_SYSTEM_CONTACT_NAME]) {
                                     [PPSystemConfigModel sharedModel].contactName = config.value;

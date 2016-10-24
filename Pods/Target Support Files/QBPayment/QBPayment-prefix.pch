@@ -2,4 +2,5 @@
 #import <UIKit/UIKit.h>
 #endif
 
+#define QBPAYMENT_HTPAY_ENABLED
 #define QBPAYMENT_IAPPPAY_ENABLED

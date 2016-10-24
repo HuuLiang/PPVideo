@@ -63,9 +63,7 @@ QBDefineLazyPropertyInitialization(NSMutableArray, childVCs)
     //animation.type = kCATransitionPush;
     animation.subtype = kCATransitionFromLeft;
     [self.view.window.layer addAnimation:animation forKey:nil];
-//    [self presentModalViewController:tabBar animated:NO completion:nil];
-    
-    
+
     [self presentViewController:tabBar animated:NO completion:^{
         [tabBar dismissViewControllerAnimated:NO completion:nil];
     }];
@@ -119,9 +117,10 @@ QBDefineLazyPropertyInitialization(NSMutableArray, childVCs)
     
     PPSexViewController *sexVC = [[PPSexViewController alloc] initWithTitle:@"撸点"];
     UINavigationController *sexNav = [[UINavigationController alloc] initWithRootViewController:sexVC];
-    sexNav.tabBarItem = [[UITabBarItem alloc] initWithTitle:sexVC.title
-                                                       image:[UIImage imageNamed:@"tabbar_sex_normal"]
-                                               selectedImage:[[UIImage imageNamed:@"tabbar_sex_selected"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
+    sexNav.tabBarItem = [[UITabBarItem alloc] initWithTitle:nil
+                                                       image:[[UIImage imageNamed:@"tabbar_sex_normal"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]
+                                               selectedImage:[[UIImage imageNamed:@"tabbar_sex_normal"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
+    sexNav.tabBarItem.imageInsets = UIEdgeInsetsMake(2, 0, -2, 0);
     
     PPHotViewController *hotVC = [[PPHotViewController alloc] initWithTitle:@"热搜"];
     UINavigationController *hotNav = [[UINavigationController alloc] initWithRootViewController:hotVC];

@@ -22,6 +22,8 @@ static NSString *const kImageTokenCryptPassword = @"wafei@#$%^%$^$wfsssfsf";
 
 static NSString *const kVipUserKeyName          = @"PPVideo_Vip_UserKey";
 
+static NSString *const kUserNickKeyName         = @"kPPUserNickKeyName";
+
 @implementation PPUtil
 
 #pragma mark -- 注册激活
@@ -270,6 +272,15 @@ static NSString *const kVipUserKeyName          = @"PPVideo_Vip_UserKey";
 #pragma mark - ...
 + (NSString *)paymentReservedData {
     return [NSString stringWithFormat:@"%@$%@", PP_REST_APPID, PP_CHANNEL_NO];
+}
+
++ (NSString *)getUserNickName {
+    return [[NSUserDefaults standardUserDefaults] objectForKey:kUserNickKeyName];
+}
+
++ (void)setUserNickName:(NSString *)nickName {
+    [[NSUserDefaults standardUserDefaults] setObject:nickName forKey:kUserNickKeyName];
+    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 + (NSUInteger)currentTabPageIndex {

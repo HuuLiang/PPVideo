@@ -26,6 +26,7 @@
 - (NSDictionary *)getAttrsWithFont:(UIFont *)font lineSpace:(CGFloat)lineSpace {
     NSMutableParagraphStyle *style = [NSMutableParagraphStyle new];
     style.lineSpacing = lineSpace;
+    style.alignment = NSTextAlignmentCenter;
     NSDictionary *attrs = @{NSFontAttributeName : font,
                             NSParagraphStyleAttributeName:style};
     return  attrs;

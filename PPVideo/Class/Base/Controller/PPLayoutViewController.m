@@ -75,6 +75,14 @@ QBDefineLazyPropertyInitialization(NSMutableDictionary, headerTitles)
     [self.headerHeights removeAllObjects];
 }
 
+- (void)removeCell:(UITableViewCell *)cell
+             inRow:(NSUInteger)row
+        andSection:(NSUInteger)section {
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:row inSection:section];
+    [self.cells removeObjectForKey:indexPath];
+    [self.cellHeights removeObjectForKey:indexPath];
+}
+
 - (void)setHeaderHeight:(CGFloat)height inSection:(NSUInteger)section {
     [self.headerHeights setObject:@(height) forKey:@(section)];
 }

@@ -41,7 +41,8 @@
         
         {
             [_vipView mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.center.equalTo(self);
+                make.centerX.equalTo(self);
+                make.bottom.equalTo(self.mas_bottom).offset(-kWidth(124));
                 make.size.mas_equalTo(CGSizeMake(kWidth(128), kWidth(128)));
             }];
             

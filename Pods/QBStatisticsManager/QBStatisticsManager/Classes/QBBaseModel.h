@@ -14,6 +14,7 @@
 @property (nonatomic)NSNumber *programType;
 @property (nonatomic)NSNumber *programId;
 @property (nonatomic)NSNumber *programLocation;
+@property (nonatomic)NSInteger subTab;
 
 + (instancetype)getBaseModelWithRealColoumId:(NSNumber *)realColoumId channelType:(NSNumber *)channelType programId:(NSNumber *)programId programType:(NSNumber *)programType programLocation:(NSNumber *)programLocation;
 @end

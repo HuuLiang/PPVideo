@@ -294,10 +294,9 @@ shouldDisplaySectionBackgroundInSection:(NSUInteger)section {
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section < self.dataSource.count) {
         PPColumnModel *column = self.dataSource[indexPath.section];
-        
-        if (indexPath.section != PPTrailSectionAd) {
+        PPProgramModel *program = column.programList[indexPath.item];
+        if (indexPath.section != PPTrailSectionAd && program.type != 3) {
             if (indexPath.item < column.programList.count) {
-                PPProgramModel *program = column.programList[indexPath.item];
                 [self pushDetailViewControllerWithColumnId:column.columnId RealColumnId:column.realColumnId columnType:column.type programLocation:indexPath.item andProgramInfo:program];
             }
         } else {
@@ -318,7 +317,20 @@ shouldDisplaySectionBackgroundInSection:(NSUInteger)section {
     PPColumnModel *column = [self.dataSource firstObject];
     if (index < column.programList.count) {
         PPProgramModel *program = column.programList[index];
-        [self pushDetailViewControllerWithColumnId:column.columnId RealColumnId:column.realColumnId columnType:column.type programLocation:index andProgramInfo:program];
+        if (program.type != 3) {
+            program.isFree = YES;
+            [self pushDetailViewControllerWithColumnId:column.columnId RealColumnId:column.realColumnId columnType:column.type programLocation:index andProgramInfo:program];
+        } else {
+            if ([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:program.videoUrl]]) {
+                QBBaseModel *baseModel = [QBBaseModel getBaseModelWithRealColoumId:[NSNumber numberWithInteger:column.realColumnId]
+                                                                       channelType:[NSNumber numberWithInteger:column.type]
+                                                                         programId:[NSNumber numberWithInteger:program.programId]
+                                                                       programType:[NSNumber numberWithInteger:program.type]
+                                                                   programLocation:nil];
+                [[QBStatsManager sharedManager] statsCPCWithBaseModel:baseModel inTabIndex:self.tabBarController.selectedIndex];
+                [[UIApplication sharedApplication] openURL:[NSURL URLWithString:program.videoUrl]];
+            }
+        }
     }
 }
 

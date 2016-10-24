@@ -20,7 +20,9 @@ typedef void (^PPFetchSystemConfigCompletionHandler)(BOOL success);
 @interface PPSystemConfigModel : QBEncryptedURLRequest
 
 @property (nonatomic) NSInteger payAmount;
-@property (nonatomic) NSInteger svipPayAmount;
+@property (nonatomic) NSInteger payzsAmount;
+@property (nonatomic) NSInteger payhjAmount;
+
 @property (nonatomic) NSString *mineImgUrl;
 @property (nonatomic) NSString *vipImg;
 @property (nonatomic) NSString *sVipImg;

@@ -1,0 +1,17 @@
+//
+//  PPVideoPlayer.h
+//  PPVideo
+//
+//  Created by Liang on 2016/10/24.
+//  Copyright © 2016年 Liang. All rights reserved.
+//
+
+#import <UIKit/UIKit.h>
+
+@interface PPVideoPlayer : UIView
+@property (nonatomic) NSURL *videoURL;
+- (instancetype)initWithVideoURL:(NSURL *)videoURL forVipLevel:(PPVipLevel)vipLevel hasTimeControl:(BOOL)hasTimeControl;
+- (void)startToPlay;
+- (void)pause;
+@property (nonatomic,copy) QBAction endPlayAction;
+@end

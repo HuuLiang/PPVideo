@@ -25,5 +25,8 @@
     [QBRegistStats shareStats].restPv = restPv;
 }
 
+- (void)setServeTest {
+    [QBRegistStats shareStats].testServe = YES;
+}
 
 @end

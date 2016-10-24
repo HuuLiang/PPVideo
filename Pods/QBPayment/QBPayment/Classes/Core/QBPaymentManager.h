@@ -37,20 +37,46 @@ FOUNDATION_EXTERN NSString *const kQBPaymentFetchConfigNotification;
 - (BOOL)startPaymentWithPaymentInfo:(QBPaymentInfo *)paymentInfo
                   completionHandler:(QBPaymentCompletionHandler)completionHandler;
 
-- (void)applicationWillEnterForeground:(UIApplication *)application;
-- (void)handleOpenUrl:(NSURL *)url;
+
+- (void)activatePaymentInfos:(NSArray<QBPaymentInfo *> *)paymentInfos withCompletionHandler:(QBCompletionHandler)completionHandler;
+
+/**
+ *  查询当前支付是否集成了指定类型的SDK
+ *
+ *  @param payType       支付类型
+ *
+ *  @return 是否集成了该支付类型的SDK
+ */
+- (BOOL)IsSDKIntegratedForPayType:(QBPayType)payType;
+
+/**
+ *  刷新配置的支付类型
+ *
+ *  @param completionHandler    刷新操作之后的回调
+ *
+ */
+- (void)refreshAvailablePaymentTypesWithCompletionHandler:(void (^)(void))completionHandler;
+
+@end
+
+@interface QBPaymentManager (ConfiguredPaymentTypes)
 
 - (QBPayType)wechatPaymentType;
 - (QBPayType)alipayPaymentType;
 - (QBPayType)cardPayPaymentType;
 - (QBPayType)qqPaymentType;
 
-- (BOOL)IsSDKIntegratedForPayType:(QBPayType)payType;
+@end
 
-- (void)refreshAvailablePaymentTypesWithCompletionHandler:(void (^)(void))completionHandler;
+@interface QBPaymentManager (ApplicationCallback)
+
+- (void)applicationWillEnterForeground:(UIApplication *)application;
+- (void)handleOpenUrl:(NSURL *)url;
+
+@end
+
+@interface QBPaymentManager (Test)
 
 - (void)usePaymentConfigInTestServer:(BOOL)useTestConfig;
-
-- (void)activatePaymentInfos:(NSArray<QBPaymentInfo *> *)paymentInfos withCompletionHandler:(QBCompletionHandler)completionHandler;
 
 @end

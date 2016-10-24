@@ -134,7 +134,17 @@ QBDefineLazyPropertyInitialization(PPColumnModel, response)
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.item < self.response.programList.count) {
         PPProgramModel *program = self.response.programList[indexPath.item];
-        [self pushDetailViewControllerWithColumnId:self.response.columnId RealColumnId:self.response.realColumnId columnType:self.response.type programLocation:indexPath.item andProgramInfo:program];
+        QBBaseModel *baseModel = [QBBaseModel getBaseModelWithRealColoumId:[NSNumber numberWithInteger:self.response.realColumnId]
+                                                               channelType:[NSNumber numberWithInteger:self.response.type]
+                                                                 programId:[NSNumber numberWithInteger:program.programId]
+                                                               programType:[NSNumber numberWithInteger:program.type]
+                                                           programLocation:[NSNumber numberWithInteger:indexPath.item]];
+        if ([PPUtil currentVipLevel] < _vipLevel) {
+            [self presentPayViewControllerWithBaseModel:baseModel];
+        } else {
+            
+            [self playVideoWithUrl:program baseModel:baseModel vipLevel:self->_vipLevel hasTomeControl:NO];
+        }
     }
 }
 

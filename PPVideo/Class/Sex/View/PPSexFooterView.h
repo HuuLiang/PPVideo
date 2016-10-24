@@ -14,5 +14,6 @@ typedef void(^moreAction)(void);
 
 @property (nonatomic) NSInteger time;
 @property (nonatomic) moreAction moreAction;
+@property (nonatomic) BOOL hideBtn;
 
 @end

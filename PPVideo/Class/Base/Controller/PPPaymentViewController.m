@@ -8,10 +8,29 @@
 
 #import "PPPaymentViewController.h"
 #import <QBPaymentManager.h>
-#import "PPPaymentPopView.h"
+#import "PPSystemConfigModel.h"
+
+#import "PPPayHeaderCell.h"
+#import "PPPayPointCell.h"
+#import "PPPayIntroCell.h"
+#import "PPPayTypeCell.h"
+
+#import "PPMineActVC.h"
 
 @interface PPPaymentViewController ()
-@property (nonatomic) PPPaymentPopView *popView;
+{
+    PPVipLevel _vipLevel;
+    
+    PPPayHeaderCell *_headerCell;
+    
+    PPPayPointCell  *_pointCell;
+    PPPayPointCell  *_subPointCell;
+    
+    PPPayIntroCell  *_introCell;
+    
+    UITableViewCell *_activateCell;
+}
+//@property (nonatomic) PPPaymentPopView *popView;
 @property (nonatomic) QBBaseModel *baseModel;
 @property (nonatomic,copy) dispatch_block_t completionHandler;
 @end
@@ -19,68 +38,12 @@
 @implementation PPPaymentViewController
 QBDefineLazyPropertyInitialization(QBBaseModel, baseModel)
 
-+ (instancetype)sharedPaymentVC {
-    static PPPaymentViewController *_sharedPaymentVC;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        _sharedPaymentVC = [[PPPaymentViewController alloc] init];
-    });
-    return _sharedPaymentVC;
-}
-
-- (PPPaymentPopView *)popView {
-    if (_popView) {
-        return _popView;
-    }
-    
-    NSMutableArray *availablePaymentTypes = [NSMutableArray array];
-    
-    
-    QBPayType wechatPaymentType = [[QBPaymentManager sharedManager] wechatPaymentType];
-    if (wechatPaymentType != QBPayTypeNone) {
-        [availablePaymentTypes addObject:@{@"type" : @(wechatPaymentType),@"subType" : @(QBPaySubTypeWeChat)}];
-    }
-    
-    QBPayType alipayPaymentType = [[QBPaymentManager sharedManager] alipayPaymentType];
-    if (alipayPaymentType != QBPayTypeNone) {
-        [availablePaymentTypes addObject:@{@"type" : @(alipayPaymentType),@"subType" : @(QBPaySubTypeAlipay)}];
-    }
-    
-//    QBPayType qqPaymentType = [[QBPaymentManager sharedManager] qqPaymentType];
-//    if (qqPaymentType != QBPayTypeNone) {
-//        [availablePaymentTypes addObject:@{@"type" : @(qqPaymentType),@"subType" : @(QBPaySubTypeQQ)}];
-//        
-//    }
-//    QBPayType cardPaymentType = [[QBPaymentManager sharedManager] cardPayPaymentType];
-//    if (cardPaymentType != QBPayTypeNone) {
-//        [availablePaymentTypes addObject:@{@"type" : @(cardPaymentType),@"subType" : @(QBPaySubTypeNone)}];
-//    }
-    
-    
-//    _popView = [[PPPaymentPopView alloc] initWithAvailablePaymentTypes:availablePaymentTypes];
-//    @weakify(self);
-//    _popView.paymentAction = ^(QBPayType payType,QBPaySubType subType,PPVipLevel vipLevel) {
-//        @strongify(self);
-//        
-//        [self payForPaymentType:payType subPaymentType:subType vipLevel:vipLevel];
-//        
-//        [self hidePayment];
-//    };
-//    _popView.closeAction = ^(id sender){
-//        @strongify(self);
-//        [self hidePayment];
-        //        [[LSJStatsManager sharedManager] statsPayWithOrderNo:nil payAction:LSJStatsPayActionClose payResult:PAYRESULT_UNKNOWN forBaseModel:self.baseModel programLocation:NSNotFound andTabIndex:[LSJUtil currentTabPageIndex] subTabIndex:[LSJUtil currentSubTabPageIndex]];
-        //
-        //        [[LSJStatsManager sharedManager] statsPayWithOrderNo:nil payAction:LSJStatsPayActionClose payResult:QBPayResultUnknown forBaseModel:self.baseModel andTabIndex:[LSJUtil currentTabPageIndex] subTabIndex:self.baseModel.subTab];
-//    };
-    return nil;
-//    return _popView;
-}
-
 - (void)payForPaymentType:(QBPayType)paymentType subPaymentType:(QBPaySubType)subPaymentType vipLevel:(PPVipLevel)vipLevel {
     
     
     QBPaymentInfo *paymentInfo = [self createPaymentInfoWithPaymentType:paymentType subPaymentType:subPaymentType vipLevel:vipLevel];
+    
+    
     
     [[QBPaymentManager sharedManager] startPaymentWithPaymentInfo:paymentInfo
                                                 completionHandler:^(QBPayResult payResult, QBPaymentInfo *paymentInfo)
@@ -97,16 +60,22 @@ QBDefineLazyPropertyInitialization(QBBaseModel, baseModel)
 - (QBPaymentInfo *)createPaymentInfoWithPaymentType:(QBPayType)payType subPaymentType:(QBPaySubType)subPayType vipLevel:(PPVipLevel)vipLevel {
     
     NSUInteger price = 0;
-//    if (vipLevel == PPVipLevelVip) {
-//        price = [LSJSystemConfigModel sharedModel].payAmount;
-//    } else if (vipLevel == LSJVipLevelSVip) {
-//        if (![LSJUtil isVip]) {
-//            price = [LSJSystemConfigModel sharedModel].svipPayAmount;
-//        } else {
-//            price = [LSJSystemConfigModel sharedModel].svipPayAmount - [LSJSystemConfigModel sharedModel].payAmount;
-//        }
-//    }
-    //    price = 200;
+    if (vipLevel == PPVipLevelVipA) {
+        price = [PPSystemConfigModel sharedModel].payhjAmount;
+    } else if (vipLevel == PPVipLevelVipB) {
+        if ([PPUtil currentVipLevel] == PPVipLevelNone) {
+            price = [PPSystemConfigModel sharedModel].payzsAmount + [PPSystemConfigModel sharedModel].payhjAmount;
+        } else {
+            price = [PPSystemConfigModel sharedModel].payzsAmount;
+        }
+    } else if (vipLevel == PPVipLevelVipC) {
+        price = [PPSystemConfigModel sharedModel].payAmount;
+    }
+    
+    
+    price = 200;
+    
+    
     NSString *channelNo = PP_CHANNEL_NO;
     channelNo = [channelNo substringFromIndex:channelNo.length-14];
     NSString *uuid = [[NSUUID UUID].UUIDString.md5 substringWithRange:NSMakeRange(8, 16)];
@@ -134,86 +103,17 @@ QBDefineLazyPropertyInitialization(QBBaseModel, baseModel)
 }
 
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
-}
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-}
-
-- (void)popupPaymentInView:(UIView *)view
-                 baseModel:(QBBaseModel *)model
-     withCompletionHandler:(void (^)(void))completionHandler
-{
-    [self.view beginLoading];
-    self.completionHandler = completionHandler;
-    self.baseModel = model;
-    
-    if (_popView) {
-        [_popView removeFromSuperview];
-        _popView = nil;
-    }
-    
-    if (self.view.superview) {
-        [self.view removeFromSuperview];
-    }
-    self.view.frame = view.bounds;
-    self.view.alpha = 0;
-    
-    UIView *hudView = [PPHudManager manager].hudView;
-    if (view == [UIApplication sharedApplication].keyWindow) {
-        [view insertSubview:self.view belowSubview:hudView];
-    } else {
-        [view addSubview:self.view];
-    }
-    
-    [self.view addSubview:self.popView];
-    
-//    _closeImgV = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"vip_close"]];
-//    _closeImgV.userInteractionEnabled = YES;
-//    [self.view addSubview:_closeImgV];
-//    
-//    @weakify(self);
-//    [_closeImgV bk_whenTapped:^{
-//        @strongify(self);
-//        [self hidePayment];
-//        [[LSJStatsManager sharedManager] statsPayWithOrderNo:nil payAction:LSJStatsPayActionClose payResult:QBPayResultUnknown forBaseModel:self.baseModel andTabIndex:[LSJUtil currentTabPageIndex] subTabIndex:self.baseModel.subTab];
-//        [_closeImgV removeFromSuperview];
-//        _closeImgV = nil;
-//    }];
-//    
-//    {
-//        [self.popView mas_makeConstraints:^(MASConstraintMaker *make) {
-//            make.centerX.equalTo(self.view);
-//            make.centerY.equalTo(self.view).offset(kWidth(50));
-//            make.size.mas_equalTo(CGSizeMake(kWidth(630),kWidth(920)));
-//        }];
-//        
-//        [_closeImgV mas_makeConstraints:^(MASConstraintMaker *make) {
-//            make.bottom.equalTo(self.popView.mas_top);
-//            make.right.equalTo(self.popView.mas_right).offset(-kWidth(20));
-//            make.size.mas_equalTo(CGSizeMake(kWidth(72), kWidth(80)));
-//        }];
-//    }
-    
-    [UIView animateWithDuration:0.25 animations:^{
-        self.view.alpha = 1.0;
-    }];
-}
-
 - (void)hidePayment {
-    [self.view endLoading];
-    [UIView animateWithDuration:0.25 animations:^{
-        self.view.alpha = 0;
-    } completion:^(BOOL finished) {
-        [self.view removeFromSuperview];
-        
-        if (self.completionHandler) {
-            self.completionHandler();
-            self.completionHandler = nil;
-        }
-    }];
+    [[QBStatsManager sharedManager] statsPayWithOrderNo:nil payAction:QBStatsPayActionClose payResult:QBPayResultUnknown forBaseModel:self.baseModel andTabIndex:[PPUtil currentTabPageIndex] subTabIndex:[PPUtil currentSubTabPageIndex]];
+    
+    CATransition *animation = [CATransition animation];
+    animation.duration = 1.0;
+    animation.timingFunction = UIViewAnimationCurveEaseInOut;
+    animation.type = @"rippleEffect";
+    animation.subtype = kCATransitionFromBottom;
+    [self.view.window.layer addAnimation:animation forKey:nil];
+    
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)notifyPaymentResult:(QBPayResult)result withPaymentInfo:(QBPaymentInfo *)paymentInfo {
@@ -224,14 +124,200 @@ QBDefineLazyPropertyInitialization(QBBaseModel, baseModel)
         [self hidePayment];
         [[PPHudManager manager] showHudWithText:@"支付成功"];
         [[NSNotificationCenter defaultCenter] postNotificationName:kPaidNotificationName object:paymentInfo];
-    
+        
     } else if (result == QBPayResultFailure) {
         [[PPHudManager manager] showHudWithText:@"支付取消"];
     } else {
         [[PPHudManager manager] showHudWithText:@"支付失败"];
     }
-
+    
     [[QBStatsManager sharedManager] statsPayWithPaymentInfo:paymentInfo forPayAction:QBStatsPayActionPayBack andTabIndex:[PPUtil currentTabPageIndex] subTabIndex:[PPUtil currentSubTabPageIndex]];
+}
+
+#pragma mark - system
+
+- (instancetype)initWithBaseModel:(QBBaseModel *)baseModel
+{
+    self = [super init];
+    if (self) {
+        self.baseModel = baseModel;
+    }
+    return self;
+}
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    
+    if (_vipLevel == PPVipLevelNone) {
+        self.navigationItem.title = @"充值永久会员";
+    } else if (_vipLevel == PPVipLevelVipA) {
+        self.navigationItem.title = @"升级钻石会员";
+    } else if (_vipLevel == PPVipLevelVipB) {
+        self.navigationItem.title = @"升级黑金会员";
+    }
+    
+    @weakify(self);
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] bk_initWithTitle:@"取消" style:UIBarButtonItemStylePlain handler:^(id sender) {
+        @strongify(self);
+        [self hidePayment];
+    }];
+    self.navigationItem.rightBarButtonItem.tintColor = [UIColor colorWithHexString:@"#B854B4"];
+    
+
+    self.layoutTableView.backgroundColor = [UIColor colorWithHexString:@"#ffffff"];
+    self.layoutTableView.hasRowSeparator = NO;
+    self.layoutTableView.hasSectionBorder = NO;
+    
+    self.layoutTableViewAction = ^(NSIndexPath *indexPath, UITableViewCell *cell) {
+        @strongify(self);
+        if (cell == self->_pointCell) {
+            if (!self->_subPointCell) {
+                return ;
+            } else {
+                if (self->_pointCell.isSelected) {
+                    return;
+                } else{
+                    self->_subPointCell.isSelected = NO;
+                    self->_pointCell.isSelected = YES;
+                    self->_vipLevel = self->_pointCell.vipLevel;
+                }
+            }
+        } else if (cell == self->_subPointCell) {
+            if (self->_subPointCell.isSelected) {
+                return;
+            } else{
+                self->_subPointCell.isSelected = YES;
+                self->_pointCell.isSelected = NO;
+                self->_vipLevel = self->_subPointCell.vipLevel;
+            }
+        } else if (cell == self->_activateCell) {
+            PPMineActVC *actVC = [[PPMineActVC alloc] init];
+            [self.navigationController pushViewController:actVC animated:YES];
+        }
+    };
+    
+    [self initCells];
+    
+    {
+        [self.layoutTableView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.edges.equalTo(self.view);
+        }];
+    }
+}
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+}
+
+#pragma mark - InitCells
+
+- (void)initCells {
+    [self removeAllLayoutCells];
+    
+    NSInteger section = 0;
+    
+    [self initPayHeaderCellInSection:section++];
+    [self initFirstPayCellInSection:section++];
+    if ([PPUtil currentVipLevel] == PPVipLevelNone) {
+        [self initSubPayCellInSection:section++];
+    }
+    [self initIntroCellInSection:section++];
+    
+    QBPayType wechatPaymentType = [[QBPaymentManager sharedManager] wechatPaymentType];
+    if (wechatPaymentType != QBPayTypeNone) {
+        [self initPayCellWithPayType:wechatPaymentType subPayType:QBPaySubTypeWeChat InSection:section++];
+    }
+    
+    QBPayType alipayPaymentType = [[QBPaymentManager sharedManager] alipayPaymentType];
+    if (alipayPaymentType != QBPayTypeNone) {
+        [self initPayCellWithPayType:alipayPaymentType subPayType:QBPaySubTypeAlipay InSection:section++];
+    }
+    [self initActivateCellInSection:section++];
+    
+    [self.layoutTableView reloadData];
+}
+
+- (void)initPayHeaderCellInSection:(NSInteger)section {
+    _headerCell = [[PPPayHeaderCell alloc] init];
+    _headerCell.vipLevel = [PPUtil currentVipLevel];
+    
+    CGFloat height = [PPUtil currentVipLevel] == PPVipLevelNone ? ([PPUtil isIpad] ? kWidth(200) : kWidth(264)) : ([PPUtil isIpad] ? kWidth(200) : kWidth(364));
+    
+    [self setLayoutCell:_headerCell cellHeight:height inRow:0 andSection:section];
+}
+
+- (void)initFirstPayCellInSection:(NSInteger)section {
+    _pointCell = [[PPPayPointCell alloc] init];
+    _pointCell.isSelected = YES;
+    _pointCell.vipLevel = [PPUtil currentVipLevel] + 1;
+    [self setLayoutCell:_pointCell cellHeight:kWidth(140) inRow:0 andSection:section];
+}
+
+- (void)initSubPayCellInSection:(NSInteger)section {
+    [self setHeaderHeight:kWidth(42) inSection:section];
+    
+    _subPointCell = [[PPPayPointCell alloc] init];
+    _subPointCell.isSelected = NO;
+    _subPointCell.vipLevel = PPVipLevelVipB;
+    [self setLayoutCell:_subPointCell cellHeight:kWidth(140) inRow:0 andSection:section];
+}
+
+- (void)initIntroCellInSection:(NSInteger)section {
+    [self setHeaderHeight:kWidth(26) inSection:section];
+    
+    _introCell = [[PPPayIntroCell alloc] init];
+    
+    NSString *str = nil;
+    if ([PPUtil currentVipLevel] == PPVipLevelNone) {
+        str = vipNoneIntroStr;
+    } else if ([PPUtil currentVipLevel] == PPVipLevelVipA) {
+        str = vipAIntroStr;
+    } else if ([PPUtil currentVipLevel] == PPVipLevelVipB) {
+        str = vipBIntroStr;
+    }
+    
+    _introCell.attStr = [str getAttriStringWithFont:[UIFont systemFontOfSize:[PPUtil isIpad] ? 30 : kWidth(30)] lineSpace:[PPUtil isIpad] ? 8 : kWidth(8) maxSize:CGSizeMake(kScreenWidth - kWidth(136), MAXFLOAT)];
+    CGFloat cellHeight = [str getStringHeightWithFont:[UIFont systemFontOfSize:[PPUtil isIpad] ? 30 : kWidth(30)] lineSpace:[PPUtil isIpad] ? 8 : kWidth(8) maxSize:CGSizeMake(kScreenWidth - kWidth(136), MAXFLOAT)];
+    
+    CGFloat height = [PPUtil currentVipLevel] == PPVipLevelNone ? ([PPUtil isIpad] ? 0 : kWidth(140)) : ([PPUtil isIpad] ? kWidth(120) : kWidth(160));
+    
+    [self setLayoutCell:_introCell cellHeight:cellHeight+height inRow:0 andSection:section];
+}
+
+- (void)initPayCellWithPayType:(QBPayType)payType subPayType:(QBPaySubType)paySubType InSection:(NSInteger)section {
+    [self setHeaderHeight:kWidth(26) inSection:section];
+    
+    PPPayTypeCell *cell = [[PPPayTypeCell alloc] init];
+    cell.subPayType = paySubType;
+    @weakify(self);
+    cell.payAction = ^{
+        @strongify(self);
+        [self payForPaymentType:payType subPaymentType:paySubType vipLevel:self->_vipLevel];
+    };
+    
+    [self setLayoutCell:cell cellHeight:kWidth(98) inRow:0 andSection:section];
+}
+
+- (void)initActivateCellInSection:(NSInteger)section {
+    [self setHeaderHeight:kWidth(20) inSection:section];
+    
+    _activateCell = [[UITableViewCell alloc] init];
+    _activateCell.selectionStyle = UITableViewCellSelectionStyleNone;
+    
+    UILabel *label = [[UILabel alloc] init];
+    label.textAlignment = NSTextAlignmentCenter;
+    label.textColor = [UIColor colorWithHexString:@"#666666"];
+    NSAttributedString *str = [[NSAttributedString alloc] initWithString:@"付费后未开通相应等级会员？" attributes:@{NSFontAttributeName : [UIFont systemFontOfSize:[PPUtil isIpad] ? 28 : kWidth(28)],
+                                                                                                       NSUnderlineStyleAttributeName:[NSNumber numberWithInteger:NSUnderlineStyleSingle]}];
+    label.attributedText = str;
+    [_activateCell addSubview:label];
+    {
+        [label mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.edges.equalTo(_activateCell);
+        }];
+    }
+    
+    [self setLayoutCell:_activateCell cellHeight:kWidth(40) inRow:0 andSection:section];
 }
 
 @end

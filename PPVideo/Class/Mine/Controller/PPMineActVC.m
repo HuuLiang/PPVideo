@@ -26,7 +26,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.title = @"自助激活";
+//    self.title = @"自助激活";
     
     self.layoutTableView.backgroundColor = [UIColor colorWithHexString:@"#ffffff"];
     
@@ -53,6 +53,7 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
 
 - (void)initCells {
     [self removeAllLayoutCells];
@@ -214,12 +215,10 @@
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField {
     self.layoutTableView.scrollEnabled = NO;
-//    NSLog(@"text begin");
 }
 
 - (void)textFieldDidEndEditing:(UITextField *)textField {
     self.layoutTableView.scrollEnabled = YES;
-//     NSLog(@"text ends");
 }
 
 - (void)textFieldWillEndEditing:(UITextField *)textField {

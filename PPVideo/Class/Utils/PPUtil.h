@@ -45,6 +45,8 @@ extern NSString *const kPaymentInfoKeyName;
 + (NSArray<QBPaymentInfo *> *)allUnsuccessfulPaymentInfos;;
 
 + (NSString *)paymentReservedData;
++ (NSString *)getUserNickName;
++ (void)setUserNickName:(NSString *)nickName;
 + (NSUInteger)currentTabPageIndex;
 + (NSUInteger)currentSubTabPageIndex;
 
