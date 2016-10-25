@@ -15,4 +15,6 @@
 @property (nonatomic) NSInteger playCount;
 @property (nonatomic) NSInteger commentCount;
 
+@property (nonatomic) BOOL isVipCell;
+
 @end

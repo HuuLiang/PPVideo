@@ -45,7 +45,8 @@
         
         {
             [_graphicBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.center.equalTo(self);
+                make.centerX.equalTo(self);
+                make.top.equalTo(self.mas_top).offset(kWidth(0));
                 make.size.mas_equalTo(CGSizeMake(kWidth(150), kWidth(40)));
             }];
         }

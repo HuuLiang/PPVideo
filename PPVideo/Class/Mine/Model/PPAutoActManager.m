@@ -49,6 +49,11 @@
 }
 
 - (void)servicesActivationWithOrderId:(NSString *)orderId {
+    if (orderId.length != 12) {
+        [[PPHudManager manager] showHudWithText:@"无效的订单号"];
+        return;
+    }
+    
     NSString *currentString = [PPUtil currentTimeStringWithFormat:upVipLevelTimeFormat];
     NSMutableString *dataString = [[NSMutableString alloc] init];
     for (NSInteger i = 0; i < currentString.length; i++) {

@@ -245,7 +245,7 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
     if (section == PPTrailSectionFree || section == PPTrailSectionContent) {
         return UIEdgeInsetsMake(kWidth(20), kWidth(20), kWidth(20), kWidth(20));
     } else if (section == PPTrailSectionAd) {
-        return UIEdgeInsetsMake(kWidth(40), kWidth(20), kWidth(20), kWidth(20));
+        return UIEdgeInsetsMake(kWidth(40), kWidth(20), kWidth(0), kWidth(20));
     }
     
     return UIEdgeInsetsZero;
@@ -267,7 +267,7 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
         UICollectionReusableView *sectionBgView = [collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:kSectionBackgroundReusableIdentifier forIndexPath:indexPath];
         if (indexPath.section == PPTrailSectionFree) {
             sectionBgView.backgroundColor = [UIColor colorWithHexString:@"#efefef"];
-        } else if (indexPath.section == PPTrailSectionContent) {
+        } else if (indexPath.section == PPTrailSectionContent || indexPath.section == PPTrailSectionAd) {
             sectionBgView.backgroundColor = [UIColor colorWithHexString:@"#ffffff"];
         } else {
             sectionBgView.backgroundColor = [UIColor clearColor];
@@ -279,7 +279,7 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section {
     if (section == PPTrailSectionAd) {
-        return CGSizeMake(kScreenWidth, kWidth(40));
+        return CGSizeMake(kScreenWidth, kWidth(60));
     } else {
         return CGSizeZero;
     }
@@ -294,9 +294,9 @@ shouldDisplaySectionBackgroundInSection:(NSUInteger)section {
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section < self.dataSource.count) {
         PPColumnModel *column = self.dataSource[indexPath.section];
-        PPProgramModel *program = column.programList[indexPath.item];
-        if (indexPath.section != PPTrailSectionAd && program.type != 3) {
+        if (indexPath.section != PPTrailSectionAd) {
             if (indexPath.item < column.programList.count) {
+                PPProgramModel *program = column.programList[indexPath.item];
                 program.hasTimeControl = YES;
                 [self pushDetailViewControllerWithColumnId:column.columnId RealColumnId:column.realColumnId columnType:column.type programLocation:indexPath.item andProgramInfo:program];
             }

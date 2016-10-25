@@ -13,6 +13,8 @@
 @property (nonatomic) NSInteger programId;
 @property (nonatomic) NSInteger likeCount;
 @property (nonatomic) NSInteger hateCount;
+@property (nonatomic) NSInteger playCount;
+@property (nonatomic) NSInteger commentCount;
 @property (nonatomic) BOOL isChanged;
 
 + (instancetype)getCommentInfoWithProgramId:(NSInteger)programId;

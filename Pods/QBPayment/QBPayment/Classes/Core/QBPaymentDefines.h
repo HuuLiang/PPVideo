@@ -60,4 +60,7 @@ typedef NS_ENUM(NSUInteger, QBPayStatus) {
 @class QBPaymentInfo;
 typedef void (^QBPaymentCompletionHandler)(QBPayResult payResult, QBPaymentInfo *paymentInfo);
 
+static NSString *const kQBDXTXWeChatAppId = @"wxf5f945e675dda51d";
+static NSString *const kQBHTWeChatAppId = @"wxa2dd5aab946c4118";
+
 #endif /* QBPaymentDefines_h */

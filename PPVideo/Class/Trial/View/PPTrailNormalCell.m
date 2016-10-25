@@ -125,5 +125,17 @@
     _commentLabel.text = [NSString stringWithFormat:@"%ld",commentCount];
 }
 
+- (void)setIsVipCell:(BOOL)isVipCell {
+    if (isVipCell) {
+        _shadewImgV.image = [UIImage imageNamed:@"trail_normal_shadow"];
+        [_shadewImgV mas_updateConstraints:^(MASConstraintMaker *make) {
+            make.height.mas_equalTo(kWidth(40));
+        }];
+        [_playImgV removeFromSuperview];
+        [_playLabel removeFromSuperview];
+        [_commentImgV removeFromSuperview];
+        [_commentLabel removeFromSuperview];
+    }
+}
 
 @end

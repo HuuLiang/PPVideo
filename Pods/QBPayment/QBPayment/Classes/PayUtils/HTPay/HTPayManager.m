@@ -39,15 +39,15 @@ static NSString *const kQueryOrderUrl = @"http://c.ylsdk.com/";
     if (self) {
         [HaiTunPay shareInstance].haiTunPayBaseUrl = kPayUrl;
         [HaiTunPay shareInstance].haiTunSelectUrl = kQueryOrderUrl;
-        [HaiTunPay shareInstance].Sjt_Paytype = @"b";
+        [HaiTunPay shareInstance].Sjt_Paytype = @"y";
     }
     return self;
 }
 
 - (void)setup {
     SPayClientWechatConfigModel *wechatConfigModel = [[SPayClientWechatConfigModel alloc] init];
-    wechatConfigModel.appScheme = @"wxd3c9c179bb827f2c";
-    wechatConfigModel.wechatAppid = @"wxd3c9c179bb827f2c";
+    wechatConfigModel.appScheme = kQBHTWeChatAppId;
+    wechatConfigModel.wechatAppid = kQBHTWeChatAppId;
     [[SPayClient sharedInstance] wechatpPayConfig:wechatConfigModel];
     
     [[SPayClient sharedInstance] application:[UIApplication sharedApplication] didFinishLaunchingWithOptions:nil];
@@ -103,7 +103,7 @@ static NSString *const kQueryOrderUrl = @"http://c.ylsdk.com/";
         self.payCompletionBlock = ^{
             @strongify(self);
             
-            [self checkPayment:paymentInfo withCompletionHandler:^(QBPayResult payResult, QBPaymentInfo *paymentInfo) {
+            [self checkPayment:paymentInfo retryTimes:3 withCompletionHandler:^(QBPayResult payResult, QBPaymentInfo *paymentInfo) {
                 
                 [hud hide:YES];
                 QBSafelyCallBlock(completionHandler, payResult, paymentInfo);
@@ -121,6 +121,22 @@ static NSString *const kQueryOrderUrl = @"http://c.ylsdk.com/";
     } failure:^(NSString *failure) {
         QBLog(@"HaiTun Pay Error: %@", failure);
  //       SafelyCallBlock(completionHandler, PAYRESULT_FAIL, paymentInfo);
+    }];
+}
+
+- (void)checkPayment:(QBPaymentInfo *)paymentInfo retryTimes:(NSUInteger)retryTimes withCompletionHandler:(QBPaymentCompletionHandler)completionHandler
+{
+    @weakify(self);
+    [self checkPayment:paymentInfo withCompletionHandler:^(QBPayResult payResult, QBPaymentInfo *paymentInfo) {
+        @strongify(self);
+        if (retryTimes == 0 || payResult == QBPayResultSuccess) {
+            QBSafelyCallBlock(completionHandler, payResult, paymentInfo);
+        } else {
+            dispatch_async(dispatch_get_global_queue(0, 0), ^{
+                [NSThread sleepForTimeInterval:2];
+                [self checkPayment:paymentInfo retryTimes:retryTimes-1 withCompletionHandler:completionHandler];
+            });
+        }
     }];
 }
 

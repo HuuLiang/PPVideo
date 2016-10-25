@@ -110,6 +110,7 @@ QBDefineLazyPropertyInitialization(PPColumnModel, response)
         normalCell.titleStr = program.title;
         normalCell.playCount = 1234;
         normalCell.commentCount = 2345;
+        normalCell.isVipCell = YES;
     }
     return normalCell;
 }

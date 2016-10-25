@@ -95,6 +95,9 @@ QBDefineLazyPropertyInitialization(NSMutableDictionary, reloadDic)
                 [self.reloadDic setValue:[NSNumber numberWithBool:NO] forKey:[NSString stringWithFormat:@"%ld",i]];
             }
             [_layoutCollectionView reloadData];
+            if ([PPUtil currentVipLevel] == PPVipLevelNone || [PPUtil currentVipLevel] == PPVipLevelVipA) {
+                self->_footerView.hideBtn = NO;
+            }
         }
     }];
 }
@@ -111,15 +114,15 @@ QBDefineLazyPropertyInitialization(NSMutableDictionary, reloadDic)
 #pragma mark - UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
-//    if ([PPUtil currentVipLevel] == PPVipLevelNone) {
-//        return self.dataSource.count >= 1 ? 1 : 0;
-//    } else if ([PPUtil currentVipLevel] == PPVipLevelVipA) {
-//        return self.dataSource.count >= 2 ? 2 : 0;
-//    } else if ([PPUtil currentVipLevel] == PPVipLevelVipB) {
-//        return self.dataSource.count >= 2 ? 2 : 0;
-//    } else {
+    if ([PPUtil currentVipLevel] == PPVipLevelNone) {
+        return self.dataSource.count >= 4 ? 4 : 0;
+    } else if ([PPUtil currentVipLevel] == PPVipLevelVipA) {
+        return self.dataSource.count >= 6 ? 6 : 0;
+    } else if ([PPUtil currentVipLevel] == PPVipLevelVipB) {
+        return self.dataSource.count >= 8 ? 8 : 0;
+    } else {
         return self.dataSource.count;
-//    }
+    }
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
@@ -166,7 +169,7 @@ QBDefineLazyPropertyInitialization(NSMutableDictionary, reloadDic)
 }
 
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section {
-    return UIEdgeInsetsMake(kWidth(20), kWidth(20), kWidth(10), kWidth(20));
+    return UIEdgeInsetsMake(kWidth(20), kWidth(20), kWidth(20), kWidth(20));
 };
 
 - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath {

@@ -89,16 +89,16 @@
     }
     
     _pauseBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-//    [_pauseBtn setBackgroundImage:[UIImage imageNamed:@""] forState:UIControlStateNormal];
-    _pauseBtn.backgroundColor = [UIColor redColor];
+    [_pauseBtn setBackgroundImage:[UIImage imageNamed:@"video_pause"] forState:UIControlStateNormal];
     [self.view addSubview:_pauseBtn];
     
     _slider = [[UISlider alloc] init];
     _slider.minimumValue = 0.0;
     _slider.maximumValue = 1800;
-    _slider.backgroundColor = [UIColor clearColor];
+    _slider.backgroundColor = [UIColor redColor];
     _slider.minimumTrackTintColor = [UIColor redColor];
     _slider.maximumTrackTintColor = [UIColor whiteColor];
+    [_slider setThumbImage:[UIImage imageNamed:@"video_point"] forState:UIControlStateNormal];
     _slider.backgroundColor = [UIColor colorWithHexString:@"#ffffff"];
     [self.view addSubview:_slider];
     
@@ -115,7 +115,7 @@
         [_pauseBtn mas_makeConstraints:^(MASConstraintMaker *make) {
             make.centerX.equalTo(self.view);
             make.bottom.equalTo(_slider.mas_top).offset(-kWidth(30));
-            make.size.mas_equalTo(CGSizeMake(kWidth(80), kWidth(80)));
+            make.size.mas_equalTo(CGSizeMake(kWidth(40), kWidth(40)));
         }];
     }
     
@@ -140,10 +140,10 @@
         @strongify(self);
         if (self->isPause) {
             [self->_videoPlayer startToPlay];
-            [self->_pauseBtn setBackgroundImage:[UIImage imageNamed:@""] forState:UIControlStateNormal];
+            [self->_pauseBtn setBackgroundImage:[UIImage imageNamed:@"video_pause"] forState:UIControlStateNormal];
         } else {
             [self->_videoPlayer pause];
-            [self->_pauseBtn setBackgroundImage:[UIImage imageNamed:@""] forState:UIControlStateNormal];
+            [self->_pauseBtn setBackgroundImage:[UIImage imageNamed:@"video_start"] forState:UIControlStateNormal];
         }
         self->isPause = !self->isPause;
     } forControlEvents:UIControlEventTouchUpInside];
