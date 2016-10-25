@@ -176,6 +176,11 @@ QBDefineLazyPropertyInitialization(NSMutableDictionary, reloadDic)
     if (kind == UICollectionElementKindSectionFooter) {
         _footerView = [collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:kPPSexFooterViewReusableIdentifier forIndexPath:indexPath];
         _footerView.time = indexPath.section;
+        if ([[self.reloadDic valueForKey:[NSString stringWithFormat:@"%ld",indexPath.section]] boolValue]) {
+            _footerView.hideBtn = YES;
+        } else{
+            _footerView.hideBtn = NO;
+        }
         @weakify(self);
         _footerView.moreAction = ^{
             @strongify(self);

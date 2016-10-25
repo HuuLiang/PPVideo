@@ -91,6 +91,7 @@
 }
 
 - (void)setHideBtn:(BOOL)hideBtn {
+    _hideBtn = hideBtn;
     if (self->_moreBtn) {
         _moreBtn.hidden = hideBtn;
     }
