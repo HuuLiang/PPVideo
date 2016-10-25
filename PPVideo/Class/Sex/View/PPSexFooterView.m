@@ -22,13 +22,23 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
+        self.backgroundColor = [UIColor colorWithHexString:@"#efefef"];
+        
+        UIView *view = [[UIView alloc] init];
+        view.backgroundColor = [UIColor colorWithHexString:@"#ffffff"];
+        [self addSubview:view];
         
         _timeLabel = [[UILabel alloc] init];
         _timeLabel.textColor = [UIColor colorWithHexString:@"#666666"];
         _timeLabel.font = [UIFont systemFontOfSize:kWidth(28)];
-        [self addSubview:_timeLabel];
+        [view addSubview:_timeLabel];
 
         {
+            [view mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.left.right.top.equalTo(self);
+                make.height.mas_equalTo(kWidth(60));
+            }];
+            
             [_timeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.top.equalTo(self).offset(kWidth(10));
                 make.left.equalTo(self).offset(kWidth(20));
@@ -55,7 +65,7 @@
             _moreBtn.titleLabel.font = [UIFont systemFontOfSize:kWidth(28)];
             _moreBtn.titleLabel.textColor = [UIColor colorWithHexString:@"#B854B4"];
             
-            [self addSubview:_moreBtn];
+            [view addSubview:_moreBtn];
             
             {
                 [_moreBtn mas_makeConstraints:^(MASConstraintMaker *make) {

@@ -12,4 +12,8 @@
 
 @property (nonatomic) NSString *bgImgUrl;
 
+@property (nonatomic) UIImage *userImg;
+
+@property (nonatomic) QBAction uploadImg;
+
 @end

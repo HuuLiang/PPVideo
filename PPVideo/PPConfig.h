@@ -37,6 +37,6 @@
 
 #define PP_APP_URL                     @"/iosvideo/appSpreadList.htm"
 
-
+#define PP_UMENG_APP_ID                @"580de5dbae1bf85293000504"
 
 #endif /* PPConfig_h */

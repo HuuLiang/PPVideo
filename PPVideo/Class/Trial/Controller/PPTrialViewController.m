@@ -115,6 +115,7 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
     @weakify(self);
     [self.trailModel fetchTrailInfoWithCompletionHandler:^(BOOL success, id obj) {
         @strongify(self);
+        [_layoutCollectionView PP_endPullToRefresh];
         if (success) {
             [self.dataSource removeAllObjects];
             [self removeCurrentRefreshBtn];
@@ -122,7 +123,6 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
             [self.dataSource addObjectsFromArray:obj];
             [self refreshBannerView];
             [_layoutCollectionView reloadData];
-            [_layoutCollectionView PP_endPullToRefresh];
         }
     }];
 
@@ -228,15 +228,15 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
     } else if (indexPath.section == PPTrailSectionFree) {
         CGFloat width = (fullWidth - insets.left - insets.right - layout.minimumInteritemSpacing) / 2;
         CGFloat height = width * 0.6 + kWidth(88);
-        return CGSizeMake(width, height);
+        return CGSizeMake((long)width, (long)height);
     } else if (indexPath.section == PPTrailSectionAd) {
         CGFloat width = (fullWidth - insets.left - insets.right);
         CGFloat height = width /5;
-        return CGSizeMake(width, height);
+        return CGSizeMake((long)width, (long)height);
     } else if (indexPath.section == PPTrailSectionContent) {
         CGFloat width = (fullWidth - insets.left - insets.right - layout.minimumInteritemSpacing * 2) / 3;
         CGFloat height = width * 9 /7;
-        return CGSizeMake(width, height);
+        return CGSizeMake((long)width, (long)height);
     }
     return CGSizeZero;
 }
@@ -297,6 +297,7 @@ shouldDisplaySectionBackgroundInSection:(NSUInteger)section {
         PPProgramModel *program = column.programList[indexPath.item];
         if (indexPath.section != PPTrailSectionAd && program.type != 3) {
             if (indexPath.item < column.programList.count) {
+                program.hasTimeControl = YES;
                 [self pushDetailViewControllerWithColumnId:column.columnId RealColumnId:column.realColumnId columnType:column.type programLocation:indexPath.item andProgramInfo:program];
             }
         } else {
@@ -318,7 +319,7 @@ shouldDisplaySectionBackgroundInSection:(NSUInteger)section {
     if (index < column.programList.count) {
         PPProgramModel *program = column.programList[index];
         if (program.type != 3) {
-            program.isFree = YES;
+            program.hasTimeControl = YES;
             [self pushDetailViewControllerWithColumnId:column.columnId RealColumnId:column.realColumnId columnType:column.type programLocation:index andProgramInfo:program];
         } else {
             if ([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:program.videoUrl]]) {

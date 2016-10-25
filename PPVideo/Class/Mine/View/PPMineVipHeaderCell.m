@@ -45,9 +45,17 @@
         _backImgV = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"mine_back.jpg"]];
         [self addSubview:_backImgV];
         
-        _userImgV = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"mine_user"]];
+        _userImgV = [[UIImageView alloc] initWithImage:[PPUtil getUserImage] ? [PPUtil getUserImage] : [UIImage imageNamed:@"mine_user"]];
         _userImgV.layer.cornerRadius = kWidth(70);
         _userImgV.layer.masksToBounds = YES;
+        _userImgV.userInteractionEnabled = YES;
+        @weakify(self);
+        [_userImgV bk_whenTapped:^{
+            @strongify(self);
+            if (self.uploadImg) {
+                self.uploadImg(self);
+            }
+        }];
         [self addSubview:_userImgV];
         
         _accountLabel = [[UILabel alloc] init];
@@ -121,6 +129,10 @@
 
 - (void)setBgImgUrl:(NSString *)bgImgUrl {
     [_backImgV sd_setImageWithURL:[NSURL URLWithString:bgImgUrl]];
+}
+
+- (void)setUserImg:(UIImage *)userImg {
+    _userImgV.image = userImg;
 }
 
 - (void)drawRect:(CGRect)rect {

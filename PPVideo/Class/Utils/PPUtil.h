@@ -47,6 +47,8 @@ extern NSString *const kPaymentInfoKeyName;
 + (NSString *)paymentReservedData;
 + (NSString *)getUserNickName;
 + (void)setUserNickName:(NSString *)nickName;
++ (UIImage *)getUserImage;
++ (void)setUserImage:(UIImage *)userImage;
 + (NSUInteger)currentTabPageIndex;
 + (NSUInteger)currentSubTabPageIndex;
 

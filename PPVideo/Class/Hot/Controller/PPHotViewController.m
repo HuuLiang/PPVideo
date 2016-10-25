@@ -108,12 +108,12 @@ QBDefineLazyPropertyInitialization(PPSearchModel, searchModel)
     @weakify(self);
     [self.hotModel fetchHotInfoWithCompletionHandler:^(BOOL success, id obj) {
         @strongify(self);
+        [_layoutCollectionView PP_endPullToRefresh];
         if (success) {
             [self removeCurrentRefreshBtn];
             self.response = obj;
             _loadMoreTags = NO;
             [_layoutCollectionView reloadData];
-            [_layoutCollectionView PP_endPullToRefresh];
         }
         
     }];
@@ -191,11 +191,11 @@ QBDefineLazyPropertyInitialization(PPSearchModel, searchModel)
     if (indexPath.section == PPHotSectionTag) {
         CGFloat width = (fullWidth - insets.left - insets.right - itemSpacing * 2) / 3;
         CGFloat height = width * 28 / 83;
-        return CGSizeMake((long)width, height);
+        return CGSizeMake((long)width, (long)height);
     } else if (indexPath.section == PPHotSectionContent) {
         CGFloat width = (fullWidth - insets.left - insets.right -  itemSpacing) / 2;
         CGFloat height = width * 0.6 + kWidth(88);
-        return CGSizeMake(width, height);
+        return CGSizeMake((long)width, (long)height);
     }
     return CGSizeZero;
 }
@@ -288,16 +288,17 @@ QBDefineLazyPropertyInitialization(PPSearchModel, searchModel)
                                                                      programId:nil
                                                                    programType:nil
                                                                programLocation:nil];
-            if ([PPUtil currentVipLevel] == PPVipLevelNone) {
-                [self presentPayViewControllerWithBaseModel:baseModel];
-            } else {
+//            if ([PPUtil currentVipLevel] == PPVipLevelNone) {
+//                [self presentPayViewControllerWithBaseModel:baseModel];
+//            } else {
                 [self searchTagWithStr:self.response.tags[indexPath.item]];
                 [[QBStatsManager sharedManager] statsCPCWithBaseModel:baseModel inTabIndex:self.tabBarController.selectedIndex];
-            }
+//            }
         }
     } else if (indexPath.section == PPHotSectionContent) {
         if (indexPath.item < self.response.hotSearch.count) {
             PPProgramModel *program = self.response.hotSearch[indexPath.item];
+            program.hasTimeControl = YES;
             [self pushDetailViewControllerWithColumnId:self.response.hsColumnId RealColumnId:self.response.hsRealColumnId columnType:NSNotFound programLocation:indexPath.item andProgramInfo:program];
         }
     }
@@ -319,7 +320,7 @@ QBDefineLazyPropertyInitialization(PPSearchModel, searchModel)
 }
 
 - (void)showAlert {
-    [UIAlertView bk_showAlertViewWithTitle:@"很抱歉!" message:@"此区域只针对视频VIP用户开放" cancelButtonTitle:@"再考虑看看" otherButtonTitles:@[@"立即开通"] handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
+    [UIAlertView bk_showAlertViewWithTitle:@"很抱歉!" message:@"搜索功能只针对黑金VIP用户开放" cancelButtonTitle:@"再考虑看看" otherButtonTitles:@[@"立即开通"] handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
         if (buttonIndex == 1) {
             [self presentPayViewControllerWithBaseModel:nil];
         }
@@ -329,7 +330,7 @@ QBDefineLazyPropertyInitialization(PPSearchModel, searchModel)
 #pragma mark UISearchBarDelegate
 
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
-    if ([PPUtil currentVipLevel] == PPVipLevelNone) {
+    if ([PPUtil currentVipLevel] != PPVipLevelVipC) {
         searchBar.text = @"";
         [searchBar resignFirstResponder];
         [self showAlert];

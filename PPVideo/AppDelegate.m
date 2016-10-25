@@ -14,6 +14,8 @@
 #import "PPSystemConfigModel.h"
 #import "PPUserAccessModel.h"
 
+#import "MobClick.h"
+
 static NSString *const kAliPaySchemeUrl = @"paoPaoYingyuanAliPayUrlScheme";
 
 @interface AppDelegate () <UITabBarControllerDelegate>
@@ -147,6 +149,21 @@ static NSString *const kAliPaySchemeUrl = @"paoPaoYingyuanAliPayUrlScheme";
 //                          } error:nil];
 }
 
+- (void)setupMobStatistics {
+#ifdef DEBUG
+    [MobClick setLogEnabled:YES];
+#endif
+    NSString *bundleVersion = [NSBundle mainBundle].infoDictionary[@"CFBundleShortVersionString"];
+    if (bundleVersion) {
+        [MobClick setAppVersion:bundleVersion];
+    }
+    UMAnalyticsConfig *config = [[UMAnalyticsConfig alloc] init];
+    config.appKey = PP_UMENG_APP_ID;
+    config.channelId = PP_CHANNEL_NO;
+    [MobClick startWithConfigure:config];
+    
+}
+
 #pragma mark - AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
@@ -200,7 +217,6 @@ static NSString *const kAliPaySchemeUrl = @"paoPaoYingyuanAliPayUrlScheme";
             }}
     };
     
-    
     BOOL requestedSystemConfig = NO;
     //#ifdef JF_IMAGE_TOKEN_ENABLED
     NSString *imageToken = [PPUtil imageToken];
@@ -231,6 +247,7 @@ static NSString *const kAliPaySchemeUrl = @"paoPaoYingyuanAliPayUrlScheme";
     }
     
     [self.window makeKeyAndVisible];
+    [self setupMobStatistics];
     return YES;
 }
 

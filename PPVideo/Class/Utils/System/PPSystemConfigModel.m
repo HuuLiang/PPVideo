@@ -55,10 +55,18 @@
                                     [PPSystemConfigModel sharedModel].payzsAmount = [config.value integerValue];
                                 } else if ([config.name isEqualToString:PP_SYSTEM_IMAGE_TOKEN]) {
                                     [PPSystemConfigModel sharedModel].imageToken = config.value;
-                                } else if ([config.name isEqualToString:PP_SYSTEM_CONTACT_NAME]) {
-                                    [PPSystemConfigModel sharedModel].contactName = config.value;
-                                } else if ([config.name isEqualToString:PP_SYSTEM_CONTACT_SCHEME]) {
-                                    [PPSystemConfigModel sharedModel].contactScheme = config.value;
+                                } else if ([config.name isEqualToString:PP_SYSTEM_CONTACT_NAME_1]) {
+                                    [PPSystemConfigModel sharedModel].contactName1 = config.value;
+                                } else if ([config.name isEqualToString:PP_SYSTEM_CONTACT_NAME_2]) {
+                                    [PPSystemConfigModel sharedModel].contactName2 = config.value;
+                                } else if ([config.name isEqualToString:PP_SYSTEM_CONTACT_NAME_3]) {
+                                    [PPSystemConfigModel sharedModel].contactName3 = config.value;
+                                } else if ([config.name isEqualToString:PP_SYSTEM_CONTACT_SCHEME_1]) {
+                                    [PPSystemConfigModel sharedModel].contactScheme1 = config.value;
+                                } else if ([config.name isEqualToString:PP_SYSTEM_CONTACT_SCHEME_2]) {
+                                    [PPSystemConfigModel sharedModel].contactScheme2 = config.value;
+                                } else if ([config.name isEqualToString:PP_SYSTEM_CONTACT_SCHEME_3]) {
+                                    [PPSystemConfigModel sharedModel].contactScheme3 = config.value;
                                 }
                             }];
                             _loaded = YES;

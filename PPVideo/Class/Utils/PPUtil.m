@@ -23,6 +23,7 @@ static NSString *const kImageTokenCryptPassword = @"wafei@#$%^%$^$wfsssfsf";
 static NSString *const kVipUserKeyName          = @"PPVideo_Vip_UserKey";
 
 static NSString *const kUserNickKeyName         = @"kPPUserNickKeyName";
+static NSString *const kUserImageKeyName        = @"kPPUserImageKeyName";
 
 @implementation PPUtil
 
@@ -280,6 +281,21 @@ static NSString *const kUserNickKeyName         = @"kPPUserNickKeyName";
 
 + (void)setUserNickName:(NSString *)nickName {
     [[NSUserDefaults standardUserDefaults] setObject:nickName forKey:kUserNickKeyName];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
++ (UIImage *)getUserImage {
+    return [UIImage imageWithData:[[NSUserDefaults standardUserDefaults] objectForKey:kUserImageKeyName]];
+}
+
++ (void)setUserImage:(UIImage *)userImage {
+    NSData *data;
+    if (UIImagePNGRepresentation(userImage) == nil) {
+        data = UIImageJPEGRepresentation(userImage, 1);
+    } else {
+        data = UIImagePNGRepresentation(userImage);
+    }
+    [[NSUserDefaults standardUserDefaults] setObject:data forKey:kUserImageKeyName];
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 

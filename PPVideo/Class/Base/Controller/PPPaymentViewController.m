@@ -118,9 +118,7 @@ QBDefineLazyPropertyInitialization(QBBaseModel, baseModel)
 
 - (void)notifyPaymentResult:(QBPayResult)result withPaymentInfo:(QBPaymentInfo *)paymentInfo {
     if (result == QBPayResultSuccess) {
-        if ([PPUtil currentVipLevel] < paymentInfo.payPointType) {
-            [PPUtil registerVip:paymentInfo.payPointType];
-        }
+        [PPUtil registerVip:paymentInfo.payPointType];
         [self hidePayment];
         [[PPHudManager manager] showHudWithText:@"支付成功"];
         [[NSNotificationCenter defaultCenter] postNotificationName:kPaidNotificationName object:paymentInfo];
@@ -131,7 +129,10 @@ QBDefineLazyPropertyInitialization(QBBaseModel, baseModel)
         [[PPHudManager manager] showHudWithText:@"支付失败"];
     }
     
-    [[QBStatsManager sharedManager] statsPayWithPaymentInfo:paymentInfo forPayAction:QBStatsPayActionPayBack andTabIndex:[PPUtil currentTabPageIndex] subTabIndex:[PPUtil currentSubTabPageIndex]];
+    if (paymentInfo.orderId != nil) {
+        [[QBStatsManager sharedManager] statsPayWithPaymentInfo:paymentInfo forPayAction:QBStatsPayActionPayBack andTabIndex:[PPUtil currentTabPageIndex] subTabIndex:[PPUtil currentSubTabPageIndex]];
+    }
+
 }
 
 #pragma mark - system
@@ -250,6 +251,7 @@ QBDefineLazyPropertyInitialization(QBBaseModel, baseModel)
     _pointCell = [[PPPayPointCell alloc] init];
     _pointCell.isSelected = YES;
     _pointCell.vipLevel = [PPUtil currentVipLevel] + 1;
+    self->_vipLevel = _pointCell.vipLevel;
     [self setLayoutCell:_pointCell cellHeight:kWidth(140) inRow:0 andSection:section];
 }
 

@@ -89,6 +89,10 @@ QBDefineLazyPropertyInitialization(PPAppModel, appModel)
     
 }
 
+- (void)onPaidNotification:(NSNotification *)notification {
+    [self.layoutTableView PP_triggerPullToRefresh];
+}
+
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     self.navigationController.navigationBar.hidden = YES;
@@ -100,8 +104,19 @@ QBDefineLazyPropertyInitialization(PPAppModel, appModel)
 }
 
 - (void)contactCustomerService {
-    NSString *contactScheme = [PPSystemConfigModel sharedModel].contactScheme;
-    NSString *contactName = [PPSystemConfigModel sharedModel].contactName;
+    NSString *contactScheme = nil;
+    NSString *contactName = nil;
+    if ([PPUtil currentVipLevel] == PPVipLevelVipA) {
+        contactName = [PPSystemConfigModel sharedModel].contactName1;
+        contactScheme = [PPSystemConfigModel sharedModel].contactScheme1;
+    } else if ([PPUtil currentVipLevel] == PPVipLevelVipB) {
+        contactName = [PPSystemConfigModel sharedModel].contactName2;
+        contactScheme = [PPSystemConfigModel sharedModel].contactScheme2;
+    } else if ([PPUtil currentVipLevel] == PPVipLevelVipC) {
+        contactName = [PPSystemConfigModel sharedModel].contactName3;
+        contactScheme = [PPSystemConfigModel sharedModel].contactScheme3;
+    }
+    
     
     if (contactScheme.length == 0) {
         return ;
@@ -146,7 +161,6 @@ QBDefineLazyPropertyInitialization(PPAppModel, appModel)
     NSInteger section = 0;
     
     [self initHeaderCellInSection:section++];
-//    [self initDetailCellInSection:section++];
     [self initVipInSection:section++];
     
     if ([PPUtil currentVipLevel] != PPVipLevelNone) {

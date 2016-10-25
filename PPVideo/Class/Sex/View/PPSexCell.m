@@ -31,6 +31,12 @@
     if (self) {
         
         self.backgroundColor = [UIColor colorWithHexString:@"#ffffff"];
+        self.layer.shadowColor = [UIColor darkGrayColor].CGColor;
+        self.layer.shadowOffset = CGSizeMake(0, 1);
+        self.layer.shadowRadius = 1.0f;
+        self.layer.shadowOpacity = 0.5f;
+        self.layer.masksToBounds = NO;
+        self.layer.shadowPath = [UIBezierPath bezierPathWithRoundedRect:self.bounds cornerRadius:self.contentView.layer.cornerRadius].CGPath;
         
         _imgV = [[UIImageView alloc] init];
         [self addSubview:_imgV];

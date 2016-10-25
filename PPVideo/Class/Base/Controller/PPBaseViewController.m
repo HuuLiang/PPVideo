@@ -108,7 +108,7 @@
             }
         }];
     } else {
-        if (programModel.isFree == YES || [PPUtil currentVipLevel] > PPVipLevelNone) {
+//        if (programModel.isFree == YES || [PPUtil currentVipLevel] > PPVipLevelNone) {
             @weakify(self);
             PPVideoPlayerController *videoVC = [[PPVideoPlayerController alloc] initWithVideo:programModel.videoUrl forVipLevel:vipLevel hasTimeControl:hasTomeControl];
             videoVC.baseModel = baseModel;
@@ -117,9 +117,9 @@
                 [self presentPayViewControllerWithBaseModel:baseModel];
             };
             [self presentViewController:videoVC animated:YES completion:nil];
-        } else {
-            [self presentPayViewControllerWithBaseModel:baseModel];
-        }
+//        } else {
+//            [self presentPayViewControllerWithBaseModel:baseModel];
+//        }
     }
 }
 

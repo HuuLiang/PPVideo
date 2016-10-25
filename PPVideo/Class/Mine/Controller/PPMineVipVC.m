@@ -12,9 +12,11 @@
 #import "PPVipIntroduceCell.h"
 #import "PPNickNameCell.h"
 
+#import <AssetsLibrary/AssetsLibrary.h>
+
 //#define secondCellHeight tableViewCellheight+kWidth(442)
 
-@interface PPMineVipVC () <UITextFieldDelegate>
+@interface PPMineVipVC () <UITextFieldDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
 {
     PPMineVipHeaderCell *_headerCell;
     PPTableViewCell *_detailCell;
@@ -63,6 +65,28 @@
     [super didReceiveMemoryWarning];
 }
 
+- (void)getImage {
+    if ([PPUtil isIpad]) {
+        UIImagePickerControllerSourceType sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+        //sourceType = UIImagePickerControllerSourceTypeSavedPhotosAlbum; //保存的相片
+        UIImagePickerController *picker = [[UIImagePickerController alloc] init];
+        picker.delegate = self;
+        picker.allowsEditing = NO;
+        picker.sourceType = sourceType;
+
+        UIPopoverController *popover = [[UIPopoverController alloc]initWithContentViewController:picker];
+
+        [popover presentPopoverFromRect:CGRectMake(0, 0, kScreenWidth, 200) inView:self.view permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
+    } else {
+        UIImagePickerControllerSourceType sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+        UIImagePickerController *picker = [[UIImagePickerController alloc] init];
+        picker.delegate = self;
+        picker.allowsEditing = NO;
+        picker.sourceType = sourceType;
+        [self presentViewController:picker animated:YES completion:nil];
+    }
+}
+
 - (void)initCells {
     [self removeAllLayoutCells];
     
@@ -77,6 +101,12 @@
 
 - (void)initHeaderCellInSection:(NSInteger)section {
     _headerCell = [[PPMineVipHeaderCell alloc] init];
+    
+    @weakify(self);
+    _headerCell.uploadImg = ^(id obj) {
+        @strongify(self);
+        [self getImage];
+    };
     
     [self setLayoutCell:_headerCell cellHeight:kWidth(402) inRow:0 andSection:section];
 }
@@ -177,5 +207,32 @@
     [_nickCell.nameField resignFirstResponder];
 }
 
+#pragma mark - UIImagePickerControllerDelegate
+
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info {
+    @weakify(self);
+    UIImage *pickedImage;
+    if (picker.allowsEditing) {
+        pickedImage = [info objectForKey:UIImagePickerControllerEditedImage];
+    } else {
+        pickedImage = [info objectForKey:UIImagePickerControllerOriginalImage];
+    }
+    
+    if (pickedImage) {
+        @strongify(self);
+        if (self->_headerCell) {
+            self->_headerCell.userImg = pickedImage;
+            [PPUtil setUserImage:pickedImage];
+        }
+    } else {
+        [[PPHudManager manager] showHudWithText:@"照片获取失败"];
+
+    }
+    [picker dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
+    [picker dismissViewControllerAnimated:YES completion:nil];
+}
 
 @end

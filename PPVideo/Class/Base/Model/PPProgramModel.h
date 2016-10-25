@@ -22,5 +22,5 @@
 @property (nonatomic) NSString *videoUrl;
 
 @property (nonatomic) BOOL hasTimeControl;
-@property (nonatomic) BOOL isFree;
+//@property (nonatomic) BOOL isFree;
 @end

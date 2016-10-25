@@ -10,11 +10,15 @@
 #import "PPSexModel.h"
 #import "PPSexCell.h"
 #import "PPSexFooterView.h"
+#import "PPSectionBackgroundFlowLayout.h"
+
 
 static NSString *const kPPSexFooterViewReusableIdentifier = @"PPSexFooterViewReusableIdentifier";
 static NSString *const kPPSexCellReusableIdentifier = @"PPSexCellReusableIdentifier";
+static NSString *const kSectionBackgroundReusableIdentifier = @"SectionBackgroundReusableIdentifier";
 
-@interface PPSexViewController () <UICollectionViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout>
+
+@interface PPSexViewController () <UICollectionViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout,PPSectionBackgroundFlowLayoutDelegate>
 {
     UICollectionView *_layoutCollectionView;
     PPSexFooterView *_footerView;
@@ -32,7 +36,7 @@ QBDefineLazyPropertyInitialization(NSMutableDictionary, reloadDic)
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    UICollectionViewFlowLayout *mainLayout = [[UICollectionViewFlowLayout alloc] init];
+    PPSectionBackgroundFlowLayout *mainLayout = [[PPSectionBackgroundFlowLayout alloc] init];
     mainLayout.minimumLineSpacing = kWidth(20);
     mainLayout.minimumInteritemSpacing = kWidth(20);
     _layoutCollectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:mainLayout];
@@ -42,6 +46,7 @@ QBDefineLazyPropertyInitialization(NSMutableDictionary, reloadDic)
     _layoutCollectionView.showsVerticalScrollIndicator = NO;
     [_layoutCollectionView registerClass:[PPSexCell class] forCellWithReuseIdentifier:kPPSexCellReusableIdentifier];
     [_layoutCollectionView registerClass:[PPSexFooterView class] forSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:kPPSexFooterViewReusableIdentifier];
+    [_layoutCollectionView registerClass:[UICollectionReusableView class] forSupplementaryViewOfKind:PPElementKindSectionBackground withReuseIdentifier:kSectionBackgroundReusableIdentifier];
     [self.view addSubview:_layoutCollectionView];
     {
         [_layoutCollectionView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -54,6 +59,14 @@ QBDefineLazyPropertyInitialization(NSMutableDictionary, reloadDic)
         @strongify(self);
         [self loadData];
     }];
+    if ([PPUtil currentVipLevel] != PPVipLevelVipC) {
+        [_layoutCollectionView PP_addVIPNotiRefreshWithHandler:^{
+            @strongify(self);
+            [self presentPayViewControllerWithBaseModel:nil];
+            [self->_layoutCollectionView PP_endPullToRefresh];
+        }];
+    }
+
     [_layoutCollectionView PP_triggerPullToRefresh];
     
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
@@ -64,22 +77,25 @@ QBDefineLazyPropertyInitialization(NSMutableDictionary, reloadDic)
             }];
         }
     });
-
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshSexView:) name:kPaidNotificationName object:nil];
 }
 
 - (void)loadData  {
     @weakify(self);
     [self.sexModel fetchSexInfoWithCompletionHandler:^(BOOL success, id obj) {
         @strongify(self);
-        [self removeCurrentRefreshBtn];
-        [self.dataSource removeAllObjects];
-        [self.dataSource addObjectsFromArray:obj];
-        [self.reloadDic removeAllObjects];
-        for (NSInteger i = 0; i < self.dataSource.count; i++) {
-            [self.reloadDic setValue:[NSNumber numberWithBool:NO] forKey:[NSString stringWithFormat:@"%ld",i]];
-        }
-        [_layoutCollectionView reloadData];
         [_layoutCollectionView PP_endPullToRefresh];
+        if (success) {
+            [self removeCurrentRefreshBtn];
+            [self.dataSource removeAllObjects];
+            [self.dataSource addObjectsFromArray:obj];
+            [self.reloadDic removeAllObjects];
+            for (NSInteger i = 0; i < self.dataSource.count; i++) {
+                [self.reloadDic setValue:[NSNumber numberWithBool:NO] forKey:[NSString stringWithFormat:@"%ld",i]];
+            }
+            [_layoutCollectionView reloadData];
+        }
     }];
 }
 
@@ -88,10 +104,22 @@ QBDefineLazyPropertyInitialization(NSMutableDictionary, reloadDic)
     // Dispose of any resources that can be recreated.
 }
 
+- (void)refreshSexView:(NSNotification *)notification {
+    [_layoutCollectionView PP_triggerPullToRefresh];
+}
+
 #pragma mark - UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
-    return self.dataSource.count;
+//    if ([PPUtil currentVipLevel] == PPVipLevelNone) {
+//        return self.dataSource.count >= 1 ? 1 : 0;
+//    } else if ([PPUtil currentVipLevel] == PPVipLevelVipA) {
+//        return self.dataSource.count >= 2 ? 2 : 0;
+//    } else if ([PPUtil currentVipLevel] == PPVipLevelVipB) {
+//        return self.dataSource.count >= 2 ? 2 : 0;
+//    } else {
+        return self.dataSource.count;
+//    }
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
@@ -134,38 +162,50 @@ QBDefineLazyPropertyInitialization(NSMutableDictionary, reloadDic)
     CGFloat fullWidth = CGRectGetWidth(collectionView.bounds);
     CGFloat width = (fullWidth - insets.left - insets.right - layout.minimumInteritemSpacing) / 2;
     CGFloat height = width * 0.6 + kWidth(88);
-    return CGSizeMake(width, height);
+    return CGSizeMake((long)width, (long)height);
 }
 
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section {
-    return UIEdgeInsetsMake(kWidth(20), kWidth(20), kWidth(20), kWidth(20));
+    return UIEdgeInsetsMake(kWidth(20), kWidth(20), kWidth(10), kWidth(20));
 };
 
 - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath {
-    _footerView = [collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:kPPSexFooterViewReusableIdentifier forIndexPath:indexPath];
-    _footerView.time = indexPath.section;
-    @weakify(self);
-    _footerView.moreAction = ^{
-        @strongify(self);
-        if ([PPUtil currentVipLevel] == PPVipLevelNone) {
-            PPColumnModel *column = self.dataSource[indexPath.section];
-            QBBaseModel *baseModel = [QBBaseModel getBaseModelWithRealColoumId:[NSNumber numberWithInteger:column.realColumnId]
-                                                                   channelType:[NSNumber numberWithInteger:column.type]
-                                                                     programId:nil
-                                                                   programType:nil
-                                                               programLocation:nil];
-            [self presentPayViewControllerWithBaseModel:baseModel];
-        } else if ([PPUtil currentVipLevel] == PPVipLevelVipA) {
-            [self.reloadDic setValue:[NSNumber numberWithBool:YES] forKey:[NSString stringWithFormat:@"%ld",indexPath.section]];
-            [self->_layoutCollectionView reloadSections:[NSIndexSet indexSetWithIndex:indexPath.section]];
-            self->_footerView.hideBtn = YES;
-        }
-    };
-    return _footerView;
+    if (kind == UICollectionElementKindSectionFooter) {
+        _footerView = [collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:kPPSexFooterViewReusableIdentifier forIndexPath:indexPath];
+        _footerView.time = indexPath.section;
+        @weakify(self);
+        _footerView.moreAction = ^{
+            @strongify(self);
+            if ([PPUtil currentVipLevel] == PPVipLevelNone) {
+                PPColumnModel *column = self.dataSource[indexPath.section];
+                QBBaseModel *baseModel = [QBBaseModel getBaseModelWithRealColoumId:[NSNumber numberWithInteger:column.realColumnId]
+                                                                       channelType:[NSNumber numberWithInteger:column.type]
+                                                                         programId:nil
+                                                                       programType:nil
+                                                                   programLocation:nil];
+                [self presentPayViewControllerWithBaseModel:baseModel];
+            } else if ([PPUtil currentVipLevel] == PPVipLevelVipA) {
+                [self.reloadDic setValue:[NSNumber numberWithBool:YES] forKey:[NSString stringWithFormat:@"%ld",indexPath.section]];
+                [self->_layoutCollectionView reloadSections:[NSIndexSet indexSetWithIndex:indexPath.section]];
+                self->_footerView.hideBtn = YES;
+            }
+        };
+        return _footerView;
+    } else if (kind == PPElementKindSectionBackground) {
+        UICollectionReusableView *sectionBgView = [collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:kSectionBackgroundReusableIdentifier forIndexPath:indexPath];
+        sectionBgView.backgroundColor = [UIColor colorWithHexString:@"#ffffff"];
+        return sectionBgView;
+    }
+    return nil;
+
 };
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForFooterInSection:(NSInteger)section {
-    return CGSizeMake(kScreenWidth, section == 5 ? kWidth(70) : kWidth(60));
+    return CGSizeMake(kScreenWidth, section == 5 ? kWidth(90) : kWidth(80));
+}
+
+- (BOOL)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout shouldDisplaySectionBackgroundInSection:(NSUInteger)section {
+    return YES;
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {

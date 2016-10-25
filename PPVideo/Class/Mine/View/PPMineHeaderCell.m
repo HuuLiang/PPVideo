@@ -12,6 +12,7 @@
 {
     UILabel *_vipLabel;
     UIView * _vipView;
+    UILabel *_levelLabel;
 }
 @end
 
@@ -39,6 +40,18 @@
         _vipLabel.textColor = [UIColor colorWithHexString:@"#ffffff"];
         [_vipView addSubview:_vipLabel];
         
+        NSDictionary *vipLevel = @{@(PPVipLevelNone):@"游客",
+                                   @(PPVipLevelVipA):@"黄金会员",
+                                   @(PPVipLevelVipB):@"钻石会员",
+                                   @(PPVipLevelVipC):@"黑金会员"};
+        
+        _levelLabel = [[UILabel alloc] init];
+        _levelLabel.textColor = [UIColor colorWithHexString:@"#ffffff"];
+        _levelLabel.font = [UIFont systemFontOfSize:kWidth(30)];
+        _levelLabel.textAlignment = NSTextAlignmentCenter;
+        _levelLabel.text = vipLevel[@([PPUtil currentVipLevel])];
+        [self addSubview:_levelLabel];
+        
         {
             [_vipView mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.centerX.equalTo(self);
@@ -50,8 +63,13 @@
                 make.center.equalTo(_vipView);
                 make.size.mas_equalTo(CGSizeMake(kWidth(66), kWidth(88)));
             }];
+            
+            [_levelLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.left.right.equalTo(self);
+                make.height.mas_equalTo(kWidth(32));
+                make.top.equalTo(_vipView.mas_bottom).offset(kWidth(10));
+            }];
         }
-        
     }
     return self;
 }

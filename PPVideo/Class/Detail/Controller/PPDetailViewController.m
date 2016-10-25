@@ -96,9 +96,9 @@ QBDefineLazyPropertyInitialization(PPDetailResponse, response)
             [self->_reportView.textField resignFirstResponder];
         }
         if (cell == self->_headerCell) {
-            if (self->_programModel.isFree) {
-                self.response.program.isFree = YES;
-            }
+//            if (self->_programModel.isFree) {
+//                self.response.program.isFree = YES;
+//            }
             [self playVideoWithUrl:self.response.program baseModel:self->_baseModel vipLevel:NSNotFound hasTomeControl:self->_programModel.hasTimeControl];
         }
     };
@@ -168,6 +168,10 @@ QBDefineLazyPropertyInitialization(PPDetailResponse, response)
     @weakify(self);
     _funcCell.likeAction = ^(NSNumber * isChanged) {
         @strongify(self);
+        if ([PPUtil currentVipLevel] == PPVipLevelNone) {
+            [[PPHudManager manager] showHudWithText:@"成为会员可👍/👎"];
+            return ;
+        }
         if ([isChanged boolValue]) {
             [[PPHudManager manager] showHudWithText:@"您已经👍/👎过了"];
         } else {
@@ -180,6 +184,10 @@ QBDefineLazyPropertyInitialization(PPDetailResponse, response)
     
     _funcCell.hateAction = ^(NSNumber * isChanged) {
         @strongify(self);
+        if ([PPUtil currentVipLevel] == PPVipLevelNone) {
+            [[PPHudManager manager] showHudWithText:@"成为会员可👎/👍"];
+            return ;
+        }
         if ([isChanged boolValue]) {
             [[PPHudManager manager] showHudWithText:@"您已经👎/👍过了"];
         } else {

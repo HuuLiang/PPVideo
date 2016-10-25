@@ -10,6 +10,8 @@
 #import <QBPaymentManager.h>
 #import "PPPaymentViewController.h"
 
+#define upVipLevelTimeFormat   @"MMHH"
+
 @implementation PPAutoActManager
 + (instancetype)sharedManager {
     static PPAutoActManager *_sharedManager;
@@ -28,7 +30,7 @@
     
     NSArray<QBPaymentInfo *> *paymentInfos = [PPUtil allUnsuccessfulPaymentInfos];
     paymentInfos = [paymentInfos bk_select:^BOOL(QBPaymentInfo *paymentInfo) {
-        return paymentInfo.payPointType > [PPUtil currentVipLevel];
+        return paymentInfo.payPointType >= [PPUtil currentVipLevel];
     }];
     
 
@@ -46,5 +48,34 @@
     }];
 }
 
+- (void)servicesActivationWithOrderId:(NSString *)orderId {
+    NSString *currentString = [PPUtil currentTimeStringWithFormat:upVipLevelTimeFormat];
+    NSMutableString *dataString = [[NSMutableString alloc] init];
+    for (NSInteger i = 0; i < currentString.length; i++) {
+        NSInteger ascii = [currentString characterAtIndex:i];
+        [dataString appendString:[NSString stringWithFormat:@"%ld",ascii]];
+    }
+    
+    if ([[orderId substringToIndex:8] isEqualToString:dataString]) {
+        if ([[orderId substringFromIndex:8] isEqualToString:@"5641"]) {
+            [self registerVipLevel:PPVipLevelVipA];
+        } else if ([[orderId substringFromIndex:8] isEqualToString:@"5642"]) {
+            [self registerVipLevel:PPVipLevelVipB];
+        } else if ([[orderId substringFromIndex:8] isEqualToString:@"5643"]) {
+            [self registerVipLevel:PPVipLevelVipC];
+        } else {
+            [[PPHudManager manager] showHudWithText:@"无效的订单号"];
+        }
+    } else {
+        [[PPHudManager manager] showHudWithText:@"无效的订单号"];
+    }
+}
+
+- (void)registerVipLevel:(PPVipLevel)vipLevel {
+    QBPaymentInfo *paymengInfo = [[QBPaymentInfo alloc] init];
+    paymengInfo.payPointType = vipLevel;
+    PPPaymentViewController *paymentVC = [[PPPaymentViewController alloc] initWithBaseModel:nil];
+    [paymentVC notifyPaymentResult:QBPayResultSuccess withPaymentInfo:paymengInfo];
+}
 
 @end

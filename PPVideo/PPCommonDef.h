@@ -41,13 +41,16 @@ typedef NS_ENUM(NSInteger ,PPVipLevel) {
 #define kWidth(width)                     kScreenWidth  * width  / 750
 #define kHeight(height)                   kScreenHeight * height / 1334.
 
-#define PP_SYSTEM_CONTACT_NAME            @"CONTACT_NAME"
-#define PP_SYSTEM_CONTACT_SCHEME          @"CONTACT_SCHEME"
+#define PP_SYSTEM_CONTACT_NAME_1          @"CONTACT_NAME_1"
+#define PP_SYSTEM_CONTACT_NAME_2          @"CONTACT_NAME_2"
+#define PP_SYSTEM_CONTACT_NAME_3          @"CONTACT_NAME_3"
+#define PP_SYSTEM_CONTACT_SCHEME_1          @"CONTACT_SCHEME_1"
+#define PP_SYSTEM_CONTACT_SCHEME_2          @"CONTACT_SCHEME_2"
+#define PP_SYSTEM_CONTACT_SCHEME_3          @"CONTACT_SCHEME_3"
 #define PP_SYSTEM_IMAGE_TOKEN             @"IMG_REFERER"
 #define PP_SYSTEM_PAY_HJ_AMOUNT           @"PAY_HJ_AMOUNT"
 #define PP_SYSTEM_PAY_ZS_AMOUNT           @"PAY_ZS_AMOUNT"
 #define PP_SYSTEM_PAY_AMOUNT              @"PAY_AMOUNT"
-
 
 //#define PP_SYSTEM_MINE_IMG                @"MINE_IMG"
 //#define PP_SYSTEM_SVIP_PAY_AMOUNT         @"SVIP_PAY_AMOUNT"

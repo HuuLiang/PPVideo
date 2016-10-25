@@ -97,7 +97,7 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
     if (indexPath.section == 0) {
         CGFloat width = fullWidth - insets.left - insets.right;
         CGFloat height = width /2 + kWidth(120);
-        return CGSizeMake(width, height);
+        return CGSizeMake((long)width, (long)height);
     }
     
     return CGSizeZero;
@@ -110,6 +110,7 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.item < self.dataSource.count) {
         PPSearchProgramModel *program = self.dataSource[indexPath.item];
+        program.hasTimeControl = YES;
         [self pushDetailViewControllerWithColumnId:program.columnId RealColumnId:program.realColumnId columnType:program.type programLocation:indexPath.item andProgramInfo:program];
     }
 }

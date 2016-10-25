@@ -162,7 +162,7 @@
     [cell.contentView addSubview:_textField];
     
     _nonAutoBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [_nonAutoBtn setTitle:@"提交激活" forState:UIControlStateNormal];
+    [_nonAutoBtn setTitle:@"提交订单" forState:UIControlStateNormal];
     [_nonAutoBtn setTitleColor:[UIColor colorWithHexString:@"#ffffff"] forState:UIControlStateNormal];
     _nonAutoBtn.backgroundColor = [UIColor colorWithHexString:@"#FF680D"];
     _nonAutoBtn.titleLabel.font = [UIFont systemFontOfSize:kWidth(34)];
@@ -171,7 +171,7 @@
     [cell.contentView addSubview:_nonAutoBtn];
     
     [_nonAutoBtn bk_addEventHandler:^(id sender) {
-//        [[PPAutoActManager sharedManager] doActivation];
+        [[PPAutoActManager sharedManager] servicesActivationWithOrderId:_textField.text];
     } forControlEvents:UIControlEventTouchUpInside];
     
     {

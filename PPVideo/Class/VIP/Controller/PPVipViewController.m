@@ -78,11 +78,11 @@ QBDefineLazyPropertyInitialization(PPColumnModel, response)
     @weakify(self);
     [self.vipModel fetchVipInfoWithVipLevel:_vipLevel CompletionHandler:^(BOOL success, id obj) {
         @strongify(self);
+        [_layoutCollectionView PP_endPullToRefresh];
         if (success) {
             [self removeCurrentRefreshBtn];
             self.response = obj;
             [_layoutCollectionView reloadData];
-            [_layoutCollectionView PP_endPullToRefresh];
         }
     }];
 }
@@ -121,7 +121,7 @@ QBDefineLazyPropertyInitialization(PPColumnModel, response)
     if (indexPath.section == 0) {
         CGFloat width = (fullWidth - insets.left - insets.right - layout.minimumInteritemSpacing * 2) / 3;
         CGFloat height = width * 9 /7;
-        return CGSizeMake(width, height);
+        return CGSizeMake((long)width, (long)height);
     }
     
     return CGSizeZero;
@@ -140,9 +140,9 @@ QBDefineLazyPropertyInitialization(PPColumnModel, response)
                                                                programType:[NSNumber numberWithInteger:program.type]
                                                            programLocation:[NSNumber numberWithInteger:indexPath.item]];
         if ([PPUtil currentVipLevel] < _vipLevel) {
+            [[PPHudManager manager] showHudWithText:@"激活相应的VIP权限才可以观看哦"];
             [self presentPayViewControllerWithBaseModel:baseModel];
         } else {
-            
             [self playVideoWithUrl:program baseModel:baseModel vipLevel:self->_vipLevel hasTomeControl:NO];
         }
     }

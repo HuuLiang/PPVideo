@@ -2,6 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>需要访问您的相册才可以获得照片哦。😄</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>zh_CN</string>
 	<key>CFBundleDisplayName</key>
@@ -36,7 +38,7 @@
 		<string>alipay</string>
 		<string>wechat</string>
 		<string>alipayqr</string>
-		<string>wexin</string>
+		<string>weixin</string>
 		<string>mqq</string>
 	</array>
 	<key>LSRequiresIPhoneOS</key>

@@ -16,6 +16,9 @@
     UIButton *_closeButton;
     PPVipLevel _vipLevel;
     BOOL _hasTimeControl;
+    UISlider *_slider;
+    UIButton *_pauseBtn;
+    BOOL isPause;
 }
 @end
 
@@ -85,7 +88,36 @@
         }];
     }
     
+    _pauseBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+//    [_pauseBtn setBackgroundImage:[UIImage imageNamed:@""] forState:UIControlStateNormal];
+    _pauseBtn.backgroundColor = [UIColor redColor];
+    [self.view addSubview:_pauseBtn];
     
+    _slider = [[UISlider alloc] init];
+    _slider.minimumValue = 0.0;
+    _slider.maximumValue = 1800;
+    _slider.backgroundColor = [UIColor clearColor];
+    _slider.minimumTrackTintColor = [UIColor redColor];
+    _slider.maximumTrackTintColor = [UIColor whiteColor];
+    _slider.backgroundColor = [UIColor colorWithHexString:@"#ffffff"];
+    [self.view addSubview:_slider];
+    
+    {
+
+        
+        [_slider mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.equalTo(self.view).offset(kWidth(40));
+            make.right.equalTo(self.view.mas_right).offset(-kWidth(40));
+            make.height.mas_equalTo(kWidth(1));
+            make.bottom.equalTo(self.view.mas_bottom).offset(-kWidth(40));
+        }];
+        
+        [_pauseBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.centerX.equalTo(self.view);
+            make.bottom.equalTo(_slider.mas_top).offset(-kWidth(30));
+            make.size.mas_equalTo(CGSizeMake(kWidth(80), kWidth(80)));
+        }];
+    }
     
     @weakify(self);
     _videoPlayer.endPlayAction = ^(id obj) {
@@ -94,6 +126,27 @@
             [self dismissAndPopPayment];
         }];
     };
+    
+    _videoPlayer.sliderPercent = ^ (CGFloat percent) {
+        @strongify(self);
+        NSLog(@"%f",percent);
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self->_slider setValue:percent animated:YES];
+//            [self->_slider setValue:percent];
+        });
+    };
+    
+    [_pauseBtn bk_addEventHandler:^(id sender) {
+        @strongify(self);
+        if (self->isPause) {
+            [self->_videoPlayer startToPlay];
+            [self->_pauseBtn setBackgroundImage:[UIImage imageNamed:@""] forState:UIControlStateNormal];
+        } else {
+            [self->_videoPlayer pause];
+            [self->_pauseBtn setBackgroundImage:[UIImage imageNamed:@""] forState:UIControlStateNormal];
+        }
+        self->isPause = !self->isPause;
+    } forControlEvents:UIControlEventTouchUpInside];
     
     //#ifdef YYK_DISPLAY_VIDEO_URL
     //    NSString *url = videoUrl.absoluteString;

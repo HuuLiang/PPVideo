@@ -66,10 +66,16 @@
             //回到主线程刷新UI
             NSLog(@"%f %f",currentSecond,allSecond);
             
+            if (self.sliderPercent && currentSecond > 0) {
+                self.sliderPercent(currentSecond);
+            }
+            
             if (hasTimeControl) {
-                if (currentSecond > 22 && [PPUtil currentVipLevel] == PPVipLevelVipA && currentSecond < allSecond) {
+                if (currentSecond > 20 && [PPUtil currentVipLevel] == PPVipLevelNone) {
                     [self pauseAndPopAction];
-                } else if (currentSecond > 42 && [PPUtil currentVipLevel] == PPVipLevelVipB && currentSecond < allSecond) {
+                } else if (currentSecond > 40 && [PPUtil currentVipLevel] == PPVipLevelVipA) {
+                    [self pauseAndPopAction];
+                } else if (currentSecond > 60 && [PPUtil currentVipLevel] == PPVipLevelVipB) {
                     [self pauseAndPopAction];
                 }
             }
