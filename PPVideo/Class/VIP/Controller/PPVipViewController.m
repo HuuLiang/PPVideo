@@ -9,8 +9,10 @@
 #import "PPVipViewController.h"
 #import "PPTrailNormalCell.h"
 #import "PPVipModel.h"
+#import "PPVipHeaderView.h"
 
-static NSString *const kPPVipCellReusableIdentifier = @"PPVipCellReusableIdentifier";
+static NSString *const kPPVipCellReusableIdentifier     = @"PPVipCellReusableIdentifier";
+static NSString *const kPPVipHeaderReusableIdentifier   = @"PPVipHeaderReusableIdentifier";
 
 @interface PPVipViewController () <UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout>
 {
@@ -49,6 +51,7 @@ QBDefineLazyPropertyInitialization(PPColumnModel, response)
     _layoutCollectionView.dataSource = self;
     _layoutCollectionView.showsVerticalScrollIndicator = NO;
     [_layoutCollectionView registerClass:[PPTrailNormalCell class] forCellWithReuseIdentifier:kPPVipCellReusableIdentifier];
+    [_layoutCollectionView registerClass:[PPVipHeaderView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:kPPVipHeaderReusableIdentifier];
 
     [self.view addSubview:_layoutCollectionView];
     {
@@ -63,6 +66,19 @@ QBDefineLazyPropertyInitialization(PPColumnModel, response)
         [self loadData];
     }];
     [_layoutCollectionView PP_triggerPullToRefresh];
+    
+    if ([PPUtil currentVipLevel] < _vipLevel) {
+        [_layoutCollectionView PP_addVIPNotiRefreshWithHandler:^{
+            @strongify(self);
+            QBBaseModel *baseModel = [QBBaseModel getBaseModelWithRealColoumId:[NSNumber numberWithInteger:self.response.realColumnId]
+                                                                   channelType:[NSNumber numberWithInteger:self.response.type]
+                                                                     programId:nil
+                                                                   programType:nil
+                                                               programLocation:nil];
+            [self presentPayViewControllerWithBaseModel:baseModel];
+            [self->_layoutCollectionView PP_endPullToRefresh];
+        }];
+    }
     
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         if (self.response.programList == 0) {
@@ -108,8 +124,6 @@ QBDefineLazyPropertyInitialization(PPColumnModel, response)
         PPProgramModel *program = self.response.programList[indexPath.item];
         normalCell.imgUrlStr = program.coverImg;
         normalCell.titleStr = program.title;
-        normalCell.playCount = 1234;
-        normalCell.commentCount = 2345;
         normalCell.isVipCell = YES;
     }
     return normalCell;
@@ -130,6 +144,22 @@ QBDefineLazyPropertyInitialization(PPColumnModel, response)
 
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section {
     return UIEdgeInsetsMake(kWidth(20), kWidth(20), kWidth(20), kWidth(20));
+}
+
+- (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath {
+    if (kind == UICollectionElementKindSectionHeader && [PPUtil currentVipLevel] < _vipLevel) {
+        PPVipHeaderView *headerView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:kPPVipHeaderReusableIdentifier forIndexPath:indexPath];
+        headerView.vipLevel = _vipLevel;
+        return headerView;
+    }
+    return nil;
+}
+
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section {
+    if ([PPUtil currentVipLevel] < _vipLevel) {
+        return CGSizeMake(kScreenWidth, kWidth(40));
+    }
+    return CGSizeZero;
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {

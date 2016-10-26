@@ -242,7 +242,13 @@ QBDefineLazyPropertyInitialization(QBBaseModel, baseModel)
     _headerCell = [[PPPayHeaderCell alloc] init];
     _headerCell.vipLevel = [PPUtil currentVipLevel];
     
-    CGFloat height = [PPUtil currentVipLevel] == PPVipLevelNone ? ([PPUtil isIpad] ? kWidth(200) : kWidth(264)) : ([PPUtil isIpad] ? kWidth(200) : kWidth(364));
+    CGFloat height = 0;
+    if ([PPUtil deviceType] == PPDeviceType_iPhone4 || [PPUtil deviceType] == PPDeviceType_iPhone4S) {
+        height = [PPUtil currentVipLevel] == PPVipLevelNone ? kWidth(190) : kWidth(240);
+    } else {
+        height = [PPUtil currentVipLevel] == PPVipLevelNone ? ([PPUtil isIpad] ? kWidth(200) : kWidth(264)) : ([PPUtil isIpad] ? kWidth(200) : kWidth(364));
+    }
+    
     
     [self setLayoutCell:_headerCell cellHeight:height inRow:0 andSection:section];
 }
@@ -281,7 +287,12 @@ QBDefineLazyPropertyInitialization(QBBaseModel, baseModel)
     _introCell.attStr = [str getAttriCenterStringWithFont:[UIFont systemFontOfSize:[PPUtil isIpad] ? 30 : kWidth(30)] lineSpace:[PPUtil isIpad] ? 8 : kWidth(8) maxSize:CGSizeMake(kScreenWidth - kWidth(136), MAXFLOAT)];
     CGFloat cellHeight = [str getStringHeightWithFont:[UIFont systemFontOfSize:[PPUtil isIpad] ? 30 : kWidth(30)] lineSpace:[PPUtil isIpad] ? 8 : kWidth(8) maxSize:CGSizeMake(kScreenWidth - kWidth(136), MAXFLOAT)];
     
-    CGFloat height = [PPUtil currentVipLevel] == PPVipLevelNone ? ([PPUtil isIpad] ? 0 : kWidth(140)) : ([PPUtil isIpad] ? kWidth(120) : kWidth(160));
+    CGFloat height = 0;
+    if ([PPUtil deviceType] == PPDeviceType_iPhone4 || [PPUtil deviceType] == PPDeviceType_iPhone4S) {
+        height = [PPUtil currentVipLevel] == PPVipLevelNone ? kWidth(20) : kWidth(120);
+    } else {
+        height = [PPUtil currentVipLevel] == PPVipLevelNone ? ([PPUtil isIpad] ? 0 : kWidth(140)) : ([PPUtil isIpad] ? kWidth(120) : kWidth(160));
+    }
     
     [self setLayoutCell:_introCell cellHeight:cellHeight+height inRow:0 andSection:section];
 }

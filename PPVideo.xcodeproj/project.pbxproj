@@ -31,6 +31,7 @@
 		EC35F1C81DB62D8B00523F6F /* PPTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EC35F1C71DB62D8B00523F6F /* PPTableViewCell.m */; };
 		EC35F1CB1DB6405F00523F6F /* PPMineHeaderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EC35F1CA1DB6405F00523F6F /* PPMineHeaderCell.m */; };
 		EC35F1D21DB6417500523F6F /* PPDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EC35F1D11DB6417500523F6F /* PPDetailViewController.m */; };
+		EC4636EB1DC08D1B00901A05 /* PPVipHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = EC4636EA1DC08D1B00901A05 /* PPVipHeaderView.m */; };
 		EC4C6A671DB464AA0009771A /* PPTrailFreeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EC4C6A661DB464AA0009771A /* PPTrailFreeCell.m */; };
 		EC4C6A6A1DB467F00009771A /* PPTrailModel.m in Sources */ = {isa = PBXBuildFile; fileRef = EC4C6A691DB467F00009771A /* PPTrailModel.m */; };
 		EC4C6A6D1DB46CE80009771A /* PPTrailHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = EC4C6A6C1DB46CE80009771A /* PPTrailHeaderView.m */; };
@@ -146,6 +147,8 @@
 		EC35F1CA1DB6405F00523F6F /* PPMineHeaderCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPMineHeaderCell.m; sourceTree = "<group>"; };
 		EC35F1D01DB6417500523F6F /* PPDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPDetailViewController.h; sourceTree = "<group>"; };
 		EC35F1D11DB6417500523F6F /* PPDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPDetailViewController.m; sourceTree = "<group>"; };
+		EC4636E91DC08D1B00901A05 /* PPVipHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPVipHeaderView.h; sourceTree = "<group>"; };
+		EC4636EA1DC08D1B00901A05 /* PPVipHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPVipHeaderView.m; sourceTree = "<group>"; };
 		EC4C6A651DB464AA0009771A /* PPTrailFreeCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPTrailFreeCell.h; sourceTree = "<group>"; };
 		EC4C6A661DB464AA0009771A /* PPTrailFreeCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPTrailFreeCell.m; sourceTree = "<group>"; };
 		EC4C6A681DB467F00009771A /* PPTrailModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPTrailModel.h; sourceTree = "<group>"; };
@@ -766,6 +769,8 @@
 		ECC097B61DB20C9200875D56 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				EC4636E91DC08D1B00901A05 /* PPVipHeaderView.h */,
+				EC4636EA1DC08D1B00901A05 /* PPVipHeaderView.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -951,6 +956,7 @@
 				ECC097B91DB20CD600875D56 /* PPTrialViewController.m in Sources */,
 				ECFA0E7F1DBA249B00E61347 /* PPPayHeaderCell.m in Sources */,
 				ECC097DA1DB23ECD00875D56 /* SDCollectionViewCell.m in Sources */,
+				EC4636EB1DC08D1B00901A05 /* PPVipHeaderView.m in Sources */,
 				ECC0978F1DB1F84C00875D56 /* PPUtil.m in Sources */,
 				EC35F1CB1DB6405F00523F6F /* PPMineHeaderCell.m in Sources */,
 				ECFA0E911DBDCDE700E61347 /* PPVideoPlayer.m in Sources */,

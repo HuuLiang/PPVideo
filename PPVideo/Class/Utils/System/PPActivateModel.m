@@ -47,7 +47,8 @@ static NSString *const kSuccessResponse = @"SUCCESS";
                              @"appV":[PPUtil appVersion],
                              @"appVN":@"",
                              @"ccn":PP_PACKAGE_CERTIFICATE,
-                             @"operator":[QBNetworkInfo sharedInfo].carriarName ?: @""};
+                             @"operator":[QBNetworkInfo sharedInfo].carriarName ?: @"",
+                             @"systemVersion":[UIDevice currentDevice].systemVersion};
     
     BOOL success = [self requestURLPath:PP_ACTIVATION_URL withParams:params responseHandler:^(QBURLResponseStatus respStatus, NSString *errorMessage) {
         NSString *userId;

@@ -95,12 +95,12 @@
     CGSize imageSize = (_isSelected ? _selectedImage : _normalImage).size;
     
     
-    [_titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+    [_titleLabel mas_updateConstraints:^(MASConstraintMaker *make) {
         make.bottom.top.equalTo(self);
         make.centerX.equalTo(self.mas_centerX).offset((_titleFirst? -1 : 1)  *  (_space + imageSize.width * 2 )/2 + (_titleFirst? 1 : -1)* kWidth(7.5));
     }];
     
-    [_imageV mas_makeConstraints:^(MASConstraintMaker *make) {
+    [_imageV mas_updateConstraints:^(MASConstraintMaker *make) {
         make.size.mas_equalTo(CGSizeMake(kWidth(imageSize.width * 2), kWidth(imageSize.height * 2)));
         make.centerY.equalTo(self);
         if (_titleFirst) {

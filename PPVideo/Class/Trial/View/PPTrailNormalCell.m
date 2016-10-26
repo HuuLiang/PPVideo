@@ -42,7 +42,7 @@
         _titleLabel = [[UILabel alloc] init];
         _titleLabel.textColor = [UIColor colorWithHexString:@"#ffffff"];
         _titleLabel.font = [UIFont systemFontOfSize:[PPUtil isIpad] ? 22 : kWidth(28)];
-        [self addSubview:_titleLabel];
+        [_shadewImgV addSubview:_titleLabel];
         
         UIImage *playImg = [UIImage imageNamed:@"trail_normal_play"];
         _playImgV = [[UIImageView alloc] initWithImage:playImg];
@@ -134,6 +134,12 @@
         [_shadewImgV mas_updateConstraints:^(MASConstraintMaker *make) {
             make.height.mas_equalTo(self.frame.size.width * shadowImg.size.height / shadowImg.size.width);
         }];
+        
+        [_titleLabel mas_updateConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(_shadewImgV).offset(kWidth(10));
+
+        }];
+        
         [_playImgV removeFromSuperview];
         [_playLabel removeFromSuperview];
         [_commentImgV removeFromSuperview];
