@@ -167,7 +167,6 @@ static NSString *const kAliPaySchemeUrl = @"paoPaoYingyuanAliPayUrlScheme";
 #pragma mark - AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-//    [PPUtil registerVip:PPVipLevelVipA];
     
     [QBNetworkingConfiguration defaultConfiguration].RESTAppId = PP_REST_APPID;
     [QBNetworkingConfiguration defaultConfiguration].RESTpV = @([PP_REST_PV integerValue]);

@@ -312,6 +312,9 @@ QBDefineLazyPropertyInitialization(PPSearchModel, searchModel)
         @strongify(self);
         if (success) {
             if (obj.count > 0) {
+                if ([self->_searchBar isFirstResponder]) {
+                    [self->_searchBar resignFirstResponder];
+                }
                 PPSearchResultViewController *resultVC = [[PPSearchResultViewController alloc] initWithProgramList:obj searchWords:tagStr ColumnId:self.response.columnId];
                 [self.navigationController pushViewController:resultVC animated:YES];
             } else {
