@@ -26,7 +26,7 @@
         _view = [[UIView alloc] init];
         _view.backgroundColor = [UIColor clearColor];
         _view.layer.cornerRadius = kWidth(8);
-        _view.layer.borderColor = [UIColor colorWithHexString:@"#ffffff"].CGColor;
+        _view.layer.borderColor = [[UIColor colorWithHexString:@"#ffffff"] colorWithAlphaComponent:0.57].CGColor;
         _view.layer.borderWidth = 1;
         _view.layer.masksToBounds = YES;
         [self addSubview:_view];
@@ -41,7 +41,8 @@
         _textField.returnKeyType = UIReturnKeySend;
         _textField.delegate = self;
         _textField.placeholder = @"期待你的神评";
-        [_textField setValue:[UIColor whiteColor] forKeyPath:@"_placeholderLabel.textColor"];
+        _textField.font = [UIFont systemFontOfSize:[PPUtil isIpad] ? 30 : kWidth(30)];
+        [_textField setValue:[[UIColor whiteColor] colorWithAlphaComponent:0.57] forKeyPath:@"_placeholderLabel.textColor"];
         [_view addSubview:_textField];
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleKeyBoardActionHide:) name:UIKeyboardWillHideNotification object:nil];
@@ -56,9 +57,9 @@
                 make.centerY.equalTo(_view);
                 make.left.equalTo(_view.mas_left).offset(kWidth(12));
                 if ([PPUtil isIpad]) {
-                    make.size.mas_equalTo(CGSizeMake(40, 40));
+                    make.size.mas_equalTo(CGSizeMake(30, 34));
                 } else {
-                    make.size.mas_equalTo(CGSizeMake(kWidth(48), kWidth(48)));
+                    make.size.mas_equalTo(CGSizeMake(kWidth(30), kWidth(34)));
                 }
             }];
             
@@ -97,12 +98,12 @@
     return YES;
 }
 
-- (void)textFieldDidBeginEditing:(UITextField *)textField {
-    [_textField setValue:[UIColor grayColor] forKeyPath:@"_placeholderLabel.textColor"];
-}
-
-- (void)textFieldDidEndEditing:(UITextField *)textField {
-     [_textField setValue:[UIColor whiteColor] forKeyPath:@"_placeholderLabel.textColor"];
-}
+//- (void)textFieldDidBeginEditing:(UITextField *)textField {
+//    [_textField setValue:[UIColor grayColor] forKeyPath:@"_placeholderLabel.textColor"];
+//}
+//
+//- (void)textFieldDidEndEditing:(UITextField *)textField {
+//     [_textField setValue:[UIColor whiteColor] forKeyPath:@"_placeholderLabel.textColor"];
+//}
 
 @end

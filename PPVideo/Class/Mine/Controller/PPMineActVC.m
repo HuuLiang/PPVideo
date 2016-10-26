@@ -127,7 +127,7 @@
     cell.accessoryType = UITableViewCellAccessoryNone;
     
     UILabel *aotuLabel = [[UILabel alloc] init];
-    aotuLabel.text = @"或方法二：输入支付订单号自助激活";
+    aotuLabel.text = @"方法二：输入支付订单号自助激活";
     aotuLabel.textColor = [UIColor colorWithHexString:@"#333333"];
     aotuLabel.font = [UIFont systemFontOfSize:kWidth(32)];
     aotuLabel.textAlignment = NSTextAlignmentCenter;
@@ -154,7 +154,7 @@
     _textField.textColor = [UIColor colorWithHexString:@"#000000"];
     _textField.returnKeyType = UIReturnKeyDone;
     _textField.delegate = self;
-    _textField.placeholder = @"请输入正确的订单号";
+    _textField.placeholder = @"  请输入正确的订单号";
     _textField.layer.borderColor = [[UIColor colorWithHexString:@"#000000"] colorWithAlphaComponent:0.3].CGColor;
     _textField.layer.borderWidth = 1;
     _textField.layer.masksToBounds = YES;
@@ -162,7 +162,7 @@
     [cell.contentView addSubview:_textField];
     
     _nonAutoBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [_nonAutoBtn setTitle:@"提交订单" forState:UIControlStateNormal];
+    [_nonAutoBtn setTitle:@"提交激活" forState:UIControlStateNormal];
     [_nonAutoBtn setTitleColor:[UIColor colorWithHexString:@"#ffffff"] forState:UIControlStateNormal];
     _nonAutoBtn.backgroundColor = [UIColor colorWithHexString:@"#FF680D"];
     _nonAutoBtn.titleLabel.font = [UIFont systemFontOfSize:kWidth(34)];

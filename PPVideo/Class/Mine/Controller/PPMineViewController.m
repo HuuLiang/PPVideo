@@ -17,7 +17,7 @@
 #import "PPMineVipVC.h"
 
 static NSString *const kMoreCellReusableIdentifier = @"MoreCellReusableIdentifier";
-#define appCellWidth (kScreenWidth-kWidth(20)*4)/3
+#define appCellWidth (kScreenWidth-kWidth(40)*3)/3
 
 @interface PPMineViewController () <UICollectionViewDataSource,UICollectionViewDelegate>
 {
@@ -201,9 +201,9 @@ QBDefineLazyPropertyInitialization(PPAppModel, appModel)
 
 - (UICollectionViewLayout *)createLayout {
     UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
-    layout.minimumLineSpacing = kWidth(20);
+    layout.minimumLineSpacing = kWidth(44);
     layout.minimumInteritemSpacing = kWidth(20);
-    layout.itemSize = CGSizeMake((long)appCellWidth, appCellWidth+kWidth(35));
+    layout.itemSize = CGSizeMake((long)appCellWidth, appCellWidth+kWidth(40));
     layout.sectionInset = UIEdgeInsetsMake(kWidth(40), kWidth(20), kWidth(20), kWidth(20));
     return layout;
 }
@@ -228,7 +228,7 @@ QBDefineLazyPropertyInitialization(PPAppModel, appModel)
     }
     NSInteger lineCount = (self.dataSource.count % 3 == 0 ? self.dataSource.count / 3 : self.dataSource.count / 3 + 1 );
     
-    [self setLayoutCell:_appCell cellHeight:(appCellWidth+kWidth(55))* lineCount + kWidth(40) inRow:0 andSection:section];
+    [self setLayoutCell:_appCell cellHeight:(appCellWidth+kWidth(40))* lineCount + kWidth(44) + kWidth(60)  inRow:0 andSection:section];
     
     [self.layoutTableView reloadData];
 }

@@ -18,6 +18,8 @@
     
     UIImageView     *_commentImgV;
     UILabel         *_commentLabel;
+    
+    UIImageView     *_freeTagImgV;
 }
 @end
 
@@ -55,6 +57,9 @@
         _commentLabel.textColor = [UIColor colorWithHexString:@"#666666"];
         _commentLabel.font = [UIFont systemFontOfSize:kWidth(22)];
         [self addSubview:_commentLabel];
+        
+        _freeTagImgV = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"trail_free_tag"]];
+        [self addSubview:_freeTagImgV];
         
         {
             [_imgV mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -95,6 +100,10 @@
                 make.height.mas_equalTo(kWidth(32));
             }];
             
+            [_freeTagImgV mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.left.top.equalTo(self);
+                make.size.mas_equalTo(CGSizeMake(kWidth(102), kWidth(102)));
+            }];
         }
     }
     return self;

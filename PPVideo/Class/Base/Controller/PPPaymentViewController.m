@@ -278,7 +278,7 @@ QBDefineLazyPropertyInitialization(QBBaseModel, baseModel)
         str = vipBIntroStr;
     }
     
-    _introCell.attStr = [str getAttriStringWithFont:[UIFont systemFontOfSize:[PPUtil isIpad] ? 30 : kWidth(30)] lineSpace:[PPUtil isIpad] ? 8 : kWidth(8) maxSize:CGSizeMake(kScreenWidth - kWidth(136), MAXFLOAT)];
+    _introCell.attStr = [str getAttriCenterStringWithFont:[UIFont systemFontOfSize:[PPUtil isIpad] ? 30 : kWidth(30)] lineSpace:[PPUtil isIpad] ? 8 : kWidth(8) maxSize:CGSizeMake(kScreenWidth - kWidth(136), MAXFLOAT)];
     CGFloat cellHeight = [str getStringHeightWithFont:[UIFont systemFontOfSize:[PPUtil isIpad] ? 30 : kWidth(30)] lineSpace:[PPUtil isIpad] ? 8 : kWidth(8) maxSize:CGSizeMake(kScreenWidth - kWidth(136), MAXFLOAT)];
     
     CGFloat height = [PPUtil currentVipLevel] == PPVipLevelNone ? ([PPUtil isIpad] ? 0 : kWidth(140)) : ([PPUtil isIpad] ? kWidth(120) : kWidth(160));

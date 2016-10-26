@@ -36,7 +36,7 @@
         [self addSubview:_imgV];
         
         _tagLabel = [[UILabel alloc] init];
-        _tagLabel.font = [UIFont systemFontOfSize:[PPUtil isIpad] ? 24 :kWidth(24)];
+        _tagLabel.font = [UIFont systemFontOfSize:[PPUtil isIpad] ? 28 :kWidth(28)];
         _tagLabel.textAlignment = NSTextAlignmentCenter;
         _tagLabel.textColor = [UIColor colorWithHexString:@"#ffffff"];
         _tagLabel.layer.cornerRadius = kWidth(8);

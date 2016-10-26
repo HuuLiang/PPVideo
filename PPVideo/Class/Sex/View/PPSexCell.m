@@ -31,7 +31,7 @@
     if (self) {
         
         self.backgroundColor = [UIColor colorWithHexString:@"#ffffff"];
-        self.layer.shadowColor = [UIColor darkGrayColor].CGColor;
+        self.layer.shadowColor = [[UIColor colorWithHexString:@"#000000"] colorWithAlphaComponent:0.3].CGColor;
         self.layer.shadowOffset = CGSizeMake(0, 1);
         self.layer.shadowRadius = 1.0f;
         self.layer.shadowOpacity = 0.5f;
@@ -45,7 +45,7 @@
         _tagLabel.font = [UIFont systemFontOfSize:kWidth(24)];
         _tagLabel.textAlignment = NSTextAlignmentCenter;
         _tagLabel.textColor = [UIColor colorWithHexString:@"#ffffff"];
-        _tagLabel.layer.cornerRadius = kWidth(8);
+        _tagLabel.layer.cornerRadius = kWidth(5);
         _tagLabel.layer.masksToBounds = YES;
         [self addSubview:_tagLabel];
         
@@ -79,9 +79,9 @@
             }];
             
             [_tagLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.top.equalTo(self).offset(kWidth(20));
-                make.right.equalTo(self.mas_right).offset(-kWidth(20));
-                make.size.mas_equalTo(CGSizeMake(kWidth(88), kWidth(40)));
+                make.top.equalTo(self).offset(kWidth(15));
+                make.right.equalTo(self.mas_right).offset(-kWidth(15));
+                make.size.mas_equalTo(CGSizeMake(kWidth(78), kWidth(36)));
             }];
             
             [_titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {

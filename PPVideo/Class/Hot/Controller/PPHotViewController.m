@@ -33,6 +33,7 @@ typedef NS_ENUM(NSInteger ,PPHotSection) {
 {
     UICollectionView *_layoutCollectionView;
     UISearchBar *_searchBar;
+    PPHotContentHeaderView *headerView;
     BOOL _loadMoreTags;
 }
 @property (nonatomic) PPHotModel *hotModel;
@@ -114,6 +115,7 @@ QBDefineLazyPropertyInitialization(PPSearchModel, searchModel)
             self.response = obj;
             _loadMoreTags = NO;
             [_layoutCollectionView reloadData];
+            self->headerView.selectedMoreBth = NO;
         }
         
     }];
@@ -233,12 +235,12 @@ QBDefineLazyPropertyInitialization(PPSearchModel, searchModel)
     if (kind == UICollectionElementKindSectionHeader) {
         if (indexPath.section < PPHotSectionCount) {
             if (indexPath.section == PPHotSectionTag) {
-                PPHotTagHeaderView *headerView = [collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:kPPHotTagHeaderViewReusableIdentifier forIndexPath:indexPath];
-                headerView.titleStr = @"热搜标签";
-                headerView.titleColorStr = @"#666666";
-                return headerView;
+                PPHotTagHeaderView *tagHeaderView = [collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:kPPHotTagHeaderViewReusableIdentifier forIndexPath:indexPath];
+                tagHeaderView.titleStr = @"热搜标签";
+                tagHeaderView.titleColorStr = @"#666666";
+                return tagHeaderView;
             } else if (indexPath.section == PPHotSectionContent) {
-                PPHotContentHeaderView *headerView = [collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:kPPHotContentHeaderViewReusableIdentifier forIndexPath:indexPath];
+                headerView = [collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:kPPHotContentHeaderViewReusableIdentifier forIndexPath:indexPath];
                 headerView.titleStr = @"精品推荐";
                 headerView.titleColorStr = @"#333333";
                 @weakify(self);

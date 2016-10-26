@@ -25,7 +25,7 @@
         
         _title = [[UILabel alloc] init];
         _title.textColor = [UIColor colorWithHexString:@"#333333"];
-        _title.font = [UIFont systemFontOfSize:[PPUtil isIpad] ? 38 : kWidth(38)];
+        _title.font = [UIFont boldSystemFontOfSize:[PPUtil isIpad] ? 38 : kWidth(38)];
         _title.textAlignment = NSTextAlignmentCenter;
         [self.contentView addSubview:_title];
         

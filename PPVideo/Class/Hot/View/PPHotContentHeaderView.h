@@ -17,5 +17,6 @@ typedef void(^isSelected)(void);
 @property (nonatomic) NSString *titleStr;
 @property (nonatomic) NSString *titleColorStr;
 
+@property (nonatomic) BOOL selectedMoreBth;
 
 @end

@@ -39,7 +39,7 @@
         
         _title = [[UILabel alloc] init];
         _title.textAlignment = NSTextAlignmentCenter;
-        _title.font = [UIFont systemFontOfSize:kWidth(28)];
+        _title.font = [UIFont systemFontOfSize:kWidth(34)];
         _title.textColor = [UIColor colorWithHexString:@"#333333"];
         [self addSubview:_title];
         
@@ -64,7 +64,7 @@
             }];
             
             [_title mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.top.equalTo(_bgImgv.mas_bottom);
+                make.top.equalTo(_bgImgv.mas_bottom).offset(kWidth(5));
                 make.bottom.left.right.equalTo(self);
             }];
             

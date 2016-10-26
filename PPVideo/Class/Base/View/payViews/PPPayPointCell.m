@@ -30,7 +30,7 @@
         _frameView = [[UIView alloc] init];
         _frameView.layer.cornerRadius = [PPUtil isIpad] ? 10 : kWidth(10);
         _frameView.layer.borderColor = [UIColor colorWithHexString:@"#B854B4"].CGColor;
-        _frameView.layer.borderWidth = 1.f;
+        _frameView.layer.borderWidth = 2.f;
         _frameView.layer.masksToBounds = YES;
         [self.contentView addSubview:_frameView];
         
@@ -42,12 +42,12 @@
         
         _subTitle = [[UILabel alloc] init];
         _subTitle.textColor = [UIColor colorWithHexString:@"#333333"];
-        _subTitle.font = [UIFont systemFontOfSize:[PPUtil isIpad] ? 32 : kWidth(32)];
+        _subTitle.font = [UIFont systemFontOfSize:[PPUtil isIpad] ? 28 : kWidth(28)];
         _subTitle.textAlignment = NSTextAlignmentCenter;
         [_frameView addSubview:_subTitle];
         
         _moneyLabel = [[UILabel alloc] init];
-        _moneyLabel.textColor = [UIColor colorWithHexString:@"#E19619"];
+        _moneyLabel.textColor = [UIColor colorWithHexString:@"#FF5722"];
         _moneyLabel.font = [UIFont systemFontOfSize:[PPUtil isIpad] ? 36 : kWidth(36)];
         _moneyLabel.textAlignment = NSTextAlignmentRight;
         [_frameView addSubview:_moneyLabel];
@@ -94,19 +94,19 @@
     if (vipLevel == PPVipLevelVipA) {
         _title.text = @"黄金会员";
         _subTitle.text = @"可观看上百部完整版爽片";
-        _moneyLabel.text = [NSString stringWithFormat:@"%ld",[PPSystemConfigModel sharedModel].payhjAmount/100];
+        _moneyLabel.text = [NSString stringWithFormat:@"¥%ld",[PPSystemConfigModel sharedModel].payhjAmount/100];
     } else if (vipLevel == PPVipLevelVipB) {
         _title.text = [PPUtil currentVipLevel] == PPVipLevelVipA ? @"升级为钻石会员" : @"钻石会员";
         _subTitle.text = @"上千部高清限制级精彩视频";
         if ([PPUtil currentVipLevel] == PPVipLevelNone) {
-            _moneyLabel.text = [NSString stringWithFormat:@"%ld",[PPSystemConfigModel sharedModel].payzsAmount/100+[PPSystemConfigModel sharedModel].payhjAmount/100];
+            _moneyLabel.text = [NSString stringWithFormat:@"¥%ld",[PPSystemConfigModel sharedModel].payzsAmount/100+[PPSystemConfigModel sharedModel].payhjAmount/100];
         } else {
-            _moneyLabel.text = [NSString stringWithFormat:@"%ld",[PPSystemConfigModel sharedModel].payzsAmount/100];
+            _moneyLabel.text = [NSString stringWithFormat:@"¥%ld",[PPSystemConfigModel sharedModel].payzsAmount/100];
         }
     } else if (vipLevel == PPVipLevelVipC) {
         _title.text = @"升级为黑金会员";
         _subTitle.text = @"享日本最新超清AV大片";
-        _moneyLabel.text = [NSString stringWithFormat:@"%ld",[PPSystemConfigModel sharedModel].payAmount/100];
+        _moneyLabel.text = [NSString stringWithFormat:@"¥%ld",[PPSystemConfigModel sharedModel].payAmount/100];
     }
 }
 
@@ -114,9 +114,9 @@
     _isSelected = isSelected;
     
     if (_isSelected) {
-        _title.textColor = [UIColor colorWithHexString:@"#333333"];
-        _subTitle.textColor = [UIColor colorWithHexString:@"#333333"];
-        _moneyLabel.textColor = [UIColor colorWithHexString:@"#E19619"];
+        _title.textColor = [UIColor colorWithHexString:@"#B854B4"];
+        _subTitle.textColor = [UIColor colorWithHexString:@"#B854B4"];
+        _moneyLabel.textColor = [UIColor colorWithHexString:@"#FF5722"];
         _seletedImgV.image = [UIImage imageNamed:@"pay_selected"];
         _frameView.layer.borderColor = [UIColor colorWithHexString:@"#B854B4"].CGColor;
     } else {

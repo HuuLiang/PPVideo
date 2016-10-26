@@ -220,6 +220,17 @@ QBDefineLazyPropertyInitialization(PPDetailResponse, response)
     shadowCell.selectionStyle = UITableViewCellSelectionStyleNone;
     shadowCell.accessoryType = UITableViewCellAccessoryNone;
     shadowCell.backgroundColor = [UIColor colorWithHexString:@"#ffffff"];
+    UILabel *label = [[UILabel alloc] init];
+    label.text = @"热门评论";
+    label.font = [UIFont systemFontOfSize:[PPUtil isIpad] ? 34 : kWidth(34)];
+    label.textColor = [UIColor colorWithHexString:@"#333333"];
+    [shadowCell addSubview:label];
+    {
+        [label mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.edges.equalTo(shadowCell);
+        }];
+    }
+    
     [self setLayoutCell:shadowCell cellHeight:kWidth(88) inRow:0 andSection:section++];
     
     

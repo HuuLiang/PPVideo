@@ -19,6 +19,8 @@
     
     UIImageView     *_commentImgV;
     UILabel         *_commentLabel;
+    
+    UIImageView     *_freeTagImgV;
 }
 
 @end
@@ -127,14 +129,26 @@
 
 - (void)setIsVipCell:(BOOL)isVipCell {
     if (isVipCell) {
-        _shadewImgV.image = [UIImage imageNamed:@"trail_normal_shadow"];
+        UIImage *shadowImg = [UIImage imageNamed:@"trail_short_shadow"];
+        _shadewImgV.image = shadowImg;
         [_shadewImgV mas_updateConstraints:^(MASConstraintMaker *make) {
-            make.height.mas_equalTo(kWidth(40));
+            make.height.mas_equalTo(self.frame.size.width * shadowImg.size.height / shadowImg.size.width);
         }];
         [_playImgV removeFromSuperview];
         [_playLabel removeFromSuperview];
         [_commentImgV removeFromSuperview];
         [_commentLabel removeFromSuperview];
+    }
+}
+
+- (void)setIsFreeCell:(BOOL)isFreeCell {
+    if (isFreeCell) {
+        _freeTagImgV = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"trail_free_tag"]];
+        [self addSubview:_freeTagImgV];
+        [_freeTagImgV mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.top.equalTo(self);
+            make.size.mas_equalTo(CGSizeMake(kWidth(102), kWidth(102)));
+        }];
     }
 }
 

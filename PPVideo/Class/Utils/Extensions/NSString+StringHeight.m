@@ -26,10 +26,22 @@
 - (NSDictionary *)getAttrsWithFont:(UIFont *)font lineSpace:(CGFloat)lineSpace {
     NSMutableParagraphStyle *style = [NSMutableParagraphStyle new];
     style.lineSpacing = lineSpace;
-    style.alignment = NSTextAlignmentCenter;
     NSDictionary *attrs = @{NSFontAttributeName : font,
                             NSParagraphStyleAttributeName:style};
     return  attrs;
+}
+
+- (NSAttributedString *)getAttriCenterStringWithFont:(UIFont *)font lineSpace:(CGFloat)lineSpace maxSize:(CGSize)size {
+    
+    NSMutableParagraphStyle *style = [NSMutableParagraphStyle new];
+    style.lineSpacing = lineSpace;
+    style.alignment = NSTextAlignmentCenter;
+    NSDictionary *attrs = @{NSFontAttributeName : font,
+                            NSParagraphStyleAttributeName:style};
+    
+    NSAttributedString *attriStr = [[NSAttributedString alloc] initWithString:self
+                                                                   attributes:attrs];
+    return attriStr;
 }
 
 @end

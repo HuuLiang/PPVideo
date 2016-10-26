@@ -55,4 +55,10 @@
     return self;
 }
 
+- (void)setSelectedMoreBtn:(BOOL)selectedMoreBtn {
+    if (self->_graphicBtn) {
+        self->_graphicBtn.isSelected = selectedMoreBtn;
+    }
+}
+
 @end

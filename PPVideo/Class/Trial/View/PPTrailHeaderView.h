@@ -13,5 +13,6 @@ typedef void(^touchBtn)(void);
 @interface PPTrailHeaderView : UICollectionReusableView
 
 @property (nonatomic) touchBtn selected;
+@property (nonatomic) BOOL selectedMoreBtn;
 
 @end

@@ -103,4 +103,10 @@
     _titleLabel.textColor = [UIColor colorWithHexString:titleColorStr];
 }
 
+- (void)setSelectedMoreBth:(BOOL)selectedMoreBth {
+    if (self->_graphicBtn) {
+        self->_graphicBtn.isSelected = selectedMoreBth;
+    }
+}
+
 @end

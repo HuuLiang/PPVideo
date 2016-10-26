@@ -119,12 +119,17 @@ QBDefineLazyPropertyInitialization(NSMutableArray, childVCs)
     
     PPSexViewController *sexVC = [[PPSexViewController alloc] initWithTitle:@"撸点"];
     UINavigationController *sexNav = [[UINavigationController alloc] initWithRootViewController:sexVC];
-    sexNav.tabBarItem = [[UITabBarItem alloc] initWithTitle:[PPUtil currentVipLevel] == PPVipLevelVipC ? @"撸点" : nil
-                                                       image:[[UIImage imageNamed:[PPUtil currentVipLevel] == PPVipLevelVipC ? @"tabbar_sex_normal" : @"tabbar_sex" ] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]
-                                               selectedImage:[[UIImage imageNamed:[PPUtil currentVipLevel] == PPVipLevelVipC ? @"tabbar_sex_selected" : @"tabbar_sex"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
+    UIImage *image = nil;
     if ([PPUtil currentVipLevel] != PPVipLevelVipC) {
         sexNav.tabBarItem.imageInsets = UIEdgeInsetsMake(2, 0, -2, 0);
+        image = [[UIImage imageNamed:@"tabbar_sex"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    } else {
+        image = [UIImage imageNamed:@"tabbar_sex_normal"];
     }
+    sexNav.tabBarItem = [[UITabBarItem alloc] initWithTitle:[PPUtil currentVipLevel] == PPVipLevelVipC ? @"撸点" : nil
+                                                       image:image
+                                               selectedImage:[[UIImage imageNamed:[PPUtil currentVipLevel] == PPVipLevelVipC ? @"tabbar_sex_selected" : @"tabbar_sex"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
+
     
     PPHotViewController *hotVC = [[PPHotViewController alloc] initWithTitle:@"热搜"];
     UINavigationController *hotNav = [[UINavigationController alloc] initWithRootViewController:hotVC];

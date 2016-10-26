@@ -55,7 +55,7 @@ static CGFloat const kAnimateDuration = 1;
     self.backgroundColor    = [UIColor clearColor];
     self.layer.cornerRadius = CGRectGetWidth(self.frame) / 2;
     self.layer.borderColor  = [UIColor whiteColor].CGColor;
-    self.layer.borderWidth  = 2;
+    self.layer.borderWidth  = kWidth(1.5);
 }
 
 
@@ -74,7 +74,7 @@ static CGFloat const kAnimateDuration = 1;
     [UIView animateWithDuration:kAnimateDuration delay:0 usingSpringWithDamping:.5 initialSpringVelocity:-20 options:UIViewAnimationOptionCurveLinear animations:^{
         self.backgroundColor = _dotColor;
 //        self.transform = CGAffineTransformMakeScale(1.4, 1.4);
-        self.frame = CGRectMake(self.frame.origin.x - 6, self.frame.origin.y, 20, 10);
+        self.frame = CGRectMake(self.frame.origin.x - kWidth(6), self.frame.origin.y, kWidth(24), kWidth(12));
     } completion:nil];
 }
 
@@ -83,7 +83,7 @@ static CGFloat const kAnimateDuration = 1;
     [UIView animateWithDuration:kAnimateDuration delay:0 usingSpringWithDamping:.5 initialSpringVelocity:0 options:UIViewAnimationOptionCurveLinear animations:^{
         self.backgroundColor = [UIColor clearColor];
         self.transform = CGAffineTransformIdentity;
-        self.frame = CGRectMake(self.frame.origin.x + 6, self.frame.origin.y, 10, 10);
+        self.frame = CGRectMake(self.frame.origin.x + kWidth(6), self.frame.origin.y, kWidth(12), kWidth(12));
     } completion:nil];
 }
 

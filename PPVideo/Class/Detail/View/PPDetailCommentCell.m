@@ -66,7 +66,7 @@
             
             [_timeImgV mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.centerY.equalTo(_userImgV);
-                make.right.equalTo(self.mas_right).offset(-kWidth(180));
+                make.right.equalTo(self.mas_right).offset(-kWidth(80));
                 make.size.mas_equalTo(CGSizeMake(kWidth(40), kWidth(40)));
             }];
             

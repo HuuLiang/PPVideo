@@ -16,5 +16,6 @@
 @property (nonatomic) NSInteger commentCount;
 
 @property (nonatomic) BOOL isVipCell;
+@property (nonatomic) BOOL isFreeCell;
 
 @end

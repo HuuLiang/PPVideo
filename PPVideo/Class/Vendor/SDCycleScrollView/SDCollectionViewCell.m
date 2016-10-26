@@ -111,7 +111,7 @@
         CGFloat titleLabelW = self.sd_width;
         CGFloat titleLabelH = _titleLabelHeight;
         CGFloat titleLabelX = 0;
-        CGFloat titleLabelY = self.sd_height - titleLabelH * 1.5;
+        CGFloat titleLabelY = self.sd_height - titleLabelH * 2;
         _titleLabel.frame = CGRectMake(titleLabelX, titleLabelY, titleLabelW, titleLabelH);
 //        _titleLabel.center = CGPointMake(self.sd_width/2, titleLabelY + titleLabelH/2);
     }

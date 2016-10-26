@@ -70,7 +70,7 @@
             
             [playView mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.left.right.bottom.equalTo(self);
-                make.height.mas_equalTo(kWidth(kWidth(54)));
+                make.height.mas_equalTo(kWidth(54));
             }];
             
             [_startImgV mas_makeConstraints:^(MASConstraintMaker *make) {

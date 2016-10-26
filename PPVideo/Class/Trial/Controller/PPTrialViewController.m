@@ -36,7 +36,7 @@ typedef NS_ENUM(NSInteger ,PPTrailSection) {
     
     SDCycleScrollView *_bannerView;
     UICollectionViewCell *_bannerCell;
-    
+    PPTrailHeaderView *headerView;
     BOOL _refreshFree;
 }
 @property (nonatomic) PPTrailModel *trailModel;
@@ -55,10 +55,11 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
     _bannerView.bannerImageViewContentMode = UIViewContentModeScaleAspectFill;
     _bannerView.autoScrollTimeInterval = 3;
     _bannerView.titleLabelBackgroundColor = [UIColor clearColor];
-    _bannerView.titleLabelTextFont = [UIFont systemFontOfSize:[PPUtil isIpad] ? 20 : kWidth(32)];
+    _bannerView.titleLabelTextFont = [UIFont systemFontOfSize:[PPUtil isIpad] ? kWidth(28) : kWidth(34)];
+    _bannerView.titleLabelHeight = [PPUtil isIpad] ? kWidth(28) : kWidth(34);
     _bannerView.titleLabelTextColor = [UIColor colorWithHexString:@"#ffffff"];
     _bannerView.pageControlAliment = SDCycleScrollViewPageContolAlimentCenter;
-    _bannerView.pageControlDotSize = CGSizeMake(10, 10);
+    _bannerView.pageControlDotSize = CGSizeMake(kWidth(12), kWidth(12));
     _bannerView.pageControlStyle = SDCycleScrollViewPageContolStyleAnimated;
     _bannerView.delegate = self;
     _bannerView.backgroundColor = [UIColor colorWithHexString:@"#000000"];
@@ -123,6 +124,7 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
             [self.dataSource addObjectsFromArray:obj];
             [self refreshBannerView];
             [_layoutCollectionView reloadData];
+            self->headerView.selectedMoreBtn = NO;
         }
     }];
 
@@ -196,8 +198,11 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
             PPProgramModel *program = column.programList[indexPath.row];
             freeCell.imgUrlStr = program.coverImg;
             freeCell.titleStr = program.title;
-            freeCell.playCount = 1234;
-            freeCell.commentCount = 2345;
+            NSArray *array = [program.spare componentsSeparatedByString:@"|"];
+            if (array.count > 0) {
+                freeCell.playCount = [[array firstObject] integerValue];
+                freeCell.commentCount = [[array lastObject] integerValue];
+            }
         }
         return freeCell;
     } else if (indexPath.section == PPTrailSectionAd) {
@@ -210,8 +215,12 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
             PPProgramModel *program = column.programList[indexPath.row];
             normalCell.imgUrlStr = program.coverImg;
             normalCell.titleStr = program.title;
-            normalCell.playCount = 1234;
-            normalCell.commentCount = 2345;
+            NSArray *array = [program.spare componentsSeparatedByString:@"|"];
+            if (array.count > 0) {
+                normalCell.playCount = [[array firstObject] integerValue];
+                normalCell.commentCount = [[array lastObject] integerValue];
+            }
+            normalCell.isFreeCell = YES;
         }
         return normalCell;
     }
@@ -254,7 +263,7 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
 - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath {
     if (kind == UICollectionElementKindSectionHeader) {
         if (indexPath.section == PPTrailSectionAd) {
-            PPTrailHeaderView *headerView = [collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:kPPTrailHeaderViewReusableIdentifier forIndexPath:indexPath];
+            headerView = [collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:kPPTrailHeaderViewReusableIdentifier forIndexPath:indexPath];
             @weakify(self);
             headerView.selected = ^{
                 @strongify(self);
