@@ -10,7 +10,7 @@
 #import <QBPaymentManager.h>
 #import "PPPaymentViewController.h"
 
-#define upVipLevelTimeFormat   @"MMHH"
+#define upVipLevelTimeFormat   @"ddHH"
 
 @implementation PPAutoActManager
 + (instancetype)sharedManager {

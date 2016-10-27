@@ -185,6 +185,7 @@ QBDefineLazyPropertyInitialization(NSMutableDictionary, reloadDic)
         _footerView.moreAction = ^{
             @strongify(self);
             if ([PPUtil currentVipLevel] == PPVipLevelNone) {
+                [[PPHudManager manager] showHudWithText:@"升级VIP可观看更多"];
                 PPColumnModel *column = self.dataSource[indexPath.section];
                 QBBaseModel *baseModel = [QBBaseModel getBaseModelWithRealColoumId:[NSNumber numberWithInteger:column.realColumnId]
                                                                        channelType:[NSNumber numberWithInteger:column.type]

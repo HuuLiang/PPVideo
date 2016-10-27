@@ -89,6 +89,7 @@ QBDefineLazyPropertyInitialization(NSMutableArray, childVCs)
     if ([PPUtil currentVipLevel] == PPVipLevelNone) {
         PPTrialViewController *trialVC = [[PPTrialViewController alloc] initWithTitle:titleDic[@([PPUtil currentVipLevel])]];
         UINavigationController *trialNav = [[UINavigationController alloc] initWithRootViewController:trialVC];
+        
         trialNav.tabBarItem = [[UITabBarItem alloc] initWithTitle:trialVC.title
                                                             image:[UIImage imageNamed:[NSString stringWithFormat:@"tabbar_%@_normal",photoDic[@([PPUtil currentVipLevel])]]]
                                                     selectedImage:[[UIImage imageNamed:[NSString stringWithFormat:@"tabbar_%@_selected",photoDic[@([PPUtil currentVipLevel])]]] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
@@ -98,8 +99,8 @@ QBDefineLazyPropertyInitialization(NSMutableArray, childVCs)
     PPVipViewController *vipVC = [[PPVipViewController alloc] initWithTitle:titleDic[@([PPUtil currentVipLevel] + ([PPUtil isVip] ? 0 : 1))] vipLevel:[PPUtil currentVipLevel] + ([PPUtil isVip] ? 0 : 1)];
     UINavigationController *vipNav = [[UINavigationController alloc] initWithRootViewController:vipVC];
     vipNav.tabBarItem = [[UITabBarItem alloc] initWithTitle:vipVC.title
-                                                      image:[UIImage imageNamed:[NSString stringWithFormat:@"tabbar_%@_normal",photoDic[@([PPUtil currentVipLevel])]]]
-                                              selectedImage:[[UIImage imageNamed:[NSString stringWithFormat:@"tabbar_%@_selected",photoDic[@([PPUtil currentVipLevel])]]] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
+                                                      image:[UIImage imageNamed:[NSString stringWithFormat:@"tabbar_%@_normal",photoDic[@([PPUtil currentVipLevel] + ([PPUtil isVip] ? 0 : 1))]]]
+                                              selectedImage:[[UIImage imageNamed:[NSString stringWithFormat:@"tabbar_%@_selected",photoDic[@([PPUtil currentVipLevel] + ([PPUtil isVip] ? 0 : 1))]]] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
     [self.childVCs addObject:vipNav];
     
     if (photoDic[@([PPUtil currentVipLevel] + 1)] && self.childVCs.count != 2) {
