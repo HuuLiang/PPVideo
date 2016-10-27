@@ -7,7 +7,7 @@
 //
 
 #import "PPBaseViewController.h"
-#import "QBBaseModel.h"
+#import <QBBaseModel.h>
 
 @interface PPVideoPlayerController : PPBaseViewController
 @property (nonatomic) NSString *videoUrl;
