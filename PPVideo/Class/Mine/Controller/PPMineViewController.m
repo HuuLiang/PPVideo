@@ -82,11 +82,6 @@ QBDefineLazyPropertyInitialization(PPAppModel, appModel)
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onPaidNotification:) name:kPaidNotificationName object:nil];
     
-//    [self.navigationController.navigationBar bk_whenTouches:1 tapped:5 handler:^{
-//        NSString *baseURLString = [JF_BASE_URL stringByReplacingCharactersInRange:NSMakeRange(0, JF_BASE_URL.length-6) withString:@"******"];
-//        [[CRKHudManager manager] showHudWithText:[NSString stringWithFormat:@"Server:%@\nChannelNo:%@\nPackageCertificate:%@\npV:%@/%@", baseURLString, JF_CHANNEL_NO, JF_PACKAGE_CERTIFICATE, JF_REST_PV, JF_PAYMENT_PV]];
-//    }];
-    
 }
 
 - (void)onPaidNotification:(NSNotification *)notification {
