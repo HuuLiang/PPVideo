@@ -12,7 +12,7 @@ IPA_DES_DIR="$4"
 CURRENT_USER_HOME=`cd ~;pwd`
 DERIVEDDATAPATH_DIR="$WORK_DIR"
 SCHEME="$5"
-MODPLIST_EXEC="./$SCHEME/BatchBuild/modplist"
+MODPLIST_EXEC="$WORK_DIR/BatchBuild/modplist"
 
 NEXT_MODPLIST=
 NEXT_XCBUILD=
@@ -45,7 +45,6 @@ if [ $NEXT_MODPLIST == 1 ]; then
 eval "$MODPLIST_EXEC ./$SCHEME/config.plist ChannelNo $CHANNELNO >> $CURRENT_USER_HOME/BatchBuild/BatchBuild.log"
 if [ $? != 0 ]; then
 echo "modplist faild"
-echo "./$SCHEME/$SCHEME/config.plist"
 exit 1
 else
 NEXT_XCBUILD=1
@@ -54,7 +53,7 @@ fi
 
 
 if [ $NEXT_XCBUILD == 1 ]; then
-eval "$XCODEBUILD_EXEC -workspace $SCHEME/.xcworkspace -scheme $SCHEME -sdk iphoneos -configuration Release -derivedDataPath $DERIVEDDATAPATH_DIR >> $CURRENT_USER_HOME/BatchBuild/BatchBuild.log"
+eval "$XCODEBUILD_EXEC -workspace $SCHEME.xcworkspace -scheme $SCHEME -sdk iphoneos -configuration Release -derivedDataPath $DERIVEDDATAPATH_DIR >> $CURRENT_USER_HOME/BatchBuild/BatchBuild.log"
 if [ $? != 0 ]; then
 echo "xcodebuild faild"
 exit 1

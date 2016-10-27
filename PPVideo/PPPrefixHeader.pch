@@ -18,7 +18,7 @@
 #import <UIButton+WebCache.h>
 
 #import <QBNetworkingConfiguration.h>
-#import "QBNetworkInfo.h"
+#import <QBNetworkInfo.h>
 #import <QBPaymentDefines.h>
 #import <QBDefines.h>
 #import <QBStatsManager.h>
