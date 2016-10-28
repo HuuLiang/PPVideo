@@ -93,6 +93,8 @@
 		ECFA0E8B1DBDCCE200E61347 /* PPVideoPlayerController.m in Sources */ = {isa = PBXBuildFile; fileRef = ECFA0E8A1DBDCCE200E61347 /* PPVideoPlayerController.m */; };
 		ECFA0E8E1DBDCD3900E61347 /* PPVideoTokenManager.m in Sources */ = {isa = PBXBuildFile; fileRef = ECFA0E8D1DBDCD3900E61347 /* PPVideoTokenManager.m */; };
 		ECFA0E911DBDCDE700E61347 /* PPVideoPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = ECFA0E901DBDCDE700E61347 /* PPVideoPlayer.m */; };
+		ECFB79871DC33BCB0082F59D /* PPAppSpreadBannerModel.m in Sources */ = {isa = PBXBuildFile; fileRef = ECFB79861DC33BCB0082F59D /* PPAppSpreadBannerModel.m */; };
+		ECFB798A1DC33CC00082F59D /* PPSpreadBannerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ECFB79891DC33CC00082F59D /* PPSpreadBannerViewController.m */; };
 		F16FC29275575E2FF3312376 /* libPods-PPVideo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 023420A73BCDB4EDC186B735 /* libPods-PPVideo.a */; };
 /* End PBXBuildFile section */
 
@@ -271,6 +273,10 @@
 		ECFA0E8D1DBDCD3900E61347 /* PPVideoTokenManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPVideoTokenManager.m; sourceTree = "<group>"; };
 		ECFA0E8F1DBDCDE700E61347 /* PPVideoPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPVideoPlayer.h; sourceTree = "<group>"; };
 		ECFA0E901DBDCDE700E61347 /* PPVideoPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPVideoPlayer.m; sourceTree = "<group>"; };
+		ECFB79851DC33BCB0082F59D /* PPAppSpreadBannerModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPAppSpreadBannerModel.h; sourceTree = "<group>"; };
+		ECFB79861DC33BCB0082F59D /* PPAppSpreadBannerModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPAppSpreadBannerModel.m; sourceTree = "<group>"; };
+		ECFB79881DC33CC00082F59D /* PPSpreadBannerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPSpreadBannerViewController.h; sourceTree = "<group>"; };
+		ECFB79891DC33CC00082F59D /* PPSpreadBannerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPSpreadBannerViewController.m; sourceTree = "<group>"; };
 		FCBF9BC6404344E8E96607B9 /* Pods-PPVideo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PPVideo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PPVideo/Pods-PPVideo.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -498,6 +504,7 @@
 		ECC097701DB1D97A00875D56 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				ECFB797E1DC33B8D0082F59D /* Ad */,
 				ECC0977E1DB1DFB500875D56 /* Extensions */,
 				ECC0977F1DB1DFCE00875D56 /* System */,
 				ECC0978D1DB1F84C00875D56 /* PPUtil.h */,
@@ -819,6 +826,17 @@
 			path = payViews;
 			sourceTree = "<group>";
 		};
+		ECFB797E1DC33B8D0082F59D /* Ad */ = {
+			isa = PBXGroup;
+			children = (
+				ECFB79851DC33BCB0082F59D /* PPAppSpreadBannerModel.h */,
+				ECFB79861DC33BCB0082F59D /* PPAppSpreadBannerModel.m */,
+				ECFB79881DC33CC00082F59D /* PPSpreadBannerViewController.h */,
+				ECFB79891DC33CC00082F59D /* PPSpreadBannerViewController.m */,
+			);
+			path = Ad;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -950,6 +968,7 @@
 				ECFA0E761DB9E61600E61347 /* PPVipIntroduceCell.m in Sources */,
 				ECFA0E8B1DBDCCE200E61347 /* PPVideoPlayerController.m in Sources */,
 				ECC097991DB2059900875D56 /* PPUserAccessModel.m in Sources */,
+				ECFB798A1DC33CC00082F59D /* PPSpreadBannerViewController.m in Sources */,
 				EC20D00A1DB876B70089D8BF /* PPDetailHeaderCell.m in Sources */,
 				EC20D0241DB8AC220089D8BF /* NSString+StringHeight.m in Sources */,
 				EC4C6A7F1DB4BE2C0009771A /* PPSexFooterView.m in Sources */,
@@ -1012,6 +1031,7 @@
 				ECC097BF1DB20CF500875D56 /* PPSexViewController.m in Sources */,
 				ECC097A21DB2096D00875D56 /* PPBaseViewController.m in Sources */,
 				ECC0979C1DB2061800875D56 /* PPSystemConfig.m in Sources */,
+				ECFB79871DC33BCB0082F59D /* PPAppSpreadBannerModel.m in Sources */,
 				ECB8F0871DB71DD10088A118 /* PPAppModel.m in Sources */,
 				ECC097D91DB23ECD00875D56 /* TAPageControl.m in Sources */,
 				ECC097961DB2038C00875D56 /* PPActivateModel.m in Sources */,

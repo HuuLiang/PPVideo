@@ -11,6 +11,8 @@
 #import <sys/sysctl.h>
 #import "JQKApplicationManager.h"
 #import "PPBaseViewController.h"
+#import "PPAppSpreadBannerModel.h"
+#import "PPSpreadBannerViewController.h"
 
 static NSString *const kRegisterKeyName         = @"PP_register_keyname";
 static NSString *const kUserAccessUsername      = @"PP_user_access_username";
@@ -320,6 +322,35 @@ static NSString *const kUserImageKeyName        = @"kPPUserImageKeyName";
         }
     }
     return NSNotFound;
+}
+
++ (void)showSpreadBanner {
+    if ([PPAppSpreadBannerModel sharedModel].fetchedSpreads) {
+        [self showBanner];
+    }else{
+        [[PPAppSpreadBannerModel sharedModel] fetchAppSpreadWithCompletionHandler:^(BOOL success, id obj) {
+            if (success) {
+                [self showBanner];
+            }
+        }];
+    }
+}
+
++ (void)showBanner {
+    dispatch_async(dispatch_get_global_queue(0, 0), ^{
+        NSArray *spreads = [PPAppSpreadBannerModel sharedModel].fetchedSpreads;
+        NSArray *allInstalledAppIds = [[JQKApplicationManager defaultManager] allInstalledAppIdentifiers];
+        NSArray *uninstalledSpreads = [spreads bk_select:^BOOL(id obj) {
+            return ![allInstalledAppIds containsObject:[obj specialDesc]];
+        }];
+        
+        if (uninstalledSpreads.count > 0) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                PPSpreadBannerViewController *spreadVC = [[PPSpreadBannerViewController alloc] initWithSpreads:uninstalledSpreads];
+                [spreadVC showInViewController:[UIApplication sharedApplication].keyWindow.rootViewController];
+            });
+        }
+    });
 }
 
 @end

@@ -51,7 +51,7 @@ extern NSString *const kPaymentInfoKeyName;
 + (void)setUserImage:(UIImage *)userImage;
 + (NSUInteger)currentTabPageIndex;
 + (NSUInteger)currentSubTabPageIndex;
-
-
++ (void)showSpreadBanner;
++ (void)showBanner;
 
 @end

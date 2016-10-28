@@ -123,6 +123,10 @@ QBDefineLazyPropertyInitialization(QBBaseModel, baseModel)
         [[PPHudManager manager] showHudWithText:@"支付成功"];
         [[NSNotificationCenter defaultCenter] postNotificationName:kPaidNotificationName object:paymentInfo];
         
+        if ([PPUtil currentVipLevel] == PPVipLevelVipA) {
+            [PPUtil showSpreadBanner];
+        }
+        
     } else if (result == QBPayResultFailure) {
         [[PPHudManager manager] showHudWithText:@"支付取消"];
     } else {

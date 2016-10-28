@@ -44,6 +44,10 @@ QBDefineLazyPropertyInitialization(NSMutableArray, childVCs)
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    if ([PPUtil launchSeq] > 1) {
+        [PPUtil showSpreadBanner];
+    }
+    
     [self addChildViewControllers];
     
     

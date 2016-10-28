@@ -36,6 +36,7 @@
 #define PP_DETAIL_URL                  @"/iosvideo/detailsg.htm"
 
 #define PP_APP_URL                     @"/iosvideo/appSpreadList.htm"
+#define PP_APP_SPREAD_BANNER_URL       @"/iosvideo/appSpreadBanner.htm"
 
 #define PP_UMENG_APP_ID                @"580de5dbae1bf85293000504"
 
