@@ -73,7 +73,7 @@ QBDefineLazyPropertyInitialization(QBBaseModel, baseModel)
     }
     
     
-    price = 200;
+//    price = 200;
     
     
     NSString *channelNo = PP_CHANNEL_NO;

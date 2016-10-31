@@ -54,6 +54,9 @@ PODS:
   - QBPayment/IappPay (0.0.31):
     - QBPayment/Core
     - QBPayment/CorePay
+  - QBPayment/VIAPay (0.0.31):
+    - QBPayment/Core
+    - QBPayment/CorePay
   - QBStatisticsManager (0.0.4):
     - BlocksKit (~> 2.2.5)
     - FMDB (~> 2.6.2)
@@ -72,6 +75,7 @@ DEPENDENCIES:
   - MJRefresh (~> 2.4.12)
   - QBPayment/HTPay (~> 0.0.24)
   - QBPayment/IappPay (~> 0.0.24)
+  - QBPayment/VIAPay (~> 0.0.24)
   - QBStatisticsManager (~> 0.0.4)
   - SDWebImage (= 3.7.3)
   - SFHFKeychainUtils (~> 0.0.1)
@@ -93,6 +97,6 @@ SPEC CHECKSUMS:
   SFHFKeychainUtils: 9576b411a79a058f4d5381ace6f3242b9a62e664
   UMengAnalytics-NO-IDFA: b26a7003458204d4549b6bd132c2f07dd5942b86
 
-PODFILE CHECKSUM: 8c46259ffdf022de5c65a7e7dacde8f0e5d8594e
+PODFILE CHECKSUM: ca1ed7436f1411d86549924bdbedd744f16d58f4
 
 COCOAPODS: 1.1.0.rc.2

@@ -62,6 +62,7 @@ QBDefineLazyPropertyInitialization(NSMutableDictionary, reloadDic)
     if ([PPUtil currentVipLevel] != PPVipLevelVipC) {
         [_layoutCollectionView PP_addVIPNotiRefreshWithHandler:^{
             @strongify(self);
+            [[PPHudManager manager] showHudWithText:@"升级VIP可观看更多"];
             [self presentPayViewControllerWithBaseModel:nil];
             [self->_layoutCollectionView PP_endPullToRefresh];
         }];
