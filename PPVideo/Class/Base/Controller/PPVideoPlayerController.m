@@ -18,6 +18,7 @@
     BOOL _hasTimeControl;
     UISlider *_slider;
     UIButton *_pauseBtn;
+    UILabel *_notiLabel;
     BOOL isPause;
 }
 @end
@@ -58,24 +59,24 @@
         }];
     } forControlEvents:UIControlEventTouchUpInside];
     
-    [self.view beginProgressingWithTitle:@"加载中..." subtitle:nil];
+//    [self.view beginProgressingWithTitle:@"加载中..." subtitle:nil];
     
-    [[PPVideoTokenManager sharedManager] requestTokenWithCompletionHandler:^(BOOL success, NSString *token, NSString *userId) {
-        @strongify(self);
-        if (!self) {
-            return ;
-        }
-        [self.view endProgressing];
-        
-        if (success) {
+//    [[PPVideoTokenManager sharedManager] requestTokenWithCompletionHandler:^(BOOL success, NSString *token, NSString *userId) {
+//        @strongify(self);
+//        if (!self) {
+//            return ;
+//        }
+//        [self.view endProgressing];
+//        
+//        if (success) {
             [self loadVideo:[NSURL URLWithString:[[PPVideoTokenManager sharedManager]videoLinkWithOriginalLink:_videoUrl]]];
-        } else {
-            [UIAlertView bk_showAlertViewWithTitle:@"无法获取视频信息" message:nil cancelButtonTitle:@"确定" otherButtonTitles:nil handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
-                @strongify(self);
-                [self.navigationController popViewControllerAnimated:YES];
-            }];
-        }
-    }];
+//        } else {
+//            [UIAlertView bk_showAlertViewWithTitle:@"无法获取视频信息" message:nil cancelButtonTitle:@"确定" otherButtonTitles:nil handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
+//                @strongify(self);
+//                [self.navigationController popViewControllerAnimated:YES];
+//            }];
+//        }
+//    }];
 }
 
 - (void)loadVideo:(NSURL *)videoUrl {
@@ -101,7 +102,7 @@
     [_slider setThumbImage:[UIImage imageNamed:@"video_point"] forState:UIControlStateNormal];
     _slider.backgroundColor = [UIColor colorWithHexString:@"#ffffff"];
     [self.view addSubview:_slider];
-    
+
     {
 
         
@@ -117,6 +118,8 @@
             make.bottom.equalTo(_slider.mas_top).offset(-kWidth(30));
             make.size.mas_equalTo(CGSizeMake(kWidth(40), kWidth(40)));
         }];
+        
+
     }
     
     @weakify(self);
@@ -127,12 +130,27 @@
         }];
     };
     
+    _videoPlayer.notiEndAction = ^(id obj) {
+        @strongify(self);
+        [self dismissViewControllerAnimated:YES completion:^{
+            [UIAlertView bk_showAlertViewWithTitle:nil
+                                           message:[PPUtil notiAlertStrWithCurrentVipLevel]
+                                 cancelButtonTitle:@"取消"
+                                 otherButtonTitles:@[@"确认"]
+                                           handler:^(UIAlertView *alertView, NSInteger buttonIndex)
+             {
+                 if (buttonIndex == 1) {
+                     [self dismissAndPopPayment];
+                 }
+             }];
+        }];
+    };
+    
     _videoPlayer.sliderPercent = ^ (CGFloat percent) {
         @strongify(self);
         NSLog(@"%f",percent);
         dispatch_async(dispatch_get_main_queue(), ^{
             [self->_slider setValue:percent animated:YES];
-//            [self->_slider setValue:percent];
         });
     };
     
@@ -148,10 +166,30 @@
         self->isPause = !self->isPause;
     } forControlEvents:UIControlEventTouchUpInside];
     
-    //#ifdef YYK_DISPLAY_VIDEO_URL
-    //    NSString *url = videoUrl.absoluteString;
-    //    [UIAlertView bk_showAlertViewWithTitle:@"视频链接" message:url cancelButtonTitle:@"确定" otherButtonTitles:nil handler:nil];
-    //#endif
+    if (_hasTimeControl) {
+        _notiLabel = [[UILabel alloc] init];
+        _notiLabel.textAlignment = NSTextAlignmentCenter;
+        _notiLabel.userInteractionEnabled = YES;
+        _notiLabel.textColor = [UIColor colorWithHexString:@"#888888"];
+        NSAttributedString *str = [[NSAttributedString alloc] initWithString:[PPUtil notiLabelStrWithCurrentVipLevel] attributes:@{NSFontAttributeName : [UIFont systemFontOfSize:[PPUtil isIpad] ? 28 : kWidth(28)],
+                                                                                                                                   NSUnderlineStyleAttributeName:[NSNumber numberWithInteger:NSUnderlineStyleSingle]}];
+        _notiLabel.attributedText = str;
+        [self.view addSubview:_notiLabel];
+        
+        [_notiLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.centerX.equalTo(self.view);
+            make.bottom.equalTo(_pauseBtn.mas_top).offset(-kWidth(60));
+            make.height.mas_equalTo(kWidth(30));
+        }];
+        
+        [_notiLabel bk_whenTapped:^{
+            @strongify(self);
+            [self->_videoPlayer pause];
+            [self dismissViewControllerAnimated:YES completion:^{
+                [self dismissAndPopPayment];
+            }];
+        }];
+    }
 }
 
 - (void)viewDidAppear:(BOOL)animated {

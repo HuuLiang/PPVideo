@@ -88,8 +88,8 @@
 
 - (void)pauseAndPopAction {
     [self.player pause];
-    if (self.endPlayAction) {
-        self.endPlayAction(self);
+    if (self.notiEndAction) {
+        self.notiEndAction(self);
     }
 }
 

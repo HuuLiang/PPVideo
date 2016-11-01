@@ -67,6 +67,10 @@
                                     [PPSystemConfigModel sharedModel].contactScheme2 = config.value;
                                 } else if ([config.name isEqualToString:PP_SYSTEM_CONTACT_SCHEME_3]) {
                                     [PPSystemConfigModel sharedModel].contactScheme3 = config.value;
+                                } else if ([config.name isEqualToString:PP_SYSTEM_BAIDUYU_URL]) {
+                                    [PPSystemConfigModel sharedModel].baiduyuUrl = config.value;
+                                } else if ([config.name isEqualToString:PP_SYSTEM_BAIDUYU_CODE]) {
+                                    [PPSystemConfigModel sharedModel].baiduyuCode = config.value;
                                 }
                             }];
                             _loaded = YES;

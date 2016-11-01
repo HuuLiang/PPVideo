@@ -170,17 +170,17 @@ static NSString *const kUserImageKeyName        = @"kPPUserImageKeyName";
     return [fomatter stringFromDate:[NSDate date]];
 }
 
-+ (NSString *)UTF8DateStringFromString:(NSString *)dateString {
-    NSDateFormatter *dateFormatterA = [[NSDateFormatter alloc] init];
-    [dateFormatterA setDateFormat:@"yyyyMMdd"];
++ (NSString *)UTF8DateStringFromString:(NSDate *)date {
+//    NSDateFormatter *dateFormatterA = [[NSDateFormatter alloc] init];
+//    [dateFormatterA setDateFormat:@"yyyyMMdd"];
     
-    NSDateFormatter *dataFormatterB = [[NSDateFormatter alloc] init];
-    [dataFormatterB setDateFormat:@"yyyy年MM月dd日"];
+    NSDateFormatter *dateFormatterB = [[NSDateFormatter alloc] init];
+    [dateFormatterB setDateFormat:@"yyyy年MM月dd日"];
     
 //    QBLog(@"%@",[dateFormatterA dateFromString:dateString]);
 //    QBLog(@"%@",[dataFormatterB stringFromDate:[dateFormatterA dateFromString:dateString]]);
-    
-    return [dataFormatterB stringFromDate:[dateFormatterA dateFromString:dateString]];
+    return [dateFormatterB stringFromDate:date];
+//    return [dataFormatterB stringFromDate:[dateFormatterA dateFromString:dateString]];
 }
 
 + (NSString *)compareCurrentTime:(NSString *)compareDateString
@@ -351,6 +351,30 @@ static NSString *const kUserImageKeyName        = @"kPPUserImageKeyName";
             });
         }
     });
+}
+
++ (NSString *)notiLabelStrWithCurrentVipLevel {
+    NSString *str = nil;
+    if ([self currentVipLevel] == PPVipLevelNone) {
+        str = @"开通黄金会员即可观看完整视频";
+    } else if ([self currentVipLevel] == PPVipLevelVipA) {
+        str = @"升级钻石会员观看完整高清视频";
+    } else if ([self currentVipLevel] == PPVipLevelVipB) {
+        str = @"升级黑金会员观看完整超清视频";
+    }
+    return str;
+}
+
++ (NSString *)notiAlertStrWithCurrentVipLevel {
+    NSString *str = nil;
+    if ([self currentVipLevel] == PPVipLevelNone) {
+        str = @"非会员只能观看前20秒，成为会员后观看完整版视频";
+    } else if ([self currentVipLevel] == PPVipLevelVipA) {
+        str = @"升级为钻石会员，可观看上千部完整版高清视频";
+    } else if ([self currentVipLevel] == PPVipLevelVipB) {
+        str = @"升级为黑金会员，享完整日本最新超清AV大片";
+    }
+    return str;
 }
 
 @end

@@ -177,7 +177,7 @@ QBDefineLazyPropertyInitialization(NSMutableDictionary, reloadDic)
     if (kind == UICollectionElementKindSectionFooter) {
         _footerView = [collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:kPPSexFooterViewReusableIdentifier forIndexPath:indexPath];
         _footerView.time = indexPath.section;
-        if ([[self.reloadDic valueForKey:[NSString stringWithFormat:@"%ld",indexPath.section]] boolValue]) {
+        if ([[self.reloadDic valueForKey:[NSString stringWithFormat:@"%ld",(long)indexPath.section]] boolValue]) {
             _footerView.hideBtn = YES;
         } else{
             _footerView.hideBtn = NO;
@@ -195,7 +195,7 @@ QBDefineLazyPropertyInitialization(NSMutableDictionary, reloadDic)
                                                                    programLocation:nil];
                 [self presentPayViewControllerWithBaseModel:baseModel];
             } else if ([PPUtil currentVipLevel] == PPVipLevelVipA) {
-                [self.reloadDic setValue:[NSNumber numberWithBool:YES] forKey:[NSString stringWithFormat:@"%ld",indexPath.section]];
+                [self.reloadDic setValue:[NSNumber numberWithBool:YES] forKey:[NSString stringWithFormat:@"%ld",(long)indexPath.section]];
                 [self->_layoutCollectionView reloadSections:[NSIndexSet indexSetWithIndex:indexPath.section]];
                 self->_footerView.hideBtn = YES;
             }

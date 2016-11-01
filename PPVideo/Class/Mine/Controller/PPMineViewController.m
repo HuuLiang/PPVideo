@@ -25,6 +25,7 @@ static NSString *const kMoreCellReusableIdentifier = @"MoreCellReusableIdentifie
     PPTableViewCell *_activateCell;
     PPTableViewCell *_vipCell;
     PPTableViewCell *_qqCell;
+    PPTableViewCell *_baiduCell;
     
     UITableViewCell *_appCell;
     UICollectionView *_appCollectionView;
@@ -75,6 +76,17 @@ QBDefineLazyPropertyInitialization(PPAppModel, appModel)
             [self.navigationController pushViewController:actVC animated:YES];
         } else if (cell == self->_qqCell) {
             [self contactCustomerService];
+        } else if (cell == self->_baiduCell) {
+            [UIAlertView bk_showAlertViewWithTitle:nil
+                                           message:@"更多精彩内容，请转至百度云观看"
+                                 cancelButtonTitle:@"取消"
+                                 otherButtonTitles:@[@"确认"]
+                                           handler:^(UIAlertView *alertView, NSInteger buttonIndex)
+             {
+                 if (buttonIndex == 1 && [PPSystemConfigModel sharedModel].baiduyuUrl.length > 0) {
+                     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[PPSystemConfigModel sharedModel].baiduyuUrl]];
+                 }
+             }];
         }
     };
     
@@ -161,7 +173,6 @@ QBDefineLazyPropertyInitialization(PPAppModel, appModel)
     if ([PPUtil currentVipLevel] != PPVipLevelNone) {
         [self initQQCellInSection:section++];
     }
-    
     currentSection = section;
 }
 
@@ -186,12 +197,19 @@ QBDefineLazyPropertyInitialization(PPAppModel, appModel)
 }
 
 - (void)initQQCellInSection:(NSInteger)section {
-    [self setHeaderHeight:20 inSection:section];
+    [self setHeaderHeight:kWidth(20) inSection:section];
     
     _qqCell = [[PPTableViewCell alloc] initWithImage:[UIImage imageNamed:@"mine_qq"] title:@"在线客服"];
     _qqCell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     _qqCell.selectionStyle = UITableViewCellSelectionStyleNone;
     [self setLayoutCell:_qqCell cellHeight:tableViewCellheight inRow:0 andSection:section];
+    
+    if ([PPUtil currentVipLevel] == PPVipLevelVipC)  {
+        _baiduCell = [[PPTableViewCell alloc] initWithImage:[UIImage imageNamed:@"mine_baidu"] title:@"百度云" subtitle:[PPSystemConfigModel sharedModel].baiduyuCode];
+        _baiduCell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        _baiduCell.selectionStyle = UITableViewCellSelectionStyleNone;
+        [self setLayoutCell:_baiduCell cellHeight:tableViewCellheight inRow:1 andSection:section];
+    }
 }
 
 - (UICollectionViewLayout *)createLayout {

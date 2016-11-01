@@ -17,5 +17,5 @@ typedef void(^refreshPlaySlider)(CGFloat percent);
 - (void)pause;
 @property (nonatomic,copy) QBAction endPlayAction;
 @property (nonatomic) refreshPlaySlider sliderPercent;
-
+@property (nonatomic,copy) QBAction notiEndAction;
 @end

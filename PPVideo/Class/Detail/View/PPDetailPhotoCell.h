@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "PPDetailModel.h"
 
-#define PPDetalCellHeight (kScreenWidth - kWidth(80))/3.5/0.79 + kWidth(40)
+#define PPDetalCellHeight (kScreenWidth - kWidth(80))/3.5/0.79 + kWidth(41)
 
 @interface PPDetailPhotoCell : UITableViewCell
 @property (nonatomic) NSArray <PPDetailUrlModel *> *imgUrls;

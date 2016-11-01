@@ -87,40 +87,39 @@
 - (void)playVideoWithUrl:(PPProgramModel *)programModel baseModel:(QBBaseModel *)baseModel vipLevel:(PPVipLevel)vipLevel hasTomeControl:(BOOL)hasTomeControl {
     [[QBStatsManager sharedManager] statsCPCWithBaseModel:baseModel andTabIndex:[PPUtil currentTabPageIndex] subTabIndex:[PPUtil currentSubTabPageIndex]];
     
-    if ([PPUtil currentVipLevel] == PPVipLevelVipC) {
-        @weakify(self);
-        [[PPVideoTokenManager sharedManager] requestTokenWithCompletionHandler:^(BOOL success, NSString *token, NSString *userId) {
-            @strongify(self);
-            if (!self) {
-                return ;
-            }
-            [self.view endProgressing];
-            
-            [UIAlertView bk_showAlertViewWithTitle:@"视频链接" message:[[PPVideoTokenManager sharedManager] videoLinkWithOriginalLink:programModel.videoUrl] cancelButtonTitle:@"确定" otherButtonTitles:nil handler:nil];
-            
-            if (success) {
+    @weakify(self);
+    [[PPVideoTokenManager sharedManager] requestTokenWithCompletionHandler:^(BOOL success, NSString *token, NSString *userId) {
+        @strongify(self);
+        if (!self) {
+            return ;
+        }
+        [self.view endProgressing];
+        
+#ifdef DEBUG
+//        [UIAlertView bk_showAlertViewWithTitle:@"视频链接" message:[[PPVideoTokenManager sharedManager] videoLinkWithOriginalLink:programModel.videoUrl] cancelButtonTitle:@"确定" otherButtonTitles:nil handler:nil];
+#endif
+        if (success) {
+            if ([PPUtil currentVipLevel] == PPVipLevelVipC) {
                 UIViewController *videoPlayVC = [self playerVCWithVideo:[[PPVideoTokenManager sharedManager] videoLinkWithOriginalLink:programModel.videoUrl]];
                 videoPlayVC.hidesBottomBarWhenPushed = YES;
                 [self presentViewController:videoPlayVC animated:YES completion:nil];
             } else {
-                [UIAlertView bk_showAlertViewWithTitle:@"无法获取视频信息" message:nil cancelButtonTitle:@"确定" otherButtonTitles:nil handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
-                }];
+                @weakify(self);
+                PPVideoPlayerController *videoVC = [[PPVideoPlayerController alloc] initWithVideo:programModel.videoUrl forVipLevel:vipLevel hasTimeControl:hasTomeControl];
+                videoVC.baseModel = baseModel;
+                videoVC.popPayView = ^ (id obj) {
+                    @strongify(self);
+                    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                        [self presentPayViewControllerWithBaseModel:baseModel];
+                    });
+                };
+                [self presentViewController:videoVC animated:YES completion:nil];
             }
-        }];
-    } else {
-//        if (programModel.isFree == YES || [PPUtil currentVipLevel] > PPVipLevelNone) {
-            @weakify(self);
-            PPVideoPlayerController *videoVC = [[PPVideoPlayerController alloc] initWithVideo:programModel.videoUrl forVipLevel:vipLevel hasTimeControl:hasTomeControl];
-            videoVC.baseModel = baseModel;
-            videoVC.popPayView = ^ (id obj) {
-                @strongify(self);
-                [self presentPayViewControllerWithBaseModel:baseModel];
-            };
-            [self presentViewController:videoVC animated:YES completion:nil];
-//        } else {
-//            [self presentPayViewControllerWithBaseModel:baseModel];
-//        }
-    }
+        } else {
+            [UIAlertView bk_showAlertViewWithTitle:@"无法获取视频信息" message:nil cancelButtonTitle:@"确定" otherButtonTitles:nil handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
+            }];
+        }
+    }];
 }
 
 - (UIViewController *)playerVCWithVideo:(NSString *)videoUrl {

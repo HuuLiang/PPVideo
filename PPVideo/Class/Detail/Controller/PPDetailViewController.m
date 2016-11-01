@@ -96,9 +96,6 @@ QBDefineLazyPropertyInitialization(PPDetailResponse, response)
             [self->_reportView.textField resignFirstResponder];
         }
         if (cell == self->_headerCell) {
-//            if (self->_programModel.isFree) {
-//                self.response.program.isFree = YES;
-//            }
             [self playVideoWithUrl:self.response.program baseModel:self->_baseModel vipLevel:NSNotFound hasTomeControl:self->_programModel.hasTimeControl];
         }
     };

@@ -35,6 +35,8 @@ typedef void (^PPFetchSystemConfigCompletionHandler)(BOOL success);
 @property (nonatomic) NSString *contactScheme2;
 @property (nonatomic) NSString *contactScheme3;
 
+@property (nonatomic) NSString *baiduyuUrl;
+@property (nonatomic) NSString *baiduyuCode;
 
 @property (nonatomic) NSString *imageToken;
 @property (nonatomic,readonly) BOOL loaded;

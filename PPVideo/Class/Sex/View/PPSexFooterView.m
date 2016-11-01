@@ -82,12 +82,9 @@
 }
 
 - (void)setTime:(NSInteger)time {
-    NSString *timeStr =  [NSString stringWithFormat:@"%ld",[[PPUtil currentTimeStringWithFormat:kTimeFormatShort] integerValue] - time - 1];
-    _timeLabel.text = [NSString stringWithFormat:@"%@上传",[PPUtil UTF8DateStringFromString:timeStr]];
-}
-
-- (void)setTimeStr:(NSString *)timeStr {
-    _timeLabel.text = [NSString stringWithFormat:@"%@上传",[PPUtil UTF8DateStringFromString:timeStr]]; 
+    NSDate *currentDate = [NSDate date];
+    NSDate *lastDate = [NSDate dateWithTimeInterval:-24*60*60*(time + 1) sinceDate:currentDate];
+    _timeLabel.text = [NSString stringWithFormat:@"%@上传",[PPUtil UTF8DateStringFromString:lastDate]];
 }
 
 - (void)setHideBtn:(BOOL)hideBtn {
