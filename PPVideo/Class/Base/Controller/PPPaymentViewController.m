@@ -61,19 +61,19 @@ QBDefineLazyPropertyInitialization(QBBaseModel, baseModel)
     
     NSUInteger price = 0;
     if (vipLevel == PPVipLevelVipA) {
-        price = [PPSystemConfigModel sharedModel].payhjAmount;
+        price = [PPSystemConfigModel sharedModel].payAmount;
     } else if (vipLevel == PPVipLevelVipB) {
         if ([PPUtil currentVipLevel] == PPVipLevelNone) {
-            price = [PPSystemConfigModel sharedModel].payzsAmount + [PPSystemConfigModel sharedModel].payhjAmount;
+            price = [PPSystemConfigModel sharedModel].payAmount + [PPSystemConfigModel sharedModel].payzsAmount;
         } else {
             price = [PPSystemConfigModel sharedModel].payzsAmount;
         }
     } else if (vipLevel == PPVipLevelVipC) {
-        price = [PPSystemConfigModel sharedModel].payAmount;
+        price = [PPSystemConfigModel sharedModel].payhjAmount;
     }
     
     
-//    price = 200;
+//    price = 200;0
     
     
     NSString *channelNo = PP_CHANNEL_NO;

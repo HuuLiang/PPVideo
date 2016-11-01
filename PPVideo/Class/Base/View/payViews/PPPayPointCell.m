@@ -94,19 +94,19 @@
     if (vipLevel == PPVipLevelVipA) {
         _title.text = @"黄金会员";
         _subTitle.text = @"可观看上百部完整版爽片";
-        _moneyLabel.text = [NSString stringWithFormat:@"¥%ld",[PPSystemConfigModel sharedModel].payhjAmount/100];
+        _moneyLabel.text = [NSString stringWithFormat:@"¥%ld",[PPSystemConfigModel sharedModel].payAmount/100];
     } else if (vipLevel == PPVipLevelVipB) {
         _title.text = [PPUtil currentVipLevel] == PPVipLevelVipA ? @"升级为钻石会员" : @"钻石会员";
         _subTitle.text = @"上千部高清限制级精彩视频";
         if ([PPUtil currentVipLevel] == PPVipLevelNone) {
-            _moneyLabel.text = [NSString stringWithFormat:@"¥%ld",[PPSystemConfigModel sharedModel].payzsAmount/100+[PPSystemConfigModel sharedModel].payhjAmount/100];
+            _moneyLabel.text = [NSString stringWithFormat:@"¥%ld",[PPSystemConfigModel sharedModel].payzsAmount/100+[PPSystemConfigModel sharedModel].payAmount/100];
         } else {
             _moneyLabel.text = [NSString stringWithFormat:@"¥%ld",[PPSystemConfigModel sharedModel].payzsAmount/100];
         }
     } else if (vipLevel == PPVipLevelVipC) {
         _title.text = @"升级为黑金会员";
         _subTitle.text = @"享日本最新超清AV大片";
-        _moneyLabel.text = [NSString stringWithFormat:@"¥%ld",[PPSystemConfigModel sharedModel].payAmount/100];
+        _moneyLabel.text = [NSString stringWithFormat:@"¥%ld",[PPSystemConfigModel sharedModel].payhjAmount/100];
     }
 }
 
