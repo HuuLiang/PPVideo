@@ -159,6 +159,7 @@ static NSString *const kAliPaySchemeUrl = @"paoPaoYingyuanAliPayUrlScheme";
     }
     UMConfigInstance.appKey = PP_UMENG_APP_ID;
     UMConfigInstance.channelId = PP_CHANNEL_NO;
+    UMConfigInstance.ePolicy = BATCH;
     [MobClick startWithConfigure:UMConfigInstance];
 }
 
