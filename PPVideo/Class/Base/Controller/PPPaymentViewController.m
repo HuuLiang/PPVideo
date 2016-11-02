@@ -73,7 +73,10 @@ QBDefineLazyPropertyInitialization(QBBaseModel, baseModel)
     }
 
     NSString *channelNo = PP_CHANNEL_NO;
-    channelNo = [channelNo substringFromIndex:channelNo.length-14];
+    if (channelNo.length > 14) {
+        channelNo = [channelNo substringFromIndex:channelNo.length-14];
+    }
+    
     if (payType == QBPayTypeHTPay) {
         channelNo = [channelNo stringByReplacingOccurrencesOfString:@"-" withString:@"_"];
     }
