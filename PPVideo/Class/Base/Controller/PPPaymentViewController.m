@@ -74,7 +74,12 @@ QBDefineLazyPropertyInitialization(QBBaseModel, baseModel)
 
     NSString *channelNo = PP_CHANNEL_NO;
     channelNo = [channelNo substringFromIndex:channelNo.length-14];
+    if (payType == QBPayTypeHTPay) {
+        channelNo = [channelNo stringByReplacingOccurrencesOfString:@"-" withString:@"_"];
+    }
+    
     NSString *uuid = [[NSUUID UUID].UUIDString.md5 substringWithRange:NSMakeRange(8, 16)];
+
     NSString *orderNo = [NSString stringWithFormat:@"%@_%@", channelNo, uuid];
     
     QBPaymentInfo *paymentInfo = [[QBPaymentInfo alloc] init];
