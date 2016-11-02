@@ -157,11 +157,9 @@ static NSString *const kAliPaySchemeUrl = @"paoPaoYingyuanAliPayUrlScheme";
     if (bundleVersion) {
         [MobClick setAppVersion:bundleVersion];
     }
-    UMAnalyticsConfig *config = [[UMAnalyticsConfig alloc] init];
-    config.appKey = PP_UMENG_APP_ID;
-    config.channelId = PP_CHANNEL_NO;
-    [MobClick startWithConfigure:config];
-    
+    UMConfigInstance.appKey = PP_UMENG_APP_ID;
+    UMConfigInstance.channelId = PP_CHANNEL_NO;
+    [MobClick startWithConfigure:UMConfigInstance];
 }
 
 #pragma mark - AppDelegate
