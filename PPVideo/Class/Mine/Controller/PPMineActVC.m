@@ -68,10 +68,8 @@
     [self initAutoActTitleInSection:section++];
     [self initAutoFuncButtonInSection:section++];
     
-    if (YES) {
-        [self initNonAutoActTitleInSection:section++];
-        [self initNonAutoFuncButtonInSection:section++];
-    }
+    [self initNonAutoActTitleInSection:section++];
+    [self initNonAutoFuncButtonInSection:section++];
     
     [self.layoutTableView reloadData];
 }
