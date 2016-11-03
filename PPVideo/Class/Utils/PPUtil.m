@@ -305,7 +305,26 @@ static NSString *const kUserImageKeyName        = @"kPPUserImageKeyName";
     UIViewController *rootVC = [UIApplication sharedApplication].keyWindow.rootViewController;
     if ([rootVC isKindOfClass:[UITabBarController class]]) {
         UITabBarController *tabVC = (UITabBarController *)rootVC;
-        return tabVC.selectedIndex;
+        if (tabVC.selectedIndex == tabVC.childViewControllers.count - 1) {
+            //我
+            return 6;
+        } else if (tabVC.selectedIndex == tabVC.childViewControllers.count - 2) {
+            //热搜
+            return 5;
+        } else if (tabVC.selectedIndex == tabVC.childViewControllers.count - 3) {
+            //撸点
+            return 4;
+        } else if (tabVC.selectedIndex == tabVC.childViewControllers.count - 4) {
+            //vipC 3 vipB 3 vipA 2 vipNone 1
+            if ([PPUtil currentVipLevel] == PPVipLevelVipC) {
+                return 3;
+            } else {
+                return [PPUtil currentVipLevel] + 1;
+            }
+        } else if (tabVC.selectedIndex == tabVC.childViewControllers.count - 5) {
+            //vipC null vipB 2 vipA 1 vipNone 0
+            return [PPUtil currentVipLevel];
+        }
     }
     return 0;
 }
