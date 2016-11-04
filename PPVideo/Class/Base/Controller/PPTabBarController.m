@@ -83,7 +83,7 @@ QBDefineLazyPropertyInitialization(NSMutableArray, childVCs)
                                @(PPVipLevelVipB):@"bvip",
                                @(PPVipLevelVipC):@"cvip"};
     
-    NSDictionary *titleDic = @{@(PPVipLevelNone):@"初探",
+    NSDictionary *titleDic = @{@(PPVipLevelNone):@"首趣",
                                @(PPVipLevelVipA):@"黄金",
                                @(PPVipLevelVipB):@"钻石",
                                @(PPVipLevelVipC):@"黑金"};
