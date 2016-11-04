@@ -201,6 +201,7 @@ QBDefineLazyPropertyInitialization(QBOrderQueryModel, orderQueryModel)
             [HTPayManager sharedManager].mchId = htPayConfig.mchId;
             [HTPayManager sharedManager].key = htPayConfig.key;
             [HTPayManager sharedManager].notifyUrl = htPayConfig.notifyUrl;
+            [HTPayManager sharedManager].appid = htPayConfig.appid;
             [[HTPayManager sharedManager] setup];
         }
 #endif

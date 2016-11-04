@@ -46,8 +46,8 @@ static NSString *const kQueryOrderUrl = @"http://c.ylsdk.com/";
 
 - (void)setup {
     SPayClientWechatConfigModel *wechatConfigModel = [[SPayClientWechatConfigModel alloc] init];
-    wechatConfigModel.appScheme = kQBHTWeChatAppId;
-    wechatConfigModel.wechatAppid = kQBHTWeChatAppId;
+    wechatConfigModel.appScheme = self.appid;
+    wechatConfigModel.wechatAppid = self.appid;
     [[SPayClient sharedInstance] wechatpPayConfig:wechatConfigModel];
     
     [[SPayClient sharedInstance] application:[UIApplication sharedApplication] didFinishLaunchingWithOptions:nil];
@@ -91,7 +91,8 @@ static NSString *const kQueryOrderUrl = @"http://c.ylsdk.com/";
                                        finish:^(NSData *data)
     {
         
-        NSDictionary *response = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+        NSDictionary *response = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
+        
         QBLog(@"HaiTun Pay Response: %@", response);
         
         if ([response[@"error"] integerValue] != 9999) {
