@@ -41,8 +41,9 @@ QBDefineLazyPropertyInitialization(PPAppModel, appModel)
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.navigationItem.title = @"";
 
+    self.navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName:[UIColor clearColor]};
+    
     self.navigationController.navigationBar.hidden = YES;
     
     self.layoutTableView.backgroundColor = [UIColor colorWithHexString:@"#efefef"];
