@@ -161,5 +161,12 @@ QBDefineLazyPropertyInitialization(NSMutableArray, childVCs)
     
 }
 
+- (BOOL)shouldAutorotate {
+    return NO;
+}
+
+- (UIInterfaceOrientationMask)supportedInterfaceOrientations {
+    return UIInterfaceOrientationMaskPortrait;
+}
 
 @end
