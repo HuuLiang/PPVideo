@@ -101,10 +101,11 @@ QBDefineLazyPropertyInitialization(PPDetailResponse, response)
     };
     
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onPaidNotification:) name:kPaidNotificationName object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onPaidNotificationInDetailVC:) name:kPaidNotificationName object:nil];
 }
 
-- (void)onPaidNotification:(NSNotification *)notification {
+
+- (void)onPaidNotificationInDetailVC:(NSNotification *)notification {
     [self.layoutTableView PP_triggerPullToRefresh];
 }
 

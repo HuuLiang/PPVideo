@@ -139,6 +139,7 @@
                                  otherButtonTitles:@[@"确认"]
                                            handler:^(UIAlertView *alertView, NSInteger buttonIndex)
              {
+                 
                  if (buttonIndex == 1) {
                      [self dismissAndPopPayment];
                  }
@@ -213,11 +214,10 @@
 }
 
 - (BOOL)shouldAutorotate {
-    return YES;
+    return NO;
 }
 
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations {
-    return UIInterfaceOrientationMaskAll;
+    return UIInterfaceOrientationMaskPortrait;
 }
-
 @end
