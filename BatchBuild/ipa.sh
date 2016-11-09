@@ -3,6 +3,7 @@
 #MODPLIST_EXEC="/usr/bin/modplist"
 XCODEBUILD_EXEC="/usr/bin/xcodebuild"
 XCRUN_EXEC="/usr/bin/xcrun"
+DSYM_EXEC="/usr/bin/dwarfdump"
 
 WORK_DIR="$1"
 CHANNELNO="$2"
@@ -13,10 +14,13 @@ CURRENT_USER_HOME=`cd ~;pwd`
 DERIVEDDATAPATH_DIR="$WORK_DIR"
 SCHEME="$5"
 MODPLIST_EXEC="$WORK_DIR/BatchBuild/modplist"
+dsYM_DES_DIR="$6"
+PROJECT_NAME="$7"
 
 NEXT_MODPLIST=
 NEXT_XCBUILD=
 NEXT_XCRUN=
+NEXT_DSYM=
 
 if [ -z "$WORK_DIR" ]; then
 echo "work directory is empty"
@@ -53,7 +57,7 @@ fi
 
 
 if [ $NEXT_XCBUILD == 1 ]; then
-eval "$XCODEBUILD_EXEC -workspace $SCHEME.xcworkspace -scheme $SCHEME -sdk iphoneos -configuration Release -derivedDataPath $DERIVEDDATAPATH_DIR >> $CURRENT_USER_HOME/BatchBuild/BatchBuild.log"
+eval "$XCODEBUILD_EXEC -workspace $SCHEME.xcworkspace -scheme $SCHEME -sdk iphoneos -configuration Release -derivedDataPath $DERIVEDDATAPATH_DIR DEBUG_INFORMATION_FORMAT='dwarf-with-dsym' DWARF_DSYM_FOLDER_PATH='$dsYM_DES_DIR/' >> $CURRENT_USER_HOME/BatchBuild/BatchBuild.log"
 if [ $? != 0 ]; then
 echo "xcodebuild faild"
 exit 1
@@ -67,5 +71,11 @@ eval "$XCRUN_EXEC -sdk iphoneos PackageApplication -v $DERIVEDDATAPATH_DIR/Build
 if [ $? != 0 ]; then
 echo "xcrun faild"
 exit 1
+else
+NEXT_DSYM=1
 fi
+fi
+
+if [ $NEXT_DSYM == 1 ];then
+eval "$DSYM_EXEC --uuid $DERIVEDDATAPATH_DIR/Build/Products/Release-iphoneos/$PROJECT_NAME.app.dSYM >> $dsYM_DES_DIR/uuid.txt"
 fi
