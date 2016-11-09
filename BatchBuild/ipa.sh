@@ -77,5 +77,5 @@ fi
 fi
 
 if [ $NEXT_DSYM == 1 ];then
-eval "$DSYM_EXEC --uuid $DERIVEDDATAPATH_DIR/Build/Products/Release-iphoneos/$PROJECT_NAME.app.dSYM >> $dsYM_DES_DIR/uuid.txt"
+eval "$DSYM_EXEC --uuid $dsYM_DES_DIR/$PROJECT_NAME.app.dSYM >> $dsYM_DES_DIR/uuid.txt"
 fi
