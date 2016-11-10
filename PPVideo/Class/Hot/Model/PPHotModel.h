@@ -10,7 +10,7 @@
 #import "PPColumnModel.h"
 
 
-@interface PPHotReponse : QBURLResponse
+@interface PPHotReponse : QBURLResponse <NSCoding>
 @property (nonatomic) NSInteger columnId;
 @property (nonatomic) NSArray <PPProgramModel *> *hotSearch;
 @property (nonatomic) NSInteger hsColumnId;

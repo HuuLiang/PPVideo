@@ -7,8 +7,9 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "JKDBModel.h"
 
-@interface PPProgramModel : NSObject
+@interface PPProgramModel : JKDBModel <NSCoding>
 
 @property (nonatomic) NSString *coverImg;
 @property (nonatomic) NSString *detailsCoverImg;
@@ -22,5 +23,5 @@
 @property (nonatomic) NSString *videoUrl;
 
 @property (nonatomic) BOOL hasTimeControl;
-//@property (nonatomic) BOOL isFree;
+
 @end

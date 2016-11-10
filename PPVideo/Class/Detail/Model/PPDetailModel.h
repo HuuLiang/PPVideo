@@ -9,29 +9,34 @@
 #import <QBEncryptedURLRequest.h>
 #import "PPColumnModel.h"
 
-@interface PPDetailProgramModel : PPProgramModel
+@interface PPDetailProgramModel : PPProgramModel 
 @property (nonatomic) NSString *offUrl;
 @end
 
-@interface PPDetailCommentModel : NSObject
+@interface PPDetailCommentModel : JKDBModel <NSCoding>
 @property (nonatomic) NSString *content;
 @property (nonatomic) NSString *createAt;
 @property (nonatomic) NSString *icon;
 @property (nonatomic) NSString *userName;
 @end
 
-@interface PPDetailUrlModel : NSObject
+@interface PPDetailUrlModel : JKDBModel <NSCoding>
 @property (nonatomic) NSInteger height;
 @property (nonatomic) NSInteger width;
 @property (nonatomic) NSString *url;
 @property (nonatomic) NSString *title;
 @end
 
-@interface PPDetailResponse : QBURLResponse
+@interface PPDetailResponse : QBURLResponse <NSCoding>
 @property (nonatomic) NSInteger columnId;
 @property (nonatomic) NSArray <PPDetailCommentModel *> *commentJson;
 @property (nonatomic) PPDetailProgramModel *program;
 @property (nonatomic) NSArray <PPDetailUrlModel *> *programUrlList;
+@end
+
+@interface PPDetailCacheModel : JKDBModel
+@property (nonatomic) NSInteger programId;
+@property (nonatomic) NSString *dataString;
 @end
 
 @interface PPDetailModel : QBEncryptedURLRequest

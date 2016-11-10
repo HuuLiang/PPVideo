@@ -32,8 +32,13 @@
         _vipView.layer.masksToBounds = YES;
         [self addSubview:_vipView];
         
+        NSDictionary *vipDesc = @{@(PPVipLevelNone):@"成为\nVIP",
+                                   @(PPVipLevelVipA):@"升级钻石",
+                                   @(PPVipLevelVipB):@"升级黑金",
+                                   @(PPVipLevelVipC):@"黑金会员"};
+        
         _vipLabel = [[UILabel alloc] init];
-        _vipLabel.text = @"成为\nVIP";
+        _vipLabel.text = vipDesc[@([PPUtil currentVipLevel])];
         _vipLabel.numberOfLines = 2;
         _vipLabel.textAlignment = NSTextAlignmentCenter;
         _vipLabel.font = [UIFont systemFontOfSize:kWidth(32)];

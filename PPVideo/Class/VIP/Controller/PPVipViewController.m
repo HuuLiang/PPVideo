@@ -65,6 +65,10 @@ QBDefineLazyPropertyInitialization(PPColumnModel, response)
         @strongify(self);
         [self loadData];
     }];
+    if ([PPCacheModel getVipCache].programList > 0) {
+        self.response = [PPCacheModel getVipCache];
+        [_layoutCollectionView reloadData];
+    }
     [_layoutCollectionView PP_triggerPullToRefresh];
     
     if ([PPUtil currentVipLevel] < _vipLevel) {

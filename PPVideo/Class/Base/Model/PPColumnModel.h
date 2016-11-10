@@ -9,7 +9,7 @@
 #import <QBEncryptedURLRequest.h>
 #import "PPProgramModel.h"
 
-@interface PPColumnModel : QBURLResponse
+@interface PPColumnModel : QBURLResponse <NSCoding>
 
 @property (nonatomic) NSString *columnDesc;
 @property (nonatomic) NSInteger columnId;

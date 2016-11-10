@@ -33,12 +33,12 @@
         PPTrailReponse *resp = nil;
         if (respStatus == QBURLResponseSuccess) {
             resp = self.response;
+            [PPCacheModel updateTrailCacheWithColumnInfo:resp.columnList];
         }
         
         if (handler) {
             handler(respStatus == QBURLResponseSuccess,resp.columnList);
         }
-        
     }];
     
     return success;

@@ -28,7 +28,9 @@
 #import "PPCommonDef.h"
 #import "PPConfiguration.h"
 #import "PPUtil.h"
+#import "PPCacheModel.h"
 #import "PPHudManager.h"
 #import "PPColumnModel.h"
+
 
 #endif /* PPPrefixHeader_pch */
