@@ -62,6 +62,8 @@ QBDefineLazyPropertyInitialization(PPDetailResponse, response)
     _reportView = [[PPDetailReportView alloc] initWithFrame:CGRectMake(0, kScreenHeight - 64 - kWidth(88), kScreenWidth, kWidth(88))];
     [self.view addSubview:_reportView];
     
+    self.layoutTableView.frame = CGRectMake(0, 0, kScreenWidth, kScreenHeight - kWidth(110));
+    
     @weakify(self);
     _reportView.endEditing = ^(NSString *text) {
         @strongify(self);
@@ -78,16 +80,23 @@ QBDefineLazyPropertyInitialization(PPDetailResponse, response)
         }
     };
     
-    {
-        [self.layoutTableView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.top.right.bottom.equalTo(self.view);
-            make.bottom.equalTo(self.view.mas_bottom).offset(-kWidth(68));
-        }];
-    }
+//    {
+//        [self.layoutTableView mas_makeConstraints:^(MASConstraintMaker *make) {
+//            make.left.top.right.bottom.equalTo(self.view);
+//            make.bottom.equalTo(self.view.mas_bottom).offset(-kWidth(68));
+//        }];
+//    }
     
     [self.layoutTableView PP_addPullToRefreshWithHandler:^{
         [self loadData];
     }];
+    
+    
+    if ([PPCacheModel getDetailCacheWithProgramId:[_baseModel.programId integerValue]]) {
+        self.response = [PPCacheModel getDetailCacheWithProgramId:[_baseModel.programId integerValue]];
+        [self initCells];
+    }
+    
     [self.layoutTableView PP_triggerPullToRefresh];
     
     self.layoutTableViewAction = ^(NSIndexPath *indexPath, UITableViewCell *cell) {
@@ -113,10 +122,10 @@ QBDefineLazyPropertyInitialization(PPDetailResponse, response)
     @weakify(self);
     [self.detailModel fetchDetailInfoWithColumnId:[NSNumber numberWithInteger:_columnId] ProgramId:_baseModel.programId CompletionHandler:^(BOOL success, id obj) {
         @strongify(self);
+        [self.layoutTableView PP_endPullToRefresh];
         if (success) {
             self.response = obj;
             [self initCells];
-            [self.layoutTableView PP_endPullToRefresh];
         }
     }];
 }

@@ -8,7 +8,7 @@
 
 #import <QBNetworking/QBEncryptedURLRequest.h>
 
-@interface PPAppSpread : NSObject
+@interface PPAppSpread : NSObject <NSCoding>
 @property (nonatomic) NSString *coverImg;
 @property (nonatomic) NSString *pkgName;
 @property (nonatomic) NSString *postTime;

@@ -42,6 +42,7 @@
 		EC4C6A7C1DB4BE100009771A /* PPSexCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EC4C6A7B1DB4BE100009771A /* PPSexCell.m */; };
 		EC4C6A7F1DB4BE2C0009771A /* PPSexFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = EC4C6A7E1DB4BE2C0009771A /* PPSexFooterView.m */; };
 		EC4C6A861DB4E87D0009771A /* PPSectionBackgroundFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = EC4C6A851DB4E87D0009771A /* PPSectionBackgroundFlowLayout.m */; };
+		EC652F421DD4122C0021A847 /* PPCacheModel.m in Sources */ = {isa = PBXBuildFile; fileRef = EC652F411DD4122C0021A847 /* PPCacheModel.m */; };
 		ECB8F0871DB71DD10088A118 /* PPAppModel.m in Sources */ = {isa = PBXBuildFile; fileRef = ECB8F0861DB71DD10088A118 /* PPAppModel.m */; };
 		ECB8F0B71DB71EB30088A118 /* JQKApplicationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = ECB8F0891DB71EB30088A118 /* JQKApplicationManager.m */; };
 		ECB8F0CD1DB71EE90088A118 /* JQKApplication.m in Sources */ = {isa = PBXBuildFile; fileRef = ECB8F0CC1DB71EE90088A118 /* JQKApplication.m */; };
@@ -171,6 +172,8 @@
 		EC4C6A7E1DB4BE2C0009771A /* PPSexFooterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPSexFooterView.m; sourceTree = "<group>"; };
 		EC4C6A841DB4E87D0009771A /* PPSectionBackgroundFlowLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPSectionBackgroundFlowLayout.h; sourceTree = "<group>"; };
 		EC4C6A851DB4E87D0009771A /* PPSectionBackgroundFlowLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPSectionBackgroundFlowLayout.m; sourceTree = "<group>"; };
+		EC652F401DD4122C0021A847 /* PPCacheModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPCacheModel.h; sourceTree = "<group>"; };
+		EC652F411DD4122C0021A847 /* PPCacheModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPCacheModel.m; sourceTree = "<group>"; };
 		ECB8F0851DB71DD10088A118 /* PPAppModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPAppModel.h; sourceTree = "<group>"; };
 		ECB8F0861DB71DD10088A118 /* PPAppModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPAppModel.m; sourceTree = "<group>"; };
 		ECB8F0881DB71EB30088A118 /* JQKApplicationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JQKApplicationManager.h; path = ../JQKApplicationManager.h; sourceTree = "<group>"; };
@@ -515,6 +518,8 @@
 				ECB8F0E11DB771B30088A118 /* PPHudManager.m */,
 				ECFA0E8C1DBDCD3900E61347 /* PPVideoTokenManager.h */,
 				ECFA0E8D1DBDCD3900E61347 /* PPVideoTokenManager.m */,
+				EC652F401DD4122C0021A847 /* PPCacheModel.h */,
+				EC652F411DD4122C0021A847 /* PPCacheModel.m */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -1004,6 +1009,7 @@
 				EC20D02D1DB8D7340089D8BF /* PPMineActVC.m in Sources */,
 				ECC0979F1DB2065300875D56 /* PPSystemConfigModel.m in Sources */,
 				EC4C6A7C1DB4BE100009771A /* PPSexCell.m in Sources */,
+				EC652F421DD4122C0021A847 /* PPCacheModel.m in Sources */,
 				EC35F1C51DB5C49000523F6F /* PPHotTagCell.m in Sources */,
 				EC20D0071DB8715A0089D8BF /* PPSearchCell.m in Sources */,
 				ECC097D71DB23ECD00875D56 /* TAAnimatedDotView.m in Sources */,

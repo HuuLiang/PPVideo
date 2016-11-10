@@ -33,6 +33,7 @@
         PPColumnModel *resp = nil;
         if (respStatus == QBURLResponseSuccess) {
             resp = self.response;
+            [PPCacheModel updateVipCacheWithColumnInfo:resp];
         }
                         
         if (handler) {

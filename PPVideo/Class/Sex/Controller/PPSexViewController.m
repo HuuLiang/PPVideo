@@ -59,6 +59,13 @@ QBDefineLazyPropertyInitialization(NSMutableDictionary, reloadDic)
         @strongify(self);
         [self loadData];
     }];
+    
+    if ([PPCacheModel getSexCache].count>0) {
+        [self.dataSource removeAllObjects];
+        [self.dataSource addObjectsFromArray:[PPCacheModel getSexCache]];
+        [_layoutCollectionView reloadData];
+    }
+    
     if ([PPUtil currentVipLevel] != PPVipLevelVipC) {
         [_layoutCollectionView PP_addVIPNotiRefreshWithHandler:^{
             @strongify(self);

@@ -59,10 +59,7 @@ QBDefineLazyPropertyInitialization(PPAppModel, appModel)
         }];
     }
     
-    [self.layoutTableView PP_addPullToRefreshWithHandler:^{
-        [self loadAppData];
-    }];
-    [self.layoutTableView PP_triggerPullToRefresh];
+
     
     @weakify(self);
     self.layoutTableViewAction = ^(NSIndexPath *indexPath, UITableViewCell *cell) {
@@ -92,6 +89,18 @@ QBDefineLazyPropertyInitialization(PPAppModel, appModel)
     };
     
     [self initCells];
+    
+    [self.layoutTableView PP_addPullToRefreshWithHandler:^{
+        [self loadAppData];
+    }];
+    
+    if ([PPCacheModel getAppCache].count > 0) {
+        [self.dataSource removeAllObjects];
+        [self.dataSource addObjectsFromArray:[PPCacheModel getAppCache]];
+        [self initAppCell:currentSection];
+    }
+    
+    [self.layoutTableView PP_triggerPullToRefresh];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onPaidNotification:) name:kPaidNotificationName object:nil];
     
@@ -147,10 +156,10 @@ QBDefineLazyPropertyInitialization(PPAppModel, appModel)
     @weakify(self);
     [self.appModel fetchAppSpreadWithCompletionHandler:^(BOOL success, id obj) {
         @strongify(self);
+        [self.layoutTableView PP_endPullToRefresh];
         if (success) {
             [self.dataSource removeAllObjects];
             [self.dataSource addObjectsFromArray:obj];
-            [self.layoutTableView PP_endPullToRefresh];
             if (_dataSource.count > 0) {
                 [self initAppCell:currentSection];
             }

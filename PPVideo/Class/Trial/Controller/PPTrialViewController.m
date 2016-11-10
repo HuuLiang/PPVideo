@@ -99,6 +99,13 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
         @strongify(self);
         [self loadData];
     }];
+    if ([PPCacheModel getTrailCache].count>0) {
+        [self.dataSource removeAllObjects];
+        [self.dataSource addObjectsFromArray:[PPCacheModel getTrailCache]];
+        [self refreshBannerView];
+        [_layoutCollectionView reloadData];
+    }
+    
     [_layoutCollectionView PP_triggerPullToRefresh];
     
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{

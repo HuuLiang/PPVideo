@@ -93,6 +93,14 @@ QBDefineLazyPropertyInitialization(PPSearchModel, searchModel)
         @strongify(self);
         [self loadData];
     }];
+    
+    if ([PPCacheModel getHotCache].hotSearch.count > 0) {
+        self.response = [PPCacheModel getHotCache];
+        _loadMoreTags = NO;
+        [_layoutCollectionView reloadData];
+        headerView.selectedMoreBth = NO;
+    }
+    
     [_layoutCollectionView PP_triggerPullToRefresh];
     
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
