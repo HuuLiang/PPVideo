@@ -13,7 +13,7 @@ static NSString *const kPPVideoDetailProgramOffUrlKeyName       = @"PP_DetailPro
 
 - (instancetype)initWithCoder:(NSCoder *)coder
 {
-    self = [super init];
+    self = [super initWithCoder:coder];
     if (self) {
         self.offUrl = [coder decodeObjectForKey:kPPVideoDetailProgramOffUrlKeyName];
     }
@@ -21,6 +21,8 @@ static NSString *const kPPVideoDetailProgramOffUrlKeyName       = @"PP_DetailPro
 }
 
 - (void)encodeWithCoder:(NSCoder *)aCoder {
+    [super encodeWithCoder:aCoder];
+    
     [aCoder encodeObject:self.offUrl forKey:kPPVideoDetailProgramOffUrlKeyName];
 }
 @end
