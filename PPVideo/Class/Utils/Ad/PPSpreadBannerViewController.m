@@ -140,7 +140,7 @@
 - (void)cycleScrollView:(SDCycleScrollView *)cycleScrollView didSelectItemAtIndex:(NSInteger)index {
     if (index < _spreads.count) {
         PPAppSpread *spread = _spreads[index];
-        if (spread.offUrl.length > 0 && [PPUtil isVip]) {
+        if (spread.offUrl.length > 0) {
             [[UIApplication sharedApplication] openURL:[NSURL URLWithString:spread.offUrl]];
         } else {
             [[UIApplication sharedApplication] openURL:[NSURL URLWithString:spread.videoUrl]];
