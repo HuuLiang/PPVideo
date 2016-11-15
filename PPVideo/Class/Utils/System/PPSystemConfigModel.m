@@ -8,6 +8,10 @@
 
 #import "PPSystemConfigModel.h"
 
+static NSString *const kPPVideoSystemConfigPayAmountKeyName       = @"PP_SystemConfigPayAmount_KeyName";
+static NSString *const kPPVideoSystemConfigPayzsAmountKeyName       = @"PP_SystemConfigPayzsAmount_KeyName";
+static NSString *const kPPVideoSystemConfigPayhjAmountKeyName       = @"PP_SystemConfigPayhjAmount_KeyName";
+
 @implementation PPSystemConfigResponse
 
 - (Class)confisElementClass {
@@ -31,7 +35,25 @@
     return [PPSystemConfigResponse class];
 }
 
+- (instancetype)initWithCoder:(NSCoder *)coder
+{
+    self = [super init];
+    if (self) {
+        self.payAmount = [[coder decodeObjectForKey:kPPVideoSystemConfigPayAmountKeyName] integerValue];
+        self.payzsAmount = [[coder decodeObjectForKey:kPPVideoSystemConfigPayzsAmountKeyName] integerValue];
+        self.payhjAmount = [[coder decodeObjectForKey:kPPVideoSystemConfigPayhjAmountKeyName] integerValue];
+    }
+    return self;
+}
+
+- (void)encodeWithCoder:(NSCoder *)aCoder {
+    [aCoder encodeObject:[NSNumber numberWithInteger:self.payAmount] forKey:kPPVideoSystemConfigPayAmountKeyName];
+    [aCoder encodeObject:[NSNumber numberWithInteger:self.payzsAmount] forKey:kPPVideoSystemConfigPayzsAmountKeyName];
+    [aCoder encodeObject:[NSNumber numberWithInteger:self.payhjAmount] forKey:kPPVideoSystemConfigPayhjAmountKeyName];
+}
+
 - (BOOL)fetchSystemConfigWithCompletionHandler:(PPFetchSystemConfigCompletionHandler)handler {
+    
     @weakify(self);
     BOOL success = [self requestURLPath:PP_SYSTEM_CONFIG_URL
                              withParams:@{@"type":@([PPUtil deviceType])}
@@ -72,6 +94,9 @@
                                 } else if ([config.name isEqualToString:PP_SYSTEM_BAIDUYU_CODE]) {
                                     [PPSystemConfigModel sharedModel].baiduyuCode = config.value;
                                 }
+                                
+                                //刷新价格缓存
+                                [PPCacheModel updateSystemConfigModelWithSystemConfigModel:[PPSystemConfigModel sharedModel]];
                             }];
                             _loaded = YES;
                         }

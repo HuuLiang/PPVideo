@@ -174,6 +174,9 @@ static NSString *const kAliPaySchemeUrl = @"paoPaoYingyuanAliPayUrlScheme";
     [[QBPaymentManager sharedManager] usePaymentConfigInTestServer:YES];
 #endif
     
+    //读取缓存价格配置
+    [PPCacheModel getSystemConfigModelInfo];
+    
     [PPUtil accumateLaunchSeq];
     [[QBPaymentManager sharedManager] registerPaymentWithAppId:PP_REST_APPID paymentPv:@([PP_PAYMENT_PV integerValue]) channelNo:PP_CHANNEL_NO urlScheme:kAliPaySchemeUrl];
     [self setupCommonStyles];
