@@ -17,7 +17,7 @@
 
 typedef void (^PPFetchSystemConfigCompletionHandler)(BOOL success);
 
-@interface PPSystemConfigModel : QBEncryptedURLRequest
+@interface PPSystemConfigModel : QBEncryptedURLRequest <NSCoding>
 
 @property (nonatomic) NSInteger payAmount;
 @property (nonatomic) NSInteger payzsAmount;

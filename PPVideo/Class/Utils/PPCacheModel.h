@@ -11,6 +11,7 @@
 #import "PPHotModel.h"
 #import "PPAppModel.h"
 #import "PPDetailModel.h"
+#import "PPSystemConfigModel.h"
 
 @interface PPCacheModel : NSObject
 
@@ -31,4 +32,7 @@
 
 +(PPDetailResponse *)getDetailCacheWithProgramId:(NSInteger)programId;
 +(void)updateDetailChche:(PPDetailResponse *)response WithProgramId:(NSInteger)programId;
+
++(PPSystemConfigModel *)getSystemConfigModelInfo;
++(void)updateSystemConfigModelWithSystemConfigModel:(PPSystemConfigModel *)systemConfigModel;
 @end

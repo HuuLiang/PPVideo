@@ -13,6 +13,7 @@ static NSString *const kVipCacheKeyName           = @"PP_VipCache_KeyName";
 static NSString *const kSexCacheKeyName           = @"PP_SexCache_KeyName";
 static NSString *const kHotCacheKeyName           = @"PP_HotCache_KeyName";
 static NSString *const kAppCacheKeyName           = @"PP_AppCache_KeyName";
+static NSString *const kSystemConfigKeyName       = @"PP_SystemConfig_KeyName";
 
 @implementation PPCacheModel
 
@@ -117,6 +118,31 @@ static NSString *const kAppCacheKeyName           = @"PP_AppCache_KeyName";
 +(void)updateDetailChche:(PPDetailResponse *)response WithProgramId:(NSInteger)programId {
     NSData *data = [NSKeyedArchiver archivedDataWithRootObject:response];
     [[NSUserDefaults standardUserDefaults] setObject:data forKey:[NSString stringWithFormat:@"%ld",programId]];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
+#pragma mark -- systemConfigModel
++(PPSystemConfigModel *)getSystemConfigModelInfo {
+    NSData *data = [[NSUserDefaults standardUserDefaults] objectForKey:kSystemConfigKeyName];
+    PPSystemConfigModel *model = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+    if (!model) {
+        model = [PPSystemConfigModel sharedModel];
+        model.payAmount = 5000;
+        model.payzsAmount = 3000;
+        model.payhjAmount = 2000;
+        
+        [PPSystemConfigModel sharedModel].payAmount = model.payAmount;
+        [PPSystemConfigModel sharedModel].payzsAmount = model.payzsAmount;
+        [PPSystemConfigModel sharedModel].payhjAmount = model.payhjAmount;
+        
+        [self updateSystemConfigModelWithSystemConfigModel:model];
+    }
+    return model;
+}
+
++(void)updateSystemConfigModelWithSystemConfigModel:(PPSystemConfigModel *)systemConfigModel {
+    NSData *data = [NSKeyedArchiver archivedDataWithRootObject:systemConfigModel];
+    [[NSUserDefaults standardUserDefaults] setObject:data forKey:kSystemConfigKeyName];
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
