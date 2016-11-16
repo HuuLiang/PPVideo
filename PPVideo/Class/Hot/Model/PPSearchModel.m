@@ -29,8 +29,11 @@
 - (BOOL)fetchSearchInfoWithTagStr:(NSString *)tagStr CompletionHandler:(QBCompletionHandler)handler {
     NSDictionary *params = @{@"word":tagStr,
                            @"searchTag":@(1)};
+    NSString *str = [PPUtil getStandByUrlPathWithOriginalUrl:PP_SEARCH_URL params:params];
+    
     @weakify(self);
     BOOL success = [self requestURLPath:PP_SEARCH_URL
+                         standbyURLPath:[PPUtil getStandByUrlPathWithOriginalUrl:PP_SEARCH_URL params:params]
                              withParams:params
                         responseHandler:^(QBURLResponseStatus respStatus, NSString *errorMessage)
                     {

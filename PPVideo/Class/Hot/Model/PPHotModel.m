@@ -59,6 +59,7 @@ static NSString *const kPPVideoHotTagsKeyName           = @"PP_HotTags_KeyName";
 - (BOOL)fetchHotInfoWithCompletionHandler:(QBCompletionHandler)handler {
     @weakify(self);
     BOOL success = [self requestURLPath:PP_HOT_URL
+                         standbyURLPath:[PPUtil getStandByUrlPathWithOriginalUrl:PP_HOT_URL params:nil]
                              withParams:nil
                         responseHandler:^(QBURLResponseStatus respStatus, NSString *errorMessage)
                     {

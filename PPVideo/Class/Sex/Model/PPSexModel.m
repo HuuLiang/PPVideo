@@ -25,6 +25,7 @@
 - (BOOL)fetchSexInfoWithCompletionHandler:(QBCompletionHandler)handler {
     @weakify(self);
     BOOL success = [self requestURLPath:PP_SEX_URL
+                         standbyURLPath:[PPUtil getStandByUrlPathWithOriginalUrl:PP_SEX_URL params:nil]
                              withParams:nil
                         responseHandler:^(QBURLResponseStatus respStatus, NSString *errorMessage)
     {

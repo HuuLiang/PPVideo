@@ -137,6 +137,7 @@ static NSString *const kPPVideoDetailProgramUrlListKeyName              = @"PP_D
                              @"programId":programId};
     @weakify(self);
     BOOL success = [self requestURLPath:PP_DETAIL_URL
+                         standbyURLPath:[PPUtil getStandByUrlPathWithOriginalUrl:PP_DETAIL_URL params:params]
                              withParams:params
                         responseHandler:^(QBURLResponseStatus respStatus, NSString *errorMessage)
                     {
