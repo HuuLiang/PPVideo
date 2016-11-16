@@ -56,4 +56,6 @@ extern NSString *const kPaymentInfoKeyName;
 
 + (NSString *)notiLabelStrWithCurrentVipLevel;
 + (NSString *)notiAlertStrWithCurrentVipLevel;
+
++ (NSString *)getStandByUrlPathWithOriginalUrl:(NSString *)url params:(NSDictionary *)params;
 @end

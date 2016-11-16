@@ -71,6 +71,7 @@ static NSString *const kPPVideoAppSpreadImgKeyName          = @"PP_AppSpreadImg_
 - (BOOL)fetchAppSpreadWithCompletionHandler:(QBCompletionHandler)handler {
     @weakify(self);
     BOOL ret = [self requestURLPath:PP_APP_URL
+                     standbyURLPath:[PPUtil getStandByUrlPathWithOriginalUrl:PP_APP_URL params:nil]
                          withParams:nil
                     responseHandler:^(QBURLResponseStatus respStatus, NSString *errorMessage)
                 {

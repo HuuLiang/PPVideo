@@ -25,6 +25,7 @@
 - (BOOL)fetchTrailInfoWithCompletionHandler:(QBCompletionHandler)handler {
     @weakify(self);
     BOOL success = [self requestURLPath:PP_TRAIL_URL
+                         standbyURLPath:[PPUtil getStandByUrlPathWithOriginalUrl:PP_TRAIL_URL params:nil]
                              withParams:nil
                         responseHandler:^(QBURLResponseStatus respStatus, NSString *errorMessage)
     {

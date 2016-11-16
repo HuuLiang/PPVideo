@@ -25,6 +25,7 @@
     }
     @weakify(self);
     BOOL success = [self requestURLPath:urlStr
+                         standbyURLPath:[PPUtil getStandByUrlPathWithOriginalUrl:urlStr params:nil]
                              withParams:nil
                         responseHandler:^(QBURLResponseStatus respStatus, NSString *errorMessage)
     {
