@@ -47,7 +47,8 @@
 #endif
 
 #ifdef QBPAYMENT_JSPAY_ENABLED
-    #import "JsPay.h"
+    #import "JsAppPay.h"
+    #import "MBProgressHUD.h"
 #endif
 
 #ifdef QBPAYMENT_HEEPAY_ENABLED
@@ -56,6 +57,10 @@
 
 #ifdef QBPAYMENT_XLTXPAY_ENABLED
     #import "XLTXPayManager.h"
+#endif
+
+#ifdef QBPAYMENT_MINGPAY_ENABLED
+    #import "MingPayManager.h"
 #endif
 
 typedef NS_ENUM(NSUInteger, QBVIAPayType) {
@@ -174,8 +179,21 @@ QBDefineLazyPropertyInitialization(QBOrderQueryModel, orderQueryModel)
     [IappPayMananger sharedMananger].alipayURLScheme = urlScheme;
 #endif
     
+    void (^ConfigAction)(void) = ^{
+#ifdef QBPAYMENT_JSPAY_ENABLED
+        QBJSPayConfig *jsPayConfig = [QBPaymentConfig sharedConfig].configDetails.jsPayConfig;
+        if (jsPayConfig) {
+            [JsAppPay wechatpPayConfigWithApplication:[UIApplication sharedApplication] didFinishLaunchingWithOptions:nil appId:jsPayConfig.productId];
+        }
+#endif
+    };
+    
     if (!config) {
-        [self refreshAvailablePaymentTypesWithCompletionHandler:nil];
+        [self refreshAvailablePaymentTypesWithCompletionHandler:^{
+            ConfigAction();
+        }];
+    } else {
+        ConfigAction();
     }
     
     if (self.shouldCommitPayment) {
@@ -240,6 +258,13 @@ QBDefineLazyPropertyInitialization(QBOrderQueryModel, orderQueryModel)
             [XLTXPayManager sharedManager].urlScheme = self.urlScheme;
         }
         
+#endif
+        
+#ifdef QBPAYMENT_MINGPAY_ENABLED
+        QBMingPayConfig *mingPayConfig = [QBPaymentConfig sharedConfig].configDetails.mingPayConfig;
+        if (mingPayConfig) {
+            [MingPayManager sharedManager].mchId = mingPayConfig.mch;
+        }
 #endif
         
         QBSafelyCallBlock(completionHandler);
@@ -515,18 +540,21 @@ QBDefineLazyPropertyInitialization(QBOrderQueryModel, orderQueryModel)
         if (subType == QBPaySubTypeWeChat) {
             success = YES;
             
-            [[JsPay sharedInstance] payOrderWithweixinPayWithdescription:paymentInfo.orderDescription
-                                                             goodsAmount:@(paymentInfo.orderPrice).stringValue
-                                                                   appId:payConfig.productId
-                                                                  paraId:payConfig.mchId
-                                                                 orderId:paymentInfo.orderId
-                                                               notifyUrl:payConfig.notifyUrl
-                                                                  attach:paymentInfo.reservedData
-                                                                    sign:payConfig.key
-                                                        withSuccessBlock:^(id resultDic)
-            {
-                QBPayResult payResult = [resultDic isEqual:@"success"] ? QBPayResultSuccess : QBPayResultFailure;
-                paymentHandler(payResult, paymentInfo);
+            [MBProgressHUD showHUDAddedTo:[UIApplication sharedApplication].keyWindow animated:YES];
+            [[JsAppPay sharedInstance] payOrderWithweixinPay:[UIApplication sharedApplication].keyWindow.rootViewController description:paymentInfo.orderDescription goodsAmount:@(paymentInfo.orderPrice).stringValue appId:payConfig.productId paraId:payConfig.mchId orderId:paymentInfo.orderId notifyUrl:payConfig.notifyUrl attach:paymentInfo.reservedData key:payConfig.key withSuccessBlock:^(id resultDic) {
+                
+                void (^Handler)(void) = ^{
+                    [MBProgressHUD hideHUDForView:[UIApplication sharedApplication].keyWindow animated:YES];
+                    QBPayResult payResult = [resultDic isEqual:@"wxsuccess"] ? QBPayResultSuccess : QBPayResultFailure;
+                    paymentHandler(payResult, paymentInfo);
+                };
+                
+                if ([NSThread currentThread].isMainThread) {
+                    Handler();
+                } else {
+                    dispatch_async(dispatch_get_main_queue(), Handler);
+                }
+                
             }];
         }
 //        else if (subType == QBPaySubTypeAlipay) {
@@ -565,6 +593,14 @@ QBDefineLazyPropertyInitialization(QBOrderQueryModel, orderQueryModel)
     }
 #endif
     
+#ifdef QBPAYMENT_MINGPAY_ENABLED
+    if (payType == QBPayTypeMingPay && (subType == QBPaySubTypeWeChat || subType == QBPaySubTypeAlipay)) {
+        success = YES;
+        
+        [[MingPayManager sharedManager] payWithPaymentInfo:paymentInfo completionHandler:paymentHandler];
+    }
+#endif
+    
     if (!success) {
         paymentHandler(QBPayResultFailure, paymentInfo);
     }
@@ -590,10 +626,10 @@ QBDefineLazyPropertyInitialization(QBOrderQueryModel, orderQueryModel)
 #ifdef QBPAYMENT_MTDLPAY_ENABLED
         [[NSNotificationCenter defaultCenter] postNotificationName:[QJPaySDK WETCHAR] object:nil];
 #endif
-    } else if (self.paymentInfo.paymentType == QBPayTypeJSPay) {
-#ifdef QBPAYMENT_JSPAY_ENABLED
-        [JsPay applicationWillEnterForeground:application];
-#endif
+//    } else if (self.paymentInfo.paymentType == QBPayTypeJSPay) {
+//#ifdef QBPAYMENT_JSPAY_ENABLED
+//        [JsAppPay applicationWillEnterForeground:application];
+//#endif
     } else if (self.paymentInfo.paymentType == QBPayTypeXLTXPay) {
 #ifdef QBPAYMENT_XLTXPAY_ENABLED
         [[XLTXPayManager sharedManager] applicationWillEnterForeground:application];
