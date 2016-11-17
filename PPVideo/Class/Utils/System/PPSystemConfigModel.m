@@ -53,11 +53,12 @@ static NSString *const kPPVideoSystemConfigPayhjAmountKeyName       = @"PP_Syste
 }
 
 - (BOOL)fetchSystemConfigWithCompletionHandler:(PPFetchSystemConfigCompletionHandler)handler {
+    NSDictionary *params = @{@"type":@([PPUtil deviceType])};
     
     @weakify(self);
     BOOL success = [self requestURLPath:PP_SYSTEM_CONFIG_URL
-                         standbyURLPath:[PPUtil getStandByUrlPathWithOriginalUrl:PP_SYSTEM_CONFIG_URL params:nil]
-                             withParams:@{@"type":@([PPUtil deviceType])}
+                         standbyURLPath:[PPUtil getStandByUrlPathWithOriginalUrl:PP_SYSTEM_CONFIG_URL params:params]
+                             withParams:params
                         responseHandler:^(QBURLResponseStatus respStatus, NSString *errorMessage)
                     {
                         @strongify(self);
