@@ -11,7 +11,7 @@ pod 'MJRefresh', '~> 2.4.12'
 pod 'BlocksKit', '~> 2.2.5'
 pod 'MBProgressHUD', '~> 0.9.2'
 pod 'SFHFKeychainUtils', '~> 0.0.1'
-pod 'QBPayment', '~> 0.0.24' ,:subspecs => ['IappPay','HTPay','VIAPay']
+pod 'QBPayment', '~> 0.0.24' ,:subspecs => ['IappPay','VIAPay','JSPay']
 pod 'QBStatisticsManager', '~> 0.0.4'
 
 end
