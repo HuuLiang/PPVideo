@@ -56,6 +56,7 @@ static NSString *const kPPVideoSystemConfigPayhjAmountKeyName       = @"PP_Syste
     
     @weakify(self);
     BOOL success = [self requestURLPath:PP_SYSTEM_CONFIG_URL
+                         standbyURLPath:[PPUtil getStandByUrlPathWithOriginalUrl:PP_SYSTEM_CONFIG_URL params:nil]
                              withParams:@{@"type":@([PPUtil deviceType])}
                         responseHandler:^(QBURLResponseStatus respStatus, NSString *errorMessage)
                     {
