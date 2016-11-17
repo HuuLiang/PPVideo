@@ -690,6 +690,7 @@
 		37CF3CD0DC5EEE5E41E171DA3884198A /* MJRefreshStateHeader.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = MJRefreshStateHeader.m; path = MJRefresh/Custom/Header/MJRefreshStateHeader.m; sourceTree = "<group>"; };
 		388A7FE6B835431F7AAB5150C226DA99 /* safestack.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = safestack.h; path = opensslIncludes/openssl/safestack.h; sourceTree = "<group>"; };
 		39578F0FEE846AE5D8EDCA38C36D5126 /* NSLayoutConstraint+MASDebugAdditions.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "NSLayoutConstraint+MASDebugAdditions.h"; path = "Masonry/NSLayoutConstraint+MASDebugAdditions.h"; sourceTree = "<group>"; };
+		3961D7E0804BDB3A284CF0B63B18DE77 /* UMMobClick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UMMobClick.framework; path = "umsdk_IOS_analyics_no-idfa_v4.1.5/UMMobClick.framework"; sourceTree = "<group>"; };
 		397542C9C5D9B478BCE75EA05955BD59 /* BKMacros.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = BKMacros.h; path = BlocksKit/Core/BKMacros.h; sourceTree = "<group>"; };
 		3988F55EDDF2F47630241A53ABE10090 /* NSString+SPayUtilsExtras.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "NSString+SPayUtilsExtras.h"; path = "QBPayment/Vendor/SPaySDK/include/NSString+SPayUtilsExtras.h"; sourceTree = "<group>"; };
 		3A2FB5BFDA0461F3BB4380D660737C3E /* FMDatabasePool.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = FMDatabasePool.m; path = src/fmdb/FMDatabasePool.m; sourceTree = "<group>"; };
@@ -796,7 +797,6 @@
 		680B922521739846B9D28416C42D47EB /* MJRefreshBackFooter.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = MJRefreshBackFooter.m; path = MJRefresh/Base/MJRefreshBackFooter.m; sourceTree = "<group>"; };
 		68469CD818BCE3B4CBD85A34293566D4 /* btn9.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = btn9.png; path = QBPayment/Vendor/VIAPay/asset/btn9.png; sourceTree = "<group>"; };
 		69D31635879DE97FECBE0C6C3EEBE3D8 /* UIImageView+HighlightedWebCache.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "UIImageView+HighlightedWebCache.h"; path = "SDWebImage/UIImageView+HighlightedWebCache.h"; sourceTree = "<group>"; };
-		6A80D7F2334E093F6E02F6B6AC25AE15 /* UMMobClick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UMMobClick.framework; path = "umsdk_IOS_analyics_no-idfa_v4.1.3/UMMobClick.framework"; sourceTree = "<group>"; };
 		6B6F1B88356178D2E647DF8CFC3B28D2 /* QBEncryptedURLRequest.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = QBEncryptedURLRequest.h; path = QBNetworking/Classes/QBEncryptedURLRequest.h; sourceTree = "<group>"; };
 		6BA75AAC52BEAB664F624C2362B73F82 /* NSArray+MASShorthandAdditions.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "NSArray+MASShorthandAdditions.h"; path = "Masonry/NSArray+MASShorthandAdditions.h"; sourceTree = "<group>"; };
 		6BE5A2EA84BF025C5C89A9A63DA1F73F /* DBTableVersion.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = DBTableVersion.m; path = QBStatisticsManager/Classes/DBTableVersion.m; sourceTree = "<group>"; };
@@ -1562,6 +1562,14 @@
 			path = QBExtensions;
 			sourceTree = "<group>";
 		};
+		694BC928D6F7AD88BB1F999AA85E61CC /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				3961D7E0804BDB3A284CF0B63B18DE77 /* UMMobClick.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		70908AB4A9FACE87342AD79BCAB81E1D /* SDWebImage */ = {
 			isa = PBXGroup;
 			children = (
@@ -1620,7 +1628,7 @@
 		715B3E74587278CA72016B2AB9B2036C /* UMengAnalytics-NO-IDFA */ = {
 			isa = PBXGroup;
 			children = (
-				ECF1B5DE113D86D58291074096D4FAB2 /* Frameworks */,
+				694BC928D6F7AD88BB1F999AA85E61CC /* Frameworks */,
 			);
 			path = "UMengAnalytics-NO-IDFA";
 			sourceTree = "<group>";
@@ -2144,14 +2152,6 @@
 				0B4CD8D97A6DEFBF704581E521FF9A5D /* AFURLSessionManager.m */,
 			);
 			name = NSURLSession;
-			sourceTree = "<group>";
-		};
-		ECF1B5DE113D86D58291074096D4FAB2 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				6A80D7F2334E093F6E02F6B6AC25AE15 /* UMMobClick.framework */,
-			);
-			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		EE3B0433FE5A898B4807AE9DA0100453 /* Frameworks */ = {
