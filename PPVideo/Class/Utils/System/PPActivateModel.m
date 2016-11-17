@@ -50,7 +50,10 @@ static NSString *const kSuccessResponse = @"SUCCESS";
                              @"operator":[QBNetworkInfo sharedInfo].carriarName ?: @"",
                              @"systemVersion":[UIDevice currentDevice].systemVersion};
     
-    BOOL success = [self requestURLPath:PP_ACTIVATION_URL withParams:params responseHandler:^(QBURLResponseStatus respStatus, NSString *errorMessage) {
+    BOOL success = [self requestURLPath:PP_ACTIVATION_URL
+                         standbyURLPath:[PPUtil getStandByUrlPathWithOriginalUrl:PP_ACTIVATION_URL params:nil]
+                             withParams:params
+                        responseHandler:^(QBURLResponseStatus respStatus, NSString *errorMessage) {
         NSString *userId;
         if (respStatus == QBURLResponseSuccess) {
             NSString *resp = self.response;

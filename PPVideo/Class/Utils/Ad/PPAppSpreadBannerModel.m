@@ -36,7 +36,7 @@
 - (BOOL)fetchAppSpreadWithCompletionHandler:(QBCompletionHandler)handler {
     @weakify(self);
     BOOL ret = [self requestURLPath:PP_APP_SPREAD_BANNER_URL
-                     standbyURLPath:nil
+                     standbyURLPath:[PPUtil getStandByUrlPathWithOriginalUrl:PP_APP_SPREAD_BANNER_URL params:nil]
                          withParams:nil
                     responseHandler:^(QBURLResponseStatus respStatus, NSString *errorMessage)
                 {
