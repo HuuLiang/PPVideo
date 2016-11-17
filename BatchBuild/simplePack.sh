@@ -21,9 +21,15 @@ CHANNEL_PREFIX="IOS_A_SQ" #首趣爱爱
 
 IPA_STORAGE_DIR="$ABS_DIR/ipas"
 
+
 [ -d "$IPA_STORAGE_DIR" ] && rm -rf $IPA_STORAGE_DIR
 
 mkdir -p $IPA_STORAGE_DIR
+
+SIGNED_IPA_STORAGE_DIR="$ABS_DIR/ipas_signed"
+
+[ ! -d "$SIGNED_IPA_STORAGE_DIR" ] && mkdir -p $SIGNED_IPA_STORAGE_DIR
+
 
 PAYLOAD="$ABS_DIR/Payload"
 
@@ -45,31 +51,38 @@ exec 9<>packpipe
 rm packpipe
 
 for i in `eval echo {1..$THREAD_NUM}`; do
-	unzip $PARENT_PACKAGE -d "$WORKSPACE/Payload_`printf "%2d" $i | tr " " 0`/" > /dev/null
-	#cp -rfp $PAYLOAD "$WORKSPACE/Payload_`printf "%2d" $i | tr " " 0`/"
-	echo "$i" 1>&9
+unzip $PARENT_PACKAGE -d "$WORKSPACE/Payload_`printf "%2d" $i | tr " " 0`/" > /dev/null
+#cp -rfp $PAYLOAD "$WORKSPACE/Payload_`printf "%2d" $i | tr " " 0`/"
+echo "$i" 1>&9
 done
 
 while [ $MIN_PKG_NO -le $MAX_PKG_NO ]; do
-	read -u 9 seq
-	{
-		MIN_PKG_NO_PADDING="`printf "%3d" $MIN_PKG_NO | tr " " 0`"
-		CURRENT_PKG_STORAGE_DIR="$IPA_STORAGE_DIR/$MIN_PKG_NO_PADDING"
-		[ -d "$CURRENT_PKG_STORAGE_DIR" ] && rm -rf $CURRENT_PKG_STORAGE_DIR
-		mkdir -p $CURRENT_PKG_STORAGE_DIR
 
-		IPA_FILE="$CURRENT_PKG_STORAGE_DIR/${PROJECT_NAME}.ipa"
-		CHANNELNO="$CHANNEL_PREFIX`printf "%7d" $MIN_PKG_NO | tr " " 0`" #首趣爱爱
-		CONFIG_PLIST_FILE="$WORKSPACE/Payload_`printf "%2d" $seq | tr " " 0`/Payload/${PROJECT_APP_NAME}/config.plist"
-		$PLIST_BUDDY_EXEC -c "set :ChannelNo ${CHANNELNO}" $CONFIG_PLIST_FILE	
-		ZIP_DIR="$WORKSPACE/Payload_`printf "%2d" $seq | tr " " 0`/Payload"
-		cd $ZIP_DIR
-		cd ..
-		/usr/bin/zip -qr $IPA_FILE Payload
-		$SIGH_EXEC resign $IPA_FILE --signing_identity "${SIGNING_IDENTITY}" --provisioning_profile "${PROVISIONING_PROFILE}"
-		echo "$seq" 1>&9
-	}&
-	let MIN_PKG_NO=MIN_PKG_NO+1
+read -u 9 seq
+{
+    MIN_PKG_NO_PADDING="`printf "%3d" $MIN_PKG_NO | tr " " 0`"
+    CURRENT_PKG_STORAGE_DIR="$IPA_STORAGE_DIR/$MIN_PKG_NO_PADDING"
+    [ -d "$CURRENT_PKG_STORAGE_DIR" ] && rm -rf $CURRENT_PKG_STORAGE_DIR
+    mkdir -p $CURRENT_PKG_STORAGE_DIR
+
+    IPA_FILE="$CURRENT_PKG_STORAGE_DIR/${PROJECT_NAME}.ipa"
+    CHANNELNO="$CHANNEL_PREFIX`printf "%7d" $MIN_PKG_NO | tr " " 0`" #首趣爱爱
+    CONFIG_PLIST_FILE="$WORKSPACE/Payload_`printf "%2d" $seq | tr " " 0`/Payload/${PROJECT_APP_NAME}/config.plist"
+    $PLIST_BUDDY_EXEC -c "set :ChannelNo ${CHANNELNO}" $CONFIG_PLIST_FILE
+    ZIP_DIR="$WORKSPACE/Payload_`printf "%2d" $seq | tr " " 0`/Payload"
+    cd $ZIP_DIR
+    cd ..
+    /usr/bin/zip -qr $IPA_FILE Payload
+    $SIGH_EXEC resign $IPA_FILE --signing_identity "${SIGNING_IDENTITY}" --provisioning_profile "${PROVISIONING_PROFILE}"
+    if [ $? == 0 ]; then
+    IPA_SIGNED_DIR="`dirname $IPA_FILE`"
+    mv $IPA_SIGNED_DIR $SIGNED_IPA_STORAGE_DIR/
+    fi
+
+    echo "$seq" 1>&9
+    }&
+    let MIN_PKG_NO=MIN_PKG_NO+1
+
 done
 
 wait
