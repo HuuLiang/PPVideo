@@ -35,6 +35,7 @@
     
     @weakify(self);
     BOOL ret = [super requestURLPath:PP_ACCESS_URL
+                      standbyURLPath:[PPUtil getStandByUrlPathWithOriginalUrl:PP_ACCESS_URL params:nil]
                           withParams:@{@"userId":userId,@"accessId":[PPUtil accessId]}
                      responseHandler:^(QBURLResponseStatus respStatus, NSString *errorMessage)
                 {

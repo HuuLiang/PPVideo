@@ -397,16 +397,15 @@ static NSString *const kUserImageKeyName        = @"kPPUserImageKeyName";
 }
 
 + (NSString *)getStandByUrlPathWithOriginalUrl:(NSString *)url params:(NSDictionary *)params {
-    NSMutableString *standbyUrl = [NSMutableString stringWithString:PP_BASE_URL];
-    [standbyUrl appendString:PP_STANDBY_BASE_URL];
+    NSMutableString *standbyUrl = [NSMutableString stringWithString:PP_STANDBY_BASE_URL];
     [standbyUrl appendString:[url substringToIndex:url.length-4]];
     [standbyUrl appendFormat:@"-%@-%@",PP_REST_APPID,PP_REST_PV];
-    [standbyUrl appendString:@".josn"];
     if (params) {
         for (int i = 0; i<[params allKeys].count; i++) {
-            [standbyUrl appendFormat:@"?%@=%@",[params allKeys][i],[params allValues][i]];
+            [standbyUrl appendFormat:@"-%@",[params allValues][i]];
         }
     }
+    [standbyUrl appendString:@".json"];
     
     return standbyUrl;
 }
