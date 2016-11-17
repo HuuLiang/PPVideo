@@ -71,7 +71,7 @@ PODS:
     - SDWebImage/Core (= 3.7.3)
   - SDWebImage/Core (3.7.3)
   - SFHFKeychainUtils (0.0.1)
-  - UMengAnalytics-NO-IDFA (4.1.3)
+  - UMengAnalytics-NO-IDFA (4.1.5)
   - XMLReader-Arc (1.1)
 
 DEPENDENCIES:
@@ -101,9 +101,9 @@ SPEC CHECKSUMS:
   QBStatisticsManager: 41f447ddb3cebf76d8629fa7e590e9a3d06831a9
   SDWebImage: 1d2b1a1efda1ade1b00b6f8498865f8ddedc8a84
   SFHFKeychainUtils: 9576b411a79a058f4d5381ace6f3242b9a62e664
-  UMengAnalytics-NO-IDFA: b26a7003458204d4549b6bd132c2f07dd5942b86
+  UMengAnalytics-NO-IDFA: f1b08b540eba6ebad044a574cae6d988cf40cfda
   XMLReader-Arc: 7832c527346fc26511fd6c05ebcee18008c34d6d
 
 PODFILE CHECKSUM: 41684767a8ab0803afb478b6c14592d143faab64
 
-COCOAPODS: 1.1.1
+COCOAPODS: 1.1.0.rc.2
