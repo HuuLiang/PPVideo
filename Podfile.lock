@@ -71,7 +71,7 @@ PODS:
     - SDWebImage/Core (= 3.7.3)
   - SDWebImage/Core (3.7.3)
   - SFHFKeychainUtils (0.0.1)
-  - UMengAnalytics-NO-IDFA (4.1.5)
+  - UMengAnalytics-NO-IDFA (4.1.3)
   - XMLReader-Arc (1.1)
 
 DEPENDENCIES:
