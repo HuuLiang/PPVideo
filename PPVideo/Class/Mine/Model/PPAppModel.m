@@ -76,35 +76,40 @@ static NSString *const kPPVideoAppSpreadImgKeyName          = @"PP_AppSpreadImg_
                     responseHandler:^(QBURLResponseStatus respStatus, NSString *errorMessage)
                 {
                     @strongify(self);
-                    NSArray *array = nil;
+                    PPAppResponse *resp = nil;
                     if (respStatus == QBURLResponseSuccess) {
-                        PPAppResponse *resp = self.response;
-                        array = [NSArray arrayWithArray:resp.programList];
-                        _fetchedSpreads = [[NSMutableArray alloc] init];
-                    } else {
-                        if (handler) {
-                            handler(QBURLResponseFailedByInterface,nil);
-                        }
+                        resp = self.response;
+                        [PPCacheModel updateAppCacheWithAppInfo:resp.programList];
+//                        array = [NSArray arrayWithArray:resp.programList];
+//                        _fetchedSpreads = [[NSMutableArray alloc] init];
                     }
-                    
-                    for (NSInteger i = 0; i < array.count; i++) {
-                        PPAppSpread *app = array[i];
-                        [PPUtil checkAppInstalledWithBundleId:app.specialDesc completionHandler:^(BOOL isInstall) {
-                            if (isInstall) {
-                                app.isInstall = isInstall;
-                                [_fetchedSpreads addObject:app];
-                            } else {
-                                [_fetchedSpreads insertObject:app atIndex:0];
-                            }
-                            if (_fetchedSpreads.count == array.count) {
-                                if (handler) {
-                                    [PPCacheModel updateAppCacheWithAppInfo:_fetchedSpreads];
-                                    handler(respStatus == QBURLResponseSuccess, _fetchedSpreads);
-                                }
-                            }
-                        }];
-                        
+//                    else {
+//                        if (handler) {
+//                            handler(QBURLResponseFailedByInterface,nil);
+//                        }
+//                    }
+                    if (handler) {
+                        handler(QBURLResponseFailedByInterface,resp.programList);
                     }
+//
+//                    for (NSInteger i = 0; i < array.count; i++) {
+//                        PPAppSpread *app = array[i];
+//                        [PPUtil checkAppInstalledWithBundleId:app.specialDesc completionHandler:^(BOOL isInstall) {
+//                            if (isInstall) {
+//                                app.isInstall = isInstall;
+//                                [_fetchedSpreads addObject:app];
+//                            } else {
+//                                [_fetchedSpreads insertObject:app atIndex:0];
+//                            }
+//                            if (_fetchedSpreads.count == array.count) {
+//                                if (handler) {
+//                                    [PPCacheModel updateAppCacheWithAppInfo:_fetchedSpreads];
+//                                    handler(respStatus == QBURLResponseSuccess, _fetchedSpreads);
+//                                }
+//                            }
+//                        }];
+//                        
+//                    }
                 }];
     return ret;
 }

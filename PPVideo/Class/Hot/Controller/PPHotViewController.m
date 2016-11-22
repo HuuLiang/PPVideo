@@ -57,6 +57,9 @@ QBDefineLazyPropertyInitialization(PPSearchModel, searchModel)
     _searchBar.delegate = self;
     _searchBar.tintColor = [UIColor colorWithHexString:@"#efefef"];
     _searchBar.barTintColor = [UIColor colorWithHexString:@"#efefef"];
+    [_searchBar setBackgroundColor:[UIColor colorWithHexString:@"#333865"]];
+    [_searchBar setSearchFieldBackgroundImage:[self GetImage] forState:UIControlStateNormal];
+    
     
     const CGFloat fullBarWidth = CGRectGetWidth(self.navigationController.navigationBar.bounds);
     const CGFloat fullBarHeight = CGRectGetHeight(self.navigationController.navigationBar.bounds);
@@ -65,12 +68,12 @@ QBDefineLazyPropertyInitialization(PPSearchModel, searchModel)
     const CGFloat searchBarHeight = fullBarHeight * 0.8;
     const CGFloat searchBarY = (fullBarHeight - searchBarHeight)/2;
     const CGFloat searchBarX = (fullBarWidth - searchBarWidth)/2;
-    _searchBar.frame = CGRectMake(searchBarX, searchBarY, searchBarWidth, searchBarHeight);
+    _searchBar.frame = CGRectMake(searchBarX, searchBarY - 3, searchBarWidth, searchBarHeight);
+    _searchBar.layer.cornerRadius = 5;
+    _searchBar.layer.masksToBounds = YES;
     [self.navigationController.navigationBar addSubview:_searchBar];
     
     PPSectionBackgroundFlowLayout *mainLayout = [[PPSectionBackgroundFlowLayout alloc] init];
-//    mainLayout.minimumLineSpacing = kWidth(20);
-//    mainLayout.minimumInteritemSpacing = kWidth(20);
     _layoutCollectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:mainLayout];
     _layoutCollectionView.backgroundColor = [UIColor colorWithHexString:@"#efefef"];
     _layoutCollectionView.delegate = self;
@@ -101,6 +104,19 @@ QBDefineLazyPropertyInitialization(PPSearchModel, searchModel)
         headerView.selectedMoreBth = NO;
     }
     
+    if ([PPUtil currentVipLevel] == PPVipLevelNone) {
+        [_layoutCollectionView PP_addVIPNotiRefreshWithHandler:^{
+            @strongify(self);
+            QBBaseModel *baseModel = [QBBaseModel getBaseModelWithRealColoumId:nil
+                                                                   channelType:nil
+                                                                     programId:nil
+                                                                   programType:nil
+                                                               programLocation:[NSNumber numberWithInteger:[PPUtil currentTabPageIndex]]];
+            [self presentPayViewControllerWithBaseModel:baseModel];
+            [_layoutCollectionView PP_endPullToRefresh];
+        }];
+    }
+    
     [_layoutCollectionView PP_triggerPullToRefresh];
     
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
@@ -111,6 +127,28 @@ QBDefineLazyPropertyInitialization(PPSearchModel, searchModel)
             }];
         }
     });
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshHotNotification:) name:kPaidNotificationName object:nil];
+}
+
+- (UIImage*)GetImage;
+{
+    UIColor *color = [UIColor colorWithHexString:@"#333865"];
+    CGRect r= CGRectMake(0.0f, 0.0f, 1.0f, 20);
+    UIGraphicsBeginImageContext(r.size);
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    
+    CGContextSetFillColorWithColor(context, [color CGColor]);
+    CGContextFillRect(context, r);
+    
+    UIImage *img = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    return img;
+}
+
+- (void)refreshHotNotification:(NSNotification *)notification {
+    [self->_layoutCollectionView PP_triggerPullToRefresh];
 }
 
 - (void)loadData {
@@ -158,6 +196,9 @@ QBDefineLazyPropertyInitialization(PPSearchModel, searchModel)
             return self.response.tags.count;
         }
     } else if (section == PPHotSectionContent) {
+        if ([PPUtil currentVipLevel] == PPVipLevelNone) {
+            return self.response.hotSearch.count > 4 ? 4 : self.response.hotSearch.count;
+        }
         return self.response.hotSearch.count;
     }
     return 0;

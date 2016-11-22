@@ -84,6 +84,7 @@
 		ECC097DF1DB240E200875D56 /* PPLayoutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ECC097DE1DB240E200875D56 /* PPLayoutViewController.m */; };
 		ECC097E21DB2411500875D56 /* UITableView+Separator.m in Sources */ = {isa = PBXBuildFile; fileRef = ECC097E11DB2411500875D56 /* UITableView+Separator.m */; };
 		ECC097E51DB2423F00875D56 /* UIScrollView+Refresh.m in Sources */ = {isa = PBXBuildFile; fileRef = ECC097E41DB2423F00875D56 /* UIScrollView+Refresh.m */; };
+		ECE957A01DE44C4F00B39550 /* PPAppHeaderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = ECE9579F1DE44C4F00B39550 /* PPAppHeaderCell.m */; };
 		ECFA0E761DB9E61600E61347 /* PPVipIntroduceCell.m in Sources */ = {isa = PBXBuildFile; fileRef = ECFA0E751DB9E61600E61347 /* PPVipIntroduceCell.m */; };
 		ECFA0E791DB9EF8900E61347 /* PPNickNameCell.m in Sources */ = {isa = PBXBuildFile; fileRef = ECFA0E781DB9EF8900E61347 /* PPNickNameCell.m */; };
 		ECFA0E7B1DB9FE7700E61347 /* mine_back.jpg in Resources */ = {isa = PBXBuildFile; fileRef = ECFA0E7A1DB9FE7700E61347 /* mine_back.jpg */; };
@@ -257,6 +258,8 @@
 		ECC097E11DB2411500875D56 /* UITableView+Separator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITableView+Separator.m"; sourceTree = "<group>"; };
 		ECC097E31DB2423F00875D56 /* UIScrollView+Refresh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIScrollView+Refresh.h"; sourceTree = "<group>"; };
 		ECC097E41DB2423F00875D56 /* UIScrollView+Refresh.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+Refresh.m"; sourceTree = "<group>"; };
+		ECE9579E1DE44C4F00B39550 /* PPAppHeaderCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPAppHeaderCell.h; sourceTree = "<group>"; };
+		ECE9579F1DE44C4F00B39550 /* PPAppHeaderCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPAppHeaderCell.m; sourceTree = "<group>"; };
 		ECFA0E741DB9E61600E61347 /* PPVipIntroduceCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPVipIntroduceCell.h; sourceTree = "<group>"; };
 		ECFA0E751DB9E61600E61347 /* PPVipIntroduceCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPVipIntroduceCell.m; sourceTree = "<group>"; };
 		ECFA0E771DB9EF8900E61347 /* PPNickNameCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPNickNameCell.h; sourceTree = "<group>"; };
@@ -664,6 +667,8 @@
 				ECFA0E781DB9EF8900E61347 /* PPNickNameCell.m */,
 				ECFA0E741DB9E61600E61347 /* PPVipIntroduceCell.h */,
 				ECFA0E751DB9E61600E61347 /* PPVipIntroduceCell.m */,
+				ECE9579E1DE44C4F00B39550 /* PPAppHeaderCell.h */,
+				ECE9579F1DE44C4F00B39550 /* PPAppHeaderCell.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -970,6 +975,7 @@
 				ECB8F0D91DB743B50088A118 /* PPProgramModel.m in Sources */,
 				EC20D0041DB86FBD0089D8BF /* PPSearchResultViewController.m in Sources */,
 				EC20D0171DB89AA70089D8BF /* JKDBModel.m in Sources */,
+				ECE957A01DE44C4F00B39550 /* PPAppHeaderCell.m in Sources */,
 				ECFA0E761DB9E61600E61347 /* PPVipIntroduceCell.m in Sources */,
 				ECFA0E8B1DBDCCE200E61347 /* PPVideoPlayerController.m in Sources */,
 				ECC097991DB2059900875D56 /* PPUserAccessModel.m in Sources */,

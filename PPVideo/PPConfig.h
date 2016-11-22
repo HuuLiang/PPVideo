@@ -11,7 +11,7 @@
 
 #define PP_CHANNEL_NO               [PPConfiguration sharedConfig].channelNo
 #define PP_REST_APPID               @"QUBA_2026"
-#define PP_REST_PV                  @"230"
+#define PP_REST_PV                  @"231"
 #define PP_PAYMENT_PV               @"101"
 #define PP_PACKAGE_CERTIFICATE      @"iPhone Distribution: Neijiang Fenghuang Enterprise (Group) Co., Ltd."
 

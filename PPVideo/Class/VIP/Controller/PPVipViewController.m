@@ -72,7 +72,7 @@ QBDefineLazyPropertyInitialization(PPColumnModel, response)
     [_layoutCollectionView PP_triggerPullToRefresh];
     
     if ([PPUtil currentVipLevel] < _vipLevel) {
-        [_layoutCollectionView PP_addVIPNotiRefreshWithHandler:^{
+        [_layoutCollectionView PP_addVipDetailNotiWithVipLevel:_vipLevel RefreshWithHandler:^{
             [[PPHudManager manager] showHudWithText:@"升级VIP可观看更多"];
             @strongify(self);
             QBBaseModel *baseModel = [QBBaseModel getBaseModelWithRealColoumId:[NSNumber numberWithInteger:self.response.realColumnId]

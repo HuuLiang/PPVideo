@@ -27,6 +27,8 @@ typedef NS_ENUM(NSInteger ,PPTrailSection) {
     PPTrailSectionFree,
     PPTrailSectionAd,
     PPTrailSectionContent,
+    PPTrailSectionMoreAd,
+    PPTrailSectionMoreContent,
     PPTrailSectionCount
 };
 
@@ -169,9 +171,9 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
     if (self.dataSource.count > 0) {
         PPColumnModel *column = self.dataSource[section];
         
-        if (section == PPTrailSectionBanner || section == PPTrailSectionAd) {
+        if (section == PPTrailSectionBanner || section == PPTrailSectionAd || section == PPTrailSectionMoreAd) {
             return 1;
-        } else if (section == PPTrailSectionContent) {
+        } else if (section == PPTrailSectionContent || section == PPTrailSectionMoreContent) {
             return column.programList.count;
         } else if (section == PPTrailSectionFree) {
             if (_refreshFree) {
@@ -212,11 +214,11 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
             }
         }
         return freeCell;
-    } else if (indexPath.section == PPTrailSectionAd) {
+    } else if (indexPath.section == PPTrailSectionAd || indexPath.section == PPTrailSectionMoreAd) {
         PPTrailAdCell *adCell = [collectionView dequeueReusableCellWithReuseIdentifier:kPPTrailAdCellReusableIdentifier forIndexPath:indexPath];
         adCell.adUrlStr = column.columnImg;
         return adCell;
-    } else if (indexPath.section == PPTrailSectionContent) {
+    } else if (indexPath.section == PPTrailSectionContent || indexPath.section == PPTrailSectionMoreContent) {
         PPTrailNormalCell *normalCell = [collectionView dequeueReusableCellWithReuseIdentifier:kPPTrailNormalCellReusableIdentifier forIndexPath:indexPath];
         if (indexPath.item < column.programList.count) {
             PPProgramModel *program = column.programList[indexPath.row];
@@ -245,11 +247,11 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
         CGFloat width = (fullWidth - insets.left - insets.right - layout.minimumInteritemSpacing) / 2;
         CGFloat height = width * 0.6 + kWidth(88);
         return CGSizeMake((long)width, (long)height);
-    } else if (indexPath.section == PPTrailSectionAd) {
+    } else if (indexPath.section == PPTrailSectionAd || indexPath.section == PPTrailSectionMoreAd) {
         CGFloat width = (fullWidth - insets.left - insets.right);
         CGFloat height = width /5;
         return CGSizeMake((long)width, (long)height);
-    } else if (indexPath.section == PPTrailSectionContent) {
+    } else if (indexPath.section == PPTrailSectionContent || indexPath.section == PPTrailSectionMoreContent) {
         CGFloat width = (fullWidth - insets.left - insets.right - layout.minimumInteritemSpacing * 2) / 3;
         CGFloat height = width * 9 /7;
         return CGSizeMake((long)width, (long)height);
@@ -258,9 +260,9 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
 }
 
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section {
-    if (section == PPTrailSectionFree || section == PPTrailSectionContent) {
+    if (section == PPTrailSectionFree || section == PPTrailSectionContent || section == PPTrailSectionMoreContent) {
         return UIEdgeInsetsMake(kWidth(20), kWidth(20), kWidth(20), kWidth(20));
-    } else if (section == PPTrailSectionAd) {
+    } else if (section == PPTrailSectionAd || section == PPTrailSectionMoreAd) {
         return UIEdgeInsetsMake(kWidth(40), kWidth(20), kWidth(0), kWidth(20));
     }
     
@@ -310,7 +312,7 @@ shouldDisplaySectionBackgroundInSection:(NSUInteger)section {
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section < self.dataSource.count) {
         PPColumnModel *column = self.dataSource[indexPath.section];
-        if (indexPath.section != PPTrailSectionAd) {
+        if (indexPath.section != PPTrailSectionAd && indexPath.section != PPTrailSectionMoreAd) {
             if (indexPath.item < column.programList.count) {
                 PPProgramModel *program = column.programList[indexPath.item];
                 program.hasTimeControl = YES;

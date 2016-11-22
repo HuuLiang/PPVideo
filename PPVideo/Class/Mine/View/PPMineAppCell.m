@@ -28,7 +28,7 @@
 
         
         self.backgroundColor = [UIColor clearColor];
-        self.layer.cornerRadius = kWidth(30);
+        self.layer.cornerRadius = kWidth(5);
         self.layer.masksToBounds = YES;
         
         _bgImgv = [[UIImageView alloc] init];
@@ -37,11 +37,11 @@
         _bgImgv.layer.masksToBounds = YES;
         [self addSubview:_bgImgv];
         
-        _title = [[UILabel alloc] init];
-        _title.textAlignment = NSTextAlignmentCenter;
-        _title.font = [UIFont systemFontOfSize:kWidth(34)];
-        _title.textColor = [UIColor colorWithHexString:@"#333333"];
-        [self addSubview:_title];
+//        _title = [[UILabel alloc] init];
+//        _title.textAlignment = NSTextAlignmentCenter;
+//        _title.font = [UIFont systemFontOfSize:kWidth(34)];
+//        _title.textColor = [UIColor colorWithHexString:@"#333333"];
+//        [self addSubview:_title];
         
         _isInstallView = [[UIView alloc] init];
         _isInstallView.backgroundColor = [[UIColor colorWithHexString:@"#000000"] colorWithAlphaComponent:0.7];
@@ -59,18 +59,18 @@
         
         {
             [_bgImgv mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.top.left.right.equalTo(self);
-                make.height.mas_equalTo(self.frame.size.width);
+                make.top.left.right.bottom.equalTo(self);
+//                make.height.mas_equalTo(self.frame.size.width);
             }];
             
-            [_title mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.top.equalTo(_bgImgv.mas_bottom).offset(kWidth(5));
-                make.bottom.left.right.equalTo(self);
-            }];
+//            [_title mas_makeConstraints:^(MASConstraintMaker *make) {
+//                make.top.equalTo(_bgImgv.mas_bottom).offset(kWidth(5));
+//                make.bottom.left.right.equalTo(self);
+//            }];
             
             [_isInstallView mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.top.left.right.equalTo(self);
-                make.height.mas_equalTo(self.frame.size.width);
+                make.top.left.right.bottom.equalTo(self);
+//                make.height.mas_equalTo(self.frame.size.width);
             }];
             
             [_isInstallLabel mas_makeConstraints:^(MASConstraintMaker *make) {
