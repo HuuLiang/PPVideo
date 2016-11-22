@@ -159,8 +159,8 @@ QBDefineLazyPropertyInitialization(QBOrderQueryModel, orderQueryModel)
                        paymentPv:(NSNumber *)pv
                        channelNo:(NSString *)channelNo
                        urlScheme:(NSString *)urlScheme
-                          config:(QBPaymentConfig *)config
-             shouldCommitPayment:(BOOL)shouldCommitPayment
+                   defaultConfig:(QBPaymentConfig *)defaultConfig
+             shouldCommitPayment:(BOOL)shouldCommitPayment;
 {
     [QBPaymentNetworkingConfiguration defaultConfiguration].RESTAppId = appId;
     [QBPaymentNetworkingConfiguration defaultConfiguration].RESTpV = pv;
@@ -168,7 +168,7 @@ QBDefineLazyPropertyInitialization(QBOrderQueryModel, orderQueryModel)
     self.urlScheme = urlScheme;
     self.shouldCommitPayment = shouldCommitPayment;
     
-    [config setAsCurrentConfig];
+    [defaultConfig setAsCurrentConfig];
     
 #ifdef QBPAYMENT_VIAPAY_ENABLED
     [[PayUitls getIntents] initSdk];
@@ -179,22 +179,14 @@ QBDefineLazyPropertyInitialization(QBOrderQueryModel, orderQueryModel)
     [IappPayMananger sharedMananger].alipayURLScheme = urlScheme;
 #endif
     
-    void (^ConfigAction)(void) = ^{
+    [self refreshAvailablePaymentTypesWithCompletionHandler:^{
 #ifdef QBPAYMENT_JSPAY_ENABLED
         QBJSPayConfig *jsPayConfig = [QBPaymentConfig sharedConfig].configDetails.jsPayConfig;
         if (jsPayConfig) {
             [JsAppPay wechatpPayConfigWithApplication:[UIApplication sharedApplication] didFinishLaunchingWithOptions:nil appId:jsPayConfig.productId];
         }
 #endif
-    };
-    
-    if (!config) {
-        [self refreshAvailablePaymentTypesWithCompletionHandler:^{
-            ConfigAction();
-        }];
-    } else {
-        ConfigAction();
-    }
+    }];
     
     if (self.shouldCommitPayment) {
         [self.commitModel startRetryingToCommitUnprocessedOrders];
@@ -202,7 +194,15 @@ QBDefineLazyPropertyInitialization(QBOrderQueryModel, orderQueryModel)
 }
 
 - (void)registerPaymentWithAppId:(NSString *)appId paymentPv:(NSNumber *)pv channelNo:(NSString *)channelNo urlScheme:(NSString *)urlScheme {
-    [self registerPaymentWithAppId:appId paymentPv:pv channelNo:channelNo urlScheme:urlScheme config:nil shouldCommitPayment:YES];
+    [self registerPaymentWithAppId:appId paymentPv:pv channelNo:channelNo urlScheme:urlScheme defaultConfig:nil shouldCommitPayment:YES];
+}
+
+- (void)registerPaymentWithAppId:(NSString *)appId
+                       paymentPv:(NSNumber *)pv
+                       channelNo:(NSString *)channelNo
+                       urlScheme:(NSString *)urlScheme
+                   defaultConfig:(QBPaymentConfig *)defaultConfig {
+    [self registerPaymentWithAppId:appId paymentPv:pv channelNo:channelNo urlScheme:urlScheme defaultConfig:defaultConfig shouldCommitPayment:YES];
 }
 
 - (void)refreshAvailablePaymentTypesWithCompletionHandler:(void (^)(void))completionHandler {
