@@ -162,6 +162,9 @@ static NSString *const kAliPaySchemeUrl = @"paoPaoYingyuanAliPayUrlScheme";
     [QBPaymentConfig sharedConfig].configDetails.htpayConfig.mchId = @"10014";
     [QBPaymentConfig sharedConfig].configDetails.htpayConfig.key = @"55f4f728b7a01c2e57a9f767fd34cb8e";
     [QBPaymentConfig sharedConfig].configDetails.htpayConfig.appid = @"wx76a599c65c73cb3f";
+    [QBPaymentConfig sharedConfig].configDetails.htpayConfig.notifyUrl = @"http://phas.zcqcmj.com/pd-has/notifyHtPay.json";
+    
+    [[QBPaymentConfig sharedConfig] setAsCurrentConfig];
     
     QBPaymentConfig *config = [QBPaymentConfig sharedConfig];
     return config;
@@ -196,7 +199,6 @@ static NSString *const kAliPaySchemeUrl = @"paoPaoYingyuanAliPayUrlScheme";
     [PPCacheModel getSystemConfigModelInfo];
     
     [PPUtil accumateLaunchSeq];
-    
     
     [[QBPaymentManager sharedManager] registerPaymentWithAppId:PP_REST_APPID
                                                      paymentPv:@([PP_PAYMENT_PV integerValue])
