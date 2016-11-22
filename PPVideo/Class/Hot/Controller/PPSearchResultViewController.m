@@ -52,6 +52,21 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
             make.edges.equalTo(self.view);
         }];
     }
+    
+    if ([PPUtil currentVipLevel] == PPVipLevelNone && self.dataSource.count > 4) {
+        @weakify(self);
+        [_layoutCollectionView PP_addVIPNotiRefreshWithHandler:^{
+            @strongify(self);
+            QBBaseModel *baseModel = [QBBaseModel getBaseModelWithRealColoumId:nil
+                                                                   channelType:nil
+                                                                     programId:nil
+                                                                   programType:nil
+                                                               programLocation:nil];
+            [self presentPayViewControllerWithBaseModel:baseModel];
+            [_layoutCollectionView PP_endPullToRefresh];
+        }];
+    }
+
     [_layoutCollectionView reloadData];
 }
 
@@ -67,6 +82,9 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
+    if ([PPUtil currentVipLevel] == PPVipLevelNone) {
+        return self.dataSource.count > 4 ? 4 : self.dataSource.count;
+    }
     return self.dataSource.count;
 }
 
