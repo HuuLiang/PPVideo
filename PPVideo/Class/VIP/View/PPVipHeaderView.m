@@ -38,11 +38,11 @@
 
 - (void)setVipLevel:(PPVipLevel)vipLevel {
     if (vipLevel == PPVipLevelVipA) {
-        label.text = @"   当前片库约1200部";
+        label.text = @"   当前片库约1200部,仅限黄金会员观看";
     } else if (vipLevel == PPVipLevelVipB) {
-        label.text = @"   当前片库约1500部";
+        label.text = @"   当前片库约1500部,仅限钻石会员观看";
     } else if (vipLevel == PPVipLevelVipC) {
-        label.text = @"   当前片库约1800部";
+        label.text = @"   当前片库约1800部,尽显黑金会员观看";
     }
 }
 

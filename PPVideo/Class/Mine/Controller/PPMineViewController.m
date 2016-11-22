@@ -11,13 +11,14 @@
 #import "PPTableViewCell.h"
 #import "PPAppModel.h"
 #import "PPMineAppCell.h"
+#import "PPAppHeaderCell.h"
 
 #import "PPSystemConfigModel.h"
 #import "PPMineActVC.h"
 #import "PPMineVipVC.h"
 
 static NSString *const kMoreCellReusableIdentifier = @"MoreCellReusableIdentifier";
-#define appCellWidth (kScreenWidth-kWidth(40)*3)/3
+#define appCellWidth (kScreenWidth - kWidth(40))
 
 @interface PPMineViewController () <UICollectionViewDataSource,UICollectionViewDelegate>
 {
@@ -223,20 +224,23 @@ QBDefineLazyPropertyInitialization(PPAppModel, appModel)
 
 - (UICollectionViewLayout *)createLayout {
     UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
-    layout.minimumLineSpacing = kWidth(44);
+    layout.minimumLineSpacing = kWidth(20);
     layout.minimumInteritemSpacing = kWidth(20);
-    layout.itemSize = CGSizeMake((long)appCellWidth, appCellWidth+kWidth(40));
-    layout.sectionInset = UIEdgeInsetsMake(kWidth(40), kWidth(20), kWidth(20), kWidth(20));
+    CGFloat itemHeight = appCellWidth/5;
+    [layout setItemSize:CGSizeMake((long)appCellWidth, (long)itemHeight)];
+    layout.sectionInset = UIEdgeInsetsMake(kWidth(20), kWidth(20), kWidth(20), kWidth(20));
     return layout;
 }
 
 - (void)initAppCell:(NSInteger)section {
     [self setHeaderHeight:20 inSection:section];
     
+    [self initAppHeaderCellInSection:section++];
+    
     _appCell = [[UITableViewCell alloc] init];
     _appCell.backgroundColor = [UIColor clearColor];
     _appCollectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:[self createLayout]];
-    _appCollectionView.backgroundColor = [UIColor clearColor];
+    _appCollectionView.backgroundColor = [UIColor whiteColor];
     _appCollectionView.delegate = self;
     _appCollectionView.dataSource = self;
     _appCollectionView.scrollEnabled = NO;
@@ -248,11 +252,17 @@ QBDefineLazyPropertyInitialization(PPAppModel, appModel)
             make.edges.equalTo(_appCell);
         }];
     }
-    NSInteger lineCount = (self.dataSource.count % 3 == 0 ? self.dataSource.count / 3 : self.dataSource.count / 3 + 1 );
+//    NSInteger lineCount = (self.dataSource.count % 3 == 0 ? self.dataSource.count / 3 : self.dataSource.count / 3 + 1 );
+    CGFloat height = appCellWidth/5*self.dataSource.count + (self.dataSource.count - 1)*kWidth(20) + kWidth(40);
     
-    [self setLayoutCell:_appCell cellHeight:(appCellWidth+kWidth(40))* lineCount + kWidth(44) + kWidth(60)  inRow:0 andSection:section];
+    [self setLayoutCell:_appCell cellHeight:(long)height  inRow:0 andSection:section];
     
     [self.layoutTableView reloadData];
+}
+
+- (void)initAppHeaderCellInSection:(NSInteger)section {
+    PPAppHeaderCell *appHeaderCell = [[PPAppHeaderCell alloc] init];
+    [self setLayoutCell:appHeaderCell cellHeight:kWidth(60) inRow:0 andSection:section];
 }
 
 #pragma mark - UICollectionViewDataSource,UICollectionViewDelegate
@@ -261,7 +271,7 @@ QBDefineLazyPropertyInitialization(PPAppModel, appModel)
     PPMineAppCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kMoreCellReusableIdentifier forIndexPath:indexPath];
     if (indexPath.item < self.dataSource.count) {
         PPAppSpread *app = self.dataSource[indexPath.item];
-        cell.titleStr = app.title;
+//        cell.titleStr = app.title;
         cell.imgUrl = app.coverImg;
         cell.isInstall = app.isInstall;
     }

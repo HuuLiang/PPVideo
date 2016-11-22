@@ -21,4 +21,6 @@
 
 - (void)PP_addVIPNotiRefreshWithHandler:(void (^)(void))handler;
 
+- (void)PP_addVipDetailNotiWithVipLevel:(PPVipLevel)vipLevel RefreshWithHandler:(void (^)(void))handler;
+
 @end

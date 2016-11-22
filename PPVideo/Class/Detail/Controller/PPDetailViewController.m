@@ -59,10 +59,10 @@ QBDefineLazyPropertyInitialization(PPDetailResponse, response)
     self.layoutTableView.hasRowSeparator = NO;
     self.layoutTableView.hasSectionBorder = NO;
     
-    _reportView = [[PPDetailReportView alloc] initWithFrame:CGRectMake(0, kScreenHeight - 64 - kWidth(88), kScreenWidth, kWidth(88))];
+    _reportView = [[PPDetailReportView alloc] initWithFrame:CGRectMake(0, kScreenHeight - kWidth(88) - 64, kScreenWidth, kWidth(88))];
     [self.view addSubview:_reportView];
     
-    self.layoutTableView.frame = CGRectMake(0, 0, kScreenWidth, kScreenHeight - kWidth(110));
+    self.layoutTableView.frame = CGRectMake(0, 0, kScreenWidth, kScreenHeight - ([PPUtil isIpad] ? kWidth(130) : kWidth(200)));
     
     @weakify(self);
     _reportView.endEditing = ^(NSString *text) {

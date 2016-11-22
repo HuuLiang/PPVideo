@@ -22,10 +22,14 @@
         model.hateCount = [self randomHateCount];
         model.isChanged = NO;
     }
+    model.likeCount = model.likeCount + [self refreshLikeCount];
+    model.hateCount = model.hateCount + [self refreshHateCount];
+    [model saveOrUpdate];
     
     return model;
 }
 
+// 生成
 + (NSInteger)randomLikeCount {
     NSInteger likeCount = random() %10000 + 1000;
     return likeCount;
@@ -36,6 +40,15 @@
     return hateCount;
 }
 
+//刷新改变
++ (NSInteger)refreshLikeCount {
+    NSInteger likeCount = random() % 8;
+    return likeCount;
+}
 
++ (NSInteger)refreshHateCount {
+    NSInteger hateCount = random() % 3;
+    return hateCount;
+}
 
 @end
