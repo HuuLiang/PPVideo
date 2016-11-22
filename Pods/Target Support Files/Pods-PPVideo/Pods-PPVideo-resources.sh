@@ -98,7 +98,6 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_resource "QBPayment/QBPayment/Vendor/VIAPay/private_key.p12"
   install_resource "QBPayment/QBPayment/Vendor/VIAPay/public_key.der"
   install_resource "QBPayment/QBPayment/Vendor/VIAPay/VIASDKVERSION.txt"
-  install_resource "QBPayment/QBPayment/Vendor/SPaySDK/SPaySDKResource.bundle"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
   install_resource "MJRefresh/MJRefresh/MJRefresh.bundle"
@@ -119,7 +118,6 @@ if [[ "$CONFIGURATION" == "Release" ]]; then
   install_resource "QBPayment/QBPayment/Vendor/VIAPay/private_key.p12"
   install_resource "QBPayment/QBPayment/Vendor/VIAPay/public_key.der"
   install_resource "QBPayment/QBPayment/Vendor/VIAPay/VIASDKVERSION.txt"
-  install_resource "QBPayment/QBPayment/Vendor/SPaySDK/SPaySDKResource.bundle"
 fi
 
 mkdir -p "${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}"
