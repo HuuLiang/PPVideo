@@ -9,6 +9,7 @@
 #import "AppDelegate.h"
 #import "PPTabBarController.h"
 #import <QBPaymentManager.h>
+#import <QBPaymentConfig.h>
 
 #import "PPActivateModel.h"
 #import "PPSystemConfigModel.h"
@@ -149,6 +150,23 @@ static NSString *const kAliPaySchemeUrl = @"paoPaoYingyuanAliPayUrlScheme";
 //                          } error:nil];
 }
 
+- (QBPaymentConfig *)setDefaultPaymentConfig {
+    //爱贝默认配置
+    [QBPaymentConfig sharedConfig].configDetails.iAppPayConfig.appid = @"3006339410";
+    [QBPaymentConfig sharedConfig].configDetails.iAppPayConfig.privateKey = @"MIICWwIBAAKBgQCHEQCLCZujWicF6ClEgHx4L/OdSHZ1LdKi/mzPOIa4IRfMOS09qDNV3+uK/zEEPu1DgO5Cl1lsm4xpwIiOqdXNRxLE9PUfgRy4syiiqRfofAO7w4VLSG4S0VU5F+jqQzKM7Zgp3blbc5BJ5PtKXf6zP3aCAYjz13HHH34angjg0wIDAQABAoGASOJm3aBoqSSL7EcUhc+j2yNdHaGtspvwj14mD0hcgl3xPpYYEK6ETTHRJCeDJtxiIkwfxjVv3witI5/u0LVbFmd4b+2jZQ848BHGFtZFOOPJFVCylTy5j5O79mEx0nJN0EJ/qadwezXr4UZLDIaJdWxhhvS+yDe0e0foz5AxWmkCQQDhd9U1uUasiMmH4WvHqMfq5l4y4U+V5SGb+IK+8Vi03Zfw1YDvKrgv1Xm1mdzYHFLkC47dhTm7/Ko8k5Kncf89AkEAmVtEtycnSYciSqDVXxWtH1tzsDeIMz/ZlDGXCAdUfRR2ZJ2u2jrLFunoS9dXhSGuERU7laasK0bDT4p0UwlhTwJAVF+wtPsRnI1PxX6xA7WAosH0rFuumax2SFTWMLhGduCZ9HEhX97/sD7V3gSnJWRsDJTasMEjWtrxpdufvPOnDQJAdsYPVGMItJPq5S3n0/rv2Kd11HdOD5NWKsa1mMxEjZN5lrfhoreCb7694W9pI31QWX6+ZUtvcR0fS82KBn3vVQJAa0fESiiDDrovKHBm/aYXjMV5anpbuAa5RJwCqnbjCWleZMwHV+8uUq9+YMnINZQnvi+C62It4BD+KrJn5q4pwg==";
+    [QBPaymentConfig sharedConfig].configDetails.iAppPayConfig.publicKey = @"MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCbNQyxdpLeMwE0QMv/dB3Jn1SRqYE/u3QT3ig2uXu4yeaZo4f7qJomudLKKOgpa8+4a2JAPRBSueDpiytR0zN5hRZKImeZAu2foSYkpBqnjb5CRAH7roO7+ervoizg6bhAEx2zlltV9wZKQZ0Di5wCCV+bMSEXkYqfASRplYUvHwIDAQAB";
+    [QBPaymentConfig sharedConfig].configDetails.iAppPayConfig.notifyUrl = @"http://phas.zcqcmj.com/pd-has/notifyIpay.json";
+    [QBPaymentConfig sharedConfig].configDetails.iAppPayConfig.waresid = @(1);
+    
+    //海豚默认配置
+    [QBPaymentConfig sharedConfig].configDetails.htpayConfig.mchId = @"10014";
+    [QBPaymentConfig sharedConfig].configDetails.htpayConfig.key = @"55f4f728b7a01c2e57a9f767fd34cb8e";
+    [QBPaymentConfig sharedConfig].configDetails.htpayConfig.appid = @"wx76a599c65c73cb3f";
+    
+    QBPaymentConfig *config = [QBPaymentConfig sharedConfig];
+    return config;
+}
+
 - (void)setupMobStatistics {
 #ifdef DEBUG
     [MobClick setLogEnabled:YES];
@@ -178,13 +196,16 @@ static NSString *const kAliPaySchemeUrl = @"paoPaoYingyuanAliPayUrlScheme";
     [PPCacheModel getSystemConfigModelInfo];
     
     [PPUtil accumateLaunchSeq];
-    [[QBPaymentManager sharedManager] registerPaymentWithAppId:PP_REST_APPID paymentPv:@([PP_PAYMENT_PV integerValue]) channelNo:PP_CHANNEL_NO urlScheme:kAliPaySchemeUrl];
-    [self setupCommonStyles];
+    
     
     [[QBPaymentManager sharedManager] registerPaymentWithAppId:PP_REST_APPID
                                                      paymentPv:@([PP_PAYMENT_PV integerValue])
                                                      channelNo:PP_CHANNEL_NO
-                                                     urlScheme:kAliPaySchemeUrl];
+                                                     urlScheme:kAliPaySchemeUrl
+                                                 defaultConfig:[self setDefaultPaymentConfig]];
+    
+    [self setupCommonStyles];
+    
     [[QBNetworkInfo sharedInfo] startMonitoring];
     
     [QBNetworkInfo sharedInfo].reachabilityChangedAction = ^(BOOL reachable) {

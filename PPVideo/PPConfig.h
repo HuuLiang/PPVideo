@@ -12,13 +12,13 @@
 #define PP_CHANNEL_NO               [PPConfiguration sharedConfig].channelNo
 #define PP_REST_APPID               @"QUBA_2026"
 #define PP_REST_PV                  @"230"
-#define PP_PAYMENT_PV               @"102"
+#define PP_PAYMENT_PV               @"101"
 #define PP_PACKAGE_CERTIFICATE      @"iPhone Distribution: Neijiang Fenghuang Enterprise (Group) Co., Ltd."
 
 #define PP_REST_APP_VERSION         ((NSString *)([NSBundle mainBundle].infoDictionary[@"CFBundleShortVersionString"]))
 #define PP_PAYMENT_RESERVE_DATA     [NSString stringWithFormat:@"%@$%@", LSJ_REST_APPID, LSJ_CHANNEL_NO]
 
-#define PP_BASE_URL                    @"http://iv.zcqcmj.com" @""
+#define PP_BASE_URL                    @"http://iv.zcqcmj.com" //@""
 #define PP_STANDBY_BASE_URL            @"http://sfs.dswtg.com/"
 
 
