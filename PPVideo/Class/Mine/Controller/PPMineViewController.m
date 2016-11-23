@@ -178,7 +178,10 @@ QBDefineLazyPropertyInitialization(PPAppModel, appModel)
     NSInteger section = 0;
     
     [self initHeaderCellInSection:section++];
-    [self initVipInSection:section++];
+    
+    if ([PPUtil currentVipLevel] != PPVipLevelVipC) {
+        [self initVipInSection:section++];
+    }
     
     if ([PPUtil currentVipLevel] != PPVipLevelNone) {
         [self initQQCellInSection:section++];
