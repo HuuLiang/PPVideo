@@ -166,7 +166,7 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
 #pragma mark - UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
-    return PPTrailSectionCount;
+    return self.dataSource.count > PPTrailSectionCount ? PPTrailSectionCount : self.dataSource.count;
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
