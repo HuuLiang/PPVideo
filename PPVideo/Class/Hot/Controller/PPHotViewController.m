@@ -50,28 +50,39 @@ QBDefineLazyPropertyInitialization(PPSearchModel, searchModel)
     [super viewDidLoad];
     self.navigationItem.title = @"";
     
+    
+    UIView *titleView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kWidth(500), 30)];
+    UIColor *color = self.navigationController.navigationBar.barTintColor;
+    [titleView setBackgroundColor:color];
+    
     _searchBar = [[UISearchBar alloc] init];
+    _searchBar.frame = CGRectMake(0, 0, kWidth(500), 30);
     _searchBar.placeholder = @"关键字搜索";
     _searchBar.searchBarStyle = UISearchBarStyleDefault;
     _searchBar.barStyle = UIBarStyleBlack;
     _searchBar.delegate = self;
-    _searchBar.tintColor = [UIColor colorWithHexString:@"#efefef"];
-    _searchBar.barTintColor = [UIColor colorWithHexString:@"#efefef"];
-    [_searchBar setBackgroundColor:[UIColor colorWithHexString:@"#333865"]];
+    _searchBar.tintColor = [UIColor colorWithHexString:@"#ffffff"];
+    _searchBar.barTintColor = [UIColor colorWithHexString:@"#ffffff"];
+    [_searchBar setBackgroundColor:[UIColor colorWithHexString:@"#ffffff"]];
+    _searchBar.layer.cornerRadius = 15;
+    _searchBar.layer.masksToBounds = YES;
     [_searchBar setSearchFieldBackgroundImage:[self GetImage] forState:UIControlStateNormal];
     
+    [titleView addSubview:_searchBar];
+    [self.navigationItem.titleView sizeToFit];
+    self.navigationItem.titleView = titleView;
     
-    const CGFloat fullBarWidth = CGRectGetWidth(self.navigationController.navigationBar.bounds);
-    const CGFloat fullBarHeight = CGRectGetHeight(self.navigationController.navigationBar.bounds);
-    
-    const CGFloat searchBarWidth = fullBarWidth/1.5;
-    const CGFloat searchBarHeight = fullBarHeight * 0.8;
-    const CGFloat searchBarY = (fullBarHeight - searchBarHeight)/2;
-    const CGFloat searchBarX = (fullBarWidth - searchBarWidth)/2;
-    _searchBar.frame = CGRectMake(searchBarX, searchBarY - 3, searchBarWidth, searchBarHeight);
-    _searchBar.layer.cornerRadius = 5;
-    _searchBar.layer.masksToBounds = YES;
-    [self.navigationController.navigationBar addSubview:_searchBar];
+//    const CGFloat fullBarWidth = CGRectGetWidth(self.navigationController.navigationBar.bounds);
+//    const CGFloat fullBarHeight = CGRectGetHeight(self.navigationController.navigationBar.bounds);
+//    
+//    const CGFloat searchBarWidth = fullBarWidth/1.5;
+//    const CGFloat searchBarHeight = fullBarHeight * 0.8;
+//    const CGFloat searchBarY = (fullBarHeight - searchBarHeight)/2;
+//    const CGFloat searchBarX = (fullBarWidth - searchBarWidth)/2;
+//    _searchBar.frame = CGRectMake(searchBarX, searchBarY - 3, searchBarWidth, searchBarHeight);
+//    _searchBar.layer.cornerRadius = searchBarHeight/2;
+//    _searchBar.layer.masksToBounds = YES;
+//    [self.navigationController.navigationBar addSubview:_searchBar];
     
     PPSectionBackgroundFlowLayout *mainLayout = [[PPSectionBackgroundFlowLayout alloc] init];
     _layoutCollectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:mainLayout];
@@ -133,7 +144,7 @@ QBDefineLazyPropertyInitialization(PPSearchModel, searchModel)
 
 - (UIImage*)GetImage;
 {
-    UIColor *color = [UIColor colorWithHexString:@"#333865"];
+    UIColor *color = [UIColor colorWithHexString:@"#ffffff"];
     CGRect r= CGRectMake(0.0f, 0.0f, 1.0f, 20);
     UIGraphicsBeginImageContext(r.size);
     CGContextRef context = UIGraphicsGetCurrentContext();
@@ -397,11 +408,21 @@ QBDefineLazyPropertyInitialization(PPSearchModel, searchModel)
     }
     
     [self searchTagWithStr:searchBar.text];
-    
 }
 
 - (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar {
     [searchBar setShowsCancelButton:YES animated:YES];
+    
+    for (UIView *searchButtions in [searchBar subviews]) {
+        for (UIView *subView in [searchButtions subviews]) {
+            if ([subView isKindOfClass:[UIButton class]]) {
+                UIButton *cancelButton = (UIButton *)subView;
+                cancelButton.titleLabel.font = [UIFont systemFontOfSize:14];
+                [cancelButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+                [cancelButton setTitleColor:[UIColor blackColor] forState:UIControlStateHighlighted];
+            }
+        }
+    }
 }
 
 - (void)searchBarTextDidEndEditing:(UISearchBar *)searchBar {

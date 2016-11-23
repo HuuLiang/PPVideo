@@ -21,6 +21,7 @@ static NSString *const kPPTrailHeaderViewReusableIdentifier = @"PPTrailHeaderVie
 static NSString *const kPPTrailNormalCellReusableIdentifier = @"PPTrailNormalCellReusableIdentifier";
 static NSString *const kPPTrailAdCellReusableIdentifier     = @"PPTrailAdCellReusableIdentifier";
 static NSString *const kSectionBackgroundReusableIdentifier = @"SectionBackgroundReusableIdentifier";
+static NSString *const kPPTrailGrayHeaderViewReusableIdentifier = @"PPTrailGrayHeaderViewReusableIdentifier";
 
 typedef NS_ENUM(NSInteger ,PPTrailSection) {
     PPTrailSectionBanner = 0,
@@ -85,6 +86,7 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
     _layoutCollectionView.showsVerticalScrollIndicator = NO;
     [_layoutCollectionView registerClass:[PPTrailFreeCell class] forCellWithReuseIdentifier:kPPTrailFreeCellReusableIdentifier];
     [_layoutCollectionView registerClass:[PPTrailHeaderView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:kPPTrailHeaderViewReusableIdentifier];
+    [_layoutCollectionView registerClass:[UICollectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:kPPTrailGrayHeaderViewReusableIdentifier];
     [_layoutCollectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:kBannerCellReusableIdentifier];
     [_layoutCollectionView registerClass:[PPTrailNormalCell class] forCellWithReuseIdentifier:kPPTrailNormalCellReusableIdentifier];
     [_layoutCollectionView registerClass:[PPTrailAdCell class] forCellWithReuseIdentifier:kPPTrailAdCellReusableIdentifier];
@@ -263,7 +265,7 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
     if (section == PPTrailSectionFree || section == PPTrailSectionContent || section == PPTrailSectionMoreContent) {
         return UIEdgeInsetsMake(kWidth(20), kWidth(20), kWidth(20), kWidth(20));
     } else if (section == PPTrailSectionAd || section == PPTrailSectionMoreAd) {
-        return UIEdgeInsetsMake(kWidth(40), kWidth(20), kWidth(0), kWidth(20));
+        return UIEdgeInsetsMake(kWidth(20), kWidth(20), kWidth(0), kWidth(20));
     }
     
     return UIEdgeInsetsZero;
@@ -280,12 +282,16 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
                 [self->_layoutCollectionView reloadSections:[NSIndexSet indexSetWithIndex:PPTrailSectionFree]];
             };
             return headerView;
+        } else if (indexPath.section == PPTrailSectionMoreAd) {
+            UICollectionReusableView *grayView = [collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:kPPTrailGrayHeaderViewReusableIdentifier forIndexPath:indexPath];
+            grayView.backgroundColor = [UIColor colorWithHexString:@"#efefef"];
+            return grayView;
         }
     } else if (kind == PPElementKindSectionBackground) {
         UICollectionReusableView *sectionBgView = [collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:kSectionBackgroundReusableIdentifier forIndexPath:indexPath];
         if (indexPath.section == PPTrailSectionFree) {
             sectionBgView.backgroundColor = [UIColor colorWithHexString:@"#efefef"];
-        } else if (indexPath.section == PPTrailSectionContent || indexPath.section == PPTrailSectionAd) {
+        } else if (indexPath.section == PPTrailSectionContent || indexPath.section == PPTrailSectionAd || indexPath.section == PPTrailSectionMoreAd || indexPath.section == PPTrailSectionMoreContent) {
             sectionBgView.backgroundColor = [UIColor colorWithHexString:@"#ffffff"];
         } else {
             sectionBgView.backgroundColor = [UIColor clearColor];
@@ -298,6 +304,8 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section {
     if (section == PPTrailSectionAd) {
         return CGSizeMake(kScreenWidth, kWidth(60));
+    } else if (section == PPTrailSectionMoreAd) {
+        return CGSizeMake(kScreenWidth, kWidth(20));
     } else {
         return CGSizeZero;
     }

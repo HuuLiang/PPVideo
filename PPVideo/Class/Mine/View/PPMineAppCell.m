@@ -33,8 +33,8 @@
         
         _bgImgv = [[UIImageView alloc] init];
         _bgImgv.backgroundColor = [UIColor clearColor];
-        _bgImgv.layer.cornerRadius = kWidth(30);
-        _bgImgv.layer.masksToBounds = YES;
+//        _bgImgv.layer.cornerRadius = kWidth(30);
+//        _bgImgv.layer.masksToBounds = YES;
         [self addSubview:_bgImgv];
         
 //        _title = [[UILabel alloc] init];

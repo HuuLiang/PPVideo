@@ -272,6 +272,11 @@ QBDefineLazyPropertyInitialization(PPAppModel, appModel)
     if (indexPath.item < self.dataSource.count) {
         PPAppSpread *app = self.dataSource[indexPath.item];
 //        cell.titleStr = app.title;
+        [PPUtil checkAppInstalledWithBundleId:app.specialDesc completionHandler:^(BOOL isInstalled) {
+            if (isInstalled) {
+                cell.isInstall = isInstalled;
+            }
+        }];
         cell.imgUrl = app.coverImg;
         cell.isInstall = app.isInstall;
     }
