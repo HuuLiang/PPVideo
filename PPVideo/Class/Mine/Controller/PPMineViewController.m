@@ -180,9 +180,7 @@ QBDefineLazyPropertyInitialization(PPAppModel, appModel)
     
     [self initHeaderCellInSection:section++];
     
-    if ([PPUtil currentVipLevel] != PPVipLevelVipC) {
-        [self initVipInSection:section++];
-    }
+    [self initVipInSection:section++];
     
     if ([PPUtil currentVipLevel] != PPVipLevelNone) {
         [self initQQCellInSection:section++];
@@ -199,15 +197,19 @@ QBDefineLazyPropertyInitialization(PPAppModel, appModel)
 - (void)initVipInSection:(NSInteger)section {
     [self setHeaderHeight:kWidth(20) inSection:section];
     
-    _activateCell = [[PPTableViewCell alloc] initWithImage:[UIImage imageNamed:@"mine_activate"] title:@"自助激活"];
-    _activateCell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-    _activateCell.selectionStyle = UITableViewCellSelectionStyleNone;
-    [self setLayoutCell:_activateCell cellHeight:tableViewCellheight inRow:0 andSection:section];
+    NSInteger row = 0;
+    
+    if ([PPUtil currentVipLevel] != PPVipLevelVipC) {
+        _activateCell = [[PPTableViewCell alloc] initWithImage:[UIImage imageNamed:@"mine_activate"] title:@"自助激活"];
+        _activateCell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        _activateCell.selectionStyle = UITableViewCellSelectionStyleNone;
+        [self setLayoutCell:_activateCell cellHeight:tableViewCellheight inRow:row++ andSection:section];
+    }
     
     _vipCell = [[PPTableViewCell alloc] initWithImage:[UIImage imageNamed:@"mine_vip"] title:@"会员特权"];
     _vipCell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     _vipCell.selectionStyle = UITableViewCellSelectionStyleNone;
-    [self setLayoutCell:_vipCell cellHeight:tableViewCellheight inRow:1 andSection:section];
+    [self setLayoutCell:_vipCell cellHeight:tableViewCellheight inRow:row andSection:section];
 }
 
 - (void)initQQCellInSection:(NSInteger)section {
