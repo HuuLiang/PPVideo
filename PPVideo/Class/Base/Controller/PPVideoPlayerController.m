@@ -139,7 +139,7 @@
                                  otherButtonTitles:@[@"确认"]
                                            handler:^(UIAlertView *alertView, NSInteger buttonIndex)
              {
-                 
+                 @strongify(self);
                  if (buttonIndex == 1) {
                      [self dismissAndPopPayment];
                  }
