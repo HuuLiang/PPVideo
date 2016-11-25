@@ -215,13 +215,13 @@ QBDefineLazyPropertyInitialization(PPAppModel, appModel)
 - (void)initQQCellInSection:(NSInteger)section {
     [self setHeaderHeight:kWidth(20) inSection:section];
     
-    _qqCell = [[PPTableViewCell alloc] initWithImage:[UIImage imageNamed:@"mine_qq"] title:@"在线客服"];
+    _qqCell = [[PPTableViewCell alloc] initWithImage:[UIImage imageNamed:@"mine_qq"] title:@"在4线客服"];
     _qqCell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     _qqCell.selectionStyle = UITableViewCellSelectionStyleNone;
     [self setLayoutCell:_qqCell cellHeight:tableViewCellheight inRow:0 andSection:section];
     
     if ([PPUtil currentVipLevel] == PPVipLevelVipC)  {
-        _baiduCell = [[PPTableViewCell alloc] initWithImage:[UIImage imageNamed:@"mine_baidu"] title:@"百度云" subtitle:[PPSystemConfigModel sharedModel].baiduyuCode];
+        _baiduCell = [[PPTableViewCell alloc] initWithImage:[UIImage imageNamed:@"mine_baidu"] title:@"百度云" subtitle:[NSString stringWithFormat:@"提取码:%@",[PPSystemConfigModel sharedModel].baiduyuCode]];
         _baiduCell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         _baiduCell.selectionStyle = UITableViewCellSelectionStyleNone;
         [self setLayoutCell:_baiduCell cellHeight:tableViewCellheight inRow:1 andSection:section];
