@@ -215,7 +215,7 @@ QBDefineLazyPropertyInitialization(PPAppModel, appModel)
 - (void)initQQCellInSection:(NSInteger)section {
     [self setHeaderHeight:kWidth(20) inSection:section];
     
-    _qqCell = [[PPTableViewCell alloc] initWithImage:[UIImage imageNamed:@"mine_qq"] title:@"在4线客服"];
+    _qqCell = [[PPTableViewCell alloc] initWithImage:[UIImage imageNamed:@"mine_qq"] title:@"在线客服"];
     _qqCell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     _qqCell.selectionStyle = UITableViewCellSelectionStyleNone;
     [self setLayoutCell:_qqCell cellHeight:tableViewCellheight inRow:0 andSection:section];
