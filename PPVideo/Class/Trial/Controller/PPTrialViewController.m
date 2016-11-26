@@ -152,7 +152,6 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
             [self refreshBannerView];
             [_layoutCollectionView reloadData];
             [self changeAdContentIfNeed];
-            [self popCodeImageViewAndSetHidden:YES];
             self->headerView.selectedMoreBtn = NO;
         }
     }];
@@ -185,34 +184,14 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
         if (unInstallSpreads.count > 0) {
             if (self.dataSource.count > PPTrailSectionAd) {
                 PPColumnModel *column = self.dataSource[PPTrailSectionAd];
-                [PPUtil checkAppInstalledWithBundleId:column.columnDesc completionHandler:^(BOOL install) {
-                    if (install) {
-//                        NSInteger columnIndex = [self.dataSource indexOfObject:column];
-//                        [self.dataSource removeObjectAtIndex:columnIndex];
-//                        
-//                        PPAppSpread *appSpread = unInstallSpreads[0];
-//                        column.spreadUrl = appSpread.videoUrl;
-//                        column.columnImg = appSpread.detailsCoverImg;
-//
-//                        [self.dataSource insertObject:column atIndex:columnIndex];
-//                        
-//                        dispatch_async(dispatch_get_main_queue(), ^{
-//                            [self->_layoutCollectionView reloadData];
-//                        });
-                        [self reloadAdContentWithAdColumn:column unInstallSpreads:unInstallSpreads atIndex:0];
-                    }
-                }];
+                [self reloadAdContentWithAdColumn:column unInstallSpreads:unInstallSpreads atIndex:0];
             }
         }
         
         if (unInstallSpreads.count > 1) {
             if (self.dataSource.count > PPTrailSectionMoreAd) {
                 PPColumnModel *column = self.dataSource[PPTrailSectionMoreAd];
-                [PPUtil checkAppInstalledWithBundleId:column.columnDesc completionHandler:^(BOOL install) {
-                    if (install) {
-                        [self reloadAdContentWithAdColumn:column unInstallSpreads:unInstallSpreads atIndex:1];
-                    }
-                }];
+                [self reloadAdContentWithAdColumn:column unInstallSpreads:unInstallSpreads atIndex:1];
             }
         }
     });
@@ -229,7 +208,6 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
     [self.dataSource insertObject:column atIndex:columnIndex];
     
     dispatch_async(dispatch_get_main_queue(), ^{
-//        [self->_layoutCollectionView reloadData];
         [self->_layoutCollectionView reloadSections:[NSIndexSet indexSetWithIndex:columnIndex]];
     });
 }
@@ -298,6 +276,7 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
             PPProgramModel *program = column.programList[3];
             cell.imgUrlStr = program.coverImg;
             codeUrlStr = program.detailsCoverImg;
+            [self popCodeImageViewAndSetHidden:YES];
             return cell;
         }
 
