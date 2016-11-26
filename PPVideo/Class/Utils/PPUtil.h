@@ -10,6 +10,8 @@
 
 extern NSString *const kPaymentInfoKeyName;
 
+@class PPAppSpread;
+
 @interface PPUtil : NSObject
 
 + (NSString *)accessId;
@@ -53,6 +55,7 @@ extern NSString *const kPaymentInfoKeyName;
 + (NSUInteger)currentSubTabPageIndex;
 + (void)showSpreadBanner;
 + (void)showBanner;
++ (NSArray <PPAppSpread *> *)getUnInstalledSpreads;
 
 + (NSString *)notiLabelStrWithCurrentVipLevel;
 + (NSString *)notiAlertStrWithCurrentVipLevel;

@@ -31,6 +31,7 @@
     if (self) {
         
         self.backgroundColor = [UIColor colorWithHexString:@"#ffffff"];
+        self.isWeChatAd = NO;
         
         _imgV = [[UIImageView alloc] init];
         [self addSubview:_imgV];
@@ -123,6 +124,22 @@
 
 - (void)setCommentCount:(NSInteger)commentCount {
     _commentLabel.text = [NSString stringWithFormat:@"%ld",commentCount];
+}
+
+- (void)setIsWeChatAd:(BOOL)isWeChatAd {
+    _isWeChatAd = isWeChatAd;
+    if (_isWeChatAd) {
+        [_titleLabel removeFromSuperview];
+        [_playImgV removeFromSuperview];
+        [_commentImgV removeFromSuperview];
+        [_commentLabel removeFromSuperview];
+        
+        [_imgV mas_updateConstraints:^(MASConstraintMaker *make) {
+            make.edges.equalTo(self);
+        }];
+        
+        _freeTagImgV.image = [UIImage imageNamed:@"trail_free_ad"];
+    }
 }
 
 @end

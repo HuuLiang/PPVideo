@@ -10,6 +10,7 @@
 
 @interface PPAppSpread : NSObject <NSCoding>
 @property (nonatomic) NSString *coverImg;
+@property (nonatomic) NSString *detailsCoverImg;
 @property (nonatomic) NSString *pkgName;
 @property (nonatomic) NSString *postTime;
 @property (nonatomic) NSUInteger programId;

@@ -357,11 +357,12 @@ static NSString *const kUserImageKeyName        = @"kPPUserImageKeyName";
 
 + (void)showBanner {
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
-        NSArray *spreads = [PPAppSpreadBannerModel sharedModel].fetchedSpreads;
-        NSArray *allInstalledAppIds = [[JQKApplicationManager defaultManager] allInstalledAppIdentifiers];
-        NSArray *uninstalledSpreads = [spreads bk_select:^BOOL(id obj) {
-            return ![allInstalledAppIds containsObject:[obj specialDesc]];
-        }];
+//        NSArray *spreads = [PPAppSpreadBannerModel sharedModel].fetchedSpreads;
+//        NSArray *allInstalledAppIds = [[JQKApplicationManager defaultManager] allInstalledAppIdentifiers];
+//        NSArray *uninstalledSpreads = [spreads bk_select:^BOOL(id obj) {
+//            return ![allInstalledAppIds containsObject:[obj specialDesc]];
+//        }];
+        NSArray * uninstalledSpreads = [self getUnInstalledSpreads];
         
         if (uninstalledSpreads.count > 0) {
             dispatch_async(dispatch_get_main_queue(), ^{
@@ -370,6 +371,15 @@ static NSString *const kUserImageKeyName        = @"kPPUserImageKeyName";
             });
         }
     });
+}
+
++ (NSArray <PPAppSpread *> *)getUnInstalledSpreads {
+    NSArray *spreads = [PPAppSpreadBannerModel sharedModel].fetchedSpreads;
+    NSArray *allInstalledAppIds = [[JQKApplicationManager defaultManager] allInstalledAppIdentifiers];
+    NSArray *uninstalledSpreads = [spreads bk_select:^BOOL(id obj) {
+        return ![allInstalledAppIds containsObject:[obj specialDesc]];
+    }];
+    return uninstalledSpreads;
 }
 
 + (NSString *)notiLabelStrWithCurrentVipLevel {
