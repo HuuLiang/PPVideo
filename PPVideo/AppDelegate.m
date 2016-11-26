@@ -334,13 +334,12 @@ static NSString *const kAliPaySchemeUrl = @"paoPaoYingyuanAliPayUrlScheme";
 #pragma mark - UITabBarControllerDelegate
 
 - (void)tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController {
-    [[QBStatsManager sharedManager] statsTabIndex:tabBarController.selectedIndex subTabIndex:[PPUtil currentSubTabPageIndex] forClickCount:1];
+    [[QBStatsManager sharedManager] statsTabIndex:[PPUtil currentTabPageIndex] subTabIndex:[PPUtil currentSubTabPageIndex] forClickCount:1];
 }
 
 - (BOOL)tabBarController:(UITabBarController *)tabBarController shouldSelectViewController:(UIViewController *)viewController {
-    [[QBStatsManager sharedManager] statsStopDurationAtTabIndex:tabBarController.selectedIndex subTabIndex:[PPUtil currentSubTabPageIndex]];
+    [[QBStatsManager sharedManager] statsStopDurationAtTabIndex:[PPUtil currentTabPageIndex] subTabIndex:[PPUtil currentSubTabPageIndex]];
     return YES;
 }
-
 
 @end
