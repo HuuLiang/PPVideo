@@ -20,6 +20,7 @@
 @property (nonatomic) NSUInteger type;
 @property (nonatomic) NSString *specialDesc;
 @property (nonatomic) NSString *spreadImg;
+@property (nonatomic) NSString *spare;
 @property (nonatomic) BOOL isInstall;
 @end
 
