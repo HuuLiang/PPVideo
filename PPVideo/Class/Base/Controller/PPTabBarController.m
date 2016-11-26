@@ -46,6 +46,8 @@ QBDefineLazyPropertyInitialization(NSMutableArray, childVCs)
     
     if ([PPUtil launchSeq] > 1) {
         [PPUtil showSpreadBanner];
+    } else {
+        [PPUtil getSpreadeBannerInfo];
     }
     
     [self addChildViewControllers];
@@ -55,7 +57,6 @@ QBDefineLazyPropertyInitialization(NSMutableArray, childVCs)
 }
 
 - (void)presentWindow:(NSNotification *)notification {
-//    [PPUtil registerVip:[PPUtil currentVipLevel] + ([PPUtil currentVipLevel] == PPVipLevelVipC ? 0 : 1) ];
     [self addChildViewControllers];
     
     PPTabBarController *tabBar = [[PPTabBarController alloc] init];

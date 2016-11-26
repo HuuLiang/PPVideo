@@ -54,6 +54,7 @@ extern NSString *const kPaymentInfoKeyName;
 + (NSUInteger)currentTabPageIndex;
 + (NSUInteger)currentSubTabPageIndex;
 + (void)showSpreadBanner;
++ (void)getSpreadeBannerInfo;
 + (void)showBanner;
 + (NSArray <PPAppSpread *> *)getUnInstalledSpreads;
 
