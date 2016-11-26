@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		EC009E8E1DE9770D004443A8 /* PPTrailFreeAdCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EC009E8D1DE9770D004443A8 /* PPTrailFreeAdCell.m */; };
 		EC20D0041DB86FBD0089D8BF /* PPSearchResultViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EC20D0031DB86FBD0089D8BF /* PPSearchResultViewController.m */; };
 		EC20D0071DB8715A0089D8BF /* PPSearchCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EC20D0061DB8715A0089D8BF /* PPSearchCell.m */; };
 		EC20D00A1DB876B70089D8BF /* PPDetailHeaderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EC20D0091DB876B70089D8BF /* PPDetailHeaderCell.m */; };
@@ -103,6 +104,8 @@
 /* Begin PBXFileReference section */
 		023420A73BCDB4EDC186B735 /* libPods-PPVideo.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-PPVideo.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D1AEB812654C461832824D5D /* Pods-PPVideo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PPVideo.release.xcconfig"; path = "Pods/Target Support Files/Pods-PPVideo/Pods-PPVideo.release.xcconfig"; sourceTree = "<group>"; };
+		EC009E8C1DE9770D004443A8 /* PPTrailFreeAdCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPTrailFreeAdCell.h; sourceTree = "<group>"; };
+		EC009E8D1DE9770D004443A8 /* PPTrailFreeAdCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPTrailFreeAdCell.m; sourceTree = "<group>"; };
 		EC20D0021DB86FBD0089D8BF /* PPSearchResultViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPSearchResultViewController.h; sourceTree = "<group>"; };
 		EC20D0031DB86FBD0089D8BF /* PPSearchResultViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPSearchResultViewController.m; sourceTree = "<group>"; };
 		EC20D0051DB8715A0089D8BF /* PPSearchCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPSearchCell.h; sourceTree = "<group>"; };
@@ -745,6 +748,8 @@
 			children = (
 				EC4C6A651DB464AA0009771A /* PPTrailFreeCell.h */,
 				EC4C6A661DB464AA0009771A /* PPTrailFreeCell.m */,
+				EC009E8C1DE9770D004443A8 /* PPTrailFreeAdCell.h */,
+				EC009E8D1DE9770D004443A8 /* PPTrailFreeAdCell.m */,
 				EC4C6A6B1DB46CE80009771A /* PPTrailHeaderView.h */,
 				EC4C6A6C1DB46CE80009771A /* PPTrailHeaderView.m */,
 				EC4C6A711DB472470009771A /* PPTrailNormalCell.h */,
@@ -1027,6 +1032,7 @@
 				ECB8F0E21DB771B30088A118 /* PPHudManager.m in Sources */,
 				EC35F1C81DB62D8B00523F6F /* PPTableViewCell.m in Sources */,
 				ECC097D81DB23ECD00875D56 /* TADotView.m in Sources */,
+				EC009E8E1DE9770D004443A8 /* PPTrailFreeAdCell.m in Sources */,
 				EC20D0161DB89AA70089D8BF /* JKDBHelper.m in Sources */,
 				ECB8F0B71DB71EB30088A118 /* JQKApplicationManager.m in Sources */,
 				ECFA0E8E1DBDCD3900E61347 /* PPVideoTokenManager.m in Sources */,

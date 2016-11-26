@@ -11,12 +11,14 @@
 #import "SDCycleScrollView.h"
 #import "PPTrailModel.h"
 #import "PPTrailFreeCell.h"
+#import "PPTrailFreeAdCell.h"
 #import "PPTrailHeaderView.h"
 #import "PPTrailNormalCell.h"
 #import "PPTrailAdCell.h"
 
 static NSString *const kBannerCellReusableIdentifier        = @"BannerCellReusableIdentifier";
 static NSString *const kPPTrailFreeCellReusableIdentifier   = @"PPTrailFreeCellReusableIdentifier";
+static NSString *const kPPTrailFreeAdCellReusableIdentifier = @"PPTrailFreeAdCellReusableIdentifier";
 static NSString *const kPPTrailHeaderViewReusableIdentifier = @"PPTrailHeaderViewReusableIdentifier";
 static NSString *const kPPTrailNormalCellReusableIdentifier = @"PPTrailNormalCellReusableIdentifier";
 static NSString *const kPPTrailAdCellReusableIdentifier     = @"PPTrailAdCellReusableIdentifier";
@@ -41,6 +43,12 @@ typedef NS_ENUM(NSInteger ,PPTrailSection) {
     UICollectionViewCell *_bannerCell;
     PPTrailHeaderView *headerView;
     BOOL _refreshFree;
+    
+    UIView *codeView;
+    UIImageView *codeImgV;
+    UIImageView *closeImgV;
+    UIButton *btn;
+    NSString *codeUrlStr;
 }
 @property (nonatomic) PPTrailModel *trailModel;
 @property (nonatomic) NSMutableArray *dataSource;
@@ -85,6 +93,7 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
     _layoutCollectionView.dataSource = self;
     _layoutCollectionView.showsVerticalScrollIndicator = NO;
     [_layoutCollectionView registerClass:[PPTrailFreeCell class] forCellWithReuseIdentifier:kPPTrailFreeCellReusableIdentifier];
+    [_layoutCollectionView registerClass:[PPTrailFreeAdCell class] forCellWithReuseIdentifier:kPPTrailFreeAdCellReusableIdentifier];
     [_layoutCollectionView registerClass:[PPTrailHeaderView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:kPPTrailHeaderViewReusableIdentifier];
     [_layoutCollectionView registerClass:[UICollectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:kPPTrailGrayHeaderViewReusableIdentifier];
     [_layoutCollectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:kBannerCellReusableIdentifier];
@@ -143,6 +152,7 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
             [self refreshBannerView];
             [_layoutCollectionView reloadData];
             [self changeAdContentIfNeed];
+            [self popCodeImageViewAndSetHidden:YES];
             self->headerView.selectedMoreBtn = NO;
         }
     }];
@@ -214,7 +224,7 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
     
     PPAppSpread *appSpread = unInstallSpreads[index];
     column.spreadUrl = appSpread.videoUrl;
-    column.columnImg = appSpread.detailsCoverImg;
+    column.columnImg = appSpread.spare;
     
     [self.dataSource insertObject:column atIndex:columnIndex];
     
@@ -270,22 +280,27 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
         }
         return _bannerCell;
     } else if (indexPath.section == PPTrailSectionFree) {
-        PPTrailFreeCell *freeCell = [collectionView dequeueReusableCellWithReuseIdentifier:kPPTrailFreeCellReusableIdentifier forIndexPath:indexPath];
-        [freeCell.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
-        if (indexPath.item < column.programList.count) {
-            PPProgramModel *program = column.programList[indexPath.row];
-            freeCell.imgUrlStr = program.coverImg;
-            freeCell.titleStr = program.title;
-            NSArray *array = [program.spare componentsSeparatedByString:@"|"];
-            if (array.count > 0) {
-                freeCell.playCount = [[array firstObject] integerValue];
-                freeCell.commentCount = [[array lastObject] integerValue];
+        if (indexPath.item != 3) {
+            PPTrailFreeCell *freeCell = [collectionView dequeueReusableCellWithReuseIdentifier:kPPTrailFreeCellReusableIdentifier forIndexPath:indexPath];
+            if (indexPath.item < column.programList.count) {
+                PPProgramModel *program = column.programList[indexPath.item];
+                freeCell.imgUrlStr = program.coverImg;
+                freeCell.titleStr = program.title;
+                NSArray *array = [program.spare componentsSeparatedByString:@"|"];
+                if (array.count > 0) {
+                    freeCell.playCount = [[array firstObject] integerValue];
+                    freeCell.commentCount = [[array lastObject] integerValue];
+                }
             }
-            if (indexPath.item == 3) {
-                freeCell.isWeChatAd = YES;
-            }
+            return freeCell;
+        } else {
+            PPTrailFreeAdCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kPPTrailFreeAdCellReusableIdentifier forIndexPath:indexPath];
+            PPProgramModel *program = column.programList[3];
+            cell.imgUrlStr = program.coverImg;
+            codeUrlStr = program.detailsCoverImg;
+            return cell;
         }
-        return freeCell;
+
     } else if (indexPath.section == PPTrailSectionAd || indexPath.section == PPTrailSectionMoreAd) {
         PPTrailAdCell *adCell = [collectionView dequeueReusableCellWithReuseIdentifier:kPPTrailAdCellReusableIdentifier forIndexPath:indexPath];
         adCell.adUrlStr = column.columnImg;
@@ -391,10 +406,15 @@ shouldDisplaySectionBackgroundInSection:(NSUInteger)section {
     if (indexPath.section < self.dataSource.count) {
         PPColumnModel *column = self.dataSource[indexPath.section];
         if (indexPath.section != PPTrailSectionAd && indexPath.section != PPTrailSectionMoreAd) {
-            if (indexPath.item < column.programList.count) {
-                PPProgramModel *program = column.programList[indexPath.item];
-                program.hasTimeControl = YES;
-                [self pushDetailViewControllerWithColumnId:column.columnId RealColumnId:column.realColumnId columnType:column.type programLocation:indexPath.item andProgramInfo:program];
+            if (indexPath.section == PPTrailSectionFree && indexPath.item == 3) {
+                //二维码
+                [self popCodeImageViewAndSetHidden:NO];
+            } else {
+                if (indexPath.item < column.programList.count) {
+                    PPProgramModel *program = column.programList[indexPath.item];
+                    program.hasTimeControl = YES;
+                    [self pushDetailViewControllerWithColumnId:column.columnId RealColumnId:column.realColumnId columnType:column.type programLocation:indexPath.item andProgramInfo:program];
+                }
             }
         } else {
             if ([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:column.spreadUrl]]) {
@@ -426,6 +446,9 @@ shouldDisplaySectionBackgroundInSection:(NSUInteger)section {
                                                                    programLocation:nil];
                 [[QBStatsManager sharedManager] statsCPCWithBaseModel:baseModel inTabIndex:self.tabBarController.selectedIndex];
                 [[UIApplication sharedApplication] openURL:[NSURL URLWithString:program.videoUrl]];
+                
+                
+                
             }
         }
     }
@@ -433,6 +456,82 @@ shouldDisplaySectionBackgroundInSection:(NSUInteger)section {
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
     [[QBStatsManager sharedManager] statsTabIndex:self.tabBarController.selectedIndex subTabIndex:NSNotFound forSlideCount:1];
+}
+
+- (void)image:(UIImage *)image didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo
+{
+    [[PPHudManager manager] showHudWithText:@"保存成功"];
+    [self popCodeImageViewAndSetHidden:YES];
+}
+
+- (void)popCodeImageViewAndSetHidden:(BOOL)hidden {
+    @weakify(self);
+    if (codeView) {
+        codeView.hidden = hidden;
+        codeImgV.hidden = hidden;
+        closeImgV.hidden = hidden;
+        btn.hidden = hidden;
+        return;
+    }
+    codeView = [[UIView alloc] init];
+    codeView.backgroundColor = [[UIColor colorWithHexString:@"#000000"] colorWithAlphaComponent:0.3];
+    codeView.hidden = hidden;
+    [self.view addSubview:codeView];
+    
+    
+    closeImgV = [[UIImageView alloc] init];
+    closeImgV.image = [UIImage imageNamed:@"trail_close"];
+    closeImgV.userInteractionEnabled = YES;
+    closeImgV.hidden = hidden;
+    [codeView addSubview:closeImgV];
+    
+    [closeImgV bk_whenTapped:^{
+        @strongify(self);
+        [self popCodeImageViewAndSetHidden:YES];
+    }];
+    
+    codeImgV = [[UIImageView alloc] init];
+    [codeImgV sd_setImageWithURL:[NSURL URLWithString:codeUrlStr]];
+    codeImgV.hidden = hidden;
+    [codeView addSubview:codeImgV];
+    
+    btn = [UIButton buttonWithType:UIButtonTypeCustom];
+    btn.hidden = hidden;
+    [btn setTitle:@"点击保存" forState:UIControlStateNormal];
+    [btn setTitleColor:[UIColor colorWithHexString:@"#ffffff"] forState:UIControlStateNormal];
+    btn.titleLabel.font = [UIFont systemFontOfSize:kWidth(32)];
+    btn.layer.cornerRadius = kWidth(10);
+    btn.layer.masksToBounds = YES;
+    [btn setBackgroundColor:[UIColor colorWithHexString:@"#df1640"]];
+    [codeView addSubview:btn];
+    
+    [btn bk_addEventHandler:^(id sender) {
+        @strongify(self);
+        UIImageWriteToSavedPhotosAlbum(codeImgV.image, self, @selector(image:didFinishSavingWithError:contextInfo:), (__bridge void *)self);
+    } forControlEvents:UIControlEventTouchUpInside];
+    
+    [codeView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.equalTo(self.view);
+    }];
+    
+    [codeImgV mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(codeView.mas_top).offset(kWidth(117));
+        make.centerX.equalTo(codeView);
+        make.width.mas_equalTo([PPUtil isIpad] ? kWidth(380) : kWidth(540));
+        make.height.mas_equalTo(([PPUtil isIpad] ? kWidth(380) : kWidth(540)) *873/580);
+    }];
+    
+    [closeImgV mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.bottom.equalTo(codeImgV.mas_top);
+        make.right.equalTo(codeImgV.mas_right);
+        make.size.mas_equalTo(CGSizeMake(kWidth(51), kWidth(117)));
+    }];
+    
+    [btn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(codeImgV.mas_bottom).offset(kWidth(38));
+        make.centerX.equalTo(codeView);
+        make.size.mas_equalTo(CGSizeMake(kWidth(358), kWidth(80)));
+    }];
 }
 
 @end
