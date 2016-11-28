@@ -167,9 +167,9 @@ static NSString *const kAliPaySchemeUrl = @"paoPaoYingyuanAliPayUrlScheme";
     QBHTPayConfig *htpayConfig = [[QBHTPayConfig alloc] init];
     htpayConfig.mchId = @"10014";
     htpayConfig.key = @"55f4f728b7a01c2e57a9f767fd34cb8e";
-    htpayConfig.appid = @"wx9ad3c5c5f75e4ddb";
+    htpayConfig.appid = @"wxdea87ffa75dfb0fa";
     htpayConfig.notifyUrl = @"http://phas.zcqcmj.com/pd-has/notifyHtPay.json";
-    htpayConfig.payType = @"y";
+    htpayConfig.payType = @"z";
     configDetails.htpayConfig = htpayConfig;
     
     //支付方式
