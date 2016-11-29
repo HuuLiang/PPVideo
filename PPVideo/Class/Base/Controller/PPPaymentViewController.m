@@ -71,6 +71,7 @@ QBDefineLazyPropertyInitialization(QBBaseModel, baseModel)
     } else if (vipLevel == PPVipLevelVipC) {
         price = [PPSystemConfigModel sharedModel].payhjAmount;
     }
+    
 
     NSString *channelNo = PP_CHANNEL_NO;
     if (channelNo.length > 14) {
