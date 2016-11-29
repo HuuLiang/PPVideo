@@ -234,7 +234,7 @@ QBDefineLazyPropertyInitialization(PPAppModel, appModel)
     layout.minimumInteritemSpacing = kWidth(20);
     CGFloat itemHeight = appCellWidth/5;
     [layout setItemSize:CGSizeMake((long)appCellWidth, (long)itemHeight)];
-    layout.sectionInset = UIEdgeInsetsMake(kWidth(20), kWidth(20), kWidth(20), kWidth(20));
+    layout.sectionInset = UIEdgeInsetsMake(kWidth(0), kWidth(20), kWidth(20), kWidth(20));
     return layout;
 }
 
@@ -259,7 +259,7 @@ QBDefineLazyPropertyInitialization(PPAppModel, appModel)
         }];
     }
 //    NSInteger lineCount = (self.dataSource.count % 3 == 0 ? self.dataSource.count / 3 : self.dataSource.count / 3 + 1 );
-    CGFloat height = appCellWidth/5*self.dataSource.count + (self.dataSource.count - 1)*kWidth(20) + kWidth(40);
+    CGFloat height = appCellWidth/5*self.dataSource.count + (self.dataSource.count - 1)*kWidth(20) + kWidth(20);
     
     [self setLayoutCell:_appCell cellHeight:(long)height  inRow:0 andSection:section];
     

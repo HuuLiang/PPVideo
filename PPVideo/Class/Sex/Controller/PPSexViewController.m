@@ -11,11 +11,14 @@
 #import "PPSexCell.h"
 #import "PPSexFooterView.h"
 #import "PPSectionBackgroundFlowLayout.h"
+#import "PPAdPopView.h"
+#import "PPTrailFreeAdCell.h"
 
 
 static NSString *const kPPSexFooterViewReusableIdentifier = @"PPSexFooterViewReusableIdentifier";
 static NSString *const kPPSexCellReusableIdentifier = @"PPSexCellReusableIdentifier";
 static NSString *const kSectionBackgroundReusableIdentifier = @"SectionBackgroundReusableIdentifier";
+static NSString *const kSexAdCellReusableIdentifier = @"PPSexAdCellReusableIdentifier";
 
 
 @interface PPSexViewController () <UICollectionViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout,PPSectionBackgroundFlowLayoutDelegate>
@@ -26,6 +29,7 @@ static NSString *const kSectionBackgroundReusableIdentifier = @"SectionBackgroun
 @property (nonatomic) PPSexModel *sexModel;
 @property (nonatomic) NSMutableArray *dataSource;
 @property (nonatomic) NSMutableDictionary *reloadDic;
+@property (nonatomic) PPAdPopView *adView;
 @end
 
 @implementation PPSexViewController
@@ -45,6 +49,7 @@ QBDefineLazyPropertyInitialization(NSMutableDictionary, reloadDic)
     _layoutCollectionView.dataSource = self;
     _layoutCollectionView.showsVerticalScrollIndicator = NO;
     [_layoutCollectionView registerClass:[PPSexCell class] forCellWithReuseIdentifier:kPPSexCellReusableIdentifier];
+    [_layoutCollectionView registerClass:[PPTrailFreeAdCell class] forCellWithReuseIdentifier:kSexAdCellReusableIdentifier];
     [_layoutCollectionView registerClass:[PPSexFooterView class] forSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:kPPSexFooterViewReusableIdentifier];
     [_layoutCollectionView registerClass:[UICollectionReusableView class] forSupplementaryViewOfKind:PPElementKindSectionBackground withReuseIdentifier:kSectionBackgroundReusableIdentifier];
     [self.view addSubview:_layoutCollectionView];
@@ -76,6 +81,8 @@ QBDefineLazyPropertyInitialization(NSMutableDictionary, reloadDic)
     }
 
     [_layoutCollectionView PP_triggerPullToRefresh];
+    
+    _adView = [[PPAdPopView alloc] initWithSuperView:self.view];
     
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         if (self.dataSource.count == 0) {
@@ -145,26 +152,34 @@ QBDefineLazyPropertyInitialization(NSMutableDictionary, reloadDic)
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    PPSexCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kPPSexCellReusableIdentifier forIndexPath:indexPath];
     if (indexPath.section < self.dataSource.count) {
         PPColumnModel *column = self.dataSource[indexPath.section];
         if (indexPath.item < column.programList.count) {
             PPProgramModel *program = column.programList[indexPath.item];
-            cell.imgUrlStr = program.coverImg;
-            cell.titleStr = program.title;
-            NSArray *countArr = [program.spare componentsSeparatedByString:@"|"];
-            if (countArr.count > 0) {
-                cell.playCount = [[countArr firstObject] integerValue];
-                cell.commentCount = [[countArr lastObject] integerValue];
-            }
-            NSArray *tagArr = [program.tag componentsSeparatedByString:@"|"];
-            if (tagArr.count > 0) {
-                cell.tagStr = [tagArr lastObject];
-                cell.tagHexStr = [tagArr firstObject];
+            if (program.type == 30) {
+                PPTrailFreeAdCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kSexAdCellReusableIdentifier forIndexPath:indexPath];
+                cell.imgUrlStr = program.coverImg;
+                _adView.codeImgUrlStr = program.detailsCoverImg;
+                return cell;
+            } else {
+                PPSexCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kPPSexCellReusableIdentifier forIndexPath:indexPath];
+                cell.imgUrlStr = program.coverImg;
+                cell.titleStr = program.title;
+                NSArray *countArr = [program.spare componentsSeparatedByString:@"|"];
+                if (countArr.count > 0) {
+                    cell.playCount = [[countArr firstObject] integerValue];
+                    cell.commentCount = [[countArr lastObject] integerValue];
+                }
+                NSArray *tagArr = [program.tag componentsSeparatedByString:@"|"];
+                if (tagArr.count > 0) {
+                    cell.tagStr = [tagArr lastObject];
+                    cell.tagHexStr = [tagArr firstObject];
+                }
+                return cell;
             }
         }
     }
-    return cell;
+    return nil;
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
@@ -230,8 +245,16 @@ QBDefineLazyPropertyInitialization(NSMutableDictionary, reloadDic)
         PPColumnModel *column = self.dataSource[indexPath.section];
         if (indexPath.item < column.programList.count) {
             PPProgramModel *program = column.programList[indexPath.item];
-            program.hasTimeControl = YES;
-            [self pushDetailViewControllerWithColumnId:column.columnId RealColumnId:column.realColumnId columnType:column.type programLocation:indexPath.item andProgramInfo:program];
+            if (program.type == 30) {
+                //二维码
+                if (_adView.isHidden) {
+                    _adView.codeImgUrlStr = program.detailsCoverImg;
+                    _adView.hidden = NO;
+                }
+            } else {
+                program.hasTimeControl = YES;
+                [self pushDetailViewControllerWithColumnId:column.columnId RealColumnId:column.realColumnId columnType:column.type programLocation:indexPath.item andProgramInfo:program];
+            }
         }
     }
 }
