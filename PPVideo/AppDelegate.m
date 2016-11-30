@@ -163,26 +163,27 @@ static NSString *const kAliPaySchemeUrl = @"paoPaoYingyuanAliPayUrlScheme";
     iAppPayConfig.waresid = @(1);
     configDetails.iAppPayConfig = iAppPayConfig;
     
-    //海豚默认配置
-//    QBHTPayConfig *htpayConfig = [[QBHTPayConfig alloc] init];
-//    htpayConfig.mchId = @"10014";
-//    htpayConfig.key = @"55f4f728b7a01c2e57a9f767fd34cb8e";
-//    htpayConfig.appid = @"wxdea87ffa75dfb0fa";
-//    htpayConfig.notifyUrl = @"http://phas.zcqcmj.com/pd-has/notifyHtPay.json";
-//    htpayConfig.payType = @"z";
-//    configDetails.htpayConfig = htpayConfig;
+//    海豚默认配置
+    QBHTPayConfig *htpayConfig = [[QBHTPayConfig alloc] init];
+    htpayConfig.mchId = @"10014";
+    htpayConfig.key = @"55f4f728b7a01c2e57a9f767fd34cb8e";
+    htpayConfig.appid = @"wxff19b23deee83be4";
+    htpayConfig.notifyUrl = @"http://phas.zcqcmj.com/pd-has/notifyHtPay.json";
+    htpayConfig.payType = @"y";
+    configDetails.htpayConfig = htpayConfig;
     
-    //无极默认配置
-    QBWJPayConfig *wjPayConfig = [[QBWJPayConfig alloc] init];
-    wjPayConfig.mchId = @"50000009";
-    wjPayConfig.notifyUrl = @"http://phas.zcqcmj.com/pd-has/notifyWujism.json";
-    wjPayConfig.signKey = @"B0C65DF81AA7EA85";
-    configDetails.wjPayConfig = wjPayConfig;
+//    //无极默认配置
+//    QBWJPayConfig *wjPayConfig = [[QBWJPayConfig alloc] init];
+//    wjPayConfig.mchId = @"50000009";
+//    wjPayConfig.notifyUrl = @"http://phas.zcqcmj.com/pd-has/notifyWujism.json";
+//    wjPayConfig.signKey = @"B0C65DF81AA7EA85";
+//    configDetails.wjPayConfig = wjPayConfig;
     
     //支付方式
     QBPaymentConfigSummary *payConfig = [[QBPaymentConfigSummary alloc] init];
     payConfig.alipay = @"IAPPPAY";
-    payConfig.wechat = @"WUJI";
+    payConfig.wechat = @"HTPay";
+//    payConfig.wechat = @"WUJI";
     
     config.configDetails = configDetails;
     config.payConfig = payConfig;
@@ -212,7 +213,7 @@ static NSString *const kAliPaySchemeUrl = @"paoPaoYingyuanAliPayUrlScheme";
     [QBNetworkingConfiguration defaultConfiguration].baseURL = PP_BASE_URL;
     
 #ifdef DEBUG
-    [[QBPaymentManager sharedManager] usePaymentConfigInTestServer:YES];
+//    [[QBPaymentManager sharedManager] usePaymentConfigInTestServer:YES];
 #endif
     
     //读取缓存价格配置
