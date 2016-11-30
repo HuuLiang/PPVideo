@@ -188,9 +188,6 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
         if (unInstallSpreads.count > 0) {
             if (self.dataSource.count > PPTrailSectionAd) {
                 PPColumnModel *column = self.dataSource[PPTrailSectionAd];
-                if (column.type == 30) {
-                    return;
-                }
                 [self reloadAdContentWithAdColumn:column unInstallSpreads:unInstallSpreads atIndex:0];
             }
         }
@@ -198,9 +195,6 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
         if (unInstallSpreads.count > 1) {
             if (self.dataSource.count > PPTrailSectionMoreAd) {
                 PPColumnModel *column = self.dataSource[PPTrailSectionMoreAd];
-                if (column.type == 30) {
-                    return;
-                }
                 [self reloadAdContentWithAdColumn:column unInstallSpreads:unInstallSpreads atIndex:1];
             }
         }
