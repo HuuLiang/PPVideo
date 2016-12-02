@@ -32,13 +32,13 @@ static NSString *const kMoreCellReusableIdentifier = @"MoreCellReusableIdentifie
     UICollectionView *_appCollectionView;
     NSInteger currentSection;
 }
-@property (nonatomic) NSMutableArray *dataSource;
 @property (nonatomic) PPAppModel *appModel;
+@property (nonatomic) PPAppResponse *response;
 @end
 
 @implementation PPMineViewController
-QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
 QBDefineLazyPropertyInitialization(PPAppModel, appModel)
+QBDefineLazyPropertyInitialization(PPAppResponse, response)
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -95,8 +95,7 @@ QBDefineLazyPropertyInitialization(PPAppModel, appModel)
     }];
     
     if ([PPCacheModel getAppCache].count > 0) {
-        [self.dataSource removeAllObjects];
-        [self.dataSource addObjectsFromArray:[PPCacheModel getAppCache]];
+        self.response.programList = [PPCacheModel getAppCache];
         [self initAppCell:currentSection];
     }
     
@@ -158,9 +157,8 @@ QBDefineLazyPropertyInitialization(PPAppModel, appModel)
         @strongify(self);
         [self.layoutTableView PP_endPullToRefresh];
         if (success) {
-            [self.dataSource removeAllObjects];
-            [self.dataSource addObjectsFromArray:obj];
-            if (_dataSource.count > 0) {
+            self.response = obj;
+            if (self.response.programList.count > 0) {
                 [self initAppCell:currentSection];
             }
         }
@@ -258,7 +256,7 @@ QBDefineLazyPropertyInitialization(PPAppModel, appModel)
         }];
     }
 //    NSInteger lineCount = (self.dataSource.count % 3 == 0 ? self.dataSource.count / 3 : self.dataSource.count / 3 + 1 );
-    CGFloat height = appCellWidth/5*self.dataSource.count + (self.dataSource.count - 1)*kWidth(20) + kWidth(20);
+    CGFloat height = appCellWidth/5*self.response.programList.count + (self.response.programList.count - 1)*kWidth(20) + kWidth(20);
     
     [self setLayoutCell:_appCell cellHeight:(long)height  inRow:0 andSection:section];
     
@@ -274,8 +272,8 @@ QBDefineLazyPropertyInitialization(PPAppModel, appModel)
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     PPMineAppCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kMoreCellReusableIdentifier forIndexPath:indexPath];
-    if (indexPath.item < self.dataSource.count) {
-        PPAppSpread *app = self.dataSource[indexPath.item];
+    if (indexPath.item < self.response.programList.count) {
+        PPAppSpread *app = self.response.programList[indexPath.item];
 //        cell.titleStr = app.title;
         [PPUtil checkAppInstalledWithBundleId:app.specialDesc completionHandler:^(BOOL isInstalled) {
             if (isInstalled) {
@@ -289,15 +287,18 @@ QBDefineLazyPropertyInitialization(PPAppModel, appModel)
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return self.dataSource.count;
+    return self.response.programList.count;
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.item < self.dataSource.count) {
-        PPAppSpread *app = self.dataSource[indexPath.item];
-        
-        //        [[LTStatsManager sharedManager] statsCPCWithProgram:(LTProgram *)app programLocation:indexPath.item inChannel:(LTChannel *)self.appModel.fetchSpreadChannel andTabIndex:self.tabBarController.selectedIndex subTabIndex:[LTUtil currentSubTabPageIndex]];
-        //
+    if (indexPath.item < self.response.programList.count) {
+        PPAppSpread *app = self.response.programList[indexPath.item];
+        QBBaseModel *baseModel = [QBBaseModel getBaseModelWithRealColoumId:[NSNumber numberWithInteger:self.response.realColumnId]
+                                                               channelType:[NSNumber numberWithInteger:self.response.type]
+                                                                 programId:[NSNumber numberWithInteger:app.programId]
+                                                               programType:[NSNumber numberWithInteger:app.type]
+                                                           programLocation:nil];
+        [[QBStatsManager sharedManager] statsCPCWithBaseModel:baseModel andTabIndex:[PPUtil currentTabPageIndex] subTabIndex:[PPUtil currentSubTabPageIndex]];
         if (app.videoUrl && [[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:app.videoUrl]]) {
             [[UIApplication sharedApplication] openURL:[NSURL URLWithString:app.videoUrl]];
         }

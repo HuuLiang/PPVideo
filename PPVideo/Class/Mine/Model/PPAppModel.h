@@ -26,6 +26,16 @@
 
 @interface PPAppResponse : QBURLResponse
 @property (nonatomic) NSArray <PPAppSpread *> *programList;
+@property (nonatomic) NSString *columnDesc;
+@property (nonatomic) NSInteger columnId;
+@property (nonatomic) NSString *columnImg;
+@property (nonatomic) NSString *name;
+@property (nonatomic) NSInteger realColumnId;
+@property (nonatomic) NSInteger showModel;
+@property (nonatomic) NSInteger showNumber;
+@property (nonatomic) NSString *spare;
+@property (nonatomic) NSString *spreadUrl;
+@property (nonatomic) NSInteger type;
 @end
 
 @interface PPAppModel : QBEncryptedURLRequest

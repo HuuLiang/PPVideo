@@ -104,7 +104,8 @@ static NSString *const kPPVideoAppSpreadImgKeyName          = @"PP_AppSpreadImg_
                             if (_fetchedSpreads.count == array.count) {
                                 if (handler) {
                                     [PPCacheModel updateAppCacheWithAppInfo:_fetchedSpreads];
-                                    handler(respStatus == QBURLResponseSuccess, _fetchedSpreads);
+                                    resp.programList = _fetchedSpreads;
+                                    handler(respStatus == QBURLResponseSuccess, resp);
                                 }
                             }
                         }];
