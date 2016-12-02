@@ -88,8 +88,16 @@
 
 - (void)pauseAndPopAction {
     [self.player pause];
+    
     if (self.notiEndAction) {
-        self.notiEndAction(self);
+        if ([NSThread currentThread].isMainThread) {
+            self.notiEndAction(self);
+        } else {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                self.notiEndAction(self);
+            });
+        }
+        
     }
 }
 
