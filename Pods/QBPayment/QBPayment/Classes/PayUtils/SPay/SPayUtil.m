@@ -17,11 +17,11 @@
 #import <XMLReader.h>
 #include <ifaddrs.h>
 #include <arpa/inet.h>
+#import "MBProgressHUD.h"
 
 @interface SPayUtil ()
-@property (nonatomic) NSString *mchId;
-@property (nonatomic) NSString *signKey;
-@property (nonatomic) NSString *notifyUrl;
+@property (nonatomic,copy) QBPaymentCompletionHandler completionHandler;
+@property (nonatomic,retain) QBPaymentInfo *paymentInfo;
 @end
 
 @implementation SPayUtil
@@ -35,19 +35,25 @@
     return _sharedInstance;
 }
 
-- (instancetype)init {
-    self = [super init];
-    if (self) {
-        SPayClientWechatConfigModel *configModel = [[SPayClientWechatConfigModel alloc] init];
-        configModel.appScheme = @"wxd3a1cdf74d0c41b3";
-        configModel.wechatAppid = @"wxd3a1cdf74d0c41b3";
-        [[SPayClient sharedInstance] wechatpPayConfig:configModel];
-    }
-    return self;
+- (void)setup {
+    SPayClientWechatConfigModel *configModel = [[SPayClientWechatConfigModel alloc] init];
+    configModel.appScheme = self.appId;
+    configModel.wechatAppid = self.appId;
+    [[SPayClient sharedInstance] wechatpPayConfig:configModel];
+    
+    [[SPayClient sharedInstance] application:[UIApplication sharedApplication]
+               didFinishLaunchingWithOptions:nil];
 }
 
 - (void)payWithPaymentInfo:(QBPaymentInfo *)paymentInfo
          completionHandler:(QBPaymentCompletionHandler)completionHandler {
+    
+    if (self.mchId.length == 0 || self.appId.length == 0 || paymentInfo.orderId.length == 0
+        || self.notifyUrl.length == 0 || self.signKey.length == 0) {
+        QBSafelyCallBlock(completionHandler, QBPayResultFailure, paymentInfo);
+        return ;
+    }
+    
     NSString *service = @"unified.trade.pay";
     NSString *mch_id = self.mchId;
     NSString *out_trade_no = paymentInfo.orderId;
@@ -121,20 +127,18 @@
          //NSString *services = xmlInfo[@"services"][@"text"];
          
          //调起SPaySDK支付
-         UIViewController *viewController = [[UIViewController alloc] init];
-         viewController.view.backgroundColor = [UIColor whiteColor];
-     
-         UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:viewController];
-         [[UIApplication sharedApplication].keyWindow.rootViewController presentViewController:nav animated:YES completion:nil];
-     
-         [[SPayClient sharedInstance] pay:viewController
+         self.completionHandler = completionHandler;
+         self.paymentInfo = paymentInfo;
+         
+         [[SPayClient sharedInstance] pay:[UIApplication sharedApplication].keyWindow.rootViewController
                                    amount:amount
                         spayTokenIDString:token_id
                         payServicesString:kSPconstSPayWeChatService
                                    finish:^(SPayClientPayStateModel *payStateModel,
                                             SPayClientPaySuccessDetailModel *paySuccessDetailModel)
          {
-               [nav dismissViewControllerAnimated:YES completion:nil];
+             self.completionHandler = nil;
+             self.paymentInfo = nil;
          
                if (payStateModel.payState == SPayClientConstEnumPaySuccess) {
                    QBLog(@"支付成功");
@@ -167,13 +171,15 @@
 }
 
 - (void)applicationWillEnterForeground {
-    [[SPayClient sharedInstance] applicationWillEnterForeground:[UIApplication sharedApplication]];
-}
-
-- (void)registerMchId:(NSString *)mchId signKey:(NSString *)signKey notifyUrl:(NSString *)notifyUrl {
-    self.mchId = mchId;
-    self.signKey = signKey;
-    self.notifyUrl = notifyUrl;
+    [self queryPaymentInfo:self.paymentInfo withCompletionHandler:^(QBPayResult payResult, QBPaymentInfo *paymentInfo) {
+        QBSafelyCallBlock(self.completionHandler, payResult, paymentInfo);
+        
+        self.paymentInfo = nil;
+        self.completionHandler = nil;
+    }];
+    
+    
+    //[[SPayClient sharedInstance] applicationWillEnterForeground:[UIApplication sharedApplication]];
 }
 
 - (NSString *)getIPAddress {
@@ -205,6 +211,49 @@
     
     return address;
 }
+
+- (void)queryPaymentInfo:(QBPaymentInfo *)paymentInfo
+   withCompletionHandler:(QBPaymentCompletionHandler)completionHandler
+{
+    if (self.paymentInfo.orderId.length == 0) {
+        QBSafelyCallBlock(completionHandler, QBPayResultFailure, paymentInfo);
+        return ;
+    }
+    
+    srand( (unsigned)time(0) );
+    NSString *nonce_str  = [NSString stringWithFormat:@"%d", rand()];
+    
+    NSDictionary *postInfo = [[SPRequestForm sharedInstance] spay_pay_gateway:@"unified.trade.query" version:nil charset:nil sign_type:nil sign_key:self.signKey mch_id:self.mchId out_trade_no:paymentInfo.orderId device_info:nil body:paymentInfo.orderDescription total_fee:0 mch_create_ip:[self getIPAddress] notify_url:self.notifyUrl time_start:nil time_expire:nil nonce_str:nonce_str attach:nil];
+    
+    [MBProgressHUD showHUDAddedTo:[UIApplication sharedApplication].keyWindow animated:YES];
+    [[SPHTTPManager sharedInstance] post:@"pay/gateway" paramter:postInfo success:^(id task, id responseObject) {
+        [MBProgressHUD hideHUDForView:[UIApplication sharedApplication].keyWindow animated:YES];
+        
+        NSError *erro;
+        //XML字符串 to 字典
+        //!!!! XMLReader最后节点都会设置一个kXMLReaderTextNodeKey属性
+        //如果要修改XMLReader的解析，请继承该类然后再去重写，因为SPaySDK也是调用该方法解析数据，如果修改了会导致解析失败
+        NSDictionary *info = [XMLReader dictionaryForXMLData:(NSData *)responseObject error:&erro];
+        QBLog(@"查询接口返回数据-->>\n%@",info);
+        
+        NSString *trade_state;
+        NSDictionary *xml = info[@"xml"];
+        if ([xml isKindOfClass:[NSDictionary class]]) {
+            NSDictionary *trade_state_dic = xml[@"trade_state"];
+            if ([trade_state_dic isKindOfClass:[NSDictionary class]]) {
+                trade_state = trade_state_dic[@"text"];
+            }
+        }
+        QBPayResult payResult = [trade_state isEqualToString:@"SUCCESS"] ? QBPayResultSuccess : QBPayResultFailure;
+        QBSafelyCallBlock(completionHandler, payResult, paymentInfo);
+    } failure:^(id task, NSError *error) {
+        [MBProgressHUD hideHUDForView:[UIApplication sharedApplication].keyWindow animated:YES];
+        QBSafelyCallBlock(completionHandler, QBPayResultFailure, paymentInfo);
+        
+        QBLog(@"查询接口返回失败:%@", error.localizedDescription);
+    }];
+}
+
 //+ (BOOL)application:(UIApplication *)application
 //didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
 //    SPayClientWechatConfigModel *configModel = [[SPayClientWechatConfigModel alloc] init];

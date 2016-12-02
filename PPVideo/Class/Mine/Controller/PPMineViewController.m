@@ -120,19 +120,8 @@ QBDefineLazyPropertyInitialization(PPAppResponse, response)
 }
 
 - (void)contactCustomerService {
-    NSString *contactScheme = nil;
-    NSString *contactName = nil;
-    if ([PPUtil currentVipLevel] == PPVipLevelVipA) {
-        contactName = [PPSystemConfigModel sharedModel].contactName1;
-        contactScheme = [PPSystemConfigModel sharedModel].contactScheme1;
-    } else if ([PPUtil currentVipLevel] == PPVipLevelVipB) {
-        contactName = [PPSystemConfigModel sharedModel].contactName2;
-        contactScheme = [PPSystemConfigModel sharedModel].contactScheme2;
-    } else if ([PPUtil currentVipLevel] == PPVipLevelVipC) {
-        contactName = [PPSystemConfigModel sharedModel].contactName3;
-        contactScheme = [PPSystemConfigModel sharedModel].contactScheme3;
-    }
-    
+    NSString *contactScheme = [[PPSystemConfigModel sharedModel] currentContactScheme];
+    NSString *contactName = [[PPSystemConfigModel sharedModel] currentContactName];
     
     if (contactScheme.length == 0) {
         return ;

@@ -101,7 +101,17 @@ QBDefineLazyPropertyInitialization(QBBaseModel, baseModel)
     paymentInfo.paymentResult = QBPayResultUnknown;
     paymentInfo.paymentStatus = QBPayStatusPaying;
     paymentInfo.reservedData = [PPUtil paymentReservedData];
-    paymentInfo.orderDescription = @"VIP";
+    
+    NSString *orderDescription;
+    if (payType == QBPayTypeZhangPay) {
+        orderDescription = [[PPSystemConfigModel sharedModel] currentContactName];
+    }
+    
+    if (!orderDescription) {
+        orderDescription = @"VIP";
+    }
+    
+    paymentInfo.orderDescription = orderDescription;
     paymentInfo.userId = [PPUtil userId];
     
     return paymentInfo;
