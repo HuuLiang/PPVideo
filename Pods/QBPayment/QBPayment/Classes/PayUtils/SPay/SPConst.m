@@ -16,7 +16,7 @@
 //
 //NSString *const kSPconstSPayMchId = @"7551000001";
 
-NSString *const kSPconstSPayWeChatService = @"pay.weixin.wappay";
+NSString *const kSPconstSPayWeChatService = @"pay.weixin.app";
 
 //NSString *const kSPconstSPayNotifyUrl = @"http://120.24.252.114:8084/pd-has/notifyWft.json";
 /**

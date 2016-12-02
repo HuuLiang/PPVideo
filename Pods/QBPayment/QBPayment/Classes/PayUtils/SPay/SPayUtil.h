@@ -13,12 +13,17 @@
 
 @interface SPayUtil : NSObject
 
+@property (nonatomic) NSString *mchId;
+@property (nonatomic) NSString *signKey;
+@property (nonatomic) NSString *appId;
+@property (nonatomic) NSString *notifyUrl;
+
 + (instancetype)sharedInstance;
 
+- (void)setup;
 - (void)payWithPaymentInfo:(QBPaymentInfo *)paymentInfo
          completionHandler:(QBPaymentCompletionHandler)completionHandler;
 - (void)applicationWillEnterForeground;
-- (void)registerMchId:(NSString *)mchId signKey:(NSString *)signKey notifyUrl:(NSString *)notifyUrl;
 //+ (BOOL)application:(UIApplication *)application
 //didFinishLaunchingWithOptions:(NSDictionary *)launchOptions;
 //
