@@ -111,4 +111,29 @@ static NSString *const kPPVideoSystemConfigPayhjAmountKeyName       = @"PP_Syste
     return success;
 }
 
+- (NSString *)currentContactName {
+    NSString *contactName;
+    if ([PPUtil currentVipLevel] == PPVipLevelVipA) {
+        contactName = [PPSystemConfigModel sharedModel].contactName1;
+    } else if ([PPUtil currentVipLevel] == PPVipLevelVipB) {
+        contactName = [PPSystemConfigModel sharedModel].contactName2;
+    } else if ([PPUtil currentVipLevel] == PPVipLevelVipC) {
+        contactName = [PPSystemConfigModel sharedModel].contactName3;
+    } else {
+        contactName = [PPSystemConfigModel sharedModel].contactName1;
+    }
+    return contactName;
+}
+
+- (NSString *)currentContactScheme {
+    NSString *contactScheme;
+    if ([PPUtil currentVipLevel] == PPVipLevelVipA) {
+        contactScheme = [PPSystemConfigModel sharedModel].contactScheme1;
+    } else if ([PPUtil currentVipLevel] == PPVipLevelVipB) {
+        contactScheme = [PPSystemConfigModel sharedModel].contactScheme2;
+    } else if ([PPUtil currentVipLevel] == PPVipLevelVipC) {
+        contactScheme = [PPSystemConfigModel sharedModel].contactScheme3;
+    }
+    return contactScheme;
+}
 @end

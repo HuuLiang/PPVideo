@@ -44,5 +44,7 @@ typedef void (^PPFetchSystemConfigCompletionHandler)(BOOL success);
 + (instancetype)sharedModel;
 
 - (BOOL)fetchSystemConfigWithCompletionHandler:(PPFetchSystemConfigCompletionHandler)handler;
+- (NSString *)currentContactName;
+- (NSString *)currentContactScheme;
 
 @end
