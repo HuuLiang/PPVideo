@@ -53,34 +53,13 @@
     [_closeButton bk_addEventHandler:^(id sender) {
         @strongify(self);
         [self->_videoPlayer pause];
-        
-        [self dismissViewControllerAnimated:YES completion:^{
-            [self dismissAndPopPayment];
-        }];
+        [self dismissViewControllerAnimated:YES completion:nil];
     } forControlEvents:UIControlEventTouchUpInside];
     
-//    [self.view beginProgressingWithTitle:@"加载中..." subtitle:nil];
-    
-//    [[PPVideoTokenManager sharedManager] requestTokenWithCompletionHandler:^(BOOL success, NSString *token, NSString *userId) {
-//        @strongify(self);
-//        if (!self) {
-//            return ;
-//        }
-//        [self.view endProgressing];
-//        
-//        if (success) {
-            [self loadVideo:[NSURL URLWithString:[[PPVideoTokenManager sharedManager]videoLinkWithOriginalLink:_videoUrl]]];
-//        } else {
-//            [UIAlertView bk_showAlertViewWithTitle:@"无法获取视频信息" message:nil cancelButtonTitle:@"确定" otherButtonTitles:nil handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
-//                @strongify(self);
-//                [self.navigationController popViewControllerAnimated:YES];
-//            }];
-//        }
-//    }];
+    [self loadVideo:[NSURL URLWithString:[[PPVideoTokenManager sharedManager]videoLinkWithOriginalLink:_videoUrl]]];
 }
 
 - (void)loadVideo:(NSURL *)videoUrl {
-    
     _videoPlayer = [[PPVideoPlayer alloc] initWithVideoURL:videoUrl forVipLevel:_vipLevel hasTimeControl:_hasTimeControl];
     [self.view insertSubview:_videoPlayer atIndex:0];
     {
@@ -104,8 +83,6 @@
     [self.view addSubview:_slider];
 
     {
-
-        
         [_slider mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.equalTo(self.view).offset(kWidth(40));
             make.right.equalTo(self.view.mas_right).offset(-kWidth(40));
@@ -133,17 +110,8 @@
     _videoPlayer.notiEndAction = ^(id obj) {
         @strongify(self);
         [self dismissViewControllerAnimated:YES completion:^{
-            [UIAlertView bk_showAlertViewWithTitle:nil
-                                           message:[PPUtil notiAlertStrWithCurrentVipLevel]
-                                 cancelButtonTitle:@"取消"
-                                 otherButtonTitles:@[@"确认"]
-                                           handler:^(UIAlertView *alertView, NSInteger buttonIndex)
-             {
-                 @strongify(self);
-                 if (buttonIndex == 1) {
-                     [self dismissAndPopPayment];
-                 }
-             }];
+            @strongify(self);
+            [self dismissAndPopPayment];
         }];
     };
     

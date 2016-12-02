@@ -109,9 +109,17 @@
                 videoVC.baseModel = baseModel;
                 videoVC.popPayView = ^ (id obj) {
                     @strongify(self);
-                    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                        [self presentPayViewControllerWithBaseModel:baseModel];
-                    });
+                    [UIAlertView bk_showAlertViewWithTitle:nil
+                                                   message:[PPUtil notiAlertStrWithCurrentVipLevel]
+                                         cancelButtonTitle:@"取消"
+                                         otherButtonTitles:@[@"确认"]
+                                                   handler:^(UIAlertView *alertView, NSInteger buttonIndex)
+                     {
+                         @strongify(self);
+                         if (buttonIndex == 1) {
+                             [self presentPayViewControllerWithBaseModel:baseModel];
+                         }
+                     }];
                 };
                 [self presentViewController:videoVC animated:YES completion:nil];
             }
