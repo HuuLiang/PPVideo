@@ -75,7 +75,7 @@ cd $ZIP_DIR
 cd ..
 rm -rf Payload/${PROJECT_NAME}.app/_CodeSignature
 cp "${PROVISIONING_PROFILE}" "Payload/${PROJECT_NAME}.app/embedded.mobileprovision"
-$CODESIGN_EXEC -f -s "${SIGNING_IDENTITY}" --entitlements "Payload/${PROJECT_NAME}.app/archived-expanded-entitlements.xcent" Payload/${PROJECT_NAME}.app
+$CODESIGN_EXEC -f -s "${SIGNING_IDENTITY}" --preserve-metadata=identifier --entitlements "Payload/${PROJECT_NAME}.app/archived-expanded-entitlements.xcent" Payload/${PROJECT_NAME}.app
 /usr/bin/zip -qr $IPA_FILE Payload
 
 if [ $? == 0 ]; then
