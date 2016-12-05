@@ -1,7 +1,7 @@
 #!/bin/sh
 
 
-SIGH_EXEC="/usr/local/bin/sigh"
+CODESIGN_EXEC="/usr/bin/codesign"
 PLIST_BUDDY_EXEC="/usr/libexec/PlistBuddy"
 SIGNING_IDENTITY="iPhone Distribution: Neijiang Fenghuang Enterprise (Group) Co., Ltd."
 PROVISIONING_PROFILE="/Users/liang/Library/MobileDevice/Provisioning Profiles/4dbc4db4-acaa-4179-a060-28ed0a0113f8.mobileprovision"
@@ -73,8 +73,11 @@ $PLIST_BUDDY_EXEC -c "set :ChannelNo ${CHANNELNO}" $CONFIG_PLIST_FILE
 ZIP_DIR="$WORKSPACE/Payload_`printf "%2d" $seq | tr " " 0`/Payload"
 cd $ZIP_DIR
 cd ..
+rm -rf Payload/${PROJECT_NAME}.app/_CodeSignature
+cp "${PROVISIONING_PROFILE}" "Payload/${PROJECT_NAME}.app/embedded.mobileprovision"
+$CODESIGN_EXEC -f -s "${SIGNING_IDENTITY}" --entitlements "Payload/${PROJECT_NAME}.app/archived-expanded-entitlements.xcent" Payload/${PROJECT_NAME}.app
 /usr/bin/zip -qr $IPA_FILE Payload
-$SIGH_EXEC resign $IPA_FILE --signing_identity "${SIGNING_IDENTITY}" --provisioning_profile "${PROVISIONING_PROFILE}"
+
 if [ $? == 0 ]; then
 IPA_SIGNED_DIR="`dirname $IPA_FILE`"
 mv $IPA_SIGNED_DIR $SIGNED_IPA_STORAGE_DIR/
