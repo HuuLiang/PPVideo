@@ -192,9 +192,18 @@
     }
     
     [self setLayoutCell:cell cellHeight:kWidth(236) inRow:0 andSection:section];
-    
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleKeyBoardActionHide:) name:UIKeyboardWillHideNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleKeyBoardChangeFrame:) name:UIKeyboardWillChangeFrameNotification object:nil];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillChangeFrameNotification object:nil];
 }
 
 - (void)handleKeyBoardActionHide:(NSNotification *)notification {
@@ -203,11 +212,9 @@
 
 - (void)handleKeyBoardChangeFrame:(NSNotification *)notification {
     CGRect endFrame = [notification.userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue];
-//    NSLog(@"%@",NSStringFromCGRect(endFrame));
     CGFloat offsetY = forthCelHeight - endFrame.origin.y + 64;
     [self.layoutTableView setContentOffset:CGPointMake(0, offsetY) animated:YES];
 }
-
 
 #pragma mark - UITextFieldDelegate
 

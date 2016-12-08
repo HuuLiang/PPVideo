@@ -85,7 +85,12 @@
 
 - (void)image:(UIImage *)image didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo
 {
-    [[PPHudManager manager] showHudWithText:@"保存成功"];
+    if (error.userInfo != nil) {
+        [[PPHudManager manager] showHudWithText:@"保存失败"];
+    } else {
+        [[PPHudManager manager] showHudWithText:@"保存成功"];
+    }
+
     if (!self.isHidden) {
         self.hidden = YES;
     }

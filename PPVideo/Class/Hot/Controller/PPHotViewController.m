@@ -138,8 +138,6 @@ QBDefineLazyPropertyInitialization(PPSearchModel, searchModel)
             }];
         }
     });
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshHotNotification:) name:kPaidNotificationName object:nil];
 }
 
 - (UIImage*)GetImage;
@@ -181,10 +179,13 @@ QBDefineLazyPropertyInitialization(PPSearchModel, searchModel)
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kPaidNotificationName object:nil];
     _searchBar.hidden = YES;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshHotNotification:) name:kPaidNotificationName object:nil];
     _searchBar.hidden = NO;
 }
 

@@ -92,8 +92,16 @@ QBDefineLazyPropertyInitialization(NSMutableDictionary, reloadDic)
             }];
         }
     });
-    
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshSexView:) name:kPaidNotificationName object:nil];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kPaidNotificationName object:nil];
 }
 
 - (void)loadData  {
