@@ -125,7 +125,7 @@ QBDefineLazyPropertyInitialization(QBBaseModel, baseModel)
             [PPUtil showSpreadBanner];
         }
         
-    } else if (result == QBPayResultFailure) {
+    } else if (result == QBPayResultCancelled) {
         [[PPHudManager manager] showHudWithText:@"支付取消"];
     } else {
         [[PPHudManager manager] showHudWithText:@"支付失败"];
