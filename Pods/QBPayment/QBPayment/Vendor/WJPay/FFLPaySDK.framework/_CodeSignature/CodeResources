@@ -6,19 +6,19 @@
 	<dict>
 		<key>Headers/FFLPayClient.h</key>
 		<data>
-		pQhDg1hLl7ffzdZpZdsyGDewQ7c=
+		GhE2p8lU7I8BAHs+Kn2X7hzWU94=
 		</data>
 		<key>Headers/FFLPayHeader.h</key>
 		<data>
-		+OC5e7wlHn+5vfw+n9DfSCwpKWY=
+		Kkqt0dqax6KtPfJZWf3GgHPn5eA=
 		</data>
 		<key>Headers/FFLPaySDK.h</key>
 		<data>
-		oxmUSP8ebl2fOtJOGCeikKZfCm0=
+		NgwIVBrWf0ipYlFEfOSyDR+YZWI=
 		</data>
 		<key>Info.plist</key>
 		<data>
-		Ygl3C41lngUQ6APbA9kD6NYB1wg=
+		uG52DLs7nLshWGGRI141aRAGqg0=
 		</data>
 		<key>LICENSE</key>
 		<data>
@@ -36,29 +36,71 @@
 	<key>files2</key>
 	<dict>
 		<key>Headers/FFLPayClient.h</key>
-		<data>
-		pQhDg1hLl7ffzdZpZdsyGDewQ7c=
-		</data>
+		<dict>
+			<key>hash</key>
+			<data>
+			GhE2p8lU7I8BAHs+Kn2X7hzWU94=
+			</data>
+			<key>hash2</key>
+			<data>
+			0MYO7W3oKABsUqXJaxFr9kIFS8CUNyNriZ+xIMYDbmc=
+			</data>
+		</dict>
 		<key>Headers/FFLPayHeader.h</key>
-		<data>
-		+OC5e7wlHn+5vfw+n9DfSCwpKWY=
-		</data>
+		<dict>
+			<key>hash</key>
+			<data>
+			Kkqt0dqax6KtPfJZWf3GgHPn5eA=
+			</data>
+			<key>hash2</key>
+			<data>
+			psnbFiP00eXJbbRy0+aozQnrqaa2lxb+6NTJtK5LZMg=
+			</data>
+		</dict>
 		<key>Headers/FFLPaySDK.h</key>
-		<data>
-		oxmUSP8ebl2fOtJOGCeikKZfCm0=
-		</data>
+		<dict>
+			<key>hash</key>
+			<data>
+			NgwIVBrWf0ipYlFEfOSyDR+YZWI=
+			</data>
+			<key>hash2</key>
+			<data>
+			gZDqeapkVqmVtSY2MlABjhe5fqE9Xx97X8OnK1+pum8=
+			</data>
+		</dict>
 		<key>LICENSE</key>
-		<data>
-		CUZtLZP+AkKnWBaxSBTjCchxkIM=
-		</data>
+		<dict>
+			<key>hash</key>
+			<data>
+			CUZtLZP+AkKnWBaxSBTjCchxkIM=
+			</data>
+			<key>hash2</key>
+			<data>
+			K8beXIEi4l+R4rJS0FbC87xZg9DsE0A6riAaxa2Og+o=
+			</data>
+		</dict>
 		<key>Modules/module.modulemap</key>
-		<data>
-		PmP7yAkRHEEFOcLbFftKY3fhKdQ=
-		</data>
+		<dict>
+			<key>hash</key>
+			<data>
+			PmP7yAkRHEEFOcLbFftKY3fhKdQ=
+			</data>
+			<key>hash2</key>
+			<data>
+			5qDMM0Aq+oioHSbsfK14DDyCwxaeUsn1qXT9l7cOZ6c=
+			</data>
+		</dict>
 		<key>read_me.txt</key>
-		<data>
-		X4KVJJqE+AQTUzXRL78fe6RbRPI=
-		</data>
+		<dict>
+			<key>hash</key>
+			<data>
+			X4KVJJqE+AQTUzXRL78fe6RbRPI=
+			</data>
+			<key>hash2</key>
+			<data>
+			iwBPQT6rIquG0l+qmnvNUpR3GUY5Vqa+DmX6XhHCA10=
+			</data>
+		</dict>
 	</dict>
 	<key>rules</key>
 	<dict>

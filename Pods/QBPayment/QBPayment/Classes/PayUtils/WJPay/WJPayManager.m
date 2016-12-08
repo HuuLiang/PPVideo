@@ -38,7 +38,7 @@
     }
     
     NSDictionary *postInfo = [[FFLPayClient sharedInstance] makePayForm:self.mchId
-                                                              PayTypeId:@"wechat_sdk"
+                                                              PayTypeId:@"wechat_app"
                                                              MchTradeNo:paymentInfo.orderId
                                                            TradeContent:paymentInfo.orderDescription//[paymentInfo.orderDescription stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]]
                                                             TradeAttach:paymentInfo.reservedData//[paymentInfo.reservedData stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]]

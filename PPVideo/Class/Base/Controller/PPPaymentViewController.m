@@ -38,26 +38,32 @@
 @implementation PPPaymentViewController
 QBDefineLazyPropertyInitialization(QBBaseModel, baseModel)
 
-- (void)payForPaymentType:(QBPayType)paymentType subPaymentType:(QBPaySubType)subPaymentType vipLevel:(PPVipLevel)vipLevel {
+- (void)payForPaymentType:(QBOrderPayType)orderPayType vipLevel:(PPVipLevel)vipLevel {
     
-    
-    QBPaymentInfo *paymentInfo = [self createPaymentInfoWithPaymentType:paymentType subPaymentType:subPaymentType vipLevel:vipLevel];
-    
-    
-    
-    [[QBPaymentManager sharedManager] startPaymentWithPaymentInfo:paymentInfo
-                                                completionHandler:^(QBPayResult payResult, QBPaymentInfo *paymentInfo)
-    {
+    [[QBPaymentManager sharedManager] startPaymentWithOrderInfo:[self createOrderInfoWithPaymentType:orderPayType vipLevel:vipLevel]
+                                                    contentInfo:[self createContentInfo]
+                                                    beginAction:^(QBPaymentInfo * paymentInfo) {
+        if (paymentInfo) {
+                    [[QBStatsManager sharedManager] statsPayWithPaymentInfo:paymentInfo forPayAction:QBStatsPayActionGoToPay andTabIndex:[PPUtil currentTabPageIndex] subTabIndex:[PPUtil currentSubTabPageIndex]];
+        }
+    } completionHandler:^(QBPayResult payResult, QBPaymentInfo *paymentInfo) {
         [self notifyPaymentResult:payResult withPaymentInfo:paymentInfo];
     }];
-    
-    if (paymentInfo) {
-        [[QBStatsManager sharedManager] statsPayWithPaymentInfo:paymentInfo forPayAction:QBStatsPayActionGoToPay andTabIndex:[PPUtil currentTabPageIndex] subTabIndex:[PPUtil currentSubTabPageIndex]];
-    }
-    
 }
 
-- (QBPaymentInfo *)createPaymentInfoWithPaymentType:(QBPayType)payType subPaymentType:(QBPaySubType)subPayType vipLevel:(PPVipLevel)vipLevel {
+- (QBOrderInfo *)createOrderInfoWithPaymentType:(QBOrderPayType)payType vipLevel:(PPVipLevel)vipLevel {
+    QBOrderInfo *orderInfo = [[QBOrderInfo alloc] init];
+    
+    NSString *channelNo = PP_CHANNEL_NO;
+    if (channelNo.length > 14) {
+        channelNo = [channelNo substringFromIndex:channelNo.length-14];
+    }
+    
+    channelNo = [channelNo stringByReplacingOccurrencesOfString:@"-" withString:@"_"];
+    
+    NSString *uuid = [[NSUUID UUID].UUIDString.md5 substringWithRange:NSMakeRange(8, 16)];
+    NSString *orderNo = [NSString stringWithFormat:@"%@_%@", channelNo, uuid];
+    orderInfo.orderId = orderNo;
     
     NSUInteger price = 0;
     if (vipLevel == PPVipLevelVipA) {
@@ -71,52 +77,29 @@ QBDefineLazyPropertyInitialization(QBBaseModel, baseModel)
     } else if (vipLevel == PPVipLevelVipC) {
         price = [PPSystemConfigModel sharedModel].payhjAmount;
     }
+    orderInfo.orderPrice = price;
     
+    NSString *orderDescription = [[PPSystemConfigModel sharedModel] currentContactName] ?: @"VIP";
 
-    NSString *channelNo = PP_CHANNEL_NO;
-    if (channelNo.length > 14) {
-        channelNo = [channelNo substringFromIndex:channelNo.length-14];
-    }
+    orderInfo.orderDescription = orderDescription;
+    orderInfo.payType = payType;
+    orderInfo.reservedData = [PPUtil paymentReservedData];
+    orderInfo.createTime = [PPUtil currentTimeStringWithFormat:KTimeFormatLong];
+    orderInfo.payPointType = vipLevel;
+    orderInfo.userId = [PPUtil userId];
     
-    if (payType == QBPayTypeHTPay) {
-        channelNo = [channelNo stringByReplacingOccurrencesOfString:@"-" withString:@"_"];
-    }
-    
-    NSString *uuid = [[NSUUID UUID].UUIDString.md5 substringWithRange:NSMakeRange(8, 16)];
-
-    NSString *orderNo = [NSString stringWithFormat:@"%@_%@", channelNo, uuid];
-    
-    QBPaymentInfo *paymentInfo = [[QBPaymentInfo alloc] init];
-    paymentInfo.orderId = orderNo;
-    paymentInfo.orderPrice = price;
-    paymentInfo.contentId = self.baseModel.programId;
-    paymentInfo.contentType = self.baseModel.programType;
-    paymentInfo.contentLocation = self.baseModel.programLocation;
-    paymentInfo.columnId = self.baseModel.realColumnId;
-    paymentInfo.columnType = self.baseModel.channelType;
-    paymentInfo.payPointType = vipLevel;
-    paymentInfo.paymentTime = [PPUtil currentTimeStringWithFormat:KTimeFormatLong];
-    paymentInfo.paymentType = payType;
-    paymentInfo.paymentSubType = subPayType;
-    paymentInfo.paymentResult = QBPayResultUnknown;
-    paymentInfo.paymentStatus = QBPayStatusPaying;
-    paymentInfo.reservedData = [PPUtil paymentReservedData];
-    
-    NSString *orderDescription;
-    if (payType == QBPayTypeZhangPay) {
-        orderDescription = [[PPSystemConfigModel sharedModel] currentContactName];
-    }
-    
-    if (!orderDescription) {
-        orderDescription = @"VIP";
-    }
-
-    paymentInfo.orderDescription = orderDescription;
-    paymentInfo.userId = [PPUtil userId];
-    
-    return paymentInfo;
+    return orderInfo;
 }
 
+- (QBContentInfo *)createContentInfo {
+    QBContentInfo *contenInfo = [[QBContentInfo alloc] init];
+    contenInfo.contentId = self.baseModel.programId;
+    contenInfo.contentType = self.baseModel.programType;
+    contenInfo.contentLocation = self.baseModel.programLocation;
+    contenInfo.columnId = self.baseModel.realColumnId;
+    contenInfo.columnType = self.baseModel.channelType;
+    return contenInfo;
+}
 
 - (void)hidePayment {
     [[QBStatsManager sharedManager] statsPayWithOrderNo:nil payAction:QBStatsPayActionClose payResult:QBPayResultUnknown forBaseModel:self.baseModel andTabIndex:[PPUtil currentTabPageIndex] subTabIndex:[PPUtil currentSubTabPageIndex]];
@@ -243,15 +226,14 @@ QBDefineLazyPropertyInitialization(QBBaseModel, baseModel)
     }
     [self initIntroCellInSection:section++];
     
-    QBPayType wechatPaymentType = [[QBPaymentManager sharedManager] wechatPaymentType];
-    if (wechatPaymentType != QBPayTypeNone) {
-        [self initPayCellWithPayType:wechatPaymentType subPayType:QBPaySubTypeWeChat InSection:section++];
+    if ([[QBPaymentManager sharedManager] isOrderPayTypeAvailable:QBOrderPayTypeWeChatPay]) {
+        [self initPayCellWithPayType:QBOrderPayTypeWeChatPay InSection:section++];
     }
     
-    QBPayType alipayPaymentType = [[QBPaymentManager sharedManager] alipayPaymentType];
-    if (alipayPaymentType != QBPayTypeNone) {
-        [self initPayCellWithPayType:alipayPaymentType subPayType:QBPaySubTypeAlipay InSection:section++];
+    if ([[QBPaymentManager sharedManager] isOrderPayTypeAvailable:QBOrderPayTypeAlipay]) {
+        [self initPayCellWithPayType:QBOrderPayTypeAlipay InSection:section++];
     }
+    
     [self initActivateCellInSection:section++];
     
     [self.layoutTableView reloadData];
@@ -316,15 +298,15 @@ QBDefineLazyPropertyInitialization(QBBaseModel, baseModel)
     [self setLayoutCell:_introCell cellHeight:cellHeight+height inRow:0 andSection:section];
 }
 
-- (void)initPayCellWithPayType:(QBPayType)payType subPayType:(QBPaySubType)paySubType InSection:(NSInteger)section {
+- (void)initPayCellWithPayType:(QBOrderPayType)orderPayType InSection:(NSInteger)section {
     [self setHeaderHeight:kWidth(26) inSection:section];
     
     PPPayTypeCell *cell = [[PPPayTypeCell alloc] init];
-    cell.subPayType = paySubType;
+    cell.orderPayType = orderPayType;
     @weakify(self);
     cell.payAction = ^{
         @strongify(self);
-        [self payForPaymentType:payType subPaymentType:paySubType vipLevel:self->_vipLevel];
+        [self payForPaymentType:orderPayType vipLevel:self->_vipLevel];
     };
     
     [self setLayoutCell:cell cellHeight:kWidth(98) inRow:0 andSection:section];

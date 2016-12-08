@@ -10,22 +10,21 @@
 #define FFLPayHeader_h
 
 //支付回调
-//  成功=0   payInfo={code:0, msg:xxx, order:xxx}
-//  失败!=0  payInfo={code:0, msg:xxx, order:xxx}
+//
+//@payInfo   {code:0, msg:xxx, order:xxx}
+//    code  参考FFLPayEnumPayState状态码
+//    msg   提示字符
+//    order 定单详细信息字典(支付成功时返回)
+
 typedef void(^FFLPayFinishBlock) (NSDictionary *payInfo);
 
 
 
 //支付模式
-typedef enum {
-    weixin_wap      = 101,               //微信wap支付（只有url)
-    weixin_wft_app  = 102,               //威富通app
-    weixin_wft_wap  = 103,               //威富通sdkwap
-    weixin_hfb_wap  = 104,               //汇付宝sdkwap
-    weixin_code     = 105,               //微信扫码
-    alipay_app      = 106,               //支付宝SDK
-} FFLPayEnumPayway;
 
+//#define __FFLPAY_PAYTYPE_WXSDK     @"wechat_sdk"  //此模式暂停使用 SDK1.0.6
+
+#define __FFLPAY_PAYTYPE_WXAPP     @"wechat_app"
 
 
 //支付状态

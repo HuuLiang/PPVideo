@@ -93,6 +93,7 @@ NSString *const kQBPaymentFetchConfigNotification = @"com.qbpayment.app.config";
 @property (nonatomic,retain) QBOrderQueryModel *orderQueryModel;
 @property (nonatomic) NSString *urlScheme;
 @property (nonatomic) BOOL shouldCommitPayment;
+@property (nonatomic) BOOL everFetchedConfig;
 
 @end
 
@@ -183,14 +184,7 @@ QBDefineLazyPropertyInitialization(QBOrderQueryModel, orderQueryModel)
     [IappPayMananger sharedMananger].alipayURLScheme = urlScheme;
 #endif
     
-    [self refreshAvailablePaymentTypesWithCompletionHandler:^{
-#ifdef QBPAYMENT_JSPAY_ENABLED
-        QBJSPayConfig *jsPayConfig = [QBPaymentConfig sharedConfig].configDetails.jsPayConfig;
-        if (jsPayConfig) {
-            [JsAppPay wechatpPayConfigWithApplication:[UIApplication sharedApplication] didFinishLaunchingWithOptions:nil appId:jsPayConfig.productId];
-        }
-#endif
-    }];
+    [self refreshAvailablePaymentTypesWithCompletionHandler:nil];
     
     if (self.shouldCommitPayment) {
         [self.commitModel startRetryingToCommitUnprocessedOrders];
@@ -217,6 +211,11 @@ QBDefineLazyPropertyInitialization(QBOrderQueryModel, orderQueryModel)
         //            [MingPayManager sharedManager].queryOrderUrl = [QBPaymentConfig sharedConfig].configDetails.mingPayConfig.queryOrderUrl;
         //        }
         //
+        
+        if (success) {
+            self.everFetchedConfig = YES;
+        }
+        
 #ifdef QBPAYMENT_HTPAY_ENABLED
         QBHTPayConfig *htPayConfig = [QBPaymentConfig sharedConfig].configDetails.htpayConfig;
         if (htPayConfig) {
@@ -295,6 +294,13 @@ QBDefineLazyPropertyInitialization(QBOrderQueryModel, orderQueryModel)
         }
 #endif
         
+#ifdef QBPAYMENT_JSPAY_ENABLED
+        QBJSPayConfig *jsPayConfig = [QBPaymentConfig sharedConfig].configDetails.jsPayConfig;
+        if (jsPayConfig) {
+            [JsAppPay wechatpPayConfigWithApplication:[UIApplication sharedApplication] didFinishLaunchingWithOptions:nil appId:jsPayConfig.productId];
+        }
+#endif
+        
         QBSafelyCallBlock(completionHandler);
         
         [[NSNotificationCenter defaultCenter] postNotificationName:kQBPaymentFetchConfigNotification object:nil];
@@ -302,11 +308,11 @@ QBDefineLazyPropertyInitialization(QBOrderQueryModel, orderQueryModel)
 }
 
 - (QBPayType)wechatPaymentType {
-    return [QBPaymentConfig sharedConfig].wechatPaymentType;
+    return [self paymentTypeForOrderPayType:QBOrderPayTypeWeChatPay] ? QBPayTypeUnknown : QBPayTypeNone;
 }
 
 - (QBPayType)alipayPaymentType {
-    return [QBPaymentConfig sharedConfig].alipayPaymentType;
+    return [self paymentTypeForOrderPayType:QBOrderPayTypeAlipay] ? QBPayTypeUnknown : QBPayTypeNone;
 }
 
 - (QBPayType)cardPayPaymentType {
@@ -317,7 +323,23 @@ QBDefineLazyPropertyInitialization(QBOrderQueryModel, orderQueryModel)
 }
 
 - (QBPayType)qqPaymentType {
-    return [QBPaymentConfig sharedConfig].qqPaymentType;
+    return [self paymentTypeForOrderPayType:QBOrderPayTypeQQPay] ? QBPayTypeUnknown : QBPayTypeNone;
+}
+
+- (BOOL)isOrderPayTypeAvailable:(QBOrderPayType)orderPayType {
+    return [self paymentTypeForOrderPayType:orderPayType] != QBPayTypeNone;
+}
+
+- (QBPayType)paymentTypeForOrderPayType:(QBOrderPayType)orderPayType {
+    if (orderPayType == QBOrderPayTypeWeChatPay) {
+        return [QBPaymentConfig sharedConfig].wechatPaymentType;
+    } else if (orderPayType == QBOrderPayTypeAlipay) {
+        return [QBPaymentConfig sharedConfig].alipayPaymentType;
+    } else if (orderPayType == QBOrderPayTypeQQPay) {
+        return [QBPaymentConfig sharedConfig].qqPaymentType;
+    } else {
+        return QBPayTypeNone;
+    }
 }
 
 - (BOOL)IsSDKIntegratedForPayType:(QBPayType)payType {
@@ -430,20 +452,48 @@ QBDefineLazyPropertyInitialization(QBOrderQueryModel, orderQueryModel)
 //    }
 }
 
-- (BOOL)startPaymentWithPaymentInfo:(QBPaymentInfo *)paymentInfo
-                  completionHandler:(QBPaymentCompletionHandler)completionHandler
+- (BOOL)startPaymentWithOrderInfo:(QBOrderInfo *)orderInfo
+                      contentInfo:(QBContentInfo *)contentInfo
+                      beginAction:(QBAction)beginAction
+                completionHandler:(QBPaymentCompletionHandler)completionHandler
 {
+    QBPaymentInfo *paymentInfo = [[QBPaymentInfo alloc] initWithOrderInfo:orderInfo contentInfo:contentInfo];
+    paymentInfo.paymentType = [self paymentTypeForOrderPayType:orderInfo.payType];
+    
     if (paymentInfo.paymentType == QBPayTypeNone || paymentInfo.orderId.length == 0 || paymentInfo.orderPrice == 0) {
         QBSafelyCallBlock(completionHandler, QBPayResultFailure, paymentInfo);
         return NO;
     }
+    
+    if (self.everFetchedConfig) {
+        return [self startPaymentWithPaymentInfo:paymentInfo beginAction:beginAction completionHandler:completionHandler];
+    } else {
+        [self refreshAvailablePaymentTypesWithCompletionHandler:^{
+            
+            paymentInfo.paymentType = [self paymentTypeForOrderPayType:orderInfo.payType];
+            [self startPaymentWithPaymentInfo:paymentInfo beginAction:beginAction completionHandler:completionHandler];
+        }];
+        return YES;
+    }
+}
+
+- (BOOL)startPaymentWithPaymentInfo:(QBPaymentInfo *)paymentInfo completionHandler:(QBPaymentCompletionHandler)completionHandler {
+    return [self startPaymentWithPaymentInfo:paymentInfo beginAction:nil completionHandler:completionHandler];
+}
+
+- (BOOL)startPaymentWithPaymentInfo:(QBPaymentInfo *)paymentInfo
+                        beginAction:(QBAction)beginAction
+                  completionHandler:(QBPaymentCompletionHandler)completionHandler
+{
     
     NSUInteger price = paymentInfo.orderPrice;
     QBPayPointType payPointType = paymentInfo.payPointType;
     QBPayType payType = paymentInfo.paymentType;
     QBPaySubType subType = paymentInfo.paymentSubType;
     
+    paymentInfo.paymentStatus = QBPayStatusPaying;
     [paymentInfo save];
+    
     self.paymentInfo = paymentInfo;
     self.completionHandler = completionHandler;
     
@@ -457,7 +507,9 @@ QBDefineLazyPropertyInitialization(QBOrderQueryModel, orderQueryModel)
     BOOL success = NO;
 #ifdef QBPAYMENT_VIAPAY_ENABLED
     if (payType == QBPayTypeVIAPay && (subType == QBPaySubTypeAlipay || subType == QBPaySubTypeWeChat || subType == QBPaySubTypeQQ)) {
-
+        
+        QBSafelyCallBlock(beginAction, paymentInfo);
+        
         NSDictionary *viaPayTypeMapping = @{@(QBPaySubTypeAlipay):@(QBVIAPayTypeShenZhou),
                                             @(QBPaySubTypeWeChat):@(QBVIAPayTypeWeChat),
                                             @(QBPaySubTypeQQ):@(QBVIAPayTypeQQ)};
@@ -476,6 +528,9 @@ QBDefineLazyPropertyInitialization(QBOrderQueryModel, orderQueryModel)
 
 #ifdef QBPAYMENT_IAPPPAY_ENABLED
     if (payType == QBPayTypeIAppPay) {
+        
+        QBSafelyCallBlock(beginAction, paymentInfo);
+        
         QBIAppPayConfig *payConfig = [QBPaymentConfig sharedConfig].configDetails.iAppPayConfig;
         IappPayMananger *iAppMgr = [IappPayMananger sharedMananger];
         iAppMgr.appId = payConfig.appid;
@@ -494,6 +549,9 @@ QBDefineLazyPropertyInitialization(QBOrderQueryModel, orderQueryModel)
 
 #ifdef QBPAYMENT_DXTXPAY_ENABLED
     if (payType == QBPayTypeDXTXPay && (subType == QBPaySubTypeWeChat || subType == QBPaySubTypeAlipay)) {
+        
+        QBSafelyCallBlock(beginAction, paymentInfo);
+        
         NSNumber *goodsId = [QBPaymentConfig sharedConfig].configDetails.dxtxPayConfig.waresid;
         NSString *appKey = [QBPaymentConfig sharedConfig].configDetails.dxtxPayConfig.appKey;
         
@@ -528,6 +586,8 @@ QBDefineLazyPropertyInitialization(QBOrderQueryModel, orderQueryModel)
 #ifdef QBPAYMENT_MTDLPAY_ENABLED
     if (payType == QBPayTypeMTDLPay && (subType == QBPaySubTypeWeChat || subType == QBPaySubTypeAlipay)) {
         
+        QBSafelyCallBlock(beginAction, paymentInfo);
+        
         QBMTDLPayConfig *payConfig = [QBPaymentConfig sharedConfig].configDetails.mtdlPayConfig;
         
         if (!payConfig.appid || !payConfig.appKey) {
@@ -558,6 +618,8 @@ QBDefineLazyPropertyInitialization(QBOrderQueryModel, orderQueryModel)
     
 #ifdef QBPAYMENT_HTPAY_ENABLED
     if (payType == QBPayTypeHTPay) {
+        QBSafelyCallBlock(beginAction, paymentInfo);
+        
         [[HTPayManager sharedManager] payWithPaymentInfo:paymentInfo completionHandler:paymentHandler];
         
         success = YES;
@@ -566,6 +628,8 @@ QBDefineLazyPropertyInitialization(QBOrderQueryModel, orderQueryModel)
     
 #if defined(QBPAYMENT_WFTPAY_ENABLED) || defined(QBPAYMENT_ZHANGPAY_ENABLED)
     if (payType == QBPayTypeSPay || payType == QBPayTypeZhangPay) {
+        QBSafelyCallBlock(beginAction, paymentInfo);
+        
         [[SPayUtil sharedInstance] payWithPaymentInfo:paymentInfo completionHandler:paymentHandler];
         
         success = YES;
@@ -574,6 +638,7 @@ QBDefineLazyPropertyInitialization(QBOrderQueryModel, orderQueryModel)
     
 #ifdef QBPAYMENT_JSPAY_ENABLED
     if (payType == QBPayTypeJSPay) {
+        QBSafelyCallBlock(beginAction, paymentInfo);
         
         QBJSPayConfig *payConfig = [QBPaymentConfig sharedConfig].configDetails.jsPayConfig;
         
@@ -618,6 +683,7 @@ QBDefineLazyPropertyInitialization(QBOrderQueryModel, orderQueryModel)
     
 #ifdef QBPAYMENT_HEEPAY_ENABLED
     if (payType == QBPayTypeHeePay && subType == QBPaySubTypeWeChat) {
+        QBSafelyCallBlock(beginAction, paymentInfo);
         success = YES;
         
         [[HeePayManager sharedManager] payWithPaymentInfo:paymentInfo
@@ -627,6 +693,7 @@ QBDefineLazyPropertyInitialization(QBOrderQueryModel, orderQueryModel)
     
 #ifdef QBPAYMENT_XLTXPAY_ENABLED
     if (payType == QBPayTypeXLTXPay && (subType == QBPaySubTypeWeChat || subType == QBPaySubTypeAlipay)) {
+        QBSafelyCallBlock(beginAction, paymentInfo);
         success = YES;
         
         [[XLTXPayManager sharedManager] payWithPaymentInfo:paymentInfo completionHandler:paymentHandler];
@@ -635,6 +702,7 @@ QBDefineLazyPropertyInitialization(QBOrderQueryModel, orderQueryModel)
     
 #ifdef QBPAYMENT_MINGPAY_ENABLED
     if (payType == QBPayTypeMingPay && (subType == QBPaySubTypeWeChat || subType == QBPaySubTypeAlipay)) {
+        QBSafelyCallBlock(beginAction, paymentInfo);
         success = YES;
         
         [[MingPayManager sharedManager] payWithPaymentInfo:paymentInfo completionHandler:paymentHandler];
@@ -643,6 +711,7 @@ QBDefineLazyPropertyInitialization(QBOrderQueryModel, orderQueryModel)
     
 #ifdef QBPAYMENT_WJPAY_ENABLED
     if (payType == QBPayTypeWJPay) {
+        QBSafelyCallBlock(beginAction, paymentInfo);
         success = YES;
         
         [[WJPayManager sharedManager] payWithPaymentInfo:paymentInfo completionHandler:paymentHandler];

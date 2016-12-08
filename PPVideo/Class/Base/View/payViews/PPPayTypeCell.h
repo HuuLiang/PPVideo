@@ -7,12 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <QBOrderInfo.h>
 
 typedef void(^payTypeAction)(void);
 
 @interface PPPayTypeCell : UITableViewCell
 
-@property (nonatomic) QBPaySubType subPayType;
+@property (nonatomic) QBOrderPayType orderPayType;
 
 @property (nonatomic) payTypeAction payAction;
 

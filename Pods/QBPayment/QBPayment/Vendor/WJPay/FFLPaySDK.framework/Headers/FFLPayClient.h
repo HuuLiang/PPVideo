@@ -1,5 +1,5 @@
 //
-//  FFLPaySDK_iOS.h
+//  FFLPaySDK.h
 //  FFLPaySDK-iOS
 //
 //  Created by YIF on 16/11/22.
@@ -37,6 +37,23 @@
  *
  */
 - (NSString*)SDKTypeName;
+
+
+
+/**
+ *  是否输出debug日志信息
+ *
+ *  @param output    YES 输出  NO不输出
+ */
+- (void)SDKLogOuput:(BOOL)output;
+
+/**
+ *  是否使用HTTPS请求接口
+ *
+ *  @param enabled    YES 使用  NO不使用
+ */
+- (void)SDKHttpsEnabled:(BOOL)enabled;
+
 
 
 /**
@@ -95,12 +112,14 @@
 /**
  *  FafaLaPay 支付订单支付状态
  *
- *  @param tradeNo   商户订单号
- *  @param finish    结果回调
+ *  @param tradeNo   商户订单号（必填）
+ *  @param PayTypeId 接口类型（必填）
+ *  @param finish    结果回调 （必填）
  */
 
 -(void)checkOrderStatus:(NSString*)tradeNo
-                     finish:(FFLPayFinishBlock)finish;
+              PayTypeId:(NSString*)PayTypeId
+                 finish:(FFLPayFinishBlock)finish;
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions;
@@ -115,11 +134,9 @@
 - (BOOL)application:(UIApplication *)application
       handleOpenURL:(NSURL *)url;
 
-/*
 - (BOOL)application:(UIApplication *)app
             openURL:(NSURL *)url
             options:(NSDictionary<NSString*, id> *)options NS_AVAILABLE_IOS(9_0);
-*/ 
 
 //需要在AppDelegate 的applicationWillEnterForeground:方法中调用.
 - (void)applicationWillEnterForeground:(UIApplication *)application;

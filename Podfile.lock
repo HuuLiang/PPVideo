@@ -41,30 +41,30 @@ PODS:
   - QBNetworking (0.0.8):
     - AFNetworking (~> 3.1.0)
     - QBExtensions (~> 0.0.3)
-  - QBPayment/Core (43):
+  - QBPayment/Core (47):
     - Aspects (~> 1.4.1)
     - QBExtensions (~> 0.0.6)
     - QBNetworking (~> 0.0.4)
-  - QBPayment/CorePay (43):
+  - QBPayment/CorePay (47):
     - OpenSSL (~> 1.0.208)
-  - QBPayment/CoreUI (43):
+  - QBPayment/CoreUI (47):
     - MBProgressHUD (~> 0.9.2)
-  - QBPayment/IappPay (43):
+  - QBPayment/IappPay (47):
     - QBPayment/Core
     - QBPayment/CorePay
-  - QBPayment/VIAPay (43):
+  - QBPayment/VIAPay (47):
     - QBPayment/Core
     - QBPayment/CorePay
-  - QBPayment/WFTPay (43):
+  - QBPayment/WFTPay (47):
     - MBProgressHUD (~> 0.9.2)
     - QBPayment/Core
     - QBPayment/CorePay
     - XMLReader-Arc (~> 1.1)
-  - QBPayment/WJPay (43):
+  - QBPayment/WJPay (47):
     - QBPayment/Core
     - QBPayment/CoreUI
     - QBPayment/WFTPay
-  - QBPayment/ZhangPay (43):
+  - QBPayment/ZhangPay (47):
     - QBPayment/WFTPay
   - QBStatisticsManager (0.0.5):
     - BlocksKit (~> 2.2.5)
@@ -102,7 +102,7 @@ SPEC CHECKSUMS:
   OpenSSL: b187269d386b07452f56af273764ea0636dd5da8
   QBExtensions: a32e8ae6e371c208e2efe2b2eec7251c36187b90
   QBNetworking: 8fa657e142a09c06056ee34bb9e9084b51e4b8a0
-  QBPayment: bebc517361a35a01dc517202fd69e2afe0c080e9
+  QBPayment: 3ca415a180cf2fb676dc8370b41fde03dd64af8e
   QBStatisticsManager: 9f12ff2198fbddd3705a2b94786415e2b983f7b4
   SDWebImage: 1d2b1a1efda1ade1b00b6f8498865f8ddedc8a84
   SFHFKeychainUtils: 9576b411a79a058f4d5381ace6f3242b9a62e664
@@ -111,4 +111,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 58b78c142cf52f58a594f3997e250be1fc839c6a
 
-COCOAPODS: 1.2.0.beta.1
+COCOAPODS: 1.1.0.rc.2

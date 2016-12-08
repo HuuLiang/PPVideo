@@ -48,14 +48,15 @@
     return self;
 }
 
-- (void)setSubPayType:(QBPaySubType)subPayType {
-    if (subPayType == QBPaySubTypeWeChat) {
+- (void)setOrderPayType:(QBOrderPayType)orderPayType {
+    if (orderPayType == QBOrderPayTypeWeChatPay) {
         [_payButton setTitle:@"微信支付" forState:UIControlStateNormal];
         _payButton.backgroundColor = [UIColor colorWithHexString:@"#72BC22"];
-    } else if (subPayType == QBPaySubTypeAlipay) {
+    } else if (orderPayType == QBOrderPayTypeAlipay) {
         [_payButton setTitle:@"支付宝支付" forState:UIControlStateNormal];
         _payButton.backgroundColor = [UIColor colorWithHexString:@"#4A90E2"];
     }
 }
+
 
 @end

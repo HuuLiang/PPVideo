@@ -19,7 +19,7 @@
     UIImageView     *_commentImgV;
     UILabel         *_commentLabel;
     
-    UIImageView     *_freeTagImgV;
+//    UIImageView     *_freeTagImgV;
 }
 @end
 
@@ -36,8 +36,8 @@
         [self addSubview:_imgV];
         
         
-        _freeTagImgV = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"trail_free_ad"]];
-        [self addSubview:_freeTagImgV];
+//        _freeTagImgV = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"trail_free_ad"]];
+//        [self addSubview:_freeTagImgV];
         
         {
             [_imgV mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -45,10 +45,10 @@
             }];
             
             
-            [_freeTagImgV mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.left.top.equalTo(self);
-                make.size.mas_equalTo(CGSizeMake(kWidth(102), kWidth(102)));
-            }];
+//            [_freeTagImgV mas_makeConstraints:^(MASConstraintMaker *make) {
+//                make.left.top.equalTo(self);
+//                make.size.mas_equalTo(CGSizeMake(kWidth(102), kWidth(102)));
+//            }];
         }
     }
     return self;
