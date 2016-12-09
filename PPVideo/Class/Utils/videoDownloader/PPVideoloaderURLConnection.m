@@ -132,7 +132,7 @@
     }
     
     if (!self.task) {
-        self.task = [[PPVideoRequestTask alloc] initWithFilePath:_filePath];
+        self.task = [[PPVideoRequestTask alloc] initWithProgramId:_programId];
         self.task.delegate = self;
         [self.task setUrl:interceptedURL offset:0];
     } else {

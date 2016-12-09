@@ -60,7 +60,7 @@ QBDefineLazyPropertyInitialization(NSMutableArray, childVCs)
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:kPaidNotificationName object:nil];
+//    [[NSNotificationCenter defaultCenter] removeObserver:self name:kPaidNotificationName object:nil];
 }
 
 - (void)presentWindow:(NSNotification *)notification {

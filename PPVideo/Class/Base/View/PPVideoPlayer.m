@@ -42,22 +42,22 @@
     if (self) {
         _videoURL = videoURL;
         
-        _loadingLabel = [[UILabel alloc] init];
-        _loadingLabel.text = @"加载中...";
-        _loadingLabel.textColor = [UIColor whiteColor];
-        _loadingLabel.font = [UIFont systemFontOfSize:14.];
-        [self addSubview:_loadingLabel];
-        {
-            [_loadingLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.center.equalTo(self);
-            }];
-        }
-        
+//        _loadingLabel = [[UILabel alloc] init];
+//        _loadingLabel.text = @"加载中...";
+//        _loadingLabel.textColor = [UIColor whiteColor];
+//        _loadingLabel.font = [UIFont systemFontOfSize:14.];
+//        [self addSubview:_loadingLabel];
+//        {
+//            [_loadingLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+//                make.center.equalTo(self);
+//            }];
+//        }
+//        
 //        self.player = [AVPlayer playerWithURL:videoURL];
         //如果是ios  < 7 或者是本地资源，直接播放
         if (kIOS_VERSION < 7.0 || isLocalFile) {
             self.videoAsset  = [AVURLAsset URLAssetWithURL:videoURL options:nil];
-            self.currentPlayerItem          = [AVPlayerItem playerItemWithAsset:_videoAsset];
+            self.currentPlayerItem          = [AVPlayerItem playerItemWithAsset:self.videoAsset];
             if (!self.player) {
                 self.player = [AVPlayer playerWithPlayerItem:self.currentPlayerItem];
             } else {

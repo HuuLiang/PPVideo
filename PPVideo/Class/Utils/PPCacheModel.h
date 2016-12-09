@@ -43,5 +43,5 @@
 
 + (BOOL)checkLocalProgramVideoCacheIsDownloading:(NSInteger)programId;
 + (NSString *)getLocalProgramVideoPath:(NSInteger)programId;
-
++ (void)setSuccessTagWithProgramId:(NSInteger)programId;
 @end

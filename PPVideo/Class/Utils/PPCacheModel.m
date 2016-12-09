@@ -152,7 +152,7 @@ static NSString *const kSystemConfigKeyName       = @"PP_SystemConfig_KeyName";
     if (programId == NSNotFound) {
         return nil;
     }
-    PPCacheModel *model = [self findFirstByCriteria:[NSString stringWithFormat:@"WHERE programId=%ld",programId]];
+    PPCacheModel *model = [self findFirstByCriteria:[NSString stringWithFormat:@"WHERE programVideoCacheId=%ld",programId]];
     if (!model) {
         model = [[PPCacheModel alloc] init];
         model.programVideoCacheId = programId;
@@ -169,7 +169,7 @@ static NSString *const kSystemConfigKeyName       = @"PP_SystemConfig_KeyName";
     if (programId == NSNotFound) {
         return nil;
     }
-    PPCacheModel *model = [self findFirstByCriteria:[NSString stringWithFormat:@"WHERE programId=%ld",programId]];
+    PPCacheModel *model = [self findFirstByCriteria:[NSString stringWithFormat:@"WHERE programVideoCacheId=%ld",programId]];
     if (!model) {
         model = [[PPCacheModel alloc] init];
         model.programVideoCacheId = programId;
@@ -182,5 +182,13 @@ static NSString *const kSystemConfigKeyName       = @"PP_SystemConfig_KeyName";
     return model.videoCacheFilePath;
 }
 
++ (void)setSuccessTagWithProgramId:(NSInteger)programId {
+    if (programId == NSNotFound) {
+        return ;
+    }
+    PPCacheModel *model = [self findFirstByCriteria:[NSString stringWithFormat:@"WHERE programVideoCacheId=%ld",programId]];
+    model.isDownloading = YES;
+    [model saveOrUpdate];
+}
 
 @end

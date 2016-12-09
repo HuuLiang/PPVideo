@@ -34,7 +34,7 @@
         _videoUrl = videoUrl;
         _vipLevel = vipLevel;
         _programId = programId;
-        isLocalFile = isLocalFile;
+        _isLocalFile = isLocalFile;
         _hasTimeControl = ([PPUtil currentVipLevel] == PPVipLevelVipC) ? NO : hasTimeControl;
     }
     return self;

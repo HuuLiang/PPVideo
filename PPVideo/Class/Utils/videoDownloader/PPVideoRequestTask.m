@@ -160,6 +160,7 @@
         BOOL isSuccess = [[NSFileManager defaultManager] copyItemAtPath:_tempPath toPath:[PPCacheModel getLocalProgramVideoPath:_programId] error:nil];
         if (isSuccess) {
             NSLog(@"rename success");
+            [PPCacheModel setSuccessTagWithProgramId:_programId];
         }else{
             NSLog(@"rename fail");
         }
