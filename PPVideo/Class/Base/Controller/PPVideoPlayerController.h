@@ -12,7 +12,7 @@
 @interface PPVideoPlayerController : PPBaseViewController
 @property (nonatomic) NSString *videoUrl;
 
-- (instancetype)initWithVideo:(NSString *)videoUrl forVipLevel:(PPVipLevel)vipLevel hasTimeControl:(BOOL)hasTimeControl;
+- (instancetype)initWithProgramId:(NSInteger)programId Video:(NSString *)videoUrl forVipLevel:(PPVipLevel)vipLevel hasTimeControl:(BOOL)hasTimeControl isLocalFileCache:(BOOL)isLocalFile;
 
 @property (nonatomic,retain)QBBaseModel *baseModel;
 

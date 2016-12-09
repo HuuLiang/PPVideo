@@ -13,7 +13,7 @@
 #import "PPDetailModel.h"
 #import "PPSystemConfigModel.h"
 
-@interface PPCacheModel : NSObject
+@interface PPCacheModel : JKDBModel
 
 +(NSArray <PPColumnModel *>*)getTrailCache;
 +(void)updateTrailCacheWithColumnInfo:(NSArray <PPColumnModel *>*)columnList;
@@ -35,4 +35,13 @@
 
 +(PPSystemConfigModel *)getSystemConfigModelInfo;
 +(void)updateSystemConfigModelWithSystemConfigModel:(PPSystemConfigModel *)systemConfigModel;
+
+//视频缓存
+@property (nonatomic) NSInteger programVideoCacheId;
+@property (nonatomic) NSString *videoCacheFilePath;
+@property (nonatomic) BOOL      isDownloading;
+
++ (BOOL)checkLocalProgramVideoCacheIsDownloading:(NSInteger)programId;
++ (NSString *)getLocalProgramVideoPath:(NSInteger)programId;
+
 @end

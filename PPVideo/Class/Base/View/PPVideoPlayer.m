@@ -7,16 +7,20 @@
 //
 
 #import "PPVideoPlayer.h"
+#import "PPVideoloaderURLConnection.h"
 
 @import AVFoundation;
 
-@interface PPVideoPlayer ()
+@interface PPVideoPlayer () <PPVideoloaderURLConnectionDelegate>
 {
     UILabel *_loadingLabel;
     PPVipLevel _vipLevel;
 }
+@property (nonatomic, strong) AVURLAsset     *videoURLAsset;
+@property (nonatomic, strong) AVAsset        *videoAsset;
+@property (nonatomic, strong) PPVideoloaderURLConnection *resouerLoader;
+@property (nonatomic, strong) AVPlayerItem   *currentPlayerItem;
 @property (nonatomic,retain) AVPlayer *player;
-
 @end
 
 @implementation PPVideoPlayer
@@ -33,7 +37,7 @@
     [(AVPlayerLayer *)[self layer] setPlayer:player];
 }
 
-- (instancetype)initWithVideoURL:(NSURL *)videoURL forVipLevel:(PPVipLevel)vipLevel hasTimeControl:(BOOL)hasTimeControl {
+- (instancetype)initWithProgramId:(NSInteger)programId VideoURL:(NSURL *)videoURL forVipLevel:(PPVipLevel)vipLevel hasTimeControl:(BOOL)hasTimeControl isLocalFile:(BOOL)isLocalFile {
     self = [self init];
     if (self) {
         _videoURL = videoURL;
@@ -49,7 +53,39 @@
             }];
         }
         
-        self.player = [AVPlayer playerWithURL:videoURL];
+//        self.player = [AVPlayer playerWithURL:videoURL];
+        //如果是ios  < 7 或者是本地资源，直接播放
+        if (kIOS_VERSION < 7.0 || isLocalFile) {
+            self.videoAsset  = [AVURLAsset URLAssetWithURL:videoURL options:nil];
+            self.currentPlayerItem          = [AVPlayerItem playerItemWithAsset:_videoAsset];
+            if (!self.player) {
+                self.player = [AVPlayer playerWithPlayerItem:self.currentPlayerItem];
+            } else {
+                [self.player replaceCurrentItemWithPlayerItem:self.currentPlayerItem];
+            }
+//            self.currentPlayerLayer       = [AVPlayerLayer playerLayerWithPlayer:self.player];
+//            self.currentPlayerLayer.frame = CGRectMake(0, 44, showView.bounds.size.width, showView.bounds.size.height-44);
+//            _isLocalVideo = YES;
+            
+        } else {   //ios7以上采用resourceLoader给播放器补充数据
+            self.resouerLoader          = [[PPVideoloaderURLConnection alloc] initWithProgramId:programId];
+            self.resouerLoader.delegate = self;
+            NSURL *playUrl              = [_resouerLoader getSchemeVideoURL:videoURL];
+            self.videoURLAsset             = [AVURLAsset URLAssetWithURL:playUrl options:nil];
+            [_videoURLAsset.resourceLoader setDelegate:_resouerLoader queue:dispatch_get_main_queue()];
+            self.currentPlayerItem          = [AVPlayerItem playerItemWithAsset:_videoURLAsset];
+            
+            if (!self.player) {
+                self.player = [AVPlayer playerWithPlayerItem:self.currentPlayerItem];
+            } else {
+                [self.player replaceCurrentItemWithPlayerItem:self.currentPlayerItem];
+            }
+//            self.currentPlayerLayer       = [AVPlayerLayer playerLayerWithPlayer:self.player];
+//            self.currentPlayerLayer.frame = CGRectMake(0, 44, showView.bounds.size.width, showView.bounds.size.height-44);
+//            _isLocalVideo = NO;
+        }
+        
+        
         [self.player addObserver:self forKeyPath:@"status" options:0 context:nil];
         @weakify(self);
         [self.player addPeriodicTimeObserverForInterval:CMTimeMake(1.0, 1.0) queue:dispatch_get_global_queue(0, 0) usingBlock:^(CMTime time) {

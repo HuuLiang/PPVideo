@@ -12,7 +12,7 @@ typedef void(^refreshPlaySlider)(CGFloat percent);
 
 @interface PPVideoPlayer : UIView
 @property (nonatomic) NSURL *videoURL;
-- (instancetype)initWithVideoURL:(NSURL *)videoURL forVipLevel:(PPVipLevel)vipLevel hasTimeControl:(BOOL)hasTimeControl;
+- (instancetype)initWithProgramId:(NSInteger)programId VideoURL:(NSURL *)videoURL forVipLevel:(PPVipLevel)vipLevel hasTimeControl:(BOOL)hasTimeControl isLocalFile:(BOOL)isLocalFile;
 - (void)startToPlay;
 - (void)pause;
 @property (nonatomic,copy) QBAction endPlayAction;

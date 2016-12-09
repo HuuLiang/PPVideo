@@ -16,6 +16,9 @@
     UIButton *_closeButton;
     PPVipLevel _vipLevel;
     BOOL _hasTimeControl;
+    BOOL _isLocalFile;
+    NSInteger _programId;
+    
     UISlider *_slider;
     UIButton *_pauseBtn;
     UILabel *_notiLabel;
@@ -25,12 +28,14 @@
 
 @implementation PPVideoPlayerController
 
-- (instancetype)initWithVideo:(NSString *)videoUrl forVipLevel:(PPVipLevel)vipLevel hasTimeControl:(BOOL)hasTimeControl{
+- (instancetype)initWithProgramId:(NSInteger)programId Video:(NSString *)videoUrl forVipLevel:(PPVipLevel)vipLevel hasTimeControl:(BOOL)hasTimeControl isLocalFileCache:(BOOL)isLocalFile{
     self = [self init];
     if (self) {
         _videoUrl = videoUrl;
         _vipLevel = vipLevel;
-        _hasTimeControl = hasTimeControl;
+        _programId = programId;
+        isLocalFile = isLocalFile;
+        _hasTimeControl = ([PPUtil currentVipLevel] == PPVipLevelVipC) ? NO : hasTimeControl;
     }
     return self;
 }
@@ -55,12 +60,15 @@
         [self->_videoPlayer pause];
         [self dismissViewControllerAnimated:YES completion:nil];
     } forControlEvents:UIControlEventTouchUpInside];
-    
-    [self loadVideo:[NSURL URLWithString:[[PPVideoTokenManager sharedManager]videoLinkWithOriginalLink:_videoUrl]]];
+    if (_isLocalFile) {
+        [self loadVideo:[NSURL URLWithString:_videoUrl]];
+    } else {
+        [self loadVideo:[NSURL URLWithString:[[PPVideoTokenManager sharedManager]videoLinkWithOriginalLink:_videoUrl]]];
+    }
 }
 
 - (void)loadVideo:(NSURL *)videoUrl {
-    _videoPlayer = [[PPVideoPlayer alloc] initWithVideoURL:videoUrl forVipLevel:_vipLevel hasTimeControl:_hasTimeControl];
+    _videoPlayer = [[PPVideoPlayer alloc] initWithProgramId:_programId VideoURL:videoUrl forVipLevel:_vipLevel hasTimeControl:_hasTimeControl isLocalFile:_isLocalFile];
     [self.view insertSubview:_videoPlayer atIndex:0];
     {
         [_videoPlayer mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -95,8 +103,6 @@
             make.bottom.equalTo(_slider.mas_top).offset(-kWidth(30));
             make.size.mas_equalTo(CGSizeMake(kWidth(40), kWidth(40)));
         }];
-        
-
     }
     
     @weakify(self);

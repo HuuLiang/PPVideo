@@ -134,7 +134,6 @@ QBDefineLazyPropertyInitialization(QBBaseModel, baseModel)
     if (paymentInfo.orderId != nil) {
         [[QBStatsManager sharedManager] statsPayWithPaymentInfo:paymentInfo forPayAction:QBStatsPayActionPayBack andTabIndex:[PPUtil currentTabPageIndex] subTabIndex:[PPUtil currentSubTabPageIndex]];
     }
-
 }
 
 #pragma mark - system

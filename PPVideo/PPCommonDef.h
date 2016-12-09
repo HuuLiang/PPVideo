@@ -40,6 +40,8 @@ typedef NS_ENUM(NSInteger ,PPVipLevel) {
 #define KTimeFormatLong                   @"yyyyMMddHHmmss"
 #define kWidth(width)                     kScreenWidth  * width  / 750
 #define kHeight(height)                   kScreenHeight * height / 1334.
+#define kIOS_VERSION  ([[[UIDevice currentDevice] systemVersion] floatValue])
+
 
 #define PP_SYSTEM_CONTACT_NAME_1          @"CONTACT_NAME_1"
 #define PP_SYSTEM_CONTACT_NAME_2          @"CONTACT_NAME_2"

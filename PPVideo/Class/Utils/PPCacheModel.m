@@ -146,4 +146,41 @@ static NSString *const kSystemConfigKeyName       = @"PP_SystemConfig_KeyName";
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
+#pragma mark -- VideoCache
+
++ (BOOL)checkLocalProgramVideoCacheIsDownloading:(NSInteger)programId {
+    if (programId == NSNotFound) {
+        return nil;
+    }
+    PPCacheModel *model = [self findFirstByCriteria:[NSString stringWithFormat:@"WHERE programId=%ld",programId]];
+    if (!model) {
+        model = [[PPCacheModel alloc] init];
+        model.programVideoCacheId = programId;
+        NSString *document = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).lastObject;
+        NSString *programVideoPath = [document stringByAppendingPathComponent:[NSString stringWithFormat:@"%ld.mp4",programId]];
+        model.videoCacheFilePath = programVideoPath;
+        model.isDownloading = NO;
+        [model saveOrUpdate];
+    }
+    return model.isDownloading;
+}
+
++ (NSString *)getLocalProgramVideoPath:(NSInteger)programId {
+    if (programId == NSNotFound) {
+        return nil;
+    }
+    PPCacheModel *model = [self findFirstByCriteria:[NSString stringWithFormat:@"WHERE programId=%ld",programId]];
+    if (!model) {
+        model = [[PPCacheModel alloc] init];
+        model.programVideoCacheId = programId;
+        NSString *document = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).lastObject;
+        NSString *programVideoPath = [document stringByAppendingPathComponent:[NSString stringWithFormat:@"%ld.mp4",programId]];
+        model.videoCacheFilePath = programVideoPath;
+        model.isDownloading = NO;
+        [model saveOrUpdate];
+    }
+    return model.videoCacheFilePath;
+}
+
+
 @end

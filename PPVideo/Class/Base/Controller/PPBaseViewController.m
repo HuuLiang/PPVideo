@@ -16,6 +16,7 @@
 #import <AVFoundation/AVPlayer.h>
 #import <AVKit/AVKit.h>
 #import <MediaPlayer/MediaPlayer.h>
+#import "PPCacheModel.h"
 
 @interface PPBaseViewController ()
 @property (nonatomic,weak) UIButton *refreshBtn;
@@ -87,76 +88,71 @@
 - (void)playVideoWithUrl:(PPProgramModel *)programModel baseModel:(QBBaseModel *)baseModel vipLevel:(PPVipLevel)vipLevel hasTomeControl:(BOOL)hasTomeControl {
     [[QBStatsManager sharedManager] statsCPCWithBaseModel:baseModel andTabIndex:[PPUtil currentTabPageIndex] subTabIndex:[PPUtil currentSubTabPageIndex]];
     
-    @weakify(self);
-    [[PPVideoTokenManager sharedManager] requestTokenWithCompletionHandler:^(BOOL success, NSString *token, NSString *userId) {
-        @strongify(self);
-        if (!self) {
-            return ;
-        }
-        [self.view endProgressing];
-        
-#ifdef DEBUG
-//        [UIAlertView bk_showAlertViewWithTitle:@"视频链接" message:[[PPVideoTokenManager sharedManager] videoLinkWithOriginalLink:programModel.videoUrl] cancelButtonTitle:@"确定" otherButtonTitles:nil handler:nil];
-#endif
-        if (success) {
-            if ([PPUtil currentVipLevel] == PPVipLevelVipC) {
-                UIViewController *videoPlayVC = [self playerVCWithVideo:[[PPVideoTokenManager sharedManager] videoLinkWithOriginalLink:programModel.videoUrl]];
-                videoPlayVC.hidesBottomBarWhenPushed = YES;
-                [self presentViewController:videoPlayVC animated:YES completion:nil];
-            } else {
-                @weakify(self);
-                PPVideoPlayerController *videoVC = [[PPVideoPlayerController alloc] initWithVideo:programModel.videoUrl forVipLevel:vipLevel hasTimeControl:hasTomeControl];
-                videoVC.baseModel = baseModel;
-                videoVC.popPayView = ^ (id obj) {
-                    @strongify(self);
-                    [UIAlertView bk_showAlertViewWithTitle:nil
-                                                   message:[PPUtil notiAlertStrWithCurrentVipLevel]
-                                         cancelButtonTitle:@"取消"
-                                         otherButtonTitles:@[@"确认"]
-                                                   handler:^(UIAlertView *alertView, NSInteger buttonIndex)
-                     {
-                         @strongify(self);
-                         if (buttonIndex == 1) {
-                             [self presentPayViewControllerWithBaseModel:baseModel];
-                         }
-                     }];
-                };
-                [self presentViewController:videoVC animated:YES completion:nil];
+    if ([PPCacheModel checkLocalProgramVideoCacheIsDownloading:programModel.programId]) {
+        [self pushVideoPlayControllerWithProgramId:programModel.programId
+                                         baseModel:baseModel
+                                          VideoUrl:[PPCacheModel getLocalProgramVideoPath:programModel.programId]
+                                          vipLevel:vipLevel
+                                    hasTimeControl:hasTomeControl
+                                       isLocalFile:YES];
+    } else {
+        @weakify(self);
+        [[PPVideoTokenManager sharedManager] requestTokenWithCompletionHandler:^(BOOL success, NSString *token, NSString *userId) {
+            @strongify(self);
+            if (!self) {
+                return ;
             }
-        } else {
-            [UIAlertView bk_showAlertViewWithTitle:@"无法获取视频信息" message:nil cancelButtonTitle:@"确定" otherButtonTitles:nil handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
-            }];
-        }
-    }];
+            [self.view endProgressing];
+#ifdef DEBUG
+            [UIAlertView bk_showAlertViewWithTitle:@"视频链接"
+                                           message:[[PPVideoTokenManager sharedManager] videoLinkWithOriginalLink:programModel.videoUrl]
+                                 cancelButtonTitle:@"确定"
+                                 otherButtonTitles:nil handler:nil];
+#endif
+            if (success) {
+                [self pushVideoPlayControllerWithProgramId:programModel.programId
+                                                 baseModel:baseModel
+                                                  VideoUrl:programModel.videoUrl
+                                                  vipLevel:vipLevel
+                                            hasTimeControl:hasTomeControl
+                                               isLocalFile:NO];
+            } else {
+                [UIAlertView bk_showAlertViewWithTitle:@"无法获取视频信息" message:nil cancelButtonTitle:@"确定" otherButtonTitles:nil handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
+                }];
+            }
+        }];
+    }
 }
 
-- (UIViewController *)playerVCWithVideo:(NSString *)videoUrl {
-    UIViewController *retVC;
-    if (NSClassFromString(@"AVPlayerViewController")) {
-        AVPlayerViewController *playerVC = [[AVPlayerViewController alloc] init];
-        playerVC.player = [[AVPlayer alloc] initWithURL:[NSURL URLWithString:videoUrl]];
-        [playerVC aspect_hookSelector:@selector(viewDidAppear:)
-                          withOptions:AspectPositionAfter
-                           usingBlock:^(id<AspectInfo> aspectInfo){
-                               AVPlayerViewController *thisPlayerVC = [aspectInfo instance];
-                               [thisPlayerVC.player play];
-                           } error:nil];
-        
-        retVC = playerVC;
-    } else {
-        retVC = [[MPMoviePlayerViewController alloc] initWithContentURL:[NSURL URLWithString:videoUrl]];
-    }
-    
-    [retVC aspect_hookSelector:@selector(supportedInterfaceOrientations) withOptions:AspectPositionInstead usingBlock:^(id<AspectInfo> aspectInfo){
-        UIInterfaceOrientationMask mask = UIInterfaceOrientationMaskAll;
-        [[aspectInfo originalInvocation] setReturnValue:&mask];
-    } error:nil];
-    
-    [retVC aspect_hookSelector:@selector(shouldAutorotate) withOptions:AspectPositionInstead usingBlock:^(id<AspectInfo> aspectInfo){
-        BOOL rotate = YES;
-        [[aspectInfo originalInvocation] setReturnValue:&rotate];
-    } error:nil];
-    return retVC;
+- (void)pushVideoPlayControllerWithProgramId:(NSInteger)programId
+                                   baseModel:(QBBaseModel *)baseModel
+                                    VideoUrl:(NSString *)videoUrl
+                                    vipLevel:(PPVipLevel)vipLevel
+                              hasTimeControl:(BOOL)hasTimeControl
+                                 isLocalFile:(BOOL)isLocalFile
+{
+    @weakify(self);
+    PPVideoPlayerController *videoVC = [[PPVideoPlayerController alloc] initWithProgramId:programId
+                                                                                    Video:videoUrl
+                                                                              forVipLevel:vipLevel
+                                                                           hasTimeControl:hasTimeControl
+                                                                         isLocalFileCache:isLocalFile];
+    videoVC.baseModel = baseModel;
+    videoVC.popPayView = ^ (id obj) {
+        @strongify(self);
+        [UIAlertView bk_showAlertViewWithTitle:nil
+                                       message:[PPUtil notiAlertStrWithCurrentVipLevel]
+                             cancelButtonTitle:@"取消"
+                             otherButtonTitles:@[@"确认"]
+                                       handler:^(UIAlertView *alertView, NSInteger buttonIndex)
+         {
+             @strongify(self);
+             if (buttonIndex == 1) {
+                 [self presentPayViewControllerWithBaseModel:baseModel];
+             }
+         }];
+    };
+    [self presentViewController:videoVC animated:YES completion:nil];
 }
 
 #pragma mark - refreshButton
