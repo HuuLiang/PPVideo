@@ -61,7 +61,7 @@
         [self dismissViewControllerAnimated:YES completion:nil];
     } forControlEvents:UIControlEventTouchUpInside];
     if (_isLocalFile) {
-        [self loadVideo:[NSURL URLWithString:_videoUrl]];
+        [self loadVideo:[NSURL fileURLWithPath:_videoUrl]];
     } else {
         [self loadVideo:[NSURL URLWithString:[[PPVideoTokenManager sharedManager]videoLinkWithOriginalLink:_videoUrl]]];
     }

@@ -148,7 +148,7 @@ static NSString *const kSystemConfigKeyName       = @"PP_SystemConfig_KeyName";
 
 #pragma mark -- VideoCache
 
-+ (BOOL)checkLocalProgramVideoCacheIsDownloading:(NSInteger)programId {
++ (BOOL)checkLocalProgramVideoCacheIsDownloading:(NSInteger)programId videoUrl:(NSString *)videoUrlStr {
     if (programId == NSNotFound) {
         return nil;
     }
@@ -160,8 +160,15 @@ static NSString *const kSystemConfigKeyName       = @"PP_SystemConfig_KeyName";
         NSString *programVideoPath = [document stringByAppendingPathComponent:[NSString stringWithFormat:@"%ld.mp4",programId]];
         model.videoCacheFilePath = programVideoPath;
         model.isDownloading = NO;
-        [model saveOrUpdate];
     }
+    model.isDownloading = [model.videoUrlStr isEqualToString:videoUrlStr];
+    
+    //如果videoUrlStr判断为NO 说明这个programid对应的视频数据已经更新 需要重新下载新的视频数据
+    if (!model.isDownloading) {
+        model.videoUrlStr = videoUrlStr;
+    }
+    [model saveOrUpdate];
+
     return model.isDownloading;
 }
 
@@ -173,16 +180,16 @@ static NSString *const kSystemConfigKeyName       = @"PP_SystemConfig_KeyName";
     if (!model) {
         model = [[PPCacheModel alloc] init];
         model.programVideoCacheId = programId;
-        NSString *document = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).lastObject;
-        NSString *programVideoPath = [document stringByAppendingPathComponent:[NSString stringWithFormat:@"%ld.mp4",programId]];
-        model.videoCacheFilePath = programVideoPath;
         model.isDownloading = NO;
         [model saveOrUpdate];
     }
+    NSString *document = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).lastObject;
+    NSString *programVideoPath = [document stringByAppendingPathComponent:[NSString stringWithFormat:@"%ld.mp4",programId]];
+    model.videoCacheFilePath = programVideoPath;
     return model.videoCacheFilePath;
 }
 
-+ (void)setSuccessTagWithProgramId:(NSInteger)programId {
++ (void)setSuccessTagWithProgramId:(NSInteger)programId{
     if (programId == NSNotFound) {
         return ;
     }

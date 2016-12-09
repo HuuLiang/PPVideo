@@ -117,7 +117,7 @@
 {
     [self.pendingRequests addObject:loadingRequest];
     [self dealWithLoadingRequest:loadingRequest];
-    NSLog(@"----%@", loadingRequest);
+//    NSLog(@"----%@", loadingRequest);
     return YES;
 }
 

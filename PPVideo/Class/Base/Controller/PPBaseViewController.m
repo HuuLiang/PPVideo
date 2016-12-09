@@ -88,7 +88,7 @@
 - (void)playVideoWithUrl:(PPProgramModel *)programModel baseModel:(QBBaseModel *)baseModel vipLevel:(PPVipLevel)vipLevel hasTomeControl:(BOOL)hasTomeControl {
     [[QBStatsManager sharedManager] statsCPCWithBaseModel:baseModel andTabIndex:[PPUtil currentTabPageIndex] subTabIndex:[PPUtil currentSubTabPageIndex]];
     
-    if ([PPCacheModel checkLocalProgramVideoCacheIsDownloading:programModel.programId]) {
+    if ([PPCacheModel checkLocalProgramVideoCacheIsDownloading:programModel.programId videoUrl:programModel.videoUrl]) {
         [self pushVideoPlayControllerWithProgramId:programModel.programId
                                          baseModel:baseModel
                                           VideoUrl:[PPCacheModel getLocalProgramVideoPath:programModel.programId]
@@ -104,10 +104,10 @@
             }
             [self.view endProgressing];
 #ifdef DEBUG
-            [UIAlertView bk_showAlertViewWithTitle:@"视频链接"
-                                           message:[[PPVideoTokenManager sharedManager] videoLinkWithOriginalLink:programModel.videoUrl]
-                                 cancelButtonTitle:@"确定"
-                                 otherButtonTitles:nil handler:nil];
+//            [UIAlertView bk_showAlertViewWithTitle:@"视频链接"
+//                                           message:[[PPVideoTokenManager sharedManager] videoLinkWithOriginalLink:programModel.videoUrl]
+//                                 cancelButtonTitle:@"确定"
+//                                 otherButtonTitles:nil handler:nil];
 #endif
             if (success) {
                 [self pushVideoPlayControllerWithProgramId:programModel.programId

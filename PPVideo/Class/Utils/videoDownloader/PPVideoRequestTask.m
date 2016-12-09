@@ -154,8 +154,6 @@
         _isFinishLoad = YES;
         
         //这里自己写需要保存数据的路径
-//        NSString *document = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).lastObject;
-//        NSString *movePath =  [document stringByAppendingPathComponent:@"保存数据.mp4"];
         
         BOOL isSuccess = [[NSFileManager defaultManager] copyItemAtPath:_tempPath toPath:[PPCacheModel getLocalProgramVideoPath:_programId] error:nil];
         if (isSuccess) {
@@ -164,7 +162,6 @@
         }else{
             NSLog(@"rename fail");
         }
-        
     }
     
     if ([self.delegate respondsToSelector:@selector(didFinishLoadingWithTask:)]) {

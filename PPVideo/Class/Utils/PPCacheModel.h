@@ -39,9 +39,10 @@
 //视频缓存
 @property (nonatomic) NSInteger programVideoCacheId;
 @property (nonatomic) NSString *videoCacheFilePath;
+@property (nonatomic) NSString *videoUrlStr;
 @property (nonatomic) BOOL      isDownloading;
 
-+ (BOOL)checkLocalProgramVideoCacheIsDownloading:(NSInteger)programId;
++ (BOOL)checkLocalProgramVideoCacheIsDownloading:(NSInteger)programId videoUrl:(NSString *)videoUrlStr;
 + (NSString *)getLocalProgramVideoPath:(NSInteger)programId;
 + (void)setSuccessTagWithProgramId:(NSInteger)programId;
 @end
