@@ -173,17 +173,26 @@ static NSString *const kAliPaySchemeUrl = @"paoPaoYingyuanAliPayUrlScheme";
 //    configDetails.htpayConfig = htpayConfig;
     
     //无极默认配置
-    QBWJPayConfig *wjPayConfig = [[QBWJPayConfig alloc] init];
-    wjPayConfig.mchId = @"50000009";
-    wjPayConfig.notifyUrl = @"http://phas.zcqcmj.com/pd-has/notifyWujism.json";
-    wjPayConfig.signKey = @"B0C65DF81AA7EA85";
-    configDetails.wjPayConfig = wjPayConfig;
+//    QBWJPayConfig *wjPayConfig = [[QBWJPayConfig alloc] init];
+//    wjPayConfig.mchId = @"50000009";
+//    wjPayConfig.notifyUrl = @"http://phas.zcqcmj.com/pd-has/notifyWujism.json";
+//    wjPayConfig.signKey = @"B0C65DF81AA7EA85";
+//    configDetails.wjPayConfig = wjPayConfig;
+    
+    //萌乐游
+    QBZhangPayConfig *zhangPayConfig = [[QBZhangPayConfig alloc] init];
+    zhangPayConfig.appid = @"wx3ec6aaf9bdd25d44";
+    zhangPayConfig.key = @"bc1a56fc75dfb0c89631a8598189f3bf";
+    zhangPayConfig.mchId = @"102580055502";
+    zhangPayConfig.notifyUrl = @"http://phas.zcqcmj.com/pd-has/notifyMly.json";
+    configDetails.zhangPayConfig = zhangPayConfig;
     
     //支付方式
     QBPaymentConfigSummary *payConfig = [[QBPaymentConfigSummary alloc] init];
     payConfig.alipay = @"IAPPPAY";
 //    payConfig.wechat = @"HTPay";
-    payConfig.wechat = @"WUJI";
+//    payConfig.wechat = @"WUJI";
+    payConfig.wechat = @"MLY";
     
     config.configDetails = configDetails;
     config.payConfig = payConfig;
