@@ -108,9 +108,7 @@
     @weakify(self);
     _videoPlayer.endPlayAction = ^(id obj) {
         @strongify(self);
-        [self dismissViewControllerAnimated:YES completion:^{
-            [self dismissAndPopPayment];
-        }];
+        [self dismissViewControllerAnimated:YES completion:nil];
     };
     
     _videoPlayer.notiEndAction = ^(id obj) {
