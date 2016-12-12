@@ -56,6 +56,10 @@ static NSString *const kPPVideoHotTagsKeyName           = @"PP_HotTags_KeyName";
     return [PPHotReponse class];
 }
 
+- (NSTimeInterval)requestTimeInterval {
+    return [PPSystemConfigModel sharedModel].timeoutInterval;
+}
+
 - (BOOL)fetchHotInfoWithCompletionHandler:(QBCompletionHandler)handler {
     @weakify(self);
     BOOL success = [self requestURLPath:PP_HOT_URL

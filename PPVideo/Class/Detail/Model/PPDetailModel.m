@@ -132,6 +132,10 @@ static NSString *const kPPVideoDetailProgramUrlListKeyName              = @"PP_D
     return [PPDetailResponse class];
 }
 
+- (NSTimeInterval)requestTimeInterval {
+    return [PPSystemConfigModel sharedModel].timeoutInterval;
+}
+
 - (BOOL)fetchDetailInfoWithColumnId:(NSNumber *)columnId ProgramId:(NSNumber *)programId CompletionHandler:(QBCompletionHandler)handler {
     NSDictionary *params = @{@"columnId":columnId,
                              @"programId":programId};

@@ -26,6 +26,10 @@
     return [PPSearchResponse class];
 }
 
+- (NSTimeInterval)requestTimeInterval {
+    return [PPSystemConfigModel sharedModel].timeoutInterval;
+}
+
 - (BOOL)fetchSearchInfoWithTagStr:(NSString *)tagStr CompletionHandler:(QBCompletionHandler)handler {
     NSDictionary *params = @{@"word":tagStr,
                            @"searchTag":@(1)};

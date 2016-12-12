@@ -14,6 +14,10 @@
     return [PPColumnModel class];
 }
 
+- (NSTimeInterval)requestTimeInterval {
+    return [PPSystemConfigModel sharedModel].timeoutInterval;
+}
+
 - (BOOL)fetchVipInfoWithVipLevel:(PPVipLevel)vipLevel CompletionHandler:(QBCompletionHandler)handler {
     NSString *urlStr = nil;
     if (vipLevel == PPVipLevelVipA) {

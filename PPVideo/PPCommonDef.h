@@ -55,6 +55,7 @@ typedef NS_ENUM(NSInteger ,PPVipLevel) {
 #define PP_SYSTEM_PAY_AMOUNT              @"PAY_AMOUNT"
 #define PP_SYSTEM_BAIDUYU_CODE            @"BAIDUYU_CODE"
 #define PP_SYSTEM_BAIDUYU_URL             @"BAIDUYU_URL"
+#define PP_SYSTEM_TIMEOUT_URL             @"TIME_OUT"
 
 //#define PP_SYSTEM_MINE_IMG                @"MINE_IMG"
 //#define PP_SYSTEM_SVIP_PAY_AMOUNT         @"SVIP_PAY_AMOUNT"

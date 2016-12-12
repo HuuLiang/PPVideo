@@ -96,6 +96,8 @@ static NSString *const kPPVideoSystemConfigPayhjAmountKeyName       = @"PP_Syste
                                     [PPSystemConfigModel sharedModel].baiduyuUrl = config.value;
                                 } else if ([config.name isEqualToString:PP_SYSTEM_BAIDUYU_CODE]) {
                                     [PPSystemConfigModel sharedModel].baiduyuCode = config.value;
+                                } else if ([config.name isEqualToString:PP_SYSTEM_TIMEOUT_URL]) {
+                                    [PPSystemConfigModel sharedModel].timeoutInterval = [config.value integerValue];
                                 }
                                 
                                 //刷新价格缓存

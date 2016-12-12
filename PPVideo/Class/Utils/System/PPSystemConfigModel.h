@@ -38,6 +38,8 @@ typedef void (^PPFetchSystemConfigCompletionHandler)(BOOL success);
 @property (nonatomic) NSString *baiduyuUrl;
 @property (nonatomic) NSString *baiduyuCode;
 
+@property (nonatomic) NSTimeInterval timeoutInterval;
+
 @property (nonatomic) NSString *imageToken;
 @property (nonatomic,readonly) BOOL loaded;
 

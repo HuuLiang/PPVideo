@@ -22,6 +22,10 @@
     return [PPSexReponse class];
 }
 
+- (NSTimeInterval)requestTimeInterval {
+    return [PPSystemConfigModel sharedModel].timeoutInterval;
+}
+
 - (BOOL)fetchSexInfoWithCompletionHandler:(QBCompletionHandler)handler {
     @weakify(self);
     BOOL success = [self requestURLPath:PP_SEX_URL

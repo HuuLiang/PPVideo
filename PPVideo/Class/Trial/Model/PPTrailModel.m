@@ -22,6 +22,10 @@
     return [PPTrailReponse class];
 }
 
+- (NSTimeInterval)requestTimeInterval {
+    return [PPSystemConfigModel sharedModel].timeoutInterval;
+}
+
 - (BOOL)fetchTrailInfoWithCompletionHandler:(QBCompletionHandler)handler {
     @weakify(self);
     BOOL success = [self requestURLPath:PP_TRAIL_URL

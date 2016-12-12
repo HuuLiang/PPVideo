@@ -33,6 +33,10 @@
     return NO;
 }
 
+- (NSTimeInterval)requestTimeInterval {
+    return [PPSystemConfigModel sharedModel].timeoutInterval;
+}
+
 - (BOOL)fetchAppSpreadWithCompletionHandler:(QBCompletionHandler)handler {
     @weakify(self);
     BOOL ret = [self requestURLPath:PP_APP_SPREAD_BANNER_URL

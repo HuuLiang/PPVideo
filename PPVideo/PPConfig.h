@@ -18,7 +18,7 @@
 #define PP_REST_APP_VERSION         ((NSString *)([NSBundle mainBundle].infoDictionary[@"CFBundleShortVersionString"]))
 #define PP_PAYMENT_RESERVE_DATA     [NSString stringWithFormat:@"%@$%@", LSJ_REST_APPID, LSJ_CHANNEL_NO]
 
-#define PP_BASE_URL                    @"http://iv.zcqcmj.com" //@""
+#define PP_BASE_URL                    @"http://spiv.jlswz.com"//@"http://iv.zcqcmj.com" //@""
 #define PP_STANDBY_BASE_URL            @"http://sfs.dswtg.com/"
 
 

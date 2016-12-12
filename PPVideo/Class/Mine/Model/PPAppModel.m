@@ -68,6 +68,10 @@ static NSString *const kPPVideoAppSpreadImgKeyName          = @"PP_AppSpreadImg_
     return [PPAppResponse class];
 }
 
+- (NSTimeInterval)requestTimeInterval {
+    return [PPSystemConfigModel sharedModel].timeoutInterval;
+}
+
 - (BOOL)fetchAppSpreadWithCompletionHandler:(QBCompletionHandler)handler {
     @weakify(self);
     BOOL ret = [self requestURLPath:PP_APP_URL
