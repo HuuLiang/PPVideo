@@ -57,7 +57,7 @@
                              programLocation:(NSInteger)programLocation
                               andProgramInfo:(PPProgramModel *)programModel {
     QBBaseModel *baseModel = [QBBaseModel getBaseModelWithRealColoumId:[NSNumber numberWithInteger:realColumnId]
-                                                           channelType:[NSNumber numberWithInteger:columnType]
+                                                           channelType:columnType == NSNotFound ? nil : [NSNumber numberWithInteger:columnType]
                                                              programId:[NSNumber numberWithInteger:programModel.programId]
                                                            programType:[NSNumber numberWithInteger:programModel.type]
                                                        programLocation:[NSNumber numberWithInteger:programLocation]];
