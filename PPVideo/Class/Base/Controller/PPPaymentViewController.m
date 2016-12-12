@@ -122,7 +122,7 @@ QBDefineLazyPropertyInitialization(QBBaseModel, baseModel)
         [[PPHudManager manager] showHudWithText:@"支付成功"];
         [[NSNotificationCenter defaultCenter] postNotificationName:kPaidNotificationName object:paymentInfo];
         
-        if ([PPUtil currentVipLevel] == PPVipLevelVipA) {
+        if ([PPUtil currentVipLevel] == PPVipLevelVipA && ![PP_CHANNEL_NO isEqualToString:@"IOS_XIUXIU_0001"]) {
             [PPUtil showSpreadBanner];
         }
         

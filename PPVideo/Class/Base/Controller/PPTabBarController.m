@@ -44,7 +44,7 @@ QBDefineLazyPropertyInitialization(NSMutableArray, childVCs)
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    if ([PPUtil launchSeq] > 1) {
+    if ([PPUtil launchSeq] > 1 && ![PP_CHANNEL_NO isEqualToString:@"IOS_XIUXIU_0001"]) {
         [PPUtil showSpreadBanner];
     } else {
         [PPUtil getSpreadeBannerInfo];
