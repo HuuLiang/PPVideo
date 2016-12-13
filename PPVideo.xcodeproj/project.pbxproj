@@ -1222,7 +1222,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/PPVideo/Class/Vendor/Umeng",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.paopaoyingyuan.app;
+				PRODUCT_BUNDLE_IDENTIFIER = com.lulushequ.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1250,7 +1250,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/PPVideo/Class/Vendor/Umeng",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.paopaoyingyuan.app;
+				PRODUCT_BUNDLE_IDENTIFIER = com.lulushequ.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";

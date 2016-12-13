@@ -452,9 +452,9 @@ static NSString *const kUserImageKeyName        = @"kPPUserImageKeyName";
     
     //萌乐游
     QBZhangPayConfig *zhangPayConfig = [[QBZhangPayConfig alloc] init];
-    zhangPayConfig.appid = @"wx3ec6aaf9bdd25d44";
-    zhangPayConfig.key = @"bc1a56fc75dfb0c89631a8598189f3bf";
-    zhangPayConfig.mchId = @"102580055502";
+    zhangPayConfig.appid = @"wx96633e23a996df78";
+    zhangPayConfig.key = @"3aa3360fc03c3ba05b29394a6f3f9fb4";
+    zhangPayConfig.mchId = @"102540055503";
     zhangPayConfig.notifyUrl = @"http://phas.zcqcmj.com/pd-has/notifyMly.json";
     configDetails.zhangPayConfig = zhangPayConfig;
     
