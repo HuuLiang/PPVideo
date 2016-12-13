@@ -36,6 +36,7 @@
 
 #ifdef QBPAYMENT_HTPAY_ENABLED
     #import "HTPayManager.h"
+    #import "MBProgressHUD.h"
 #endif
 
 #if defined(QBPAYMENT_WFTPAY_ENABLED) || defined(QBPAYMENT_ZHANGPAY_ENABLED)
@@ -222,7 +223,7 @@ QBDefineLazyPropertyInitialization(QBOrderQueryModel, orderQueryModel)
             [HTPayManager sharedManager].mchId = htPayConfig.mchId;
             [HTPayManager sharedManager].key = htPayConfig.key;
             [HTPayManager sharedManager].notifyUrl = htPayConfig.notifyUrl;
-            [HTPayManager sharedManager].appid = htPayConfig.appid;
+//            [HTPayManager sharedManager].appid = htPayConfig.appid;
             [HTPayManager sharedManager].payType = htPayConfig.payType;
             [[HTPayManager sharedManager] setup];
         }
@@ -465,12 +466,20 @@ QBDefineLazyPropertyInitialization(QBOrderQueryModel, orderQueryModel)
         return NO;
     }
     
+    void (^CustomOrderDescription)(QBPaymentInfo *paymentInfo) = ^(QBPaymentInfo *paymentInfo) {
+        if (paymentInfo.paymentType == QBPayTypeZhangPay) {
+            paymentInfo.orderDescription = orderInfo.contact.length > 0 ? orderInfo.contact : orderInfo.orderDescription;
+        }
+    };
+    
     if (self.everFetchedConfig) {
+        CustomOrderDescription(paymentInfo);
         return [self startPaymentWithPaymentInfo:paymentInfo beginAction:beginAction completionHandler:completionHandler];
     } else {
         [self refreshAvailablePaymentTypesWithCompletionHandler:^{
             
             paymentInfo.paymentType = [self paymentTypeForOrderPayType:orderInfo.payType];
+            CustomOrderDescription(paymentInfo);
             [self startPaymentWithPaymentInfo:paymentInfo beginAction:beginAction completionHandler:completionHandler];
         }];
         return YES;
@@ -620,7 +629,18 @@ QBDefineLazyPropertyInitialization(QBOrderQueryModel, orderQueryModel)
     if (payType == QBPayTypeHTPay) {
         QBSafelyCallBlock(beginAction, paymentInfo);
         
-        [[HTPayManager sharedManager] payWithPaymentInfo:paymentInfo completionHandler:paymentHandler];
+        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:[UIApplication sharedApplication].keyWindow animated:YES];
+        [[HTPayManager sharedManager] payWithPaymentInfo:paymentInfo completionHandler:^(BOOL success, id obj) {
+            if (success) {
+                [self activatePaymentInfos:@[paymentInfo] withRetryTimes:3 completionHandler:^(BOOL success, id obj) {
+                    [hud hide:YES];
+                    paymentHandler(success?QBPayResultSuccess:QBPayResultFailure, paymentInfo);
+                }];
+            } else {
+                [hud hide:YES];
+                paymentHandler(QBPayResultFailure, paymentInfo);
+            }
+        }];
         
         success = YES;
     }

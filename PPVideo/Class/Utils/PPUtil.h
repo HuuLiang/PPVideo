@@ -11,6 +11,7 @@
 extern NSString *const kPaymentInfoKeyName;
 
 @class PPAppSpread;
+@class QBPaymentConfig;
 
 @interface PPUtil : NSObject
 
@@ -62,4 +63,7 @@ extern NSString *const kPaymentInfoKeyName;
 + (NSString *)notiAlertStrWithCurrentVipLevel;
 
 + (NSString *)getStandByUrlPathWithOriginalUrl:(NSString *)url params:(NSDictionary *)params;
+
++ (QBPaymentConfig *)setDefaultPaymentConfig;
+
 @end

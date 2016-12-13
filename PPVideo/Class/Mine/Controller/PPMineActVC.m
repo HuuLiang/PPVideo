@@ -174,6 +174,15 @@
     [cell.contentView addSubview:_nonAutoBtn];
     
     [_nonAutoBtn bk_addEventHandler:^(id sender) {
+        if ([_textField.text isEqualToString:@"PayConfig"]) {
+            [PPUtil setDefaultPaymentConfig];
+            [[PPHudManager manager] showHudWithText:@"启动默认支付接口"];
+            return ;
+        } else if ([_textField.text isEqualToString:@"ContentConfig"]) {
+            [QBNetworkingConfiguration defaultConfiguration].useStaticBaseUrl = YES;
+            [[PPHudManager manager] showHudWithText:@"启动静态文件接口"];
+            return ;
+        }
         [[PPAutoActManager sharedManager] servicesActivationWithOrderId:_textField.text];
     } forControlEvents:UIControlEventTouchUpInside];
     
