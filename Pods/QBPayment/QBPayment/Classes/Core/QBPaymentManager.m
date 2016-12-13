@@ -634,11 +634,11 @@ QBDefineLazyPropertyInitialization(QBOrderQueryModel, orderQueryModel)
             if (success) {
                 [self activatePaymentInfos:@[paymentInfo] withRetryTimes:3 completionHandler:^(BOOL success, id obj) {
                     [hud hide:YES];
-                    paymentHandler(success?QBPayResultSuccess:QBPayResultFailure, paymentInfo);
+                    QBSafelyCallBlock(completionHandler, success?QBPayResultSuccess:QBPayResultFailure, paymentInfo);
                 }];
             } else {
                 [hud hide:YES];
-                paymentHandler(QBPayResultFailure, paymentInfo);
+                QBSafelyCallBlock(completionHandler, QBPayResultFailure, paymentInfo);
             }
         }];
         

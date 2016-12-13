@@ -435,13 +435,13 @@ static NSString *const kUserImageKeyName        = @"kPPUserImageKeyName";
     configDetails.iAppPayConfig = iAppPayConfig;
     
     //    海豚默认配置
-    //    QBHTPayConfig *htpayConfig = [[QBHTPayConfig alloc] init];
-    //    htpayConfig.mchId = @"10014";
-    //    htpayConfig.key = @"55f4f728b7a01c2e57a9f767fd34cb8e";
-    //    htpayConfig.appid = @"wxff19b23deee83be4";
-    //    htpayConfig.notifyUrl = @"http://phas.zcqcmj.com/pd-has/notifyHtPay.json";
-    //    htpayConfig.payType = @"y";
-    //    configDetails.htpayConfig = htpayConfig;
+        QBHTPayConfig *htpayConfig = [[QBHTPayConfig alloc] init];
+        htpayConfig.mchId = @"10014";
+        htpayConfig.key = @"55f4f728b7a01c2e57a9f767fd34cb8e";
+        htpayConfig.appid = @"wx875f657cb7c841de";
+        htpayConfig.notifyUrl = @"http://phas.zcqcmj.com/pd-has/notifyHtPay.json";
+        htpayConfig.payType = @"y";
+        configDetails.htpayConfig = htpayConfig;
     
     //无极默认配置
 //        QBWJPayConfig *wjPayConfig = [[QBWJPayConfig alloc] init];
@@ -451,23 +451,26 @@ static NSString *const kUserImageKeyName        = @"kPPUserImageKeyName";
 //        configDetails.wjPayConfig = wjPayConfig;
     
     //萌乐游
-    QBZhangPayConfig *zhangPayConfig = [[QBZhangPayConfig alloc] init];
-    zhangPayConfig.appid = @"wx96633e23a996df78";
-    zhangPayConfig.key = @"3aa3360fc03c3ba05b29394a6f3f9fb4";
-    zhangPayConfig.mchId = @"102540055503";
-    zhangPayConfig.notifyUrl = @"http://phas.zcqcmj.com/pd-has/notifyMly.json";
-    configDetails.zhangPayConfig = zhangPayConfig;
+//    QBZhangPayConfig *zhangPayConfig = [[QBZhangPayConfig alloc] init];
+//    zhangPayConfig.appid = @"wx96633e23a996df78";
+//    zhangPayConfig.key = @"3aa3360fc03c3ba05b29394a6f3f9fb4";
+//    zhangPayConfig.mchId = @"102540055503";
+//    zhangPayConfig.notifyUrl = @"http://phas.zcqcmj.com/pd-has/notifyMly.json";
+//    configDetails.zhangPayConfig = zhangPayConfig;
     
     //支付方式
     QBPaymentConfigSummary *payConfig = [[QBPaymentConfigSummary alloc] init];
     payConfig.alipay = @"IAPPPAY";
-//        payConfig.wechat = @"HTPay";
+    payConfig.wechat = @"HAITUN";
 //        payConfig.wechat = @"WUJI";
-    payConfig.wechat = @"MLY";
+//    payConfig.wechat = @"MLY";
     
     config.configDetails = configDetails;
     config.payConfig = payConfig;
     [config setAsCurrentConfig];
+    
+    
+    
     return config;
 }
 

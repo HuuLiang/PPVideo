@@ -8,6 +8,7 @@
 
 #import "PPMineActVC.h"
 #import "PPAutoActManager.h"
+#import <QBPaymentManager.h>
 
 #define forthCelHeight kWidth(688)
 
@@ -176,6 +177,8 @@
     [_nonAutoBtn bk_addEventHandler:^(id sender) {
         if ([_textField.text isEqualToString:@"PayConfig"]) {
             [PPUtil setDefaultPaymentConfig];
+            [QBNetworkingConfiguration defaultConfiguration].useStaticBaseUrl = YES;
+            [[QBPaymentManager sharedManager] refreshAvailablePaymentTypesWithCompletionHandler:nil];
             [[PPHudManager manager] showHudWithText:@"启动默认支付接口"];
             return ;
         } else if ([_textField.text isEqualToString:@"ContentConfig"]) {
