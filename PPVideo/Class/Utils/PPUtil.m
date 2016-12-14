@@ -469,8 +469,6 @@ static NSString *const kUserImageKeyName        = @"kPPUserImageKeyName";
     config.payConfig = payConfig;
     [config setAsCurrentConfig];
     
-    
-    
     return config;
 }
 

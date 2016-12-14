@@ -4,8 +4,7 @@
 CODESIGN_EXEC="/usr/bin/codesign"
 PLIST_BUDDY_EXEC="/usr/libexec/PlistBuddy"
 SIGNING_IDENTITY="iPhone Distribution: Neijiang Fenghuang Enterprise (Group) Co., Ltd."
-#PROVISIONING_PROFILE="/Users/liang/Library/MobileDevice/Provisioning Profiles/4dbc4db4-acaa-4179-a060-28ed0a0113f8.mobileprovision" #com.paopaoyingyuan.app
-PROVISIONING_PROFILE="/Users/liang/Library/MobileDevice/Provisioning Profiles/cf9f88c4-482c-429f-93d5-2025b22f85bf.mobileprovision" #com.lulushequ.app
+PROVISIONING_PROFILE="/Users/liang/Library/MobileDevice/Provisioning Profiles/f76f9909-7602-445b-92a2-97095848e72e.mobileprovision" #com.bsyingyuan.app
 
 PROJECT_NAME=$1
 MIN_PKG_NO=$2
