@@ -174,7 +174,7 @@ static NSString *const kAliPaySchemeUrl = @"paoPaoYingyuanAliPayUrlScheme";
     [QBNetworkingConfiguration defaultConfiguration].baseURL = PP_BASE_URL;
     [QBNetworkingConfiguration defaultConfiguration].useStaticBaseUrl = NO;
 #ifdef DEBUG
-    [[QBPaymentManager sharedManager] usePaymentConfigInTestServer:YES];
+//    [[QBPaymentManager sharedManager] usePaymentConfigInTestServer:YES];
 #endif
     
     //读取缓存价格配置
