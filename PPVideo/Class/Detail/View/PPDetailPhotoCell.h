@@ -13,6 +13,7 @@
 
 @interface PPDetailPhotoCell : UITableViewCell
 @property (nonatomic) NSArray <PPDetailUrlModel *> *imgUrls;
+@property (nonatomic) QBAction popUrlAction;
 @end
 
 

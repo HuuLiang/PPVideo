@@ -25,6 +25,8 @@
 @property (nonatomic) NSInteger width;
 @property (nonatomic) NSString *url;
 @property (nonatomic) NSString *title;
+@property (nonatomic) NSString *spreadUrl;
+@property (nonatomic) NSInteger type;
 @end
 
 @interface PPDetailResponse : QBURLResponse <NSCoding>

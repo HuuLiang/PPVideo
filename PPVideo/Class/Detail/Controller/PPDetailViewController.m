@@ -17,6 +17,8 @@
 #import "PPDetailMoreCell.h"
 #import "PPDetailReportView.h"
 
+#import "PPAdPopView.h"
+
 @interface PPDetailViewController ()
 {
     QBBaseModel *_baseModel;
@@ -32,6 +34,7 @@
 }
 @property (nonatomic) PPDetailModel *detailModel;
 @property (nonatomic) PPDetailResponse *response;
+@property (nonatomic) PPAdPopView *adPopView;
 @end
 
 @implementation PPDetailViewController
@@ -109,6 +112,7 @@ QBDefineLazyPropertyInitialization(PPDetailResponse, response)
         }
     };
     
+    _adPopView = [[PPAdPopView alloc] initWithSuperView:self.view];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -225,6 +229,15 @@ QBDefineLazyPropertyInitialization(PPDetailResponse, response)
     
     _photoCell = [[PPDetailPhotoCell alloc] init];
     _photoCell.imgUrls = self.response.programUrlList;
+    @weakify(self);
+    _photoCell.popUrlAction = ^(NSString *popUrl) {
+        @strongify(self);
+//        self.adPopView.codeImgUrlStr = popUrl;
+        if (self.adPopView.isHidden) {
+            self.adPopView.codeImgUrlStr = popUrl;
+            self.adPopView.hidden = NO;
+        }
+    };
     [self setLayoutCell:_photoCell cellHeight:PPDetalCellHeight inRow:0 andSection:section];
 }
 

@@ -70,6 +70,22 @@ static NSString *const kPPDetailPhotoCellReusableIdentifier = @"PPDetailPhotoCel
     return cell;
 }
 
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.item < _imgUrls.count) {
+        PPDetailUrlModel *model = _imgUrls[indexPath.item];
+        if ((model.type == 4 || model.type == 5) && [[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:model.spreadUrl]]) {
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:model.spreadUrl]];
+        } else if (model.type == 6) {
+            if (self.popUrlAction) {
+                self.popUrlAction(model.spreadUrl);
+            }
+        }
+    }
+    
+    
+}
+
+
 @end
 
 
