@@ -50,7 +50,7 @@
     
         [self.navigationController.navigationBar bk_whenTouches:1 tapped:5 handler:^{
             NSString *baseURLString = [PP_BASE_URL stringByReplacingCharactersInRange:NSMakeRange(0, PP_BASE_URL.length-6) withString:@"******"];
-            [[PPHudManager manager] showHudWithText:[NSString stringWithFormat:@"Server:%@\nChannelNo:%@\nPackageCertificate:%@\npV:%@/%@", baseURLString, PP_CHANNEL_NO, PP_PACKAGE_CERTIFICATE, PP_REST_PV, PP_PAYMENT_PV]];
+            [[PPHudManager manager] showHudWithText:[NSString stringWithFormat:@"Server:%@\nChannelNo:%@\nPackageCertificate:%@\npV:%@/%@\nBundleId:%@", baseURLString, PP_CHANNEL_NO, PP_PACKAGE_CERTIFICATE, PP_REST_PV, PP_PAYMENT_PV,PP_BUNDLE_IDENTIFIER]];
         }];
 
 }
