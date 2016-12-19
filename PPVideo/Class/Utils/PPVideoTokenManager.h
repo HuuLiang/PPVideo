@@ -11,8 +11,6 @@ typedef void (^PPVideoTokenCompletionHandler)(BOOL success, NSString *token, NSS
 @interface PPVideoTokenManager : NSObject
 + (instancetype)sharedManager;
 
-- (void)setValue:(NSString *)value forVideoHttpHeader:(NSString *)field;
-
 - (void)requestTokenWithCompletionHandler:(PPVideoTokenCompletionHandler)completionHandler;
 - (NSString *)videoLinkWithOriginalLink:(NSString *)originalLink;
 

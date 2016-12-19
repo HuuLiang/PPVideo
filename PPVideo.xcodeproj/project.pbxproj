@@ -1223,10 +1223,10 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/PPVideo/Class/Vendor/Umeng",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.bsyy.1;
+				PRODUCT_BUNDLE_IDENTIFIER = com.bsyy.2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "a9ab95cc-df89-49c8-a6f9-22cbca5bca5d";
-				PROVISIONING_PROFILE_SPECIFIER = BSYY1InHouseProvisioningProfile;
+				PROVISIONING_PROFILE = "2221e1bf-76dd-4da6-9429-50c23252a1d5";
+				PROVISIONING_PROFILE_SPECIFIER = BSYY2InHouseProvisioningProfile;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/**";
 			};
@@ -1239,7 +1239,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Neijiang Fenghuang Enterprise (Group) Co., Ltd.";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Neijiang Fenghuang Enterprise (Group) Co., Ltd.";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				DEPLOYMENT_POSTPROCESSING = YES;
 				DEVELOPMENT_TEAM = 7VHT3KAS56;
 				ENABLE_BITCODE = NO;
@@ -1252,10 +1252,10 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/PPVideo/Class/Vendor/Umeng",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.bsyy.1;
+				PRODUCT_BUNDLE_IDENTIFIER = com.bsyy.2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "a9ab95cc-df89-49c8-a6f9-22cbca5bca5d";
-				PROVISIONING_PROFILE_SPECIFIER = BSYY1InHouseProvisioningProfile;
+				PROVISIONING_PROFILE = "2221e1bf-76dd-4da6-9429-50c23252a1d5";
+				PROVISIONING_PROFILE_SPECIFIER = BSYY2InHouseProvisioningProfile;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/**";
 			};

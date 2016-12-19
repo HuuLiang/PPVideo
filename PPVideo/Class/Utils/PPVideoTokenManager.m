@@ -64,7 +64,7 @@ static NSString *const kTokenDataEncryptionPassword = @"fdl_2016$@Ask^we";
     }
     
     AFHTTPSessionManager *sessionManager = [[AFHTTPSessionManager alloc] init];
-    [sessionManager.requestSerializer setValue:self.httpHeaderValue forHTTPHeaderField:self.httpHeaderKey];
+//    [sessionManager.requestSerializer setValue:self.httpHeaderValue forHTTPHeaderField:self.httpHeaderKey];
     sessionManager.responseSerializer = [AFHTTPResponseSerializer serializer];
     
     NSString *dataString = [NSString stringWithFormat:@"uid=%@&channelNo=%@&appId=%@", userId, PP_CHANNEL_NO, PP_REST_APPID];
@@ -107,9 +107,22 @@ static NSString *const kTokenDataEncryptionPassword = @"fdl_2016$@Ask^we";
     return videoLink;
 }
 
-- (void)setValue:(NSString *)value forVideoHttpHeader:(NSString *)field {
-    self.httpHeaderKey = field;
-    self.httpHeaderValue = value;
-}
+//签名原始字符串S = key + url_encode(path) + T 。斜线 / 不编码。
+
+//签名SIGN = md5(S).to_lower()，to_lower指将字符串转换为小写；
+
+//- (NSString *)encodeVideoUrlWithVideoUrlStr:(NSString *)videoUrlStr {
+//    NSString *sighKey = [PPSystemConfigModel sharedModel].signKey;
+//    NSMutableString *sighString = [[NSMutableString alloc] init];
+//    
+//    [sighString appendString:sighKey];
+//    
+//    
+//    if (videoUrlStr) {
+//    }
+//    
+//    return nil;
+//}
+
 
 @end
