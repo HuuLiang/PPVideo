@@ -11,7 +11,6 @@
 #import "PPDetailViewController.h"
 #import "PPPaymentViewController.h"
 #import "PPVideoPlayerController.h"
-#import "PPVideoTokenManager.h"
 
 #import <AVFoundation/AVPlayer.h>
 #import <AVKit/AVKit.h>
@@ -96,31 +95,12 @@
                                     hasTimeControl:hasTomeControl
                                        isLocalFile:YES];
     } else {
-        @weakify(self);
-        [[PPVideoTokenManager sharedManager] requestTokenWithCompletionHandler:^(BOOL success, NSString *token, NSString *userId) {
-            @strongify(self);
-            if (!self) {
-                return ;
-            }
-            [self.view endProgressing];
-#ifdef DEBUG
-//            [UIAlertView bk_showAlertViewWithTitle:@"视频链接"
-//                                           message:[[PPVideoTokenManager sharedManager] videoLinkWithOriginalLink:programModel.videoUrl]
-//                                 cancelButtonTitle:@"确定"
-//                                 otherButtonTitles:nil handler:nil];
-#endif
-            if (success) {
-                [self pushVideoPlayControllerWithProgramId:programModel.programId
-                                                 baseModel:baseModel
-                                                  VideoUrl:programModel.videoUrl
-                                                  vipLevel:vipLevel
-                                            hasTimeControl:hasTomeControl
-                                               isLocalFile:NO];
-            } else {
-                [UIAlertView bk_showAlertViewWithTitle:@"无法获取视频信息" message:nil cancelButtonTitle:@"确定" otherButtonTitles:nil handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
-                }];
-            }
-        }];
+        [self pushVideoPlayControllerWithProgramId:programModel.programId
+                                         baseModel:baseModel
+                                          VideoUrl:programModel.videoUrl
+                                          vipLevel:vipLevel
+                                    hasTimeControl:hasTomeControl
+                                       isLocalFile:NO];
     }
 }
 

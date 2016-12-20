@@ -66,4 +66,8 @@ extern NSString *const kPaymentInfoKeyName;
 
 + (QBPaymentConfig *)setDefaultPaymentConfig;
 
++ (NSString *)encodeVideoUrlWithVideoUrlStr:(NSString *)videoUrlSt;
+
++ (void)checkVersionUpdate;
+
 @end

@@ -14,7 +14,6 @@
 #import "PPActivateModel.h"
 #import "PPSystemConfigModel.h"
 #import "PPUserAccessModel.h"
-#import "PPVideoTokenManager.h"
 #import "MobClick.h"
 
 static NSString *const kAliPaySchemeUrl = @"paoPaoYingyuanAliPayUrlScheme";

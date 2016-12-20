@@ -40,6 +40,9 @@ typedef void (^PPFetchSystemConfigCompletionHandler)(BOOL success);
 
 @property (nonatomic) NSTimeInterval timeoutInterval;
 
+@property (nonatomic) NSTimeInterval expireTime;
+@property (nonatomic) NSString *videoSignKey;
+
 @property (nonatomic) NSString *imageToken;
 @property (nonatomic,readonly) BOOL loaded;
 

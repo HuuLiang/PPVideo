@@ -8,7 +8,6 @@
 
 #import "PPVideoPlayerController.h"
 #import "PPVideoPlayer.h"
-#import "PPVideoTokenManager.h"
 
 @interface PPVideoPlayerController ()
 {
@@ -63,7 +62,7 @@
     if (_isLocalFile) {
         [self loadVideo:[NSURL fileURLWithPath:_videoUrl]];
     } else {
-        [self loadVideo:[NSURL URLWithString:[[PPVideoTokenManager sharedManager]videoLinkWithOriginalLink:_videoUrl]]];
+        [self loadVideo:[NSURL URLWithString:[PPUtil encodeVideoUrlWithVideoUrlStr:_videoUrl]]];
     }
 }
 

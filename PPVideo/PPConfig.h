@@ -22,7 +22,6 @@
 #define PP_BASE_URL                    @"http://spiv.jlswz.com"//@"http://120.24.252.114:8093"
 #define PP_STANDBY_BASE_URL            @"http://sfs.dswtg.com/"
 
-
 #define PP_ACTIVATION_URL              @"/iosvideo/activat.htm"
 #define PP_ACCESS_URL                  @"/iosvideo/userAccess.htm"
 #define PP_SYSTEM_CONFIG_URL           @"/iosvideo/systemConfig.htm"
@@ -35,6 +34,8 @@
 #define PP_HOT_URL                     @"/iosvideo/hotTag.htm"
 #define PP_SEARCH_URL                  @"/iosvideo/search.htm"
 #define PP_DETAIL_URL                  @"/iosvideo/detailsg.htm"
+
+#define PP_VERSION_UPDATE_URL          @"/iosvideo/versionCheck.htm"
 
 #define PP_APP_URL                     @"/iosvideo/appSpreadList.htm"
 #define PP_APP_SPREAD_BANNER_URL       @"/iosvideo/appSpreadBanner.htm"

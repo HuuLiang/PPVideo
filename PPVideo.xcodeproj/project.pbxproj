@@ -34,6 +34,8 @@
 		EC35F1D21DB6417500523F6F /* PPDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EC35F1D11DB6417500523F6F /* PPDetailViewController.m */; };
 		EC3FF2DC1DFA79CA0035F65E /* PPVideoRequestTask.m in Sources */ = {isa = PBXBuildFile; fileRef = EC3FF2DB1DFA79CA0035F65E /* PPVideoRequestTask.m */; };
 		EC3FF2DF1DFA7DEF0035F65E /* PPVideoloaderURLConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = EC3FF2DE1DFA7DEF0035F65E /* PPVideoloaderURLConnection.m */; };
+		EC4422B81E08DC0600F48461 /* PPVersionUpdateModel.m in Sources */ = {isa = PBXBuildFile; fileRef = EC4422B71E08DC0600F48461 /* PPVersionUpdateModel.m */; };
+		EC4422BB1E08DC8100F48461 /* PPVersionUpdateViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EC4422BA1E08DC8100F48461 /* PPVersionUpdateViewController.m */; };
 		EC4636EB1DC08D1B00901A05 /* PPVipHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = EC4636EA1DC08D1B00901A05 /* PPVipHeaderView.m */; };
 		EC4C6A671DB464AA0009771A /* PPTrailFreeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EC4C6A661DB464AA0009771A /* PPTrailFreeCell.m */; };
 		EC4C6A6A1DB467F00009771A /* PPTrailModel.m in Sources */ = {isa = PBXBuildFile; fileRef = EC4C6A691DB467F00009771A /* PPTrailModel.m */; };
@@ -97,7 +99,6 @@
 		ECFA0E851DBA365400E61347 /* PPPayTypeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = ECFA0E841DBA365400E61347 /* PPPayTypeCell.m */; };
 		ECFA0E881DBA398200E61347 /* PPPayIntroCell.m in Sources */ = {isa = PBXBuildFile; fileRef = ECFA0E871DBA398200E61347 /* PPPayIntroCell.m */; };
 		ECFA0E8B1DBDCCE200E61347 /* PPVideoPlayerController.m in Sources */ = {isa = PBXBuildFile; fileRef = ECFA0E8A1DBDCCE200E61347 /* PPVideoPlayerController.m */; };
-		ECFA0E8E1DBDCD3900E61347 /* PPVideoTokenManager.m in Sources */ = {isa = PBXBuildFile; fileRef = ECFA0E8D1DBDCD3900E61347 /* PPVideoTokenManager.m */; };
 		ECFA0E911DBDCDE700E61347 /* PPVideoPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = ECFA0E901DBDCDE700E61347 /* PPVideoPlayer.m */; };
 		ECFB79871DC33BCB0082F59D /* PPAppSpreadBannerModel.m in Sources */ = {isa = PBXBuildFile; fileRef = ECFB79861DC33BCB0082F59D /* PPAppSpreadBannerModel.m */; };
 		ECFB798A1DC33CC00082F59D /* PPSpreadBannerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ECFB79891DC33CC00082F59D /* PPSpreadBannerViewController.m */; };
@@ -161,6 +162,10 @@
 		EC3FF2DB1DFA79CA0035F65E /* PPVideoRequestTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPVideoRequestTask.m; sourceTree = "<group>"; };
 		EC3FF2DD1DFA7DEF0035F65E /* PPVideoloaderURLConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPVideoloaderURLConnection.h; sourceTree = "<group>"; };
 		EC3FF2DE1DFA7DEF0035F65E /* PPVideoloaderURLConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPVideoloaderURLConnection.m; sourceTree = "<group>"; };
+		EC4422B61E08DC0600F48461 /* PPVersionUpdateModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPVersionUpdateModel.h; sourceTree = "<group>"; };
+		EC4422B71E08DC0600F48461 /* PPVersionUpdateModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPVersionUpdateModel.m; sourceTree = "<group>"; };
+		EC4422B91E08DC8100F48461 /* PPVersionUpdateViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPVersionUpdateViewController.h; sourceTree = "<group>"; };
+		EC4422BA1E08DC8100F48461 /* PPVersionUpdateViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPVersionUpdateViewController.m; sourceTree = "<group>"; };
 		EC4636E91DC08D1B00901A05 /* PPVipHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPVipHeaderView.h; sourceTree = "<group>"; };
 		EC4636EA1DC08D1B00901A05 /* PPVipHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPVipHeaderView.m; sourceTree = "<group>"; };
 		EC4C6A651DB464AA0009771A /* PPTrailFreeCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPTrailFreeCell.h; sourceTree = "<group>"; };
@@ -287,8 +292,6 @@
 		ECFA0E871DBA398200E61347 /* PPPayIntroCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPPayIntroCell.m; sourceTree = "<group>"; };
 		ECFA0E891DBDCCE200E61347 /* PPVideoPlayerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPVideoPlayerController.h; sourceTree = "<group>"; };
 		ECFA0E8A1DBDCCE200E61347 /* PPVideoPlayerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPVideoPlayerController.m; sourceTree = "<group>"; };
-		ECFA0E8C1DBDCD3900E61347 /* PPVideoTokenManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPVideoTokenManager.h; sourceTree = "<group>"; };
-		ECFA0E8D1DBDCD3900E61347 /* PPVideoTokenManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPVideoTokenManager.m; sourceTree = "<group>"; };
 		ECFA0E8F1DBDCDE700E61347 /* PPVideoPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPVideoPlayer.h; sourceTree = "<group>"; };
 		ECFA0E901DBDCDE700E61347 /* PPVideoPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPVideoPlayer.m; sourceTree = "<group>"; };
 		ECFB79851DC33BCB0082F59D /* PPAppSpreadBannerModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPAppSpreadBannerModel.h; sourceTree = "<group>"; };
@@ -394,6 +397,17 @@
 				EC3FF2DB1DFA79CA0035F65E /* PPVideoRequestTask.m */,
 			);
 			path = videoDownloader;
+			sourceTree = "<group>";
+		};
+		EC4422B51E08DBEE00F48461 /* VersionUpdate */ = {
+			isa = PBXGroup;
+			children = (
+				EC4422B61E08DC0600F48461 /* PPVersionUpdateModel.h */,
+				EC4422B71E08DC0600F48461 /* PPVersionUpdateModel.m */,
+				EC4422B91E08DC8100F48461 /* PPVersionUpdateViewController.h */,
+				EC4422BA1E08DC8100F48461 /* PPVersionUpdateViewController.m */,
+			);
+			path = VersionUpdate;
 			sourceTree = "<group>";
 		};
 		EC4C6A801DB4E22C0009771A /* Layout */ = {
@@ -535,6 +549,7 @@
 		ECC097701DB1D97A00875D56 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				EC4422B51E08DBEE00F48461 /* VersionUpdate */,
 				EC3FF2D91DFA796B0035F65E /* videoDownloader */,
 				ECFB797E1DC33B8D0082F59D /* Ad */,
 				ECC0977E1DB1DFB500875D56 /* Extensions */,
@@ -545,8 +560,6 @@
 				ECC0978B1DB1F1F400875D56 /* PPConfiguration.m */,
 				ECB8F0E01DB771B30088A118 /* PPHudManager.h */,
 				ECB8F0E11DB771B30088A118 /* PPHudManager.m */,
-				ECFA0E8C1DBDCD3900E61347 /* PPVideoTokenManager.h */,
-				ECFA0E8D1DBDCD3900E61347 /* PPVideoTokenManager.m */,
 				EC652F401DD4122C0021A847 /* PPCacheModel.h */,
 				EC652F411DD4122C0021A847 /* PPCacheModel.m */,
 			);
@@ -1017,6 +1030,7 @@
 				EC4636EB1DC08D1B00901A05 /* PPVipHeaderView.m in Sources */,
 				ECC0978F1DB1F84C00875D56 /* PPUtil.m in Sources */,
 				EC35F1CB1DB6405F00523F6F /* PPMineHeaderCell.m in Sources */,
+				EC4422B81E08DC0600F48461 /* PPVersionUpdateModel.m in Sources */,
 				ECFA0E911DBDCDE700E61347 /* PPVideoPlayer.m in Sources */,
 				ECCFA0B01DED34AB000F4E7A /* PPAdPopView.m in Sources */,
 				ECC0978C1DB1F1F400875D56 /* PPConfiguration.m in Sources */,
@@ -1060,7 +1074,6 @@
 				EC009E8E1DE9770D004443A8 /* PPTrailFreeAdCell.m in Sources */,
 				EC20D0161DB89AA70089D8BF /* JKDBHelper.m in Sources */,
 				ECB8F0B71DB71EB30088A118 /* JQKApplicationManager.m in Sources */,
-				ECFA0E8E1DBDCD3900E61347 /* PPVideoTokenManager.m in Sources */,
 				ECC097551DB1C8AA00875D56 /* main.m in Sources */,
 				ECC097C51DB20D1300875D56 /* PPMineViewController.m in Sources */,
 				ECC097891DB1E21E00875D56 /* PPTabBarController.m in Sources */,
@@ -1082,6 +1095,7 @@
 				ECB8F0D01DB71F660088A118 /* NSObject+PropertyAccessInspecting.m in Sources */,
 				ECB8F0E51DB77BAC0088A118 /* PPSearchModel.m in Sources */,
 				EC4C6A731DB472470009771A /* PPTrailNormalCell.m in Sources */,
+				EC4422BB1E08DC8100F48461 /* PPVersionUpdateViewController.m in Sources */,
 				ECFA0E881DBA398200E61347 /* PPPayIntroCell.m in Sources */,
 				EC35F1C21DB5C41F00523F6F /* PPHotContentHeaderView.m in Sources */,
 				EC4C6A861DB4E87D0009771A /* PPSectionBackgroundFlowLayout.m in Sources */,
