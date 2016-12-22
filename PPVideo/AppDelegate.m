@@ -191,7 +191,6 @@ static NSString *const kAliPaySchemeUrl = @"paoPaoYingyuanAliPayUrlScheme";
     [self setupCommonStyles];
     
     [[QBNetworkInfo sharedInfo] startMonitoring];
-    [[PPHostIPModel sharedModel] fetchHostList];
 
     [QBNetworkInfo sharedInfo].reachabilityChangedAction = ^(BOOL reachable) {
         if (reachable && ![PPSystemConfigModel sharedModel].loaded) {
@@ -202,7 +201,7 @@ static NSString *const kAliPaySchemeUrl = @"paoPaoYingyuanAliPayUrlScheme";
                 if (success) {
                     [PPUtil setRegisteredWithUserId:userId];
                     [[PPUserAccessModel sharedModel] requestUserAccess];
-//                    [[PPHostIPModel sharedModel] fetchHostList];
+                    [[PPHostIPModel sharedModel] fetchHostList];
                 }
             }];
         } else {
