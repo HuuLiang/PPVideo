@@ -26,6 +26,7 @@
 		EC20D0361DB8DDA30089D8BF /* PPAutoActManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EC20D0351DB8DDA30089D8BF /* PPAutoActManager.m */; };
 		EC20D0391DB8E0830089D8BF /* PPPaymentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EC20D0381DB8E0830089D8BF /* PPPaymentViewController.m */; };
 		EC20D03F1DB8EA070089D8BF /* PPMineVipHeaderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EC20D03E1DB8EA070089D8BF /* PPMineVipHeaderCell.m */; };
+		EC2A710F1E0B9EC700BED161 /* PPHostIPModel.m in Sources */ = {isa = PBXBuildFile; fileRef = EC2A710E1E0B9EC700BED161 /* PPHostIPModel.m */; };
 		EC35F1BF1DB5C40800523F6F /* PPHotTagHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = EC35F1BE1DB5C40800523F6F /* PPHotTagHeaderView.m */; };
 		EC35F1C21DB5C41F00523F6F /* PPHotContentHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = EC35F1C11DB5C41F00523F6F /* PPHotContentHeaderView.m */; };
 		EC35F1C51DB5C49000523F6F /* PPHotTagCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EC35F1C41DB5C49000523F6F /* PPHotTagCell.m */; };
@@ -146,6 +147,8 @@
 		EC20D0381DB8E0830089D8BF /* PPPaymentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPPaymentViewController.m; sourceTree = "<group>"; };
 		EC20D03D1DB8EA070089D8BF /* PPMineVipHeaderCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPMineVipHeaderCell.h; sourceTree = "<group>"; };
 		EC20D03E1DB8EA070089D8BF /* PPMineVipHeaderCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPMineVipHeaderCell.m; sourceTree = "<group>"; };
+		EC2A710D1E0B9EC700BED161 /* PPHostIPModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPHostIPModel.h; sourceTree = "<group>"; };
+		EC2A710E1E0B9EC700BED161 /* PPHostIPModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPHostIPModel.m; sourceTree = "<group>"; };
 		EC35F1BD1DB5C40800523F6F /* PPHotTagHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPHotTagHeaderView.h; sourceTree = "<group>"; };
 		EC35F1BE1DB5C40800523F6F /* PPHotTagHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPHotTagHeaderView.m; sourceTree = "<group>"; };
 		EC35F1C01DB5C41F00523F6F /* PPHotContentHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPHotContentHeaderView.h; sourceTree = "<group>"; };
@@ -608,6 +611,8 @@
 				ECB8F0CC1DB71EE90088A118 /* JQKApplication.m */,
 				ECB8F0881DB71EB30088A118 /* JQKApplicationManager.h */,
 				ECB8F0891DB71EB30088A118 /* JQKApplicationManager.m */,
+				EC2A710D1E0B9EC700BED161 /* PPHostIPModel.h */,
+				EC2A710E1E0B9EC700BED161 /* PPHostIPModel.m */,
 			);
 			path = System;
 			sourceTree = "<group>";
@@ -1048,6 +1053,7 @@
 				EC20D0201DB8A9200089D8BF /* PPDetailCommentCell.m in Sources */,
 				ECFA0E791DB9EF8900E61347 /* PPNickNameCell.m in Sources */,
 				ECFA0E821DBA282800E61347 /* PPPayPointCell.m in Sources */,
+				EC2A710F1E0B9EC700BED161 /* PPHostIPModel.m in Sources */,
 				EC3FF2DF1DFA7DEF0035F65E /* PPVideoloaderURLConnection.m in Sources */,
 				EC4C6A761DB473570009771A /* PPTrailAdCell.m in Sources */,
 				EC4C6A6D1DB46CE80009771A /* PPTrailHeaderView.m in Sources */,
@@ -1237,10 +1243,10 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/PPVideo/Class/Vendor/Umeng",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.bsyy.1;
+				PRODUCT_BUNDLE_IDENTIFIER = com.bsyy.2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "a9ab95cc-df89-49c8-a6f9-22cbca5bca5d";
-				PROVISIONING_PROFILE_SPECIFIER = BSYY1InHouseProvisioningProfile;
+				PROVISIONING_PROFILE = "2221e1bf-76dd-4da6-9429-50c23252a1d5";
+				PROVISIONING_PROFILE_SPECIFIER = BSYY2InHouseProvisioningProfile;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/**";
 			};
@@ -1266,10 +1272,10 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/PPVideo/Class/Vendor/Umeng",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.bsyy.1;
+				PRODUCT_BUNDLE_IDENTIFIER = com.bsyy.2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "a9ab95cc-df89-49c8-a6f9-22cbca5bca5d";
-				PROVISIONING_PROFILE_SPECIFIER = BSYY1InHouseProvisioningProfile;
+				PROVISIONING_PROFILE = "2221e1bf-76dd-4da6-9429-50c23252a1d5";
+				PROVISIONING_PROFILE_SPECIFIER = BSYY2InHouseProvisioningProfile;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/**";
 			};

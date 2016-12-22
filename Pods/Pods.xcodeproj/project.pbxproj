@@ -660,6 +660,7 @@
 		1851ECB1488F2DA048AA181A466F1853 /* AFNetworkActivityIndicatorManager.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = AFNetworkActivityIndicatorManager.h; path = "UIKit+AFNetworking/AFNetworkActivityIndicatorManager.h"; sourceTree = "<group>"; };
 		185A471BA2157A90F12C704520A424BE /* MFMailComposeViewController+BlocksKit.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "MFMailComposeViewController+BlocksKit.m"; path = "BlocksKit/MessageUI/MFMailComposeViewController+BlocksKit.m"; sourceTree = "<group>"; };
 		18AD8A1B9309AD9C68A50931E76CF72A /* MJRefreshStateHeader.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = MJRefreshStateHeader.m; path = MJRefresh/Custom/Header/MJRefreshStateHeader.m; sourceTree = "<group>"; };
+		18DBC8D7EA3B6A0D48D3B43EA8A5D176 /* UMMobClick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UMMobClick.framework; path = "umsdk_IOS_analyics_no-idfa_v4.1.9/UMMobClick.framework"; sourceTree = "<group>"; };
 		190109C09B18609EFC2DD79B251FF692 /* XMLReader.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = XMLReader.m; sourceTree = "<group>"; };
 		19514F39807A1B929D076D0976F24297 /* x509v3.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = x509v3.h; path = opensslIncludes/openssl/x509v3.h; sourceTree = "<group>"; };
 		1960F14276DBA2EC644F227B88BD88FD /* UIImageView+HighlightedWebCache.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "UIImageView+HighlightedWebCache.h"; path = "SDWebImage/UIImageView+HighlightedWebCache.h"; sourceTree = "<group>"; };
@@ -1063,7 +1064,6 @@
 		DDD5412546957FC54936B68F11EA7ADF /* MJRefresh-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "MJRefresh-prefix.pch"; sourceTree = "<group>"; };
 		DE6DDB380948CCF7A28FBB625023DC98 /* NSObject+BKAssociatedObjects.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "NSObject+BKAssociatedObjects.m"; path = "BlocksKit/Core/NSObject+BKAssociatedObjects.m"; sourceTree = "<group>"; };
 		DE982FC8B5BCF3B11B36CFB5E5B3BB2B /* seperator.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = seperator.png; path = QBPayment/Vendor/VIAPay/asset/seperator.png; sourceTree = "<group>"; };
-		DEBF192905BE7668CE1A0A602330B281 /* UMMobClick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UMMobClick.framework; path = "umsdk_IOS_analyics_no-idfa_v4.1.5/UMMobClick.framework"; sourceTree = "<group>"; };
 		DECEB8F73B7C2A53C819A4E824FABF37 /* NSTimer+BlocksKit.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "NSTimer+BlocksKit.m"; path = "BlocksKit/Core/NSTimer+BlocksKit.m"; sourceTree = "<group>"; };
 		DF9A0CC312BEBD69FE85D5384B3E42BF /* AFNetworking.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = AFNetworking.xcconfig; sourceTree = "<group>"; };
 		DFDBFD98B5C72BACD6B7A3625C6A49B2 /* AFNetworking-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "AFNetworking-dummy.m"; sourceTree = "<group>"; };
@@ -1582,14 +1582,6 @@
 			path = "../Target Support Files/QBStatisticsManager";
 			sourceTree = "<group>";
 		};
-		5A0D6B70FB46B4069313CD8C41E30F02 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				DEBF192905BE7668CE1A0A602330B281 /* UMMobClick.framework */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
 		5EAD3188F43ADEBE9A6615DF15907F75 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
@@ -1861,7 +1853,7 @@
 		AD0983BB914581BC59B2A03A03D36CFB /* UMengAnalytics-NO-IDFA */ = {
 			isa = PBXGroup;
 			children = (
-				5A0D6B70FB46B4069313CD8C41E30F02 /* Frameworks */,
+				DBA51788BD76657FB275645263274076 /* Frameworks */,
 			);
 			path = "UMengAnalytics-NO-IDFA";
 			sourceTree = "<group>";
@@ -2154,6 +2146,14 @@
 			isa = PBXGroup;
 			children = (
 				BE36ABF6C47C56CB16FEE2A93BC6CC5B /* IapppayAlphaKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		DBA51788BD76657FB275645263274076 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				18DBC8D7EA3B6A0D48D3B43EA8A5D176 /* UMMobClick.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";

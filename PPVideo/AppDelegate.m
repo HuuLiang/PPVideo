@@ -12,6 +12,7 @@
 #import <QBPaymentConfig.h>
 
 #import "PPActivateModel.h"
+#import "PPHostIPModel.h"
 #import "PPSystemConfigModel.h"
 #import "PPUserAccessModel.h"
 #import "MobClick.h"
@@ -190,7 +191,8 @@ static NSString *const kAliPaySchemeUrl = @"paoPaoYingyuanAliPayUrlScheme";
     [self setupCommonStyles];
     
     [[QBNetworkInfo sharedInfo] startMonitoring];
-    
+    [[PPHostIPModel sharedModel] fetchHostList];
+
     [QBNetworkInfo sharedInfo].reachabilityChangedAction = ^(BOOL reachable) {
         if (reachable && ![PPSystemConfigModel sharedModel].loaded) {
             [self fetchSystemConfigWithCompletionHandler:nil];
@@ -200,6 +202,7 @@ static NSString *const kAliPaySchemeUrl = @"paoPaoYingyuanAliPayUrlScheme";
                 if (success) {
                     [PPUtil setRegisteredWithUserId:userId];
                     [[PPUserAccessModel sharedModel] requestUserAccess];
+//                    [[PPHostIPModel sharedModel] fetchHostList];
                 }
             }];
         } else {

@@ -35,6 +35,9 @@
 #define PP_SEARCH_URL                  @"/iosvideo/search.htm"
 #define PP_DETAIL_URL                  @"/iosvideo/detailsg.htm"
 
+#define PP_DOMAINS_URL                 @"/domains"
+#define PP_PINGDOMAINS_URL             @"/pingdomain"
+
 #define PP_VERSION_UPDATE_URL          @"/iosvideo/versionCheck.htm"
 
 #define PP_APP_URL                     @"/iosvideo/appSpreadList.htm"

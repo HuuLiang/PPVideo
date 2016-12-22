@@ -38,33 +38,33 @@ PODS:
   - MJRefresh (2.4.12)
   - OpenSSL (1.0.208)
   - QBExtensions (0.0.7)
-  - QBNetworking (0.0.10):
+  - QBNetworking (0.0.11):
     - AFNetworking (~> 3.1.0)
     - QBExtensions (~> 0.0.3)
-  - QBPayment/Core (49):
+  - QBPayment/Core (50):
     - Aspects (~> 1.4.1)
     - QBExtensions (~> 0.0.6)
     - QBNetworking (~> 0.0.4)
-  - QBPayment/CorePay (49):
+  - QBPayment/CorePay (50):
     - OpenSSL (~> 1.0.208)
-  - QBPayment/CoreUI (49):
+  - QBPayment/CoreUI (50):
     - MBProgressHUD (~> 0.9.2)
-  - QBPayment/IappPay (49):
+  - QBPayment/IappPay (50):
     - QBPayment/Core
     - QBPayment/CorePay
-  - QBPayment/VIAPay (49):
+  - QBPayment/VIAPay (50):
     - QBPayment/Core
     - QBPayment/CorePay
-  - QBPayment/WFTPay (49):
+  - QBPayment/WFTPay (50):
     - MBProgressHUD (~> 0.9.2)
     - QBPayment/Core
     - QBPayment/CorePay
     - XMLReader-Arc (~> 1.1)
-  - QBPayment/WJPay (49):
+  - QBPayment/WJPay (50):
     - QBPayment/Core
     - QBPayment/CoreUI
     - QBPayment/WFTPay
-  - QBPayment/ZhangPay (49):
+  - QBPayment/ZhangPay (50):
     - QBPayment/WFTPay
   - QBStatisticsManager (0.0.5):
     - BlocksKit (~> 2.2.5)
@@ -75,7 +75,7 @@ PODS:
     - SDWebImage/Core (= 3.7.3)
   - SDWebImage/Core (3.7.3)
   - SFHFKeychainUtils (0.0.1)
-  - UMengAnalytics-NO-IDFA (4.1.5)
+  - UMengAnalytics-NO-IDFA (4.1.9)
   - XMLReader-Arc (1.1)
 
 DEPENDENCIES:
@@ -101,12 +101,12 @@ SPEC CHECKSUMS:
   MJRefresh: ca8e9589895977df32d379d46e6b8a5450b3ff44
   OpenSSL: b187269d386b07452f56af273764ea0636dd5da8
   QBExtensions: a32e8ae6e371c208e2efe2b2eec7251c36187b90
-  QBNetworking: c0ce3331d1ead787a7668ebc444aedc6196b4cc9
-  QBPayment: 48975be00529d3fe6f8c109257cf402c3570ca4e
+  QBNetworking: 869919c6eb9db0582097303e13180d643f40e05f
+  QBPayment: 72ffc7d4db0a5a0173cd3fc8ad93db58706a94dd
   QBStatisticsManager: 9f12ff2198fbddd3705a2b94786415e2b983f7b4
   SDWebImage: 1d2b1a1efda1ade1b00b6f8498865f8ddedc8a84
   SFHFKeychainUtils: 9576b411a79a058f4d5381ace6f3242b9a62e664
-  UMengAnalytics-NO-IDFA: f1b08b540eba6ebad044a574cae6d988cf40cfda
+  UMengAnalytics-NO-IDFA: 985292af177111685325c90c321094172b95d2cb
   XMLReader-Arc: 7832c527346fc26511fd6c05ebcee18008c34d6d
 
 PODFILE CHECKSUM: 58b78c142cf52f58a594f3997e250be1fc839c6a
