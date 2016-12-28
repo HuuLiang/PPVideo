@@ -504,8 +504,13 @@ static NSString *const kUserImageKeyName        = @"kPPUserImageKeyName";
 
 + (NSString *)getVideoUrlPath:(NSString *)videoUrl {
     NSString * string1 = [[videoUrl componentsSeparatedByString:@".com"] lastObject];
-    NSString * stirng2 = [[string1 componentsSeparatedByString:@"?"] firstObject];
-    NSString *encodingString = [stirng2 stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    NSString *string2 = nil;
+    if ([[string1 componentsSeparatedByString:@"?"] firstObject] != nil) {
+        string2 = [[string1 componentsSeparatedByString:@"?"] firstObject];
+    } else {
+        string2 = string1;
+    }
+    NSString *encodingString = [string2 stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     return encodingString;
 }
 

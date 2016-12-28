@@ -19,7 +19,7 @@
 #define PP_BUNDLE_IDENTIFIER        ((NSString *)([NSBundle mainBundle].infoDictionary[@"CFBundleIdentifier"]))
 #define PP_PAYMENT_RESERVE_DATA     [NSString stringWithFormat:@"%@$%@", LSJ_REST_APPID, LSJ_CHANNEL_NO]
 
-#define PP_BASE_URL                    @"http://spiv.jlswz.com"//@"http://120.24.252.114:8093"
+#define PP_BASE_URL                    @"http://iv.zcqcmj.com"//@"http://120.24.252.114:8093"
 #define PP_STANDBY_BASE_URL            @"http://sfs.dswtg.com/"
 
 #define PP_ACTIVATION_URL              @"/iosvideo/activat.htm"
