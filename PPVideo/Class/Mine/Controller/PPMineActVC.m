@@ -205,6 +205,14 @@
     [self setLayoutCell:cell cellHeight:kWidth(236) inRow:0 andSection:section];
 }
 
+- (BOOL)alwaysHideNavigationBar {
+    return NO;
+}
+
+- (BOOL)alwaysHideNavigationSearchView {
+    return YES;
+}
+
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleKeyBoardActionHide:) name:UIKeyboardWillHideNotification object:nil];

@@ -17,9 +17,13 @@
 #import "PPUserAccessModel.h"
 #import "MobClick.h"
 
+#import "PPNavigationController.h"
+#import "PPMineViewController.h"
+#import "LeftSlideViewController.h"
+
 static NSString *const kAliPaySchemeUrl = @"paoPaoYingyuanAliPayUrlScheme";
 
-@interface AppDelegate () <UITabBarControllerDelegate>
+@interface AppDelegate ()
 @property (nonatomic) UIViewController *rootViewController;
 @end
 
@@ -41,22 +45,25 @@ static NSString *const kAliPaySchemeUrl = @"paoPaoYingyuanAliPayUrlScheme";
         return _rootViewController;
     }
     PPTabBarController *tabBarVC = [[PPTabBarController alloc] init];
-    tabBarVC.delegate = self;
-    _rootViewController = tabBarVC;
+    
+    PPMineViewController *mineVC = [[PPMineViewController alloc] init];
+    PPNavigationController *mineNav = [[PPNavigationController alloc] initWithRootViewController:mineVC];
+    LeftSlideViewController *leftVC = [[LeftSlideViewController alloc] initWithLeftView:mineNav andMainView:tabBarVC];
+    _rootViewController = leftVC;
     return _rootViewController;
 }
 
 - (void)setupCommonStyles {
     
-    [[UITabBar appearance] setBarTintColor:[UIColor colorWithHexString:@"#21243F"]];
+    [[UITabBar appearance] setBarTintColor:[UIColor colorWithHexString:@"#ffffff"]];
     [[UITabBar appearance] setTintColor:[UIColor redColor]];
     [[UITabBar appearance] setBarStyle:UIBarStyleBlack];
-    [[UITabBarItem appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]} forState:UIControlStateNormal];
-    [[UITabBarItem appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]} forState:UIControlStateSelected];
-    [[UINavigationBar appearance] setBarTintColor:[UIColor colorWithHexString:@"#1F233E"]];
-    [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
+    [[UITabBarItem appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor colorWithHexString:@"#999999"]} forState:UIControlStateNormal];
+    [[UITabBarItem appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor colorWithHexString:@"#333333"]} forState:UIControlStateSelected];
+    [[UINavigationBar appearance] setBarTintColor:[UIColor colorWithHexString:@"#ffffff"]];
+    [[UINavigationBar appearance] setTintColor:[UIColor blackColor]];
     [[UINavigationBar appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont boldSystemFontOfSize:[PPUtil isIpad] ? 21 : kWidth(36)],
-                                                           NSForegroundColorAttributeName:[UIColor colorWithHexString:@"#ffffff"]}];
+                                                           NSForegroundColorAttributeName:[UIColor colorWithHexString:@"#000000"]}];
     
     [UIViewController aspect_hookSelector:@selector(viewDidLoad)
                               withOptions:AspectPositionAfter
@@ -137,17 +144,17 @@ static NSString *const kAliPaySchemeUrl = @"paoPaoYingyuanAliPayUrlScheme";
     [[PPUserAccessModel sharedModel] aspect_hookSelector:@selector(requestUserAccess)
                                              withOptions:AspectPositionAfter
                                               usingBlock:^(id<AspectInfo> aspetInfo)
-    {
-        [[QBStatsManager sharedManager] registStatsManagerWithUserId:[PPUtil userId] restAppId:PP_REST_APPID restPv:PP_REST_PV launchSeq:[PPUtil launchSeq]];
-    }error:nil];
+     {
+         [[QBStatsManager sharedManager] registStatsManagerWithUserId:[PPUtil userId] restAppId:PP_REST_APPID restPv:PP_REST_PV launchSeq:[PPUtil launchSeq]];
+     }error:nil];
     
-//    [UIImageView aspect_hookSelector:@selector(init)
-//                         withOptions:AspectPositionAfter
-//                          usingBlock:^(id<AspectInfo> aspectInfo) {
-//                              UIImageView *thisImgV = [aspectInfo instance];
-//                              [thisImgV setContentMode:UIViewContentModeScaleAspectFill];
-//                              thisImgV.clipsToBounds = YES;
-//                          } error:nil];
+    //    [UIImageView aspect_hookSelector:@selector(init)
+    //                         withOptions:AspectPositionAfter
+    //                          usingBlock:^(id<AspectInfo> aspectInfo) {
+    //                              UIImageView *thisImgV = [aspectInfo instance];
+    //                              [thisImgV setContentMode:UIViewContentModeScaleAspectFill];
+    //                              thisImgV.clipsToBounds = YES;
+    //                          } error:nil];
 }
 
 
@@ -174,7 +181,7 @@ static NSString *const kAliPaySchemeUrl = @"paoPaoYingyuanAliPayUrlScheme";
     [QBNetworkingConfiguration defaultConfiguration].baseURL = PP_BASE_URL;
     [QBNetworkingConfiguration defaultConfiguration].useStaticBaseUrl = NO;
 #ifdef DEBUG
-//    [[QBPaymentManager sharedManager] usePaymentConfigInTestServer:YES];
+    //    [[QBPaymentManager sharedManager] usePaymentConfigInTestServer:YES];
 #endif
     
     //读取缓存价格配置
@@ -191,7 +198,7 @@ static NSString *const kAliPaySchemeUrl = @"paoPaoYingyuanAliPayUrlScheme";
     [self setupCommonStyles];
     
     [[QBNetworkInfo sharedInfo] startMonitoring];
-
+    
     [QBNetworkInfo sharedInfo].reachabilityChangedAction = ^(BOOL reachable) {
         if (reachable && ![PPSystemConfigModel sharedModel].loaded) {
             [self fetchSystemConfigWithCompletionHandler:nil];
@@ -298,16 +305,6 @@ static NSString *const kAliPaySchemeUrl = @"paoPaoYingyuanAliPayUrlScheme";
 
 - (UIInterfaceOrientationMask)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window {
     return UIInterfaceOrientationMaskPortrait;
-}
-#pragma mark - UITabBarControllerDelegate
-
-- (void)tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController {
-    [[QBStatsManager sharedManager] statsTabIndex:[PPUtil currentTabPageIndex] subTabIndex:[PPUtil currentSubTabPageIndex] forClickCount:1];
-}
-
-- (BOOL)tabBarController:(UITabBarController *)tabBarController shouldSelectViewController:(UIViewController *)viewController {
-    [[QBStatsManager sharedManager] statsStopDurationAtTabIndex:[PPUtil currentTabPageIndex] subTabIndex:[PPUtil currentSubTabPageIndex]];
-    return YES;
 }
 
 @end

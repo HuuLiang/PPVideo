@@ -8,7 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
+@class PPSearchView;
 @interface PPBaseViewController : UIViewController
+
+//@property (nonatomic) PPSearchView *searchView;
+@property (nonatomic) BOOL alwaysHideNavigationBar;
+//@property (nonatomic) BOOL alwaysHideNavigationSearchView;
 
 - (instancetype)initWithTitle:(NSString *)title;
 

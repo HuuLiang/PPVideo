@@ -31,6 +31,6 @@
 #import "PPCacheModel.h"
 #import "PPHudManager.h"
 #import "PPColumnModel.h"
-
+#import "PPSearchView.h"
 
 #endif /* PPPrefixHeader_pch */

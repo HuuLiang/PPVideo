@@ -232,7 +232,6 @@ QBDefineLazyPropertyInitialization(PPDetailResponse, response)
     @weakify(self);
     _photoCell.popUrlAction = ^(NSString *popUrl) {
         @strongify(self);
-//        self.adPopView.codeImgUrlStr = popUrl;
         if (self.adPopView.isHidden) {
             self.adPopView.codeImgUrlStr = popUrl;
             self.adPopView.hidden = NO;

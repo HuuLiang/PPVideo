@@ -17,6 +17,8 @@
 
 #import "PPVersionUpdateModel.h"
 #import "PPVersionUpdateViewController.h"
+#import "LeftSlideViewController.h"
+#import "PPNavigationController.h"
 
 static NSString *const kRegisterKeyName         = @"PP_register_keyname";
 static NSString *const kUserAccessUsername      = @"PP_user_access_username";
@@ -306,14 +308,14 @@ static NSString *const kUserImageKeyName        = @"kPPUserImageKeyName";
 }
 
 + (NSUInteger)currentTabPageIndex {
-    UIViewController *rootVC = [UIApplication sharedApplication].keyWindow.rootViewController;
-    if ([rootVC isKindOfClass:[UITabBarController class]]) {
-        UITabBarController *tabVC = (UITabBarController *)rootVC;
+    LeftSlideViewController *rootVC = (LeftSlideViewController *)[UIApplication sharedApplication].keyWindow.rootViewController;
+    if ([rootVC.mainVC isKindOfClass:[UITabBarController class]]) {
+        UITabBarController *tabVC = (UITabBarController *)rootVC.mainVC;
         if (tabVC.selectedIndex == tabVC.childViewControllers.count - 1) {
-            //我
+            //论坛
             return 6;
         } else if (tabVC.selectedIndex == tabVC.childViewControllers.count - 2) {
-            //热搜
+            //直播
             return 5;
         } else if (tabVC.selectedIndex == tabVC.childViewControllers.count - 3) {
             //撸点
@@ -329,6 +331,8 @@ static NSString *const kUserImageKeyName        = @"kPPUserImageKeyName";
             //vipC null vipB 2 vipA 1 vipNone 0
             return [PPUtil currentVipLevel];
         }
+    } else if ([rootVC.leftVC isKindOfClass:[PPNavigationController class]]) {
+        return 7;
     }
     return 0;
 }

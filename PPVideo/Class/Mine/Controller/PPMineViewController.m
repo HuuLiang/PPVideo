@@ -45,18 +45,16 @@ QBDefineLazyPropertyInitialization(PPAppResponse, response)
 
     self.navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName:[UIColor clearColor]};
     
-    self.navigationController.navigationBar.hidden = YES;
-    
     self.layoutTableView.backgroundColor = [UIColor colorWithHexString:@"#efefef"];
     
-//    self.layoutTableView.hasRowSeparator = NO;
     [self.layoutTableView setSeparatorInset:UIEdgeInsetsMake(0, kWidth(30), 0, kWidth(30))];
     self.layoutTableView.hasSectionBorder = NO;
     
     {
         [self.layoutTableView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.right.bottom.equalTo(self.view);
-            make.top.equalTo(self.view).offset(-20);
+            make.left.bottom.equalTo(self.view);
+            make.top.equalTo(self.view.mas_top).offset(-20);
+            make.right.equalTo(self.view.mas_right).offset(-kScreenWidth *0.24);
         }];
     }
     
@@ -103,19 +101,25 @@ QBDefineLazyPropertyInitialization(PPAppResponse, response)
     [self.layoutTableView PP_triggerPullToRefresh];
 }
 
+- (BOOL)alwaysHideNavigationBar {
+    return YES;
+}
+
+- (BOOL)alwaysHideNavigationSearchView {
+    return YES;
+}
+
 - (void)onPaidNotification:(NSNotification *)notification {
     [self.layoutTableView PP_triggerPullToRefresh];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    self.navigationController.navigationBar.hidden = YES;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onPaidNotification:) name:kPaidNotificationName object:nil];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-    self.navigationController.navigationBar.hidden = NO;
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kPaidNotificationName object:nil];
 }
 

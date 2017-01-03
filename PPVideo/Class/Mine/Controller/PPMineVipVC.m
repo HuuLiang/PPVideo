@@ -61,6 +61,14 @@
     
 }
 
+- (BOOL)alwaysHideNavigationBar {
+    return NO;
+}
+
+- (BOOL)alwaysHideNavigationSearchView {
+    return YES;
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
 }

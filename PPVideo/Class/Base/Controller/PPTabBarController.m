@@ -7,10 +7,13 @@
 //
 
 #import "PPTabBarController.h"
+#import "PPNavigationController.h"
 
 #import "PPTrialViewController.h"
 #import "PPVipViewController.h"
 #import "PPSexViewController.h"
+#import "PPLiveViewController.h"
+#import "PPForumViewController.h"
 #import "PPHotViewController.h"
 #import "PPMineViewController.h"
 
@@ -34,7 +37,7 @@ typedef enum : NSUInteger {
     
 } AnimationType;
 
-@interface PPTabBarController ()
+@interface PPTabBarController () <UITabBarControllerDelegate>
 @property (nonatomic,strong) NSMutableArray * childVCs;
 @end
 
@@ -57,12 +60,13 @@ QBDefineLazyPropertyInitialization(NSMutableArray, childVCs)
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    [self tabBarController:self didSelectViewController:[self.childVCs firstObject]];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(presentWindow:) name:kPaidNotificationName object:nil];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-//    [[NSNotificationCenter defaultCenter] removeObserver:self name:kPaidNotificationName object:nil];
+    //    [[NSNotificationCenter defaultCenter] removeObserver:self name:kPaidNotificationName object:nil];
 }
 
 - (void)presentWindow:(NSNotification *)notification {
@@ -77,7 +81,7 @@ QBDefineLazyPropertyInitialization(NSMutableArray, childVCs)
     //animation.type = kCATransitionPush;
     animation.subtype = kCATransitionFromLeft;
     [self.view.window.layer addAnimation:animation forKey:nil];
-
+    
     [self presentViewController:tabBar animated:NO completion:^{
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             [tabBar dismissViewControllerAnimated:NO completion:nil];
@@ -102,27 +106,27 @@ QBDefineLazyPropertyInitialization(NSMutableArray, childVCs)
     
     if ([PPUtil currentVipLevel] == PPVipLevelNone) {
         PPTrialViewController *trialVC = [[PPTrialViewController alloc] initWithTitle:titleDic[@([PPUtil currentVipLevel])]];
-        UINavigationController *trialNav = [[UINavigationController alloc] initWithRootViewController:trialVC];
+        PPNavigationController *trialNav = [[PPNavigationController alloc] initWithRootViewController:trialVC];
         
         trialNav.tabBarItem = [[UITabBarItem alloc] initWithTitle:trialVC.title
-                                                            image:[UIImage imageNamed:[NSString stringWithFormat:@"tabbar_%@_normal",photoDic[@([PPUtil currentVipLevel])]]]
+                                                            image:[[UIImage imageNamed:[NSString stringWithFormat:@"tabbar_%@_normal",photoDic[@([PPUtil currentVipLevel])]]] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]
                                                     selectedImage:[[UIImage imageNamed:[NSString stringWithFormat:@"tabbar_%@_selected",photoDic[@([PPUtil currentVipLevel])]]] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
         [self.childVCs addObject:trialNav];
     }
     
     PPVipViewController *vipVC = [[PPVipViewController alloc] initWithTitle:titleDic[@([PPUtil currentVipLevel] + ([PPUtil isVip] ? 0 : 1))] vipLevel:[PPUtil currentVipLevel] + ([PPUtil isVip] ? 0 : 1)];
-    UINavigationController *vipNav = [[UINavigationController alloc] initWithRootViewController:vipVC];
+    PPNavigationController *vipNav = [[PPNavigationController alloc] initWithRootViewController:vipVC];
     vipNav.tabBarItem = [[UITabBarItem alloc] initWithTitle:vipVC.title
-                                                      image:[UIImage imageNamed:[NSString stringWithFormat:@"tabbar_%@_normal",photoDic[@([PPUtil currentVipLevel] + ([PPUtil isVip] ? 0 : 1))]]]
+                                                      image:[[UIImage imageNamed:[NSString stringWithFormat:@"tabbar_%@_normal",photoDic[@([PPUtil currentVipLevel] + ([PPUtil isVip] ? 0 : 1))]]] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]
                                               selectedImage:[[UIImage imageNamed:[NSString stringWithFormat:@"tabbar_%@_selected",photoDic[@([PPUtil currentVipLevel] + ([PPUtil isVip] ? 0 : 1))]]] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
     [self.childVCs addObject:vipNav];
     
     if (photoDic[@([PPUtil currentVipLevel] + 1)] && self.childVCs.count != 2) {
         PPVipViewController *SVipVC = [[PPVipViewController alloc] initWithTitle:titleDic[@([PPUtil currentVipLevel] + 1)] vipLevel:[PPUtil currentVipLevel] + 1];
-        UINavigationController *SVipNav = [[UINavigationController alloc] initWithRootViewController:SVipVC];
+        PPNavigationController *SVipNav = [[PPNavigationController alloc] initWithRootViewController:SVipVC];
         SVipNav.tabBarItem = [[UITabBarItem alloc] initWithTitle:SVipVC.title
-                                                          image:[UIImage imageNamed:[NSString stringWithFormat:@"tabbar_%@_normal",photoDic[@([PPUtil currentVipLevel] + 1)]]]
-                                                  selectedImage:[[UIImage imageNamed:[NSString stringWithFormat:@"tabbar_%@_selected",photoDic[@([PPUtil currentVipLevel] + 1)]]] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
+                                                           image:[[UIImage imageNamed:[NSString stringWithFormat:@"tabbar_%@_normal",photoDic[@([PPUtil currentVipLevel] + 1)]]] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]
+                                                   selectedImage:[[UIImage imageNamed:[NSString stringWithFormat:@"tabbar_%@_selected",photoDic[@([PPUtil currentVipLevel] + 1)]]] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
         [self.childVCs addObject:SVipNav];
     }
 }
@@ -133,37 +137,43 @@ QBDefineLazyPropertyInitialization(NSMutableArray, childVCs)
     [self addTrendsViewControllers];
     
     PPSexViewController *sexVC = [[PPSexViewController alloc] initWithTitle:@"撸点"];
-    UINavigationController *sexNav = [[UINavigationController alloc] initWithRootViewController:sexVC];
-    UIImage *image = nil;
-    if ([PPUtil currentVipLevel] != PPVipLevelVipC) {
-        sexNav.tabBarItem.imageInsets = UIEdgeInsetsMake(2, 0, -2, 0);
-        image = [[UIImage imageNamed:@"tabbar_sex"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-    } else {
-        image = [UIImage imageNamed:@"tabbar_sex_normal"];
-    }
-    sexNav.tabBarItem = [[UITabBarItem alloc] initWithTitle:[PPUtil currentVipLevel] == PPVipLevelVipC ? @"撸点" : nil
-                                                       image:image
-                                               selectedImage:[[UIImage imageNamed:[PPUtil currentVipLevel] == PPVipLevelVipC ? @"tabbar_sex_selected" : @"tabbar_sex"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
-
+    PPNavigationController *sexNav = [[PPNavigationController alloc] initWithRootViewController:sexVC];
     
-    PPHotViewController *hotVC = [[PPHotViewController alloc] initWithTitle:@"热搜"];
-    UINavigationController *hotNav = [[UINavigationController alloc] initWithRootViewController:hotVC];
-    hotNav.tabBarItem = [[UITabBarItem alloc] initWithTitle:hotVC.title
-                                                       image:[UIImage imageNamed:@"tabbar_hot_normal"]
-                                               selectedImage:[[UIImage imageNamed:@"tabbar_hot_selected"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
+//    UIImage *image = nil;
+//    if ([PPUtil currentVipLevel] != PPVipLevelVipC) {
+//        sexNav.tabBarItem.imageInsets = UIEdgeInsetsMake(10, 0, -10, 0);
+//        image = [[UIImage imageNamed:@"tabbar_sex"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+//    } else {
+//        image = [UIImage imageNamed:@"tabbar_sex_normal"];
+//    }
+//    sexNav.tabBarItem = [[UITabBarItem alloc] initWithTitle:[PPUtil currentVipLevel] == PPVipLevelVipC ? @"撸点" : nil
+//                                                      image:image
+//                                              selectedImage:[[UIImage imageNamed:[PPUtil currentVipLevel] == PPVipLevelVipC ? @"tabbar_sex_selected" : @"tabbar_sex"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
     
-    PPMineViewController *mineVC = [[PPMineViewController alloc] initWithTitle:@"我的"];
-    UINavigationController *mineNav = [[UINavigationController alloc] initWithRootViewController:mineVC];
-    mineNav.tabBarItem = [[UITabBarItem alloc] initWithTitle:mineVC.title
-                                                       image:[UIImage imageNamed:@"tabbar_mine_normal"]
-                                               selectedImage:[[UIImage imageNamed:@"tabbar_mine_selected"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
+    sexNav.tabBarItem = [[UITabBarItem alloc] initWithTitle:nil
+                                                      image:[[UIImage imageNamed:@"tabbar_sex_normal"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]
+                                              selectedImage:[[UIImage imageNamed:@"tabbar_sex_selected"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
+    sexNav.tabBarItem.imageInsets = UIEdgeInsetsMake(6, 0, -6, 0);
+    
+    PPLiveViewController *liveVC = [[PPLiveViewController alloc] initWithTitle:@"直播"];
+    PPNavigationController *liveNav = [[PPNavigationController alloc] initWithRootViewController:liveVC];
+    liveNav.tabBarItem = [[UITabBarItem alloc] initWithTitle:liveVC.title
+                                                       image:[[UIImage imageNamed:@"tabbar_live_normal"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]
+                                               selectedImage:[[UIImage imageNamed:@"tabbar_live_selected"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
+    
+    PPForumViewController *forumVC = [[PPForumViewController alloc] initWithTitle:@"论坛"];
+    PPNavigationController *forumNav = [[PPNavigationController alloc] initWithRootViewController:forumVC];
+    forumNav.tabBarItem = [[UITabBarItem alloc] initWithTitle:forumVC.title
+                                                       image:[[UIImage imageNamed:@"tabbar_forum_normal"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]
+                                               selectedImage:[[UIImage imageNamed:@"tabbar_forum_selected"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
     
     [self.childVCs addObject:sexNav];
-    [self.childVCs addObject:hotNav];
-    [self.childVCs addObject:mineNav];
+    [self.childVCs addObject:liveNav];
+    [self.childVCs addObject:forumNav];
     
     self.viewControllers = self.childVCs;
     self.tabBar.translucent = NO;
+    self.delegate = self;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -176,6 +186,23 @@ QBDefineLazyPropertyInitialization(NSMutableArray, childVCs)
 
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations {
     return UIInterfaceOrientationMaskPortrait;
+}
+
+
+#pragma mark - UITabBarControllerDelegate
+
+- (void)tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController {
+    if ([PPUtil currentTabPageIndex] != 5 && [PPUtil currentTabPageIndex] != 7) {
+        [[PPSearchView showView] showInSuperView:self.view];
+    } else {
+        [[PPSearchView showView] hideFormSuperView];
+    }
+    [[QBStatsManager sharedManager] statsTabIndex:[PPUtil currentTabPageIndex] subTabIndex:[PPUtil currentSubTabPageIndex] forClickCount:1];
+}
+
+- (BOOL)tabBarController:(UITabBarController *)tabBarController shouldSelectViewController:(UIViewController *)viewController {
+    [[QBStatsManager sharedManager] statsStopDurationAtTabIndex:[PPUtil currentTabPageIndex] subTabIndex:[PPUtil currentSubTabPageIndex]];
+    return YES;
 }
 
 @end

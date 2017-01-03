@@ -17,7 +17,9 @@
 #import <MediaPlayer/MediaPlayer.h>
 #import "PPCacheModel.h"
 
-@interface PPBaseViewController ()
+#import "PPSearchView.h"
+
+@interface PPBaseViewController () <UISearchBarDelegate>
 @property (nonatomic,weak) UIButton *refreshBtn;
 @end
 
@@ -34,12 +36,23 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
 }
+
+//- (void)setAlwaysHideNavigationSearchView:(BOOL)alwaysHideNavigationSearchView {
+//    if ([self.view.subviews containsObject:_searchView]) {
+//        _searchView.hidden = alwaysHideNavigationSearchView;
+//        return;
+//    } else {
+//        if (!alwaysHideNavigationSearchView) {
+//            _searchView = [PPSearchView showView];
+//            _searchView.frame = CGRectMake(0, 0, kScreenWidth, 64);
+//            [self.view addSubview:_searchView];
+//        }
+//    }
+//}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 - (BOOL)shouldAutorotate {

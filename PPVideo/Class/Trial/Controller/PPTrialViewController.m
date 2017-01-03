@@ -159,8 +159,6 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
             self->headerView.selectedMoreBtn = NO;
         }
     }];
-
-
 }
 
 - (void)refreshBannerView {
@@ -216,6 +214,13 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
     });
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+}
+
+- (BOOL)alwaysHideNavigationBar {
+    return YES;
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -443,6 +448,10 @@ shouldDisplaySectionBackgroundInSection:(NSUInteger)section {
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
     [[QBStatsManager sharedManager] statsTabIndex:self.tabBarController.selectedIndex subTabIndex:NSNotFound forSlideCount:1];
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    [PPSearchView showView].bgColorAlpha = (scrollView.contentOffset.y > 150 ? scrollView.contentOffset.y - 150 : 0) / 300;
 }
 
 @end

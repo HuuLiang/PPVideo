@@ -95,6 +95,10 @@ QBDefineLazyPropertyInitialization(PPColumnModel, response)
     });
 }
 
+- (BOOL)alwaysHideNavigationBar {
+    return YES;
+}
+
 - (void)loadData {
     @weakify(self);
     [self.vipModel fetchVipInfoWithVipLevel:_vipLevel CompletionHandler:^(BOOL success, id obj) {
