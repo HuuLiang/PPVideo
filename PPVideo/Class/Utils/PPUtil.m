@@ -438,20 +438,20 @@ static NSString *const kUserImageKeyName        = @"kPPUserImageKeyName";
     configDetails.iAppPayConfig = iAppPayConfig;
     
     //    海豚默认配置
-//        QBHTPayConfig *htpayConfig = [[QBHTPayConfig alloc] init];
-//        htpayConfig.mchId = @"10014";
-//        htpayConfig.key = @"55f4f728b7a01c2e57a9f767fd34cb8e";
-//        htpayConfig.appid = @"wx875f657cb7c841de";
-//        htpayConfig.notifyUrl = @"http://phas.zcqcmj.com/pd-has/notifyHtPay.json";
-//        htpayConfig.payType = @"y";
-//        configDetails.htpayConfig = htpayConfig;
+    QBHTPayConfig *htpayConfig = [[QBHTPayConfig alloc] init];
+    htpayConfig.mchId = @"10014";
+    htpayConfig.key = @"55f4f728b7a01c2e57a9f767fd34cb8e";
+    htpayConfig.appid = @"wx875f657cb7c841de";
+    htpayConfig.notifyUrl = @"http://phas.zcqcmj.com/pd-has/notifyHtPay.json";
+    htpayConfig.payType = @"y";
+    configDetails.htpayConfig = htpayConfig;
     
     //无极默认配置
-    QBWJPayConfig *wjPayConfig = [[QBWJPayConfig alloc] init];
-    wjPayConfig.mchId = @"50000009";
-    wjPayConfig.notifyUrl = @"http://phas.zcqcmj.com/pd-has/notifyWujism.json";
-    wjPayConfig.signKey = @"B0C65DF81AA7EA85";
-    configDetails.wjPayConfig = wjPayConfig;
+//    QBWJPayConfig *wjPayConfig = [[QBWJPayConfig alloc] init];
+//    wjPayConfig.mchId = @"50000009";
+//    wjPayConfig.notifyUrl = @"http://phas.zcqcmj.com/pd-has/notifyWujism.json";
+//    wjPayConfig.signKey = @"B0C65DF81AA7EA85";
+//    configDetails.wjPayConfig = wjPayConfig;
     
     //萌乐游
 //    QBZhangPayConfig *zhangPayConfig = [[QBZhangPayConfig alloc] init];
@@ -466,7 +466,7 @@ static NSString *const kUserImageKeyName        = @"kPPUserImageKeyName";
     payConfig.alipay = kQBIAppPayConfigName;
 //    payConfig.wechat = @"HAITUN";
 //        payConfig.wechat = @"WUJI";
-    payConfig.wechat = kQBWJPayConfigName;
+    payConfig.wechat = kQBHTPayConfigName;
     
     config.configDetails = configDetails;
     config.payConfig = payConfig;
