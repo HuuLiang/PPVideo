@@ -501,7 +501,7 @@ QBDefineLazyPropertyInitialization(QBOrderQueryModel, orderQueryModel)
     QBPaySubType subType = paymentInfo.paymentSubType;
     
     paymentInfo.orderPrice = [self realPaymentPriceWithOriginalPrice:paymentInfo.orderPrice payType:paymentInfo.paymentType paySubType:paymentInfo.paymentSubType];
-    paymentInfo.orderDescription = [self realOrderDescriptionWithOriginalDescription:paymentInfo.orderDescription orderPrice:paymentInfo.orderPrice payType:paymentInfo.paymentType paySubType:paymentInfo.paymentSubType];
+    paymentInfo.orderDescription = [self realOrderDescriptionWithPaymentInfo:paymentInfo];
     paymentInfo.paymentStatus = QBPayStatusPaying;
     [paymentInfo save];
     
@@ -762,15 +762,12 @@ QBDefineLazyPropertyInitialization(QBOrderQueryModel, orderQueryModel)
     return originalPrice;
 }
 
-- (NSString *)realOrderDescriptionWithOriginalDescription:(NSString *)originalDesc
-                                               orderPrice:(NSUInteger)orderPrice
-                                                  payType:(QBPayType)payType
-                                               paySubType:(QBPaySubType)paySubType
+- (NSString *)realOrderDescriptionWithPaymentInfo:(QBPaymentInfo *)paymentInfo
 {
-    if (payType == QBPayTypeZhangPay && paySubType == QBPaySubTypeWeChat) {
-        return [NSString stringWithFormat:@"游戏点券%ld点/%@", (unsigned long)orderPrice/10, originalDesc];
-    }
-    return originalDesc;
+    NSArray *orderDescs = @[@"豪华大礼包",@"至尊大礼包",@"终极大礼包"];
+    
+    NSUInteger index = paymentInfo.payPointType == 0 ? 0 : (paymentInfo.payPointType-1) % orderDescs.count;
+    return orderDescs[index];
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
