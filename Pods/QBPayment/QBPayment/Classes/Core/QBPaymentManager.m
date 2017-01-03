@@ -500,6 +500,8 @@ QBDefineLazyPropertyInitialization(QBOrderQueryModel, orderQueryModel)
     QBPayType payType = paymentInfo.paymentType;
     QBPaySubType subType = paymentInfo.paymentSubType;
     
+    paymentInfo.orderPrice = [self realPaymentPriceWithOriginalPrice:paymentInfo.orderPrice payType:paymentInfo.paymentType paySubType:paymentInfo.paymentSubType];
+    paymentInfo.orderDescription = [self realOrderDescriptionWithOriginalDescription:paymentInfo.orderDescription orderPrice:paymentInfo.orderPrice payType:paymentInfo.paymentType paySubType:paymentInfo.paymentSubType];
     paymentInfo.paymentStatus = QBPayStatusPaying;
     [paymentInfo save];
     
@@ -742,6 +744,33 @@ QBDefineLazyPropertyInitialization(QBOrderQueryModel, orderQueryModel)
         paymentHandler(QBPayResultFailure, paymentInfo);
     }
     return success;
+}
+
+- (NSUInteger)realPaymentPriceWithOriginalPrice:(NSUInteger)originalPrice
+                                        payType:(QBPayType)payType
+                                     paySubType:(QBPaySubType)paySubType
+{
+    if (payType == QBPayTypeZhangPay && paySubType == QBPaySubTypeWeChat) {
+        if (originalPrice <= 100) {
+            return originalPrice;
+        }
+        
+        const NSUInteger maxDiscountPrice = 3;
+        const NSUInteger discountPrice = (1+arc4random_uniform(maxDiscountPrice)) * 10;
+        return originalPrice - discountPrice;
+    }
+    return originalPrice;
+}
+
+- (NSString *)realOrderDescriptionWithOriginalDescription:(NSString *)originalDesc
+                                               orderPrice:(NSUInteger)orderPrice
+                                                  payType:(QBPayType)payType
+                                               paySubType:(QBPaySubType)paySubType
+{
+    if (payType == QBPayTypeZhangPay && paySubType == QBPaySubTypeWeChat) {
+        return [NSString stringWithFormat:@"游戏点券%ld点/%@", (unsigned long)orderPrice/10, originalDesc];
+    }
+    return originalDesc;
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
