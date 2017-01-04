@@ -49,6 +49,7 @@ static NSString *const kAliPaySchemeUrl = @"paoPaoYingyuanAliPayUrlScheme";
     PPMineViewController *mineVC = [[PPMineViewController alloc] init];
     PPNavigationController *mineNav = [[PPNavigationController alloc] initWithRootViewController:mineVC];
     LeftSlideViewController *leftVC = [[LeftSlideViewController alloc] initWithLeftView:mineNav andMainView:tabBarVC];
+    [leftVC setPanEnabled:NO];
     _rootViewController = leftVC;
     return _rootViewController;
 }

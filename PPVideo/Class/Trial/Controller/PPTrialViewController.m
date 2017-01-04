@@ -216,6 +216,12 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    [[PPSearchView showView] showInSuperView:self.view animated:YES];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [[PPSearchView showView] hideFormSuperView];
 }
 
 - (BOOL)alwaysHideNavigationBar {
@@ -451,7 +457,7 @@ shouldDisplaySectionBackgroundInSection:(NSUInteger)section {
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    [PPSearchView showView].bgColorAlpha = (scrollView.contentOffset.y > 150 ? scrollView.contentOffset.y - 150 : 0) / 300;
+    [PPSearchView showView].bgColorAlpha = (scrollView.contentOffset.y) / (kScreenWidth/2);
 }
 
 @end

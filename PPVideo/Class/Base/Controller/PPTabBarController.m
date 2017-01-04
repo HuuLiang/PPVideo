@@ -38,6 +38,9 @@ typedef enum : NSUInteger {
 } AnimationType;
 
 @interface PPTabBarController () <UITabBarControllerDelegate>
+{
+    UINavigationController *_hotNav;
+}
 @property (nonatomic,strong) NSMutableArray * childVCs;
 @end
 
@@ -62,11 +65,12 @@ QBDefineLazyPropertyInitialization(NSMutableArray, childVCs)
     [super viewWillAppear:animated];
     [self tabBarController:self didSelectViewController:[self.childVCs firstObject]];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(presentWindow:) name:kPaidNotificationName object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(presentHotVC:) name:kPopSearchNotificationName object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(hideHotVC:) name:kHideSearchNotificationName object:nil];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-    //    [[NSNotificationCenter defaultCenter] removeObserver:self name:kPaidNotificationName object:nil];
 }
 
 - (void)presentWindow:(NSNotification *)notification {
@@ -87,6 +91,17 @@ QBDefineLazyPropertyInitialization(NSMutableArray, childVCs)
             [tabBar dismissViewControllerAnimated:NO completion:nil];
         });
     }];
+}
+
+- (void)presentHotVC:(NSNotification *)notification {
+    PPHotViewController *hotVC = [[PPHotViewController alloc] init];
+    _hotNav = [[UINavigationController alloc] initWithRootViewController:hotVC];
+    [_hotNav setNavigationBarHidden:YES];
+    [self presentViewController:_hotNav animated:YES completion:nil];
+}
+
+- (void)hideHotVC:(NSNotification *)notification {
+    [_hotNav dismissViewControllerAnimated:YES completion:nil];
 }
 
 
@@ -193,7 +208,7 @@ QBDefineLazyPropertyInitialization(NSMutableArray, childVCs)
 
 - (void)tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController {
     if ([PPUtil currentTabPageIndex] != 5 && [PPUtil currentTabPageIndex] != 7) {
-        [[PPSearchView showView] showInSuperView:self.view];
+        [[PPSearchView showView] showInSuperView:self.view animated:[PPUtil currentTabPageIndex] == 0];
     } else {
         [[PPSearchView showView] hideFormSuperView];
     }

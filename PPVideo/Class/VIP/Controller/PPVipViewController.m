@@ -56,7 +56,8 @@ QBDefineLazyPropertyInitialization(PPColumnModel, response)
     [self.view addSubview:_layoutCollectionView];
     {
         [_layoutCollectionView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.edges.equalTo(self.view);
+            make.left.right.bottom.equalTo(self.view);
+            make.top.equalTo(self.view).offset(44);
         }];
     }
     
@@ -94,6 +95,17 @@ QBDefineLazyPropertyInitialization(PPColumnModel, response)
         }
     });
 }
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [[PPSearchView showView] showInSuperView:self.view animated:NO];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [[PPSearchView showView] hideFormSuperView];
+}
+
 
 - (BOOL)alwaysHideNavigationBar {
     return YES;

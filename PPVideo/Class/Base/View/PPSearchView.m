@@ -14,6 +14,7 @@
     UIButton    *_userButton;
     PPSearchBar *_searchBar;
     UIButton    *_cancleButton;
+    NSString    *_placeholderStr;
 }
 @end
 
@@ -33,6 +34,9 @@
     self = [super init];
     if (self) {
         self.backgroundColor = [UIColor colorWithHexString:@"#ffffff"];
+        _placeholderStr = @"波多野结衣最新力作";
+        _bgColorAlpha = 0;
+        _firstResponder = NO;
         
         _userButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [_userButton setBackgroundImage:[UIImage imageNamed:@"mine_avatar"] forState:UIControlStateNormal];
@@ -41,7 +45,8 @@
         _searchBar = [[PPSearchBar alloc] init];
         _searchBar.backgroundColor = [[UIColor colorWithHexString:@"#ebebeb"] colorWithAlphaComponent:0.3];
         _searchBar.delegate = self;
-        _searchBar.placeholder = @"波多野结衣最新力作";
+        _searchBar.font = [UIFont systemFontOfSize:13];
+        _searchBar.placeholder = _placeholderStr;
         UIImageView *image=[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"hot_search_normal"]];
         _searchBar.leftView = image;
         _searchBar.leftViewMode = UITextFieldViewModeAlways;
@@ -52,13 +57,20 @@
         [_cancleButton setTitle:@"取消" forState:UIControlStateNormal];
         [_cancleButton setTitleColor:[UIColor colorWithHexString:@"#333333"] forState:UIControlStateNormal];
         _cancleButton.titleLabel.font = [UIFont systemFontOfSize:14];
+        _cancleButton.hidden = YES;
         [self addSubview:_cancleButton];
+        
         
         @weakify(self);
         [_userButton bk_addEventHandler:^(id sender) {
-            @strongify(self);
             LeftSlideViewController *rootVC = (LeftSlideViewController *)[UIApplication sharedApplication].keyWindow.rootViewController;
             [rootVC openLeftView];
+        } forControlEvents:UIControlEventTouchUpInside];
+        
+        [_cancleButton bk_addEventHandler:^(id sender) {
+            @strongify(self);
+            [self removeFromSuperview];
+            [self->_searchBar resignFirstResponder];
         } forControlEvents:UIControlEventTouchUpInside];
         
         {
@@ -77,19 +89,31 @@
             
             [_cancleButton mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.right.equalTo(self.mas_right).offset(-kWidth(12));
-                make.bottom.equalTo(self.mas_bottom).offset(-14);
+                make.centerY.equalTo(_searchBar);
                 make.size.mas_equalTo(CGSizeMake(30, kWidth(28)));
             }];
         }
-        
+
     }
     return self;
 }
 
-- (void)showInSuperView:(UIView *)view {
+- (void)showInSuperView:(UIView *)view animated:(BOOL)animated {
+    if (animated) {
+        self.bgColorAlpha = _bgColorAlpha;
+        UIImageView *image=[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"hot_search_normal"]];
+        _searchBar.leftView = image;
+    } else {
+        UIImageView *image=[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"hot_search_selected"]];
+        _searchBar.leftView = image;
+        NSAttributedString *attr = [[NSAttributedString alloc] initWithString:_placeholderStr attributes:@{NSForegroundColorAttributeName:[UIColor colorWithHexString:@"#666666"],
+                                                                                                           NSFontAttributeName:[UIFont systemFontOfSize:13]}];
+        _searchBar.attributedPlaceholder = attr;
+        _searchBar.backgroundColor = [UIColor colorWithHexString:@"#ebebeb"];
+        self.backgroundColor = [UIColor colorWithHexString:@"#ffffff"];
+    }
     self.frame = CGRectMake(0, 0, kScreenWidth, 64);
     [view addSubview:self];
-    
 }
 
 - (void)setBgColorAlpha:(CGFloat)bgColorAlpha {
@@ -102,29 +126,43 @@
     [self removeFromSuperview];
 }
 
-
-- (UIImage*)GetImage {
-    UIColor *color = [UIColor colorWithHexString:@"#ffffff"];
-    CGRect r= CGRectMake(0.0f, 0.0f, 1.0f, 20);
-    UIGraphicsBeginImageContext(r.size);
-    CGContextRef context = UIGraphicsGetCurrentContext();
+- (void)setFirstResponder:(BOOL)firstResponder {
+    _firstResponder = firstResponder;
+//    BOOL suc = [_searchBar canBecomeFirstResponder];
     
-    CGContextSetFillColorWithColor(context, [color CGColor]);
-    CGContextFillRect(context, r);
-    
-    UIImage *img = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-    
-    return img;
+//    if (_firstResponder) {
+//        [self->_searchBar becomeFirstResponder];
+//    }
 }
 
 #pragma mark - UITextViewDelegate
 
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
+    if (_firstResponder) {
+        return YES;
+    } else {
+        [[NSNotificationCenter defaultCenter] postNotificationName:kPopSearchNotificationName object:nil];
+        _firstResponder = YES;
+        return NO;
+    }
+}
+
 - (void)textFieldDidBeginEditing:(UITextField *)textField {
+    self->_cancleButton.hidden = NO;
     UIImageView *image=[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"hot_search_selected"]];
-    textField.leftView = image;
+    self->_searchBar.leftView = image;
+    self->_searchBar.text = _placeholderStr;
+}
+
+- (void)textFieldDidEndEditing:(UITextField *)textField {
+    _cancleButton.hidden = YES;
+    _placeholderStr = textField.text;
+    NSAttributedString *attr = [[NSAttributedString alloc] initWithString:_placeholderStr attributes:@{NSForegroundColorAttributeName:[UIColor colorWithHexString:@"#666666"],
+                                                                                                       NSFontAttributeName:[UIFont systemFontOfSize:13]}];
+    _searchBar.attributedPlaceholder = attr;
+    textField.text = @"";
     
-    textField.text = textField.attributedPlaceholder.string;
+    [[NSNotificationCenter defaultCenter] postNotificationName:kHideSearchNotificationName object:nil];
 }
 
 @end
@@ -151,21 +189,22 @@
 - (CGRect)editingRectForBounds:(CGRect)bounds {
     CGRect editingRect = [super editingRectForBounds:bounds];
     editingRect.origin.x += 10;
+    editingRect.origin.y += 2.5;
     return editingRect;
 }
 
 - (CGRect)textRectForBounds:(CGRect)bounds {
     CGRect textRect = [super textRectForBounds:bounds];
-    textRect.origin.x += 10;
+//    textRect.origin.x += 10;
     return textRect;
 }
 
 - (CGRect)placeholderRectForBounds:(CGRect)bounds {
     CGRect placeholderRect = [super placeholderRectForBounds:bounds];
-    NSMutableAttributedString *attri = [[NSMutableAttributedString alloc] initWithString:self.placeholder
-                                                                              attributes:@{NSForegroundColorAttributeName:[[UIColor colorWithHexString:@"#ffffff"] colorWithAlphaComponent:0.54],
-                                                                                           NSFontAttributeName:[UIFont systemFontOfSize:kWidth(26)]}];
-    self.attributedPlaceholder = attri;
+//    NSMutableAttributedString *attri = [[NSMutableAttributedString alloc] initWithString:self.placeholder
+//                                                                              attributes:@{NSForegroundColorAttributeName:[[UIColor colorWithHexString:@"#ffffff"] colorWithAlphaComponent:0.54],
+//                                                                                           NSFontAttributeName:[UIFont systemFontOfSize:13]}];
+//    self.attributedPlaceholder = attri;
     
     placeholderRect.origin.x += 10;
     placeholderRect.size.width -= 10;

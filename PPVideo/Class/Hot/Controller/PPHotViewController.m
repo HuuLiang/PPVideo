@@ -32,7 +32,6 @@ typedef NS_ENUM(NSInteger ,PPHotSection) {
 @interface PPHotViewController () <UICollectionViewDataSource,UICollectionViewDelegate,PPSectionBackgroundFlowLayoutDelegate,UISearchBarDelegate>
 {
     UICollectionView *_layoutCollectionView;
-    UISearchBar *_searchBar;
     PPHotContentHeaderView *headerView;
     BOOL _loadMoreTags;
 }
@@ -48,41 +47,6 @@ QBDefineLazyPropertyInitialization(PPSearchModel, searchModel)
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.navigationItem.title = @"";
-    
-    
-    UIView *titleView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kWidth(500), 30)];
-    UIColor *color = self.navigationController.navigationBar.barTintColor;
-    [titleView setBackgroundColor:color];
-    
-    _searchBar = [[UISearchBar alloc] init];
-    _searchBar.frame = CGRectMake(0, 0, kWidth(500), 30);
-    _searchBar.placeholder = @"关键字搜索";
-    _searchBar.searchBarStyle = UISearchBarStyleDefault;
-    _searchBar.barStyle = UIBarStyleBlack;
-    _searchBar.delegate = self;
-    _searchBar.tintColor = [UIColor colorWithHexString:@"#ffffff"];
-    _searchBar.barTintColor = [UIColor colorWithHexString:@"#ffffff"];
-    [_searchBar setBackgroundColor:[UIColor colorWithHexString:@"#ffffff"]];
-    _searchBar.layer.cornerRadius = 15;
-    _searchBar.layer.masksToBounds = YES;
-    [_searchBar setSearchFieldBackgroundImage:[self GetImage] forState:UIControlStateNormal];
-    
-    [titleView addSubview:_searchBar];
-    [self.navigationItem.titleView sizeToFit];
-    self.navigationItem.titleView = titleView;
-    
-//    const CGFloat fullBarWidth = CGRectGetWidth(self.navigationController.navigationBar.bounds);
-//    const CGFloat fullBarHeight = CGRectGetHeight(self.navigationController.navigationBar.bounds);
-//    
-//    const CGFloat searchBarWidth = fullBarWidth/1.5;
-//    const CGFloat searchBarHeight = fullBarHeight * 0.8;
-//    const CGFloat searchBarY = (fullBarHeight - searchBarHeight)/2;
-//    const CGFloat searchBarX = (fullBarWidth - searchBarWidth)/2;
-//    _searchBar.frame = CGRectMake(searchBarX, searchBarY - 3, searchBarWidth, searchBarHeight);
-//    _searchBar.layer.cornerRadius = searchBarHeight/2;
-//    _searchBar.layer.masksToBounds = YES;
-//    [self.navigationController.navigationBar addSubview:_searchBar];
     
     PPSectionBackgroundFlowLayout *mainLayout = [[PPSectionBackgroundFlowLayout alloc] init];
     _layoutCollectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:mainLayout];
@@ -140,22 +104,6 @@ QBDefineLazyPropertyInitialization(PPSearchModel, searchModel)
     });
 }
 
-- (UIImage*)GetImage;
-{
-    UIColor *color = [UIColor colorWithHexString:@"#ffffff"];
-    CGRect r= CGRectMake(0.0f, 0.0f, 1.0f, 20);
-    UIGraphicsBeginImageContext(r.size);
-    CGContextRef context = UIGraphicsGetCurrentContext();
-    
-    CGContextSetFillColorWithColor(context, [color CGColor]);
-    CGContextFillRect(context, r);
-    
-    UIImage *img = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-    
-    return img;
-}
-
 - (void)refreshHotNotification:(NSNotification *)notification {
     [self->_layoutCollectionView PP_triggerPullToRefresh];
 }
@@ -180,18 +128,21 @@ QBDefineLazyPropertyInitialization(PPSearchModel, searchModel)
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kPaidNotificationName object:nil];
-    _searchBar.hidden = YES;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    [[PPSearchView showView] showInSuperView:self.view animated:NO];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshHotNotification:) name:kPaidNotificationName object:nil];
-    _searchBar.hidden = NO;
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    [PPSearchView showView].firstResponder = YES;
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 #pragma mark - UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout
@@ -246,7 +197,6 @@ QBDefineLazyPropertyInitialization(PPSearchModel, searchModel)
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-//    UICollectionViewFlowLayout *layout = (UICollectionViewFlowLayout *)[self collection];
     CGFloat itemSpacing = [self collectionView:collectionView layout:collectionViewLayout minimumInteritemSpacingForSectionAtIndex:indexPath.section];
     UIEdgeInsets insets = [self collectionView:collectionView layout:collectionViewLayout insetForSectionAtIndex:indexPath.section];
     CGFloat fullWidth = CGRectGetWidth(collectionView.bounds);
@@ -351,12 +301,8 @@ QBDefineLazyPropertyInitialization(PPSearchModel, searchModel)
                                                                      programId:nil
                                                                    programType:nil
                                                                programLocation:nil];
-//            if ([PPUtil currentVipLevel] == PPVipLevelNone) {
-//                [self presentPayViewControllerWithBaseModel:baseModel];
-//            } else {
                 [self searchTagWithStr:self.response.tags[indexPath.item]];
                 [[QBStatsManager sharedManager] statsCPCWithBaseModel:baseModel inTabIndex:self.tabBarController.selectedIndex];
-//            }
         }
     } else if (indexPath.section == PPHotSectionContent) {
         if (indexPath.item < self.response.hotSearch.count) {
@@ -373,9 +319,6 @@ QBDefineLazyPropertyInitialization(PPSearchModel, searchModel)
         @strongify(self);
         if (success) {
             if (obj.count > 0) {
-                if ([self->_searchBar isFirstResponder]) {
-                    [self->_searchBar resignFirstResponder];
-                }
                 PPSearchResultViewController *resultVC = [[PPSearchResultViewController alloc] initWithProgramList:obj searchWords:tagStr ColumnId:self.response.columnId];
                 [self.navigationController pushViewController:resultVC animated:YES];
             } else {

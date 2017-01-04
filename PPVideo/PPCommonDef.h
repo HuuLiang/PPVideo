@@ -35,6 +35,8 @@ typedef NS_ENUM(NSInteger ,PPVipLevel) {
 
 #define tableViewCellheight  MAX(kScreenHeight*0.06,44)
 #define kPaidNotificationName             @"PPVideoPaidNotification"
+#define kPopSearchNotificationName        @"PopSearchNotificationName"
+#define kHideSearchNotificationName       @"HideSearchNotificationName"
 
 #define kTimeFormatShort                  @"yyyyMMdd"
 #define KTimeFormatLong                   @"yyyyMMddHHmmss"

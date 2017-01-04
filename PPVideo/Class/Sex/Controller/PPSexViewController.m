@@ -55,7 +55,8 @@ QBDefineLazyPropertyInitialization(NSMutableDictionary, reloadDic)
     [self.view addSubview:_layoutCollectionView];
     {
         [_layoutCollectionView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.edges.equalTo(self.view);
+            make.left.right.bottom.equalTo(self.view);
+            make.top.equalTo(self.view).offset(44);
         }];
     }
     
@@ -96,11 +97,13 @@ QBDefineLazyPropertyInitialization(NSMutableDictionary, reloadDic)
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    [[PPSearchView showView] showInSuperView:self.view animated:NO];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshSexView:) name:kPaidNotificationName object:nil];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
+    [[PPSearchView showView] hideFormSuperView];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kPaidNotificationName object:nil];
 }
 
