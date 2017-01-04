@@ -128,7 +128,7 @@
 
 - (void)setFirstResponder:(BOOL)firstResponder {
     _firstResponder = firstResponder;
-//    BOOL suc = [_searchBar canBecomeFirstResponder];
+    
     
 //    if (_firstResponder) {
 //        [self->_searchBar becomeFirstResponder];

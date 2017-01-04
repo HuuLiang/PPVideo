@@ -15,6 +15,8 @@ static NSString *const kHotCacheKeyName           = @"PP_HotCache_KeyName";
 static NSString *const kAppCacheKeyName           = @"PP_AppCache_KeyName";
 static NSString *const kSystemConfigKeyName       = @"PP_SystemConfig_KeyName";
 
+static NSString *const kForumCacheConfigKeyName   = @"PP_ForumCache_KeyName";
+
 @implementation PPCacheModel
 
 #pragma mark -- Trail
@@ -145,6 +147,30 @@ static NSString *const kSystemConfigKeyName       = @"PP_SystemConfig_KeyName";
     [[NSUserDefaults standardUserDefaults] setObject:data forKey:kSystemConfigKeyName];
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
+
+#pragma mark -- ForumCache
+
++(NSArray <PPColumnModel *>*)getForumCache {
+    NSArray *array = [[NSUserDefaults standardUserDefaults] objectForKey:kForumCacheConfigKeyName];
+    NSMutableArray <PPColumnModel *>*columnList = [[NSMutableArray alloc] init];
+    for (NSData *data in array) {
+        PPColumnModel *model = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+        [columnList addObject:model];
+    }
+    return columnList;;
+}
+
++(void)updateForumCacheWithColumnInfo:(NSArray <PPColumnModel *>*)columnList {
+    NSMutableArray * array = [[NSMutableArray alloc] init];
+    for (PPColumnModel * model in columnList) {
+        NSData * data = [NSKeyedArchiver archivedDataWithRootObject:model];
+        [array addObject:data];
+    }
+    [[NSUserDefaults standardUserDefaults] setObject:array forKey:kForumCacheConfigKeyName];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
+
 
 #pragma mark -- VideoCache
 

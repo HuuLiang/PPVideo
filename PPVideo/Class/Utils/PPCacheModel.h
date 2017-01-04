@@ -12,6 +12,8 @@
 #import "PPAppModel.h"
 #import "PPDetailModel.h"
 #import "PPSystemConfigModel.h"
+//#import "PPForumModel.h"
+
 
 @interface PPCacheModel : JKDBModel
 
@@ -35,6 +37,9 @@
 
 +(PPSystemConfigModel *)getSystemConfigModelInfo;
 +(void)updateSystemConfigModelWithSystemConfigModel:(PPSystemConfigModel *)systemConfigModel;
+
++(NSArray <PPColumnModel *>*)getForumCache;
++(void)updateForumCacheWithColumnInfo:(NSArray <PPColumnModel *>*)columnList;
 
 //视频缓存
 @property (nonatomic) NSInteger programVideoCacheId;

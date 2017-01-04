@@ -63,7 +63,7 @@ QBDefineLazyPropertyInitialization(NSMutableArray, childVCs)
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    [self tabBarController:self didSelectViewController:[self.childVCs firstObject]];
+//    [self tabBarController:self didSelectViewController:[self.childVCs firstObject]];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(presentWindow:) name:kPaidNotificationName object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(presentHotVC:) name:kPopSearchNotificationName object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(hideHotVC:) name:kHideSearchNotificationName object:nil];

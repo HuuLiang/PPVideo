@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		EC009E8E1DE9770D004443A8 /* PPTrailFreeAdCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EC009E8D1DE9770D004443A8 /* PPTrailFreeAdCell.m */; };
+		EC0932D51E1CE21800AFCD76 /* PPForumModel.m in Sources */ = {isa = PBXBuildFile; fileRef = EC0932D41E1CE21800AFCD76 /* PPForumModel.m */; };
+		EC0932D81E1CE35000AFCD76 /* PPForumCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EC0932D71E1CE35000AFCD76 /* PPForumCell.m */; };
+		EC0932DB1E1CE36600AFCD76 /* PPForumHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = EC0932DA1E1CE36600AFCD76 /* PPForumHeaderView.m */; };
 		EC20D0041DB86FBD0089D8BF /* PPSearchResultViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EC20D0031DB86FBD0089D8BF /* PPSearchResultViewController.m */; };
 		EC20D0071DB8715A0089D8BF /* PPSearchCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EC20D0061DB8715A0089D8BF /* PPSearchCell.m */; };
 		EC20D00A1DB876B70089D8BF /* PPDetailHeaderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EC20D0091DB876B70089D8BF /* PPDetailHeaderCell.m */; };
@@ -117,6 +120,12 @@
 		D1AEB812654C461832824D5D /* Pods-PPVideo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PPVideo.release.xcconfig"; path = "Pods/Target Support Files/Pods-PPVideo/Pods-PPVideo.release.xcconfig"; sourceTree = "<group>"; };
 		EC009E8C1DE9770D004443A8 /* PPTrailFreeAdCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPTrailFreeAdCell.h; sourceTree = "<group>"; };
 		EC009E8D1DE9770D004443A8 /* PPTrailFreeAdCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPTrailFreeAdCell.m; sourceTree = "<group>"; };
+		EC0932D31E1CE21800AFCD76 /* PPForumModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPForumModel.h; sourceTree = "<group>"; };
+		EC0932D41E1CE21800AFCD76 /* PPForumModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPForumModel.m; sourceTree = "<group>"; };
+		EC0932D61E1CE35000AFCD76 /* PPForumCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPForumCell.h; sourceTree = "<group>"; };
+		EC0932D71E1CE35000AFCD76 /* PPForumCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPForumCell.m; sourceTree = "<group>"; };
+		EC0932D91E1CE36600AFCD76 /* PPForumHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPForumHeaderView.h; sourceTree = "<group>"; };
+		EC0932DA1E1CE36600AFCD76 /* PPForumHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPForumHeaderView.m; sourceTree = "<group>"; };
 		EC20D0021DB86FBD0089D8BF /* PPSearchResultViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPSearchResultViewController.h; sourceTree = "<group>"; };
 		EC20D0031DB86FBD0089D8BF /* PPSearchResultViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPSearchResultViewController.m; sourceTree = "<group>"; };
 		EC20D0051DB8715A0089D8BF /* PPSearchCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPSearchCell.h; sourceTree = "<group>"; };
@@ -395,6 +404,8 @@
 		EC305DC71E1B400A00BBE760 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				EC0932D31E1CE21800AFCD76 /* PPForumModel.h */,
+				EC0932D41E1CE21800AFCD76 /* PPForumModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -402,6 +413,10 @@
 		EC305DC81E1B400A00BBE760 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				EC0932D61E1CE35000AFCD76 /* PPForumCell.h */,
+				EC0932D71E1CE35000AFCD76 /* PPForumCell.m */,
+				EC0932D91E1CE36600AFCD76 /* PPForumHeaderView.h */,
+				EC0932DA1E1CE36600AFCD76 /* PPForumHeaderView.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1123,6 +1138,7 @@
 				ECB8F0D91DB743B50088A118 /* PPProgramModel.m in Sources */,
 				EC20D0041DB86FBD0089D8BF /* PPSearchResultViewController.m in Sources */,
 				EC20D0171DB89AA70089D8BF /* JKDBModel.m in Sources */,
+				EC0932DB1E1CE36600AFCD76 /* PPForumHeaderView.m in Sources */,
 				ECE957A01DE44C4F00B39550 /* PPAppHeaderCell.m in Sources */,
 				ECFA0E761DB9E61600E61347 /* PPVipIntroduceCell.m in Sources */,
 				ECFA0E8B1DBDCCE200E61347 /* PPVideoPlayerController.m in Sources */,
@@ -1131,6 +1147,7 @@
 				EC20D00A1DB876B70089D8BF /* PPDetailHeaderCell.m in Sources */,
 				EC20D0241DB8AC220089D8BF /* NSString+StringHeight.m in Sources */,
 				EC4C6A7F1DB4BE2C0009771A /* PPSexFooterView.m in Sources */,
+				EC0932D81E1CE35000AFCD76 /* PPForumCell.m in Sources */,
 				ECC097B91DB20CD600875D56 /* PPTrialViewController.m in Sources */,
 				ECFA0E7F1DBA249B00E61347 /* PPPayHeaderCell.m in Sources */,
 				ECC097DA1DB23ECD00875D56 /* SDCollectionViewCell.m in Sources */,
@@ -1141,6 +1158,7 @@
 				EC4422B81E08DC0600F48461 /* PPVersionUpdateModel.m in Sources */,
 				ECFA0E911DBDCDE700E61347 /* PPVideoPlayer.m in Sources */,
 				EC305DD81E1B8CF400BBE760 /* PPSearchView.m in Sources */,
+				EC0932D51E1CE21800AFCD76 /* PPForumModel.m in Sources */,
 				ECCFA0B01DED34AB000F4E7A /* PPAdPopView.m in Sources */,
 				ECC0978C1DB1F1F400875D56 /* PPConfiguration.m in Sources */,
 				ECC097581DB1C8AA00875D56 /* AppDelegate.m in Sources */,
