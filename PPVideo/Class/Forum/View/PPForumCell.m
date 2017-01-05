@@ -23,6 +23,7 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
+        self.contentView.backgroundColor = [UIColor colorWithHexString:@"#ffffff"];
         
         _imgV = [[UIImageView alloc] init];
         [self.contentView addSubview:_imgV];
@@ -71,5 +72,22 @@
     }
     return self;
 }
+
+- (void)setImgUrl:(NSString *)imgUrl {
+    [_imgV sd_setImageWithURL:[NSURL URLWithString:imgUrl]];
+}
+
+- (void)setTitle:(NSString *)title {
+    _titleLabel.text = title;
+}
+
+- (void)setTheme:(NSString *)theme {
+    _themeLabel.text = [NSString stringWithFormat:@"主题:%@",theme];
+}
+
+- (void)setLatest:(NSString *)latest {
+    _latestLabel.text = [NSString stringWithFormat:@"最后发表:%@秒前",latest];
+}
+
 
 @end

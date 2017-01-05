@@ -118,7 +118,6 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
     [_layoutCollectionView PP_addVIPNotiRefreshWithHandler:^{
         @strongify(self);
         [[PPHudManager manager] showHudWithText:@"升级VIP可观看更多"];
-        [self presentPayViewControllerWithBaseModel:nil];
         [self->_layoutCollectionView PP_endPullToRefresh];
     }];
     
@@ -221,7 +220,6 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-    [[PPSearchView showView] hideFormSuperView];
 }
 
 - (BOOL)alwaysHideNavigationBar {

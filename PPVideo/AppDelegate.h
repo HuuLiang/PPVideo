@@ -12,6 +12,9 @@
 
 @property (strong, nonatomic) UIWindow *window;
 
+- (UIViewController *)rootViewController;
+
+- (UIViewController *)searchRootViewController;
 
 @end
 

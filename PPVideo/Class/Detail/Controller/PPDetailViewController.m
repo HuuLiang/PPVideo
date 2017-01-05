@@ -82,14 +82,7 @@ QBDefineLazyPropertyInitialization(PPDetailResponse, response)
             }
         }
     };
-    
-//    {
-//        [self.layoutTableView mas_makeConstraints:^(MASConstraintMaker *make) {
-//            make.left.top.right.bottom.equalTo(self.view);
-//            make.bottom.equalTo(self.view.mas_bottom).offset(-kWidth(68));
-//        }];
-//    }
-    
+        
     [self.layoutTableView PP_addPullToRefreshWithHandler:^{
         [self loadData];
     }];

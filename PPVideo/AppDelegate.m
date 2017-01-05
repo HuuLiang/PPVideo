@@ -19,12 +19,14 @@
 
 #import "PPNavigationController.h"
 #import "PPMineViewController.h"
+#import "PPHotViewController.h"
 #import "LeftSlideViewController.h"
 
 static NSString *const kAliPaySchemeUrl = @"paoPaoYingyuanAliPayUrlScheme";
 
 @interface AppDelegate ()
 @property (nonatomic) UIViewController *rootViewController;
+@property (nonatomic) UIViewController *searchRootViewController;
 @end
 
 @implementation AppDelegate
@@ -48,10 +50,32 @@ static NSString *const kAliPaySchemeUrl = @"paoPaoYingyuanAliPayUrlScheme";
     
     PPMineViewController *mineVC = [[PPMineViewController alloc] init];
     PPNavigationController *mineNav = [[PPNavigationController alloc] initWithRootViewController:mineVC];
+    
     LeftSlideViewController *leftVC = [[LeftSlideViewController alloc] initWithLeftView:mineNav andMainView:tabBarVC];
     [leftVC setPanEnabled:NO];
+    
     _rootViewController = leftVC;
+    
     return _rootViewController;
+}
+
+- (UIViewController *)searchRootViewController {
+    if (_searchRootViewController) {
+        return _searchRootViewController;
+    }
+    
+    PPMineViewController *mineVC = [[PPMineViewController alloc] init];
+    PPNavigationController *mineNav = [[PPNavigationController alloc] initWithRootViewController:mineVC];
+
+    PPHotViewController *hotVC = [[PPHotViewController alloc] init];
+    PPNavigationController *hotNav = [[PPNavigationController alloc] initWithRootViewController:hotVC];
+    
+    LeftSlideViewController *leftVC = [[LeftSlideViewController alloc] initWithLeftView:mineNav andMainView:hotNav];
+    [leftVC setPanEnabled:NO];
+    
+    _searchRootViewController = leftVC;
+    
+    return _searchRootViewController;
 }
 
 - (void)setupCommonStyles {
@@ -261,6 +285,11 @@ static NSString *const kAliPaySchemeUrl = @"paoPaoYingyuanAliPayUrlScheme";
     
     [self.window makeKeyAndVisible];
     [self setupMobStatistics];
+    
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(presentHotVC:) name:kPopSearchNotificationName object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(hideHotVC:) name:kHideSearchNotificationName object:nil];
+    
     return YES;
 }
 
@@ -307,5 +336,28 @@ static NSString *const kAliPaySchemeUrl = @"paoPaoYingyuanAliPayUrlScheme";
 - (UIInterfaceOrientationMask)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window {
     return UIInterfaceOrientationMaskPortrait;
 }
+
+- (void)presentHotVC:(NSNotification *)notification {
+    CATransition *animation = [CATransition animation];
+    animation.duration = 0.5;
+    animation.timingFunction = UIViewAnimationOptionCurveEaseInOut;
+    animation.type = @"CurlDown";
+    
+    //animation.type = kCATransitionPush;
+    animation.subtype = kCATransitionFromLeft;
+    [self.window.layer addAnimation:animation forKey:nil];
+    [self.window.rootViewController presentViewController:self.searchRootViewController animated:YES completion:^{
+        self.window.rootViewController = self.searchRootViewController;
+        [self.window makeKeyAndVisible];
+    }];
+}
+
+- (void)hideHotVC:(NSNotification *)notification {
+    [self.window.rootViewController dismissViewControllerAnimated:YES completion:^{
+        self.window.rootViewController = self.rootViewController;
+        [self.window makeKeyAndVisible];
+    }];
+}
+
 
 @end

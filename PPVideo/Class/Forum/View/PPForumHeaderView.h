@@ -9,5 +9,13 @@
 #import <UIKit/UIKit.h>
 
 @interface PPForumHeaderView : UICollectionReusableView
+@property (nonatomic) NSString *title;
+@property (nonatomic) NSString *owner;
+@end
+
+
+@interface PPForumTitleView : UICollectionReusableView
+
+@property (nonatomic) NSAttributedString *attriString;
 
 @end

@@ -17,6 +17,9 @@
 #import "PPHotViewController.h"
 #import "PPMineViewController.h"
 
+#import "LeftSlideViewController.h"
+#import "AppDelegate.h"
+
 typedef enum : NSUInteger {
     Fade = 1,                   //淡入淡出
     Push,                       //推挤
@@ -39,7 +42,7 @@ typedef enum : NSUInteger {
 
 @interface PPTabBarController () <UITabBarControllerDelegate>
 {
-    UINavigationController *_hotNav;
+//    LeftSlideViewController *_newRootVC;
 }
 @property (nonatomic,strong) NSMutableArray * childVCs;
 @end
@@ -65,8 +68,6 @@ QBDefineLazyPropertyInitialization(NSMutableArray, childVCs)
     [super viewWillAppear:animated];
 //    [self tabBarController:self didSelectViewController:[self.childVCs firstObject]];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(presentWindow:) name:kPaidNotificationName object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(presentHotVC:) name:kPopSearchNotificationName object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(hideHotVC:) name:kHideSearchNotificationName object:nil];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -92,18 +93,6 @@ QBDefineLazyPropertyInitialization(NSMutableArray, childVCs)
         });
     }];
 }
-
-- (void)presentHotVC:(NSNotification *)notification {
-    PPHotViewController *hotVC = [[PPHotViewController alloc] init];
-    _hotNav = [[UINavigationController alloc] initWithRootViewController:hotVC];
-    [_hotNav setNavigationBarHidden:YES];
-    [self presentViewController:_hotNav animated:YES completion:nil];
-}
-
-- (void)hideHotVC:(NSNotification *)notification {
-    [_hotNav dismissViewControllerAnimated:YES completion:nil];
-}
-
 
 - (void)addTrendsViewControllers {
     
@@ -209,8 +198,6 @@ QBDefineLazyPropertyInitialization(NSMutableArray, childVCs)
 - (void)tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController {
     if ([PPUtil currentTabPageIndex] != 5 && [PPUtil currentTabPageIndex] != 7) {
         [[PPSearchView showView] showInSuperView:self.view animated:[PPUtil currentTabPageIndex] == 0];
-    } else {
-        [[PPSearchView showView] hideFormSuperView];
     }
     [[QBStatsManager sharedManager] statsTabIndex:[PPUtil currentTabPageIndex] subTabIndex:[PPUtil currentSubTabPageIndex] forClickCount:1];
 }

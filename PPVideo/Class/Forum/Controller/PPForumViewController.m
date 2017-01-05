@@ -13,6 +13,7 @@
 #import "PPForumModel.h"
 
 static NSString *const kPPForumHeaderViewReusableIdentifier = @"PPForumHeaderViewReusableIdentifier";
+static NSString *const kPPForumTitleViewReusableIdentifier  = @"PPForumTitleViewReusableIdentifier";
 static NSString *const kPPForumCellReusableIdentifier       = @"kPPForumCellReusableIdentifier";
 static NSString *const kSectionBackgroundReusableIdentifier = @"SectionBackgroundReusableIdentifier";
 
@@ -20,7 +21,7 @@ static NSString *const kSectionBackgroundReusableIdentifier = @"SectionBackgroun
 @interface PPForumViewController () <UICollectionViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout,PPSectionBackgroundFlowLayoutDelegate>
 {
     UICollectionView    *_layoutCollectionView;
-    PPForumHeaderView   *_headerView;
+    NSMutableAttributedString *_attriStr;
 }
 @property (nonatomic) NSMutableArray *dataSource;
 @property (nonatomic) PPForumModel  *forumModel;
@@ -36,8 +37,8 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
     self.view.backgroundColor = [UIColor colorWithHexString:@"#ffffff"];
     
     PPSectionBackgroundFlowLayout *mainLayout = [[PPSectionBackgroundFlowLayout alloc] init];
-    mainLayout.minimumLineSpacing = kWidth(20);
-    mainLayout.minimumInteritemSpacing = kWidth(20);
+    mainLayout.minimumLineSpacing = kWidth(0);
+    mainLayout.minimumInteritemSpacing = kWidth(0);
     _layoutCollectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:mainLayout];
     _layoutCollectionView.backgroundColor = [UIColor colorWithHexString:@"#efefef"];
     _layoutCollectionView.delegate = self;
@@ -45,12 +46,13 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
     _layoutCollectionView.showsVerticalScrollIndicator = NO;
     [_layoutCollectionView registerClass:[PPForumCell class] forCellWithReuseIdentifier:kPPForumCellReusableIdentifier];
     [_layoutCollectionView registerClass:[PPForumHeaderView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:kPPForumHeaderViewReusableIdentifier];
+    [_layoutCollectionView registerClass:[PPForumTitleView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:kPPForumTitleViewReusableIdentifier];
     [_layoutCollectionView registerClass:[UICollectionReusableView class] forSupplementaryViewOfKind:PPElementKindSectionBackground withReuseIdentifier:kSectionBackgroundReusableIdentifier];
     [self.view addSubview:_layoutCollectionView];
     {
         [_layoutCollectionView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.right.bottom.equalTo(self.view);
-            make.top.equalTo(self.view).offset(44);
+            make.top.equalTo(self.view).offset(45);
         }];
     }
     
@@ -83,7 +85,6 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-    [[PPSearchView showView] hideFormSuperView];
 }
 
 - (BOOL)alwaysHideNavigationBar {
@@ -98,11 +99,31 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
             [self.dataSource removeAllObjects];
             [self removeCurrentRefreshBtn];
             [self.dataSource addObjectsFromArray:obj];
+            [self getContentAttriTitle];
             [_layoutCollectionView reloadData];
         }
+        [self->_layoutCollectionView PP_endPullToRefresh];
     }];
 }
 
+- (void)getContentAttriTitle {
+    PPColumnModel *column = [self.dataSource firstObject];
+    NSMutableArray *array = [[NSMutableArray alloc] init];
+    for (PPProgramModel *program in column.programList) {
+        [array addObject:[NSString stringWithFormat:@"%@:%@",program.title,program.spare]];
+    }
+    _attriStr = [[NSMutableAttributedString alloc] initWithString:[array componentsJoinedByString:@" | "] attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:kWidth(28)],
+                                                                                                                                                 NSForegroundColorAttributeName:[UIColor colorWithHexString:@"#666666"]}];
+    NSArray *number = @[@"0",@"1",@"2",@"3",@"4",@"5",@"6",@"7",@"8",@"9"];
+    for (int i = 0; i < _attriStr.string.length; i ++) {
+        //这里的小技巧，每次只截取一个字符的范围
+        NSString *a = [_attriStr.string substringWithRange:NSMakeRange(i, 1)];
+        //判断装有0-9的字符串的数字数组是否包含截取字符串出来的单个字符，从而筛选出符合要求的数字字符的范围NSMakeRange
+        if ([number containsObject:a]) {
+            [_attriStr setAttributes:@{NSForegroundColorAttributeName:[UIColor colorWithHexString:@"#F908DA"]} range:NSMakeRange(i, 1)];
+        }
+    }
+}
 
 #pragma mark - UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout
 
@@ -124,34 +145,55 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    return nil;
+    PPForumCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kPPForumCellReusableIdentifier forIndexPath:indexPath];
+    if (indexPath.section < self.dataSource.count) {
+        PPColumnModel *column = self.dataSource[indexPath.section];
+        if (indexPath.item < column.programList.count) {
+            PPProgramModel *program = column.programList[indexPath.item];
+            cell.imgUrl = program.coverImg;
+            cell.title = program.title;
+            cell.theme = program.title;
+//            cell.theme = program
+        }
+    }
+    return cell;
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-    UICollectionViewFlowLayout *layout = (UICollectionViewFlowLayout *)collectionViewLayout;
-    UIEdgeInsets insets = [self collectionView:collectionView layout:layout insetForSectionAtIndex:indexPath.section];
     CGFloat fullWidth = CGRectGetWidth(collectionView.bounds);
-    CGFloat width = (fullWidth - insets.left - insets.right - layout.minimumInteritemSpacing) / 2;
-    CGFloat height = width * 0.6 + kWidth(88);
-    return CGSizeMake((long)width, (long)height);
+    CGFloat width = fullWidth/2;
+    return CGSizeMake((long)width, (long)kWidth(150));
 }
 
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section {
-    return UIEdgeInsetsMake(kWidth(20), kWidth(20), kWidth(20), kWidth(20));
+    return UIEdgeInsetsMake(0, 0, 1, 0);
 };
 
 - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath {
-    if (kind == UICollectionElementKindSectionHeader) {
-        _headerView = [collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:kPPForumHeaderViewReusableIdentifier forIndexPath:indexPath];
-        if (indexPath.section == 0) {
-            
-        } else {
-            
+    PPColumnModel *column;
+    PPProgramModel *program;
+
+    if (indexPath.section < self.dataSource.count) {
+        column = self.dataSource[indexPath.section];
+        if (indexPath.item < column.programList.count) {
+            program = column.programList[indexPath.item];
         }
-        return _headerView;
+    }
+
+    if (kind == UICollectionElementKindSectionHeader) {
+        if (indexPath.section == 0) {
+            PPForumTitleView *titleView = [collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:kPPForumTitleViewReusableIdentifier forIndexPath:indexPath];
+            titleView.attriString = _attriStr;
+            return titleView;
+        } else {
+            PPForumHeaderView *headerView = [collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:kPPForumHeaderViewReusableIdentifier forIndexPath:indexPath];
+            headerView.title = column.name;
+            headerView.owner = column.columnDesc;
+            return headerView;
+        }
     } else if (kind == PPElementKindSectionBackground) {
         UICollectionReusableView *sectionBgView = [collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:kSectionBackgroundReusableIdentifier forIndexPath:indexPath];
-        sectionBgView.backgroundColor = [UIColor colorWithHexString:@"#ffffff"];
+        sectionBgView.backgroundColor = [UIColor colorWithHexString:@"#efefef"];
         return sectionBgView;
     }
     return nil;

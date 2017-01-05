@@ -62,7 +62,8 @@ QBDefineLazyPropertyInitialization(PPSearchModel, searchModel)
     [self.view addSubview:_layoutCollectionView];
     {
         [_layoutCollectionView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.edges.equalTo(self.view);
+            make.left.right.bottom.equalTo(self.view);
+            make.top.equalTo(self.view).offset(44);
         }];
     }
     
@@ -71,6 +72,9 @@ QBDefineLazyPropertyInitialization(PPSearchModel, searchModel)
         @strongify(self);
         [self loadData];
     }];
+    
+    [_layoutCollectionView PP_triggerPullToRefresh];
+
     
     if ([PPCacheModel getHotCache].hotSearch.count > 0) {
         self.response = [PPCacheModel getHotCache];
@@ -82,17 +86,11 @@ QBDefineLazyPropertyInitialization(PPSearchModel, searchModel)
     if ([PPUtil currentVipLevel] == PPVipLevelNone) {
         [_layoutCollectionView PP_addVIPNotiRefreshWithHandler:^{
             @strongify(self);
-            QBBaseModel *baseModel = [QBBaseModel getBaseModelWithRealColoumId:nil
-                                                                   channelType:nil
-                                                                     programId:nil
-                                                                   programType:nil
-                                                               programLocation:[NSNumber numberWithInteger:[PPUtil currentTabPageIndex]]];
-            [self presentPayViewControllerWithBaseModel:baseModel];
-            [_layoutCollectionView PP_endPullToRefresh];
+            [[PPHudManager manager] showHudWithText:@"升级VIP可观看更多"];
+            [self->_layoutCollectionView PP_endPullToRefresh];
         }];
     }
     
-    [_layoutCollectionView PP_triggerPullToRefresh];
     
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         if (self.response.tags.count == 0) {
@@ -136,9 +134,12 @@ QBDefineLazyPropertyInitialization(PPSearchModel, searchModel)
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshHotNotification:) name:kPaidNotificationName object:nil];
 }
 
+- (BOOL)alwaysHideNavigationBar {
+    return YES;
+}
+
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    [PPSearchView showView].firstResponder = YES;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -375,6 +376,15 @@ QBDefineLazyPropertyInitialization(PPSearchModel, searchModel)
 
 - (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
     [searchBar resignFirstResponder];
+}
+
+#pragma mark - UIScrollViewDelegate
+
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
+    if ([PPSearchView showView].becomeResponder) {
+        [PPSearchView showView].becomeResponder = NO;
+    }
+    [[QBStatsManager sharedManager] statsTabIndex:self.tabBarController.selectedIndex subTabIndex:NSNotFound forSlideCount:1];
 }
 
 @end

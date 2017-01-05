@@ -42,6 +42,8 @@
 		EC35F1C81DB62D8B00523F6F /* PPTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EC35F1C71DB62D8B00523F6F /* PPTableViewCell.m */; };
 		EC35F1CB1DB6405F00523F6F /* PPMineHeaderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EC35F1CA1DB6405F00523F6F /* PPMineHeaderCell.m */; };
 		EC35F1D21DB6417500523F6F /* PPDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EC35F1D11DB6417500523F6F /* PPDetailViewController.m */; };
+		EC3DC7201E1E5E8C004D5418 /* PPLiveCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EC3DC71F1E1E5E8C004D5418 /* PPLiveCell.m */; };
+		EC3DC7231E1E636C004D5418 /* PPLiveModel.m in Sources */ = {isa = PBXBuildFile; fileRef = EC3DC7221E1E636C004D5418 /* PPLiveModel.m */; };
 		EC3FF2DC1DFA79CA0035F65E /* PPVideoRequestTask.m in Sources */ = {isa = PBXBuildFile; fileRef = EC3FF2DB1DFA79CA0035F65E /* PPVideoRequestTask.m */; };
 		EC3FF2DF1DFA7DEF0035F65E /* PPVideoloaderURLConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = EC3FF2DE1DFA7DEF0035F65E /* PPVideoloaderURLConnection.m */; };
 		EC4422B81E08DC0600F48461 /* PPVersionUpdateModel.m in Sources */ = {isa = PBXBuildFile; fileRef = EC4422B71E08DC0600F48461 /* PPVersionUpdateModel.m */; };
@@ -188,6 +190,10 @@
 		EC35F1CA1DB6405F00523F6F /* PPMineHeaderCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPMineHeaderCell.m; sourceTree = "<group>"; };
 		EC35F1D01DB6417500523F6F /* PPDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPDetailViewController.h; sourceTree = "<group>"; };
 		EC35F1D11DB6417500523F6F /* PPDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPDetailViewController.m; sourceTree = "<group>"; };
+		EC3DC71E1E1E5E8C004D5418 /* PPLiveCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPLiveCell.h; sourceTree = "<group>"; };
+		EC3DC71F1E1E5E8C004D5418 /* PPLiveCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPLiveCell.m; sourceTree = "<group>"; };
+		EC3DC7211E1E636C004D5418 /* PPLiveModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPLiveModel.h; sourceTree = "<group>"; };
+		EC3DC7221E1E636C004D5418 /* PPLiveModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPLiveModel.m; sourceTree = "<group>"; };
 		EC3FF2DA1DFA79CA0035F65E /* PPVideoRequestTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPVideoRequestTask.h; sourceTree = "<group>"; };
 		EC3FF2DB1DFA79CA0035F65E /* PPVideoRequestTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPVideoRequestTask.m; sourceTree = "<group>"; };
 		EC3FF2DD1DFA7DEF0035F65E /* PPVideoloaderURLConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPVideoloaderURLConnection.h; sourceTree = "<group>"; };
@@ -443,6 +449,8 @@
 		EC305DCB1E1B400A00BBE760 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				EC3DC7211E1E636C004D5418 /* PPLiveModel.h */,
+				EC3DC7221E1E636C004D5418 /* PPLiveModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -450,6 +458,8 @@
 		EC305DCC1E1B400A00BBE760 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				EC3DC71E1E1E5E8C004D5418 /* PPLiveCell.h */,
+				EC3DC71F1E1E5E8C004D5418 /* PPLiveCell.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1136,6 +1146,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				ECB8F0D91DB743B50088A118 /* PPProgramModel.m in Sources */,
+				EC3DC7231E1E636C004D5418 /* PPLiveModel.m in Sources */,
 				EC20D0041DB86FBD0089D8BF /* PPSearchResultViewController.m in Sources */,
 				EC20D0171DB89AA70089D8BF /* JKDBModel.m in Sources */,
 				EC0932DB1E1CE36600AFCD76 /* PPForumHeaderView.m in Sources */,
@@ -1172,6 +1183,7 @@
 				ECC097E21DB2411500875D56 /* UITableView+Separator.m in Sources */,
 				ECC097DB1DB23ECD00875D56 /* SDCycleScrollView.m in Sources */,
 				EC305DCF1E1B403800BBE760 /* PPLiveViewController.m in Sources */,
+				EC3DC7201E1E5E8C004D5418 /* PPLiveCell.m in Sources */,
 				EC4C6A701DB470550009771A /* PPGraphicButton.m in Sources */,
 				EC20D0201DB8A9200089D8BF /* PPDetailCommentCell.m in Sources */,
 				ECFA0E791DB9EF8900E61347 /* PPNickNameCell.m in Sources */,

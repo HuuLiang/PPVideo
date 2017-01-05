@@ -15,6 +15,7 @@
     PPSearchBar *_searchBar;
     UIButton    *_cancleButton;
     NSString    *_placeholderStr;
+    BOOL        _responder;
 }
 @end
 
@@ -36,7 +37,7 @@
         self.backgroundColor = [UIColor colorWithHexString:@"#ffffff"];
         _placeholderStr = @"波多野结衣最新力作";
         _bgColorAlpha = 0;
-        _firstResponder = NO;
+        _responder = NO;
         
         _userButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [_userButton setBackgroundImage:[UIImage imageNamed:@"mine_avatar"] forState:UIControlStateNormal];
@@ -69,8 +70,10 @@
         
         [_cancleButton bk_addEventHandler:^(id sender) {
             @strongify(self);
-            [self removeFromSuperview];
+            _responder = NO;
             [self->_searchBar resignFirstResponder];
+            self->_cancleButton.hidden = YES;
+            [[NSNotificationCenter defaultCenter] postNotificationName:kHideSearchNotificationName object:nil];
         } forControlEvents:UIControlEventTouchUpInside];
         
         {
@@ -99,6 +102,10 @@
 }
 
 - (void)showInSuperView:(UIView *)view animated:(BOOL)animated {
+    if (self.superview) {
+        [self removeFromSuperview];
+    }
+
     if (animated) {
         self.bgColorAlpha = _bgColorAlpha;
         UIImageView *image=[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"hot_search_normal"]];
@@ -114,6 +121,12 @@
     }
     self.frame = CGRectMake(0, 0, kScreenWidth, 64);
     [view addSubview:self];
+//    [UIView animateKeyframesWithDuration:0.5 delay:0 options:UIViewKeyframeAnimationOptionCalculationModeLinear animations:^{
+//        self.transform = CGAffineTransformMakeTranslation(0, 64);
+//    } completion:^(BOOL finished) {
+//        self.frame = CGRectMake(0, 0, kScreenWidth, 64);
+//    }];
+
 }
 
 - (void)setBgColorAlpha:(CGFloat)bgColorAlpha {
@@ -122,47 +135,42 @@
     _searchBar.backgroundColor = [[UIColor colorWithHexString:@"#ebebeb"] colorWithAlphaComponent:(0.3+bgColorAlpha*0.7)];
 }
 
-- (void)hideFormSuperView {
-    [self removeFromSuperview];
+- (void)setBecomeResponder:(BOOL)becomeResponder {
+    _becomeResponder = becomeResponder;
+    if (_becomeResponder) {
+        [_searchBar becomeFirstResponder];
+    } else {
+        [_searchBar resignFirstResponder];
+    }
 }
 
-- (void)setFirstResponder:(BOOL)firstResponder {
-    _firstResponder = firstResponder;
-    
-    
-//    if (_firstResponder) {
-//        [self->_searchBar becomeFirstResponder];
-//    }
-}
 
 #pragma mark - UITextViewDelegate
 
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
-    if (_firstResponder) {
+    if (_responder) {
         return YES;
     } else {
+        _responder = YES;
+        self->_cancleButton.hidden = NO;
         [[NSNotificationCenter defaultCenter] postNotificationName:kPopSearchNotificationName object:nil];
-        _firstResponder = YES;
         return NO;
     }
 }
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField {
-    self->_cancleButton.hidden = NO;
+    _becomeResponder = YES;
     UIImageView *image=[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"hot_search_selected"]];
     self->_searchBar.leftView = image;
     self->_searchBar.text = _placeholderStr;
 }
 
 - (void)textFieldDidEndEditing:(UITextField *)textField {
-    _cancleButton.hidden = YES;
     _placeholderStr = textField.text;
     NSAttributedString *attr = [[NSAttributedString alloc] initWithString:_placeholderStr attributes:@{NSForegroundColorAttributeName:[UIColor colorWithHexString:@"#666666"],
                                                                                                        NSFontAttributeName:[UIFont systemFontOfSize:13]}];
     _searchBar.attributedPlaceholder = attr;
     textField.text = @"";
-    
-    [[NSNotificationCenter defaultCenter] postNotificationName:kHideSearchNotificationName object:nil];
 }
 
 @end
@@ -189,7 +197,7 @@
 - (CGRect)editingRectForBounds:(CGRect)bounds {
     CGRect editingRect = [super editingRectForBounds:bounds];
     editingRect.origin.x += 10;
-    editingRect.origin.y += 2.5;
+//    editingRect.origin.y += 2.5;
     return editingRect;
 }
 
@@ -207,8 +215,8 @@
 //    self.attributedPlaceholder = attri;
     
     placeholderRect.origin.x += 10;
-    placeholderRect.size.width -= 10;
-    placeholderRect.origin.y += 2.5;
+//    placeholderRect.size.width -= 10;
+//    placeholderRect.origin.y += 2.5;
     return placeholderRect;
 }
 

@@ -14,12 +14,9 @@
 
 @property (nonatomic) CGFloat bgColorAlpha;
 
-@property (nonatomic) BOOL firstResponder;
+@property (nonatomic) BOOL becomeResponder;
 
 - (void)showInSuperView:(UIView *)view animated:(BOOL)animated;
-
-- (void)hideFormSuperView;
-
 
 
 @end
