@@ -1243,10 +1243,10 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/PPVideo/Class/Vendor/Umeng",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.bsyy.2;
+				PRODUCT_BUNDLE_IDENTIFIER = com.bsyy.3;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "12247b4b-4c7c-42a3-bc4d-cbe03ad9c057";
-				PROVISIONING_PROFILE_SPECIFIER = BSYY2DevProvProfile;
+				PROVISIONING_PROFILE = "7ade4c6c-72ef-4858-8aa9-589733becef7";
+				PROVISIONING_PROFILE_SPECIFIER = BSYY3DevProvProfile;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/**";
 			};
@@ -1272,10 +1272,10 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/PPVideo/Class/Vendor/Umeng",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.bsyy.2;
+				PRODUCT_BUNDLE_IDENTIFIER = com.bsyy.3;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "2221e1bf-76dd-4da6-9429-50c23252a1d5";
-				PROVISIONING_PROFILE_SPECIFIER = BSYY2InHouseProvisioningProfile;
+				PROVISIONING_PROFILE = "7c1b6ac9-f7cd-43c1-9a78-bcc7b84331a7";
+				PROVISIONING_PROFILE_SPECIFIER = BSYY3InHouseProvisioningProfile;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/**";
 			};
