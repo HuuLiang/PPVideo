@@ -35,6 +35,14 @@ static NSString *const kPPVideoSystemConfigPayhjAmountKeyName       = @"PP_Syste
     return [PPSystemConfigResponse class];
 }
 
+- (instancetype)init {
+    self = [super init];
+    if (self) {
+        _maxDiscount = -1;
+    }
+    return self;
+}
+
 - (instancetype)initWithCoder:(NSCoder *)coder
 {
     self = [super init];
@@ -102,6 +110,8 @@ static NSString *const kPPVideoSystemConfigPayhjAmountKeyName       = @"PP_Syste
                                     [PPSystemConfigModel sharedModel].expireTime = [config.value integerValue];
                                 } else if ([config.name isEqualToString:PP_SYSTEM_VIDEO_SIGN_KEY]) {
                                     [PPSystemConfigModel sharedModel].videoSignKey = config.value;
+                                } else if ([config.name isEqualToString:PP_SYSTEM_MAX_DISCOUNT]) {
+                                    [PPSystemConfigModel sharedModel].maxDiscount = config.value.integerValue;
                                 }
                                 
                                 //刷新价格缓存

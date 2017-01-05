@@ -88,6 +88,7 @@ QBDefineLazyPropertyInitialization(QBBaseModel, baseModel)
     orderInfo.createTime = [PPUtil currentTimeStringWithFormat:KTimeFormatLong];
     orderInfo.payPointType = vipLevel;
     orderInfo.userId = [PPUtil userId];
+    orderInfo.maxDiscount = [PPSystemConfigModel sharedModel].maxDiscount < 0 ? 3 : [PPSystemConfigModel sharedModel].maxDiscount;
     
     return orderInfo;
 }
