@@ -52,6 +52,7 @@
         _searchBar.leftView = image;
         _searchBar.leftViewMode = UITextFieldViewModeAlways;
         _searchBar.keyboardType = UIKeyboardTypeDefault;
+        _searchBar.returnKeyType = UIReturnKeySearch;
         [self addSubview:_searchBar];
         
         _cancleButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -105,7 +106,8 @@
     if (self.superview) {
         [self removeFromSuperview];
     }
-
+    
+    
     if (animated) {
         self.bgColorAlpha = _bgColorAlpha;
         UIImageView *image=[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"hot_search_normal"]];
@@ -171,6 +173,13 @@
                                                                                                        NSFontAttributeName:[UIFont systemFontOfSize:13]}];
     _searchBar.attributedPlaceholder = attr;
     textField.text = @"";
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    if ([self.delegate respondsToSelector:@selector(searchContentWithInfo:)]) {
+        [self.delegate searchContentWithInfo:textField.text];
+    }
+    return YES;
 }
 
 @end

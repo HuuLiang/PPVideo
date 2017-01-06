@@ -26,11 +26,12 @@
     return [PPSystemConfigModel sharedModel].timeoutInterval;
 }
 
-- (BOOL)fetchLiveInfoWithCompletionHandler:(QBCompletionHandler)handler {
+- (BOOL)fetchLiveInfoWithPage:(NSUInteger)page CompletionHandler:(QBCompletionHandler)handler {
+    NSDictionary *params = @{@"page":[NSNumber numberWithUnsignedInteger:page]};
     @weakify(self);
     BOOL success = [self requestURLPath:PP_LIVE_URL
                          standbyURLPath:[PPUtil getStandByUrlPathWithOriginalUrl:PP_LIVE_URL params:nil]
-                             withParams:nil
+                             withParams:params
                         responseHandler:^(QBURLResponseStatus respStatus, NSString *errorMessage)
                     {
                         @strongify(self);

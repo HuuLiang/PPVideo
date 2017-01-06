@@ -16,10 +16,16 @@ static NSString *const kPPLiveHeaderViewReusableIdentifier = @"PPLiveHeaderViewR
 
 @interface PPLiveViewController () <UICollectionViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout>
 {
-    AVPlayer    *_player;
-    NSURL       *_playerVideoUrl;
-    UIImageView *_imageView;
+    AVPlayer        *_player;
+    AVPlayerLayer   *_playerLayer;
+    AVPlayerItem    *_playerItem;
+    NSURL       *_playerVideoUrl; //视频链接
+    UIImageView *_imageView;      //背景图片
+    NSURL       *_originalUrl;    //原始图片链接
+    NSURL       *_newUrl;         //新图片链接
     UICollectionView *_layoutCollectionView;
+    NSUInteger  refreshPage;     //主播刷新页码
+    BOOL        isRefresh;       //
 }
 @property (nonatomic) PPLiveModel *liveModel;
 @property (nonatomic) NSMutableArray *dataSource;
@@ -31,7 +37,27 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    refreshPage = 0;
+
     self.view.backgroundColor = [UIColor colorWithHexString:@"#ffffff"];
+    _imageView = [[UIImageView alloc] init];
+    _imageView.contentMode = UIViewContentModeScaleAspectFill;
+    [self.view addSubview:_imageView];
+    
+    @weakify(self);
+    [_imageView bk_whenTapped:^{
+        @strongify(self);
+        [self->_player play];
+        self->_layoutCollectionView.hidden = NO;
+        [_imageView sd_setImageWithURL:_newUrl];
+    }];
+    
+    {
+        [_imageView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.edges.equalTo(self.view);
+        }];
+    }
     
     UICollectionViewFlowLayout *mainLayout = [[UICollectionViewFlowLayout alloc] init];
     mainLayout.minimumLineSpacing = kWidth(0);
@@ -43,15 +69,15 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
     _layoutCollectionView.showsVerticalScrollIndicator = NO;
     [_layoutCollectionView registerClass:[PPLiveCell class] forCellWithReuseIdentifier:kPPLiveCellReusableIdentifier];
     [_layoutCollectionView registerClass:[UICollectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:kPPLiveHeaderViewReusableIdentifier];
+    _layoutCollectionView.scrollEnabled = NO;
     [self.view addSubview:_layoutCollectionView];
     {
         [_layoutCollectionView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.center.equalTo(self.view);
-            make.size.mas_equalTo(CGSizeMake(kScreenWidth*0.9, kScreenWidth *0.9*1.32));
+            make.size.mas_equalTo(CGSizeMake(kScreenWidth*0.9, ((kScreenWidth *0.9-kWidth(60))/3+kWidth(78))*3 + kWidth(150)));
         }];
     }
     
-    @weakify(self);
     [_layoutCollectionView PP_addPullToRefreshWithHandler:^{
         @strongify(self);
         [self loadData];
@@ -59,21 +85,27 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
     
     [_layoutCollectionView PP_triggerPullToRefresh];
     
-    _imageView = [[UIImageView alloc] init];
-    _imageView.contentMode = UIViewContentModeScaleAspectFill;
-    [self.view addSubview:_imageView];
+
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didEndPlay) name:AVPlayerItemDidPlayToEndTimeNotification  object:nil];
+}
+
+- (void)didEndPlay {
+    _imageView.userInteractionEnabled = NO;
+    [_imageView sd_setImageWithURL:_newUrl];
+    _layoutCollectionView.hidden = NO;
+    [_playerLayer removeFromSuperlayer];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
     
+    if ([PPUtil launchSeq] == 1) {
+        _layoutCollectionView.hidden = YES;
+    }
     
-    [_imageView bk_whenTapped:^{
-        @strongify(self);
-        _player = [AVPlayer playerWithURL:_playerVideoUrl];
-        
-    }];
-    
-    {
-        [_imageView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.edges.equalTo(self.view);
-        }];
+    if ([PPUtil shouldRefreshLiveContent]) {
+        refreshPage++;
+        [self loadData];
     }
 }
 
@@ -87,7 +119,7 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
 
 - (void)loadData {
     @weakify(self);
-    [self.liveModel fetchLiveInfoWithCompletionHandler:^(BOOL success, id obj) {
+    [self.liveModel fetchLiveInfoWithPage:refreshPage CompletionHandler:^(BOOL success, id obj) {
         @strongify(self);
         if (success) {
             [self.dataSource removeAllObjects];
@@ -103,14 +135,26 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
 - (void)setBackgroundContent {
     PPColumnModel *column = [self.dataSource firstObject];
     PPProgramModel *program = [column.programList firstObject];
-    _playerVideoUrl = [NSURL URLWithString:program.videoUrl];
     
+    _playerVideoUrl = [NSURL URLWithString:program.videoUrl];
+    _originalUrl = [NSURL URLWithString:program.coverImg];
+    _newUrl = [NSURL URLWithString:program.detailsCoverImg];
+
     if ([PPUtil launchSeq] == 1) {
         _imageView.userInteractionEnabled = YES;
-        [_imageView sd_setImageWithURL:[NSURL URLWithString:column.columnImg]];
+        [_imageView sd_setImageWithURL:_originalUrl];
+        self->_layoutCollectionView.hidden = YES;
+        
+        _playerItem = [AVPlayerItem playerItemWithURL:_playerVideoUrl];
+        _player = [AVPlayer playerWithPlayerItem:_playerItem];
+        _playerLayer = [AVPlayerLayer playerLayerWithPlayer:_player];
+        _playerLayer.frame = CGRectMake(0, 0, kScreenWidth, kScreenHeight);
+        [self.view.layer addSublayer:_playerLayer];
     } else {
-        [_imageView sd_setImageWithURL:[NSURL URLWithString:column.spare]];
+        [_imageView sd_setImageWithURL:_newUrl];
     }
+    
+
 }
 
 
@@ -139,8 +183,11 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
     CGFloat fullWidth = CGRectGetWidth(collectionView.bounds);
-    CGFloat width = fullWidth/2;
-    return CGSizeMake((long)width, (long)kWidth(150));
+    CGFloat width = (fullWidth - kWidth(60))/3;
+    CGFloat height = width+kWidth(78);
+    NSLog(@"%@",NSStringFromCGSize(CGSizeMake((long)width, (long)height)));
+    
+    return CGSizeMake((long)width, (long)height);
 }
 
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section {

@@ -44,6 +44,7 @@
 		EC35F1D21DB6417500523F6F /* PPDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EC35F1D11DB6417500523F6F /* PPDetailViewController.m */; };
 		EC3DC7201E1E5E8C004D5418 /* PPLiveCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EC3DC71F1E1E5E8C004D5418 /* PPLiveCell.m */; };
 		EC3DC7231E1E636C004D5418 /* PPLiveModel.m in Sources */ = {isa = PBXBuildFile; fileRef = EC3DC7221E1E636C004D5418 /* PPLiveModel.m */; };
+		EC3DC7251E1F967C004D5418 /* mine_vipBack.png in Resources */ = {isa = PBXBuildFile; fileRef = EC3DC7241E1F967C004D5418 /* mine_vipBack.png */; };
 		EC3FF2DC1DFA79CA0035F65E /* PPVideoRequestTask.m in Sources */ = {isa = PBXBuildFile; fileRef = EC3FF2DB1DFA79CA0035F65E /* PPVideoRequestTask.m */; };
 		EC3FF2DF1DFA7DEF0035F65E /* PPVideoloaderURLConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = EC3FF2DE1DFA7DEF0035F65E /* PPVideoloaderURLConnection.m */; };
 		EC4422B81E08DC0600F48461 /* PPVersionUpdateModel.m in Sources */ = {isa = PBXBuildFile; fileRef = EC4422B71E08DC0600F48461 /* PPVersionUpdateModel.m */; };
@@ -194,6 +195,7 @@
 		EC3DC71F1E1E5E8C004D5418 /* PPLiveCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPLiveCell.m; sourceTree = "<group>"; };
 		EC3DC7211E1E636C004D5418 /* PPLiveModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPLiveModel.h; sourceTree = "<group>"; };
 		EC3DC7221E1E636C004D5418 /* PPLiveModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPLiveModel.m; sourceTree = "<group>"; };
+		EC3DC7241E1F967C004D5418 /* mine_vipBack.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mine_vipBack.png; sourceTree = "<group>"; };
 		EC3FF2DA1DFA79CA0035F65E /* PPVideoRequestTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPVideoRequestTask.h; sourceTree = "<group>"; };
 		EC3FF2DB1DFA79CA0035F65E /* PPVideoRequestTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPVideoRequestTask.m; sourceTree = "<group>"; };
 		EC3FF2DD1DFA7DEF0035F65E /* PPVideoloaderURLConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPVideoloaderURLConnection.h; sourceTree = "<group>"; };
@@ -591,6 +593,7 @@
 		ECC0976A1DB1D8CA00875D56 /* Resource */ = {
 			isa = PBXGroup;
 			children = (
+				EC3DC7241E1F967C004D5418 /* mine_vipBack.png */,
 				ECFA0E7A1DB9FE7700E61347 /* mine_back.jpg */,
 			);
 			path = Resource;
@@ -1082,6 +1085,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EC3DC7251E1F967C004D5418 /* mine_vipBack.png in Resources */,
 				ECC097851DB1E06500875D56 /* config.plist in Resources */,
 				ECC097631DB1C8AA00875D56 /* LaunchScreen.storyboard in Resources */,
 				ECFA0E7B1DB9FE7700E61347 /* mine_back.jpg in Resources */,

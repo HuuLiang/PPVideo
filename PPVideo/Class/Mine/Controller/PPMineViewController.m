@@ -18,7 +18,7 @@
 #import "PPMineVipVC.h"
 
 static NSString *const kMoreCellReusableIdentifier = @"MoreCellReusableIdentifier";
-#define appCellWidth (kScreenWidth - kWidth(40))
+#define appCellWidth (kScreenWidth - kWidth(40))*0.76
 
 @interface PPMineViewController () <UICollectionViewDataSource,UICollectionViewDelegate>
 {
@@ -185,7 +185,7 @@ QBDefineLazyPropertyInitialization(PPAppResponse, response)
 }
 
 - (void)initVipInSection:(NSInteger)section {
-    [self setHeaderHeight:kWidth(20) inSection:section];
+//    [self setHeaderHeight:kWidth(20) inSection:section];
     
     NSInteger row = 0;
     
@@ -229,7 +229,7 @@ QBDefineLazyPropertyInitialization(PPAppResponse, response)
 }
 
 - (void)initAppCell:(NSInteger)section {
-    [self setHeaderHeight:20 inSection:section];
+    [self setHeaderHeight:2 inSection:section];
     
     [self initAppHeaderCellInSection:section++];
     
@@ -258,7 +258,7 @@ QBDefineLazyPropertyInitialization(PPAppResponse, response)
 
 - (void)initAppHeaderCellInSection:(NSInteger)section {
     PPAppHeaderCell *appHeaderCell = [[PPAppHeaderCell alloc] init];
-    [self setLayoutCell:appHeaderCell cellHeight:kWidth(60) inRow:0 andSection:section];
+    [self setLayoutCell:appHeaderCell cellHeight:kWidth(80) inRow:0 andSection:section];
 }
 
 #pragma mark - UICollectionViewDataSource,UICollectionViewDelegate

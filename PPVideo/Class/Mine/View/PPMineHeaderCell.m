@@ -24,7 +24,9 @@
     if (self) {
         
         self.selectionStyle = UITableViewCellSelectionStyleNone;
-        self.backgroundColor = [UIColor colorWithHexString:@"#1F233E"];
+        
+        UIImageView *imgV = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"mine_vipBack.png"]];
+        [self addSubview:imgV];
         
         _vipView = [[UIView alloc] init];
         _vipView.backgroundColor = [UIColor colorWithHexString:@"#E51C23"];
@@ -51,13 +53,17 @@
                                    @(PPVipLevelVipC):@"黑金会员"};
         
         _levelLabel = [[UILabel alloc] init];
-        _levelLabel.textColor = [UIColor colorWithHexString:@"#ffffff"];
+        _levelLabel.textColor = [UIColor colorWithHexString:@"#666666"];
         _levelLabel.font = [UIFont systemFontOfSize:kWidth(30)];
         _levelLabel.textAlignment = NSTextAlignmentCenter;
         _levelLabel.text = vipLevel[@([PPUtil currentVipLevel])];
         [self addSubview:_levelLabel];
         
         {
+            [imgV mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.edges.equalTo(self);
+            }];
+            
             [_vipView mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.centerX.equalTo(self);
                 make.bottom.equalTo(self.mas_bottom).offset(-kWidth(124));

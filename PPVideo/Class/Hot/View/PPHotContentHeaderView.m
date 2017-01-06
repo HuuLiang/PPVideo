@@ -29,9 +29,9 @@
         
         @weakify(self);
         _graphicBtn = [[PPGraphicButton alloc] initWithNormalTitle:@"查看更多"
-                                                     selectedTitle:@"收起"
-                                                       normalImage:[UIImage imageNamed:@"hot_more"]
-                                                     selectedImage:[UIImage imageNamed:@"hot_less"]
+                                                     selectedTitle:@"全部收起"
+                                                       normalImage:[UIImage imageNamed:@"trail_free_more"]
+                                                     selectedImage:[UIImage imageNamed:@"trail_free_less"]
                                                              space:kWidth(16)
                                                       isTitleFirst:YES
                                                        touchAction:^
@@ -42,55 +42,75 @@
                            }
                            self->_graphicBtn.isSelected = !self->_graphicBtn.isSelected;
                        }];
-        _graphicBtn.titleLabel.font = [UIFont systemFontOfSize:kWidth(26)];
-        _graphicBtn.titleLabel.textColor = [UIColor colorWithHexString:@"#B854B4"];
+        _graphicBtn.titleLabel.font = [UIFont systemFontOfSize:kWidth(28)];
+        _graphicBtn.titleLabel.textColor = [UIColor colorWithHexString:@"#666666"];
         
         [self addSubview:_graphicBtn];
         
+        UIImageView *shadowImgV = [[UIImageView alloc] init];
+        shadowImgV.backgroundColor = [UIColor colorWithHexString:@"#efefef"];
+        [self addSubview:shadowImgV];
+        
+        UIImageView *imgV = [[UIImageView alloc] init];
+        imgV.backgroundColor = [UIColor colorWithHexString:@"#333333"];
+        [self addSubview:imgV];
         
         _titleLabel = [[UILabel alloc] init];
         _titleLabel.font = [UIFont systemFontOfSize:kWidth(34)];
         _titleLabel.textAlignment = NSTextAlignmentCenter;
-        _titleLabel.backgroundColor = [UIColor colorWithHexString:@"#efefef"];
+        _titleLabel.backgroundColor = [UIColor colorWithHexString:@"#ffffff"];
         [self addSubview:_titleLabel];
         
+        //    UIImageView *_lineLeft = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"hot_line_left"]];
+        //    [self addSubview:_lineLeft];
+        //
+        //    UIImageView *_lineRight = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"hot_line_right"]];
+        //    [self addSubview:_lineRight];
+        
+        {
+            [_graphicBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.centerX.equalTo(self);
+                make.top.equalTo(self).offset(kWidth(20));
+                make.size.mas_equalTo(CGSizeMake(kWidth(166), kWidth(42)));
+            }];
+            
+            [shadowImgV mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.top.equalTo(_graphicBtn.mas_bottom).offset(kWidth(34));
+                make.left.right.equalTo(self);
+                make.height.mas_equalTo(kWidth(20));
+            }];
+            
+            //        [_lineLeft mas_makeConstraints:^(MASConstraintMaker *make) {
+            //            make.centerY.equalTo(_graphicBtn);
+            //            make.left.equalTo(self).offset(kWidth(20));
+            //            make.right.equalTo(_graphicBtn.mas_left).offset(-kWidth(20));
+            //            make.height.mas_equalTo(kWidth(4));
+            //        }];
+            //
+            //        [_lineRight mas_makeConstraints:^(MASConstraintMaker *make) {
+            //            make.centerY.equalTo(_graphicBtn);
+            //            make.left.equalTo(_graphicBtn.mas_right).offset(kWidth(20));
+            //            make.right.equalTo(self.mas_right).offset(-kWidth(20));
+            //            make.height.mas_equalTo(kWidth(4));
+            //        }];
+            
+            [imgV mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.left.equalTo(self).offset(kWidth(30));
+                make.top.equalTo(shadowImgV.mas_bottom).offset(kWidth(32));
+                make.size.mas_equalTo(CGSizeMake(kWidth(26), kWidth(26)));
+            }];
+            
+            [_titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.centerY.equalTo(imgV);
+                make.left.equalTo(imgV.mas_right).offset(kWidth(10));
+                make.height.mas_equalTo(kWidth(30));
+            }];
+            
+        }
         
     }
     
-    UIImageView *_lineLeft = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"hot_line_left"]];
-    [self addSubview:_lineLeft];
-    
-    UIImageView *_lineRight = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"hot_line_right"]];
-    [self addSubview:_lineRight];
-    
-    {
-        [_graphicBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.centerX.equalTo(self);
-            make.top.equalTo(self).offset(kWidth(20));
-            make.size.mas_equalTo(CGSizeMake(kWidth(166), kWidth(42)));
-        }];
-        
-        [_lineLeft mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.centerY.equalTo(_graphicBtn);
-            make.left.equalTo(self).offset(kWidth(20));
-            make.right.equalTo(_graphicBtn.mas_left).offset(-kWidth(20));
-            make.height.mas_equalTo(kWidth(4));
-        }];
-        
-        [_lineRight mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.centerY.equalTo(_graphicBtn);
-            make.left.equalTo(_graphicBtn.mas_right).offset(kWidth(20));
-            make.right.equalTo(self.mas_right).offset(-kWidth(20));
-            make.height.mas_equalTo(kWidth(4));
-        }];
-        
-        [_titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.right.bottom.equalTo(self);
-            make.top.equalTo(_graphicBtn.mas_bottom).offset(kWidth(20));
-        }];
-        
-    }
-    
+
     
     return self;
 }

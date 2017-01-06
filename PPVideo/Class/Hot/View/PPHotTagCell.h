@@ -14,6 +14,4 @@ typedef void(^touchTagAction)(void);
 
 @property (nonatomic) NSString *titleStr;
 
-@property (nonatomic) touchTagAction tagAction;
-
 @end

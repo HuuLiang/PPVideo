@@ -38,6 +38,7 @@ extern NSString *const kPaymentInfoKeyName;
 + (NSString *)currentTimeStringWithFormat:(NSString *)timeFormat;
 + (NSString *)UTF8DateStringFromString:(NSDate *)date;
 + (NSString *)compareCurrentTime:(NSString *)compareDateString;
++ (BOOL)shouldRefreshLiveContent;
 
 + (void)checkAppInstalledWithBundleId:(NSString *)bundleId completionHandler:(void (^)(BOOL))handler;
 

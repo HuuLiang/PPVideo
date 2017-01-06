@@ -16,4 +16,6 @@
 
 - (NSAttributedString *)getAttriCenterStringWithFont:(UIFont *)font lineSpace:(CGFloat)lineSpace maxSize:(CGSize)size;
 
+- (CGSize)sizeWithFont:(UIFont *)font maxSize:(CGSize)maxSize;
+
 @end

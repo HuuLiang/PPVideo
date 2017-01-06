@@ -29,21 +29,25 @@ typedef NS_ENUM(NSInteger ,PPHotSection) {
     PPHotSectionCount
 };
 
-@interface PPHotViewController () <UICollectionViewDataSource,UICollectionViewDelegate,PPSectionBackgroundFlowLayoutDelegate,UISearchBarDelegate>
+@interface PPHotViewController () <UICollectionViewDataSource,UICollectionViewDelegate,PPSectionBackgroundFlowLayoutDelegate,PPSearchViewDelegate>
 {
     UICollectionView *_layoutCollectionView;
     PPHotContentHeaderView *headerView;
     BOOL _loadMoreTags;
+    NSUInteger lineTag;
+    NSUInteger lineItemCount;
 }
 @property (nonatomic) PPHotModel *hotModel;
 @property (nonatomic) PPHotReponse *response;
 @property (nonatomic) PPSearchModel *searchModel;
+@property (nonatomic) NSMutableArray *titleWidthArray;
 @end
 
 @implementation PPHotViewController
 QBDefineLazyPropertyInitialization(PPHotModel, hotModel)
 QBDefineLazyPropertyInitialization(PPHotReponse, response)
 QBDefineLazyPropertyInitialization(PPSearchModel, searchModel)
+QBDefineLazyPropertyInitialization(NSMutableArray, titleWidthArray)
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -78,6 +82,9 @@ QBDefineLazyPropertyInitialization(PPSearchModel, searchModel)
     
     if ([PPCacheModel getHotCache].hotSearch.count > 0) {
         self.response = [PPCacheModel getHotCache];
+        if (self.response.tags.count >0) {
+            [self titleItemWidth:self.response.tags];
+        }
         _loadMoreTags = NO;
         [_layoutCollectionView reloadData];
         headerView.selectedMoreBth = NO;
@@ -114,6 +121,7 @@ QBDefineLazyPropertyInitialization(PPSearchModel, searchModel)
         if (success) {
             [self removeCurrentRefreshBtn];
             self.response = obj;
+            [self titleItemWidth:_response.tags];
             _loadMoreTags = NO;
             [_layoutCollectionView reloadData];
             self->headerView.selectedMoreBth = NO;
@@ -131,7 +139,55 @@ QBDefineLazyPropertyInitialization(PPSearchModel, searchModel)
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [[PPSearchView showView] showInSuperView:self.view animated:NO];
+    [PPSearchView showView].delegate = self;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshHotNotification:) name:kPaidNotificationName object:nil];
+}
+
+- (void)titleItemWidth:(NSArray *)array {
+    [self.titleWidthArray removeAllObjects];
+    lineTag = 0;
+    lineItemCount = 0;
+    CGFloat fullwidth = kScreenWidth - kWidth(92);
+    NSInteger count = 0;
+    CGFloat currentWidth = 0;
+    CGFloat nextWidth = 0;
+    CGFloat rowWidth = fullwidth;
+    for (NSInteger i = 0; i < array.count ; i++) {
+        NSString *title = array[i];
+        if (i == 0) {
+            currentWidth = [title sizeWithFont:[UIFont systemFontOfSize:kWidth(26)] maxSize:CGSizeMake(MAXFLOAT, kWidth(56))].width + kWidth(40);
+        } else {
+            currentWidth = nextWidth;
+        }
+        
+        if (lineTag == 2) {
+            lineItemCount = i;
+            lineTag = 99;// 获取到刷新行标记之后 让lineTag 失效
+        }
+        
+        if (i + 1 < array.count) {
+            title = array[i + 1];
+            nextWidth = [title sizeWithFont:[UIFont systemFontOfSize:kWidth(26)] maxSize:CGSizeMake(MAXFLOAT, kWidth(56))].width + kWidth(40);
+            if (rowWidth - currentWidth - kWidth(40) >= nextWidth && count < 3) {
+                count++;
+                rowWidth = rowWidth - currentWidth - kWidth(40);
+                [self.titleWidthArray addObject:@(currentWidth)];
+            } else {
+                count = 0;
+                lineTag++;
+                currentWidth = rowWidth;
+                [self.titleWidthArray addObject:@(currentWidth)];
+                rowWidth = kScreenWidth - kWidth(92);
+            }
+        } else {
+            if (count <= 3 && rowWidth > currentWidth) {
+                currentWidth = rowWidth;
+                [self.titleWidthArray addObject:@(currentWidth)];
+            } else {
+                [self.titleWidthArray addObject:@(currentWidth)];
+            }
+        }
+    }
 }
 
 - (BOOL)alwaysHideNavigationBar {
@@ -155,7 +211,7 @@ QBDefineLazyPropertyInitialization(PPSearchModel, searchModel)
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     if (section == PPHotSectionTag) {
         if (!_loadMoreTags) {
-            return 6;
+            return lineItemCount;
         }else {
             return self.response.tags.count;
         }
@@ -203,9 +259,11 @@ QBDefineLazyPropertyInitialization(PPSearchModel, searchModel)
     CGFloat fullWidth = CGRectGetWidth(collectionView.bounds);
     
     if (indexPath.section == PPHotSectionTag) {
-        CGFloat width = (fullWidth - insets.left - insets.right - itemSpacing * 2) / 3;
-        CGFloat height = width * 28 / 83;
-        return CGSizeMake((long)width, (long)height);
+        if (indexPath.item < self.titleWidthArray.count) {
+            CGFloat width = [self.titleWidthArray[indexPath.item] floatValue];
+            return CGSizeMake((long)width, kWidth(56));
+        }
+        return CGSizeZero;
     } else if (indexPath.section == PPHotSectionContent) {
         CGFloat width = (fullWidth - insets.left - insets.right -  itemSpacing) / 2;
         CGFloat height = width * 0.6 + kWidth(88);
@@ -235,7 +293,7 @@ QBDefineLazyPropertyInitialization(PPSearchModel, searchModel)
 
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section {
     if (section == PPHotSectionTag) {
-        return kWidth(80);
+        return kWidth(40);
     } else if (section == PPHotSectionContent) {
         return kWidth(20);
     } else {
@@ -284,7 +342,7 @@ QBDefineLazyPropertyInitialization(PPSearchModel, searchModel)
     if (section == PPHotSectionTag) {
         return CGSizeMake(kScreenWidth, kWidth(80));
     } else if (section == PPHotSectionContent) {
-        return CGSizeMake(kScreenWidth, kWidth(180));
+        return CGSizeMake(kScreenWidth, kWidth(200));
     } else {
         return CGSizeZero;
     }
@@ -337,45 +395,13 @@ QBDefineLazyPropertyInitialization(PPSearchModel, searchModel)
     }];
 }
 
-#pragma mark UISearchBarDelegate
-
-- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
-    if ([PPUtil currentVipLevel] != PPVipLevelVipC) {
-        searchBar.text = @"";
-        [searchBar resignFirstResponder];
+#pragma mark - PPSearchViewDelegate
+- (void)searchContentWithInfo:(NSString *)title {
+    if ([PPUtil currentVipLevel] == PPVipLevelVipC) {
+        [self searchTagWithStr:title];
+    } else {
         [self showAlert];
-        return ;
     }
-    
-    if (searchBar.text.length == 0) {
-        [[PPHudManager manager] showHudWithText:@"请输入关键字"];
-        return ;
-    }
-    
-    [self searchTagWithStr:searchBar.text];
-}
-
-- (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar {
-    [searchBar setShowsCancelButton:YES animated:YES];
-    
-    for (UIView *searchButtions in [searchBar subviews]) {
-        for (UIView *subView in [searchButtions subviews]) {
-            if ([subView isKindOfClass:[UIButton class]]) {
-                UIButton *cancelButton = (UIButton *)subView;
-                cancelButton.titleLabel.font = [UIFont systemFontOfSize:14];
-                [cancelButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-                [cancelButton setTitleColor:[UIColor blackColor] forState:UIControlStateHighlighted];
-            }
-        }
-    }
-}
-
-- (void)searchBarTextDidEndEditing:(UISearchBar *)searchBar {
-    [searchBar setShowsCancelButton:NO animated:YES];
-}
-
-- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
-    [searchBar resignFirstResponder];
 }
 
 #pragma mark - UIScrollViewDelegate

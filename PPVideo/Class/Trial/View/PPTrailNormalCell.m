@@ -35,30 +35,30 @@
         _imgV = [[UIImageView alloc] init];
         [self addSubview:_imgV];
         
-        UIImage *shadowImg = [UIImage imageNamed:@"trail_normal_shadow"];
-        _shadewImgV = [[UIImageView alloc] initWithImage:shadowImg];
-        [self addSubview:_shadewImgV];
+//        UIImage *shadowImg = [UIImage imageNamed:@"trail_normal_shadow"];
+//        _shadewImgV = [[UIImageView alloc] initWithImage:shadowImg];
+//        [self addSubview:_shadewImgV];
         
         _titleLabel = [[UILabel alloc] init];
-        _titleLabel.textColor = [UIColor colorWithHexString:@"#ffffff"];
+        _titleLabel.textColor = [UIColor colorWithHexString:@"#333333"];
         _titleLabel.font = [UIFont systemFontOfSize:[PPUtil isIpad] ? 22 : kWidth(28)];
-        [_shadewImgV addSubview:_titleLabel];
+        [self addSubview:_titleLabel];
         
-        UIImage *playImg = [UIImage imageNamed:@"trail_normal_play"];
+        UIImage *playImg = [UIImage imageNamed:@"trail_free_play"];
         _playImgV = [[UIImageView alloc] initWithImage:playImg];
         [self addSubview:_playImgV];
         
         _playLabel = [[UILabel alloc] init];
-        _playLabel.textColor = [UIColor colorWithHexString:@"#ffffff"];
+        _playLabel.textColor = [UIColor colorWithHexString:@"#999999"];
         _playLabel.font = [UIFont systemFontOfSize:kWidth(22)];
         [self addSubview:_playLabel];
         
-        UIImage *commentImg = [UIImage imageNamed:@"trail_normal_comment"];
+        UIImage *commentImg = [UIImage imageNamed:@"trail_free_comment"];
         _commentImgV = [[UIImageView alloc] initWithImage:commentImg];
         [self addSubview:_commentImgV];
         
         _commentLabel = [[UILabel alloc] init];
-        _commentLabel.textColor = [UIColor colorWithHexString:@"#ffffff"];
+        _commentLabel.textColor = [UIColor colorWithHexString:@"#999999"];
         _commentLabel.font = [UIFont systemFontOfSize:kWidth(22)];
         [self addSubview:_commentLabel];
         
@@ -68,21 +68,21 @@
                 make.height.mas_equalTo(self.frame.size.width*9/7);
             }];
             
-            [_shadewImgV mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.left.right.bottom.equalTo(self);
-                make.height.mas_equalTo(self.frame.size.width * shadowImg.size.height / shadowImg.size.width);
-            }];
+//            [_shadewImgV mas_makeConstraints:^(MASConstraintMaker *make) {
+//                make.left.right.bottom.equalTo(self);
+//                make.height.mas_equalTo(self.frame.size.width * shadowImg.size.height / shadowImg.size.width);
+//            }];
             
             [_titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.left.equalTo(_shadewImgV).offset(kWidth(10));
-                make.right.equalTo(_shadewImgV.mas_right).offset(-kWidth(10));
-                make.top.equalTo(_shadewImgV).offset(kWidth(4));
+                make.left.equalTo(self).offset(kWidth(10));
+                make.right.equalTo(self.mas_right).offset(-kWidth(10));
+                make.top.equalTo(_imgV.mas_bottom).offset(kWidth(4));
                 make.height.mas_equalTo(kWidth(30));
             }];
             
             [_playImgV mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.left.equalTo(_shadewImgV).offset(kWidth(14));
-                make.bottom.equalTo(_shadewImgV.mas_bottom).offset(-kWidth(8));
+                make.left.equalTo(self).offset(kWidth(14));
+                make.bottom.equalTo(self.mas_bottom).offset(-kWidth(8));
 //                make.size.mas_equalTo(CGSizeMake(playImg.size.width, playImg.size.height));
                 make.size.mas_equalTo(CGSizeMake(kWidth(22), kWidth(22)));
             }];
@@ -129,21 +129,21 @@
 
 - (void)setIsVipCell:(BOOL)isVipCell {
     if (isVipCell) {
-        UIImage *shadowImg = [UIImage imageNamed:@"trail_short_shadow"];
-        _shadewImgV.image = shadowImg;
-        [_shadewImgV mas_updateConstraints:^(MASConstraintMaker *make) {
-            make.height.mas_equalTo(self.frame.size.width * shadowImg.size.height / shadowImg.size.width);
-        }];
+//        UIImage *shadowImg = [UIImage imageNamed:@"trail_short_shadow"];
+//        _shadewImgV.image = shadowImg;
+//        [_shadewImgV mas_updateConstraints:^(MASConstraintMaker *make) {
+//            make.height.mas_equalTo(self.frame.size.width * shadowImg.size.height / shadowImg.size.width);
+//        }];
         
-        [_titleLabel mas_updateConstraints:^(MASConstraintMaker *make) {
-            make.top.equalTo(_shadewImgV).offset(kWidth(10));
-
-        }];
-        
-        [_playImgV removeFromSuperview];
-        [_playLabel removeFromSuperview];
-        [_commentImgV removeFromSuperview];
-        [_commentLabel removeFromSuperview];
+//        [_titleLabel mas_updateConstraints:^(MASConstraintMaker *make) {
+//            make.top.equalTo(_imgV.mas_bottom).offset(kWidth(10));
+//
+//        }];
+//        
+//        [_playImgV removeFromSuperview];
+//        [_playLabel removeFromSuperview];
+//        [_commentImgV removeFromSuperview];
+//        [_commentLabel removeFromSuperview];
     }
 }
 

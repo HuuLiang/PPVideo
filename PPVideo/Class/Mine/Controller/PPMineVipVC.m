@@ -41,7 +41,8 @@
     
     {
         [self.layoutTableView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.edges.equalTo(self.view);
+            make.left.bottom.top.equalTo(self.view);
+            make.right.equalTo(self.view.mas_right).offset(-kScreenWidth *0.24);
         }];
     }
     
@@ -193,7 +194,7 @@
     [self setHeaderHeight:kWidth(20) inSection:section];
     
     _introduceCell = [[PPVipIntroduceCell alloc] init];
-    [self setLayoutCell:_introduceCell cellHeight:kWidth(276) inRow:0 andSection:section];
+    [self setLayoutCell:_introduceCell cellHeight:kWidth(64)+kScreenWidth*0.19+kWidth(20) inRow:0 andSection:section];
 }
 
 #pragma mark - UITextFieldDelegate

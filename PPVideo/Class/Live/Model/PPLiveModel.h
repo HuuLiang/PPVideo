@@ -14,6 +14,6 @@
 
 @interface PPLiveModel : QBEncryptedURLRequest
 
-- (BOOL)fetchLiveInfoWithCompletionHandler:(QBCompletionHandler)handler;
+- (BOOL)fetchLiveInfoWithPage:(NSUInteger)page CompletionHandler:(QBCompletionHandler)handler;
 
 @end

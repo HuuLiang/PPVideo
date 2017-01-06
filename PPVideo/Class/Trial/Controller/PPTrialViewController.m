@@ -87,7 +87,7 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
 
     
     PPSectionBackgroundFlowLayout *mainLayout = [[PPSectionBackgroundFlowLayout alloc] init];
-    mainLayout.minimumLineSpacing = kWidth(20);
+    mainLayout.minimumLineSpacing = kWidth(24);
     mainLayout.minimumInteritemSpacing = kWidth(20);
     _layoutCollectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:mainLayout];
     _layoutCollectionView.backgroundColor = [UIColor colorWithHexString:@"#efefef"];
@@ -330,7 +330,7 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
         return CGSizeMake((long)width, (long)height);
     } else if (indexPath.section == PPTrailSectionContent || indexPath.section == PPTrailSectionMoreContent) {
         CGFloat width = (fullWidth - insets.left - insets.right - layout.minimumInteritemSpacing * 2) / 3;
-        CGFloat height = width * 9 /7;
+        CGFloat height = width * 9 /7 + kWidth(66);
         return CGSizeMake((long)width, (long)height);
     }
     return CGSizeZero;

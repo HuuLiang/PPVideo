@@ -25,7 +25,7 @@
     self = [super initWithFrame:frame];
     if (self) {
         
-        self.contentView.backgroundColor = [UIColor clearColor];
+        self.backgroundColor = [UIColor clearColor];
         
         _userImgV = [[UIImageView alloc] init];
         _userImgV.contentMode = UIViewContentModeScaleAspectFit;

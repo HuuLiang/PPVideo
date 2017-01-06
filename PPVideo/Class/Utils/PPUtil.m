@@ -33,6 +33,8 @@ static NSString *const kVipUserKeyName          = @"PPVideo_Vip_UserKey";
 static NSString *const kUserNickKeyName         = @"kPPUserNickKeyName";
 static NSString *const kUserImageKeyName        = @"kPPUserImageKeyName";
 
+static NSString *const kLiveRefreshKeyName      = @"kPPLiveRefreshKeyName";
+
 @implementation PPUtil
 
 #pragma mark -- 注册激活
@@ -222,6 +224,22 @@ static NSString *const kUserImageKeyName        = @"kPPUserImageKeyName";
     }
     
     return  result;
+}
+
++ (BOOL)shouldRefreshLiveContent {
+    NSDate *lastDate = [[NSUserDefaults standardUserDefaults] objectForKey:kLiveRefreshKeyName];
+    if (!lastDate) {
+        [[NSUserDefaults standardUserDefaults] setObject:[NSDate date] forKey:kLiveRefreshKeyName];
+        return NO;
+    } else {
+        NSTimeInterval timeInterval = [lastDate timeIntervalSinceNow];
+        timeInterval = -timeInterval;
+        if (timeInterval > 2) {
+            return YES;
+        } else {
+            return NO;
+        }
+    }
 }
 
 #pragma mark - app检查

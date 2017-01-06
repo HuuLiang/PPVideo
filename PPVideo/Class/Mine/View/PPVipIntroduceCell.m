@@ -36,7 +36,7 @@
             [_imgV mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.centerX.equalTo(self);
                 make.top.equalTo(self).offset(kWidth(26));
-                make.size.mas_equalTo(CGSizeMake(kWidth(80), kWidth(80)));
+                make.size.mas_equalTo(CGSizeMake(kWidth(60), kWidth(60)));
             }];
             
             [_label mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -97,24 +97,24 @@
             
             [viewA mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.left.bottom.equalTo(self);
-                make.size.mas_equalTo(CGSizeMake(kScreenWidth/4, kScreenWidth/4));
+                make.size.mas_equalTo(CGSizeMake(kScreenWidth/4*0.76, kScreenWidth/4*0.76));
             }];
             
             [viewB mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.bottom.equalTo(self);
                 make.left.equalTo(viewA.mas_right);
-                make.size.mas_equalTo(CGSizeMake(kScreenWidth/4, kScreenWidth/4));
+                make.size.mas_equalTo(CGSizeMake(kScreenWidth/4*0.76, kScreenWidth/4*0.76));
             }];
             
             [viewC mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.bottom.equalTo(self);
                 make.left.equalTo(viewB.mas_right);
-                make.size.mas_equalTo(CGSizeMake(kScreenWidth/4, kScreenWidth/4));
+                make.size.mas_equalTo(CGSizeMake(kScreenWidth/4*0.76, kScreenWidth/4*0.76));
             }];
             
             [viewD mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.bottom.right.equalTo(self);
-                make.size.mas_equalTo(CGSizeMake(kScreenWidth/4, kScreenWidth/4));
+                make.size.mas_equalTo(CGSizeMake(kScreenWidth/4*0.76, kScreenWidth/4*0.76));
             }];
         }
         

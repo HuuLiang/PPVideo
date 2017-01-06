@@ -21,36 +21,29 @@
     self = [super initWithFrame:frame];
     if (self) {
         
-        self.layer.cornerRadius = kWidth(8);
+        self.layer.cornerRadius = kWidth(6);
         self.layer.masksToBounds = YES;
         
         _tagLabel = [[UILabel alloc] init];
-        _tagLabel.textColor = [UIColor colorWithHexString:@"#ffffff"];
-        _tagLabel.font = [UIFont systemFontOfSize:kWidth(30)];
+        _tagLabel.textColor = [UIColor colorWithHexString:@"#666666"];
+        _tagLabel.font = [UIFont systemFontOfSize:kWidth(26)];
         _tagLabel.textAlignment = NSTextAlignmentCenter;
-        _tagLabel.backgroundColor = [[UIColor colorWithHexString:@"#B854B4"] colorWithAlphaComponent:0.78];
+        _tagLabel.layer.cornerRadius = kWidth(6);
+        _tagLabel.layer.masksToBounds = YES;
+        _tagLabel.backgroundColor = [UIColor colorWithHexString:@"#EBEBEB"];
         [self addSubview:_tagLabel];
-        
-        @weakify(self);
-        [_tagLabel bk_whenTapped:^{
-            @strongify(self);
-            if (self.tagAction) {
-                self.tagAction();
-            }
-        }];
-        
-        {
-            [_tagLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.edges.equalTo(self);
-            }];
-        }
-        
+                
     }
     return self;
 }
 
 - (void)setTitleStr:(NSString *)titleStr {
     _tagLabel.text = titleStr;
+    CGFloat width =  [titleStr sizeWithFont:[UIFont systemFontOfSize:kWidth(26)] maxSize:CGSizeMake(MAXFLOAT, kWidth(56))].width + kWidth(40);
+    [_tagLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.top.bottom.equalTo(self);
+        make.width.mas_equalTo(width);
+    }];
 }
 
 @end

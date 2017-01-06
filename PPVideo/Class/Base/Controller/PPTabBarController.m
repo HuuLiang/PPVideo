@@ -154,10 +154,10 @@ QBDefineLazyPropertyInitialization(NSMutableArray, childVCs)
 //                                                      image:image
 //                                              selectedImage:[[UIImage imageNamed:[PPUtil currentVipLevel] == PPVipLevelVipC ? @"tabbar_sex_selected" : @"tabbar_sex"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
     
-    sexNav.tabBarItem = [[UITabBarItem alloc] initWithTitle:nil
-                                                      image:[[UIImage imageNamed:@"tabbar_sex_normal"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]
-                                              selectedImage:[[UIImage imageNamed:@"tabbar_sex_selected"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
-    sexNav.tabBarItem.imageInsets = UIEdgeInsetsMake(6, 0, -6, 0);
+    sexNav.tabBarItem = [[UITabBarItem alloc] initWithTitle:[PPUtil currentVipLevel] == PPVipLevelVipC ? @"撸点" : nil
+                                                      image:[[UIImage imageNamed:[PPUtil currentVipLevel] == PPVipLevelVipC ? @"tabbar_sexc_normal" : @"tabbar_sex_normal"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]
+                                              selectedImage:[[UIImage imageNamed:[PPUtil currentVipLevel] == PPVipLevelVipC ? @"tabbar_sexc_selected" : @"tabbar_sex_selected"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
+    sexNav.tabBarItem.imageInsets = [PPUtil currentVipLevel] == PPVipLevelVipC ? UIEdgeInsetsZero : UIEdgeInsetsMake(6, 0, -6, 0) ;
     
     PPLiveViewController *liveVC = [[PPLiveViewController alloc] initWithTitle:@"直播"];
     PPNavigationController *liveNav = [[PPNavigationController alloc] initWithRootViewController:liveVC];

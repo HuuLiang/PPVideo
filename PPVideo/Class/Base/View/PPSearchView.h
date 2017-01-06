@@ -8,6 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol PPSearchViewDelegate <NSObject>
+@optional
+- (void)searchContentWithInfo:(NSString *)title;
+@end
+
 @interface PPSearchView : UIView
 
 + (instancetype)showView;
@@ -15,6 +20,8 @@
 @property (nonatomic) CGFloat bgColorAlpha;
 
 @property (nonatomic) BOOL becomeResponder;
+
+@property (nonatomic,weak) id<PPSearchViewDelegate> delegate;
 
 - (void)showInSuperView:(UIView *)view animated:(BOOL)animated;
 

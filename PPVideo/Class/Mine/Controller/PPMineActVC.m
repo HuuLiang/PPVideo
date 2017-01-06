@@ -36,7 +36,8 @@
     
     {
         [self.layoutTableView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.edges.equalTo(self.view);
+            make.left.bottom.top.equalTo(self.view);
+            make.right.equalTo(self.view.mas_right).offset(-kScreenWidth *0.24);
         }];
     }
     
@@ -82,7 +83,7 @@
     UILabel *aotuLabel = [[UILabel alloc] init];
     aotuLabel.text = @"方法一：付费未激活的用户点击自助激活";
     aotuLabel.textColor = [UIColor colorWithHexString:@"#333333"];
-    aotuLabel.font = [UIFont systemFontOfSize:kWidth(32)];
+    aotuLabel.font = [UIFont systemFontOfSize:kWidth(28)];
     aotuLabel.textAlignment = NSTextAlignmentCenter;
     [cell.contentView addSubview:aotuLabel];
     
@@ -132,7 +133,7 @@
     UILabel *aotuLabel = [[UILabel alloc] init];
     aotuLabel.text = @"方法二：输入支付订单号自助激活";
     aotuLabel.textColor = [UIColor colorWithHexString:@"#333333"];
-    aotuLabel.font = [UIFont systemFontOfSize:kWidth(32)];
+    aotuLabel.font = [UIFont systemFontOfSize:kWidth(28)];
     aotuLabel.textAlignment = NSTextAlignmentCenter;
     [cell.contentView addSubview:aotuLabel];
     
