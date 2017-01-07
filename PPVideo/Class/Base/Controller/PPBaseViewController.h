@@ -13,6 +13,7 @@
 
 //@property (nonatomic) PPSearchView *searchView;
 @property (nonatomic) BOOL alwaysHideNavigationBar;
+@property (nonatomic) BOOL isScrolling;
 //@property (nonatomic) BOOL alwaysHideNavigationSearchView;
 
 - (instancetype)initWithTitle:(NSString *)title;

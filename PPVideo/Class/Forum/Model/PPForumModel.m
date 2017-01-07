@@ -38,7 +38,7 @@
                         PPForumReponse *resp = nil;
                         if (respStatus == QBURLResponseSuccess) {
                             resp = self.response;
-                            [PPCacheModel updateSexCacheWithColumnInfo:resp.columnList];
+                            [PPCacheModel updateForumCacheWithColumnInfo:resp.columnList];
                         }
                         
                         if (handler) {

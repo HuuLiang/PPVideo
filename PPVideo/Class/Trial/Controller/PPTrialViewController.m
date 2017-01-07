@@ -117,7 +117,11 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
     
     [_layoutCollectionView PP_addVIPNotiRefreshWithHandler:^{
         @strongify(self);
-        [[PPHudManager manager] showHudWithText:@"升级VIP可观看更多"];
+        if (self.isScrolling) {
+            [[PPHudManager manager] showHudWithText:@"升级VIP可观看更多"];
+        } else {
+            [self presentPayViewControllerWithBaseModel:nil];
+        }
         [self->_layoutCollectionView PP_endPullToRefresh];
     }];
     
@@ -450,12 +454,22 @@ shouldDisplaySectionBackgroundInSection:(NSUInteger)section {
     }
 }
 
+#pragma mark - UIScrollViewDelegate
+
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
     [[QBStatsManager sharedManager] statsTabIndex:self.tabBarController.selectedIndex subTabIndex:NSNotFound forSlideCount:1];
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    [NSObject cancelPreviousPerformRequestsWithTarget:self];
+    [self performSelector:@selector(scrollViewDidEndScrollingAnimation:) withObject:nil afterDelay:0.3];
+    self.isScrolling = YES;
     [PPSearchView showView].bgColorAlpha = (scrollView.contentOffset.y) / (kScreenWidth/2);
+}
+
+- (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView {
+    [NSObject cancelPreviousPerformRequestsWithTarget:self];
+    self.isScrolling = NO;
 }
 
 @end

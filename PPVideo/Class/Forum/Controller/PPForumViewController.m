@@ -62,7 +62,19 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
         [self loadData];
     }];
 
-    [_layoutCollectionView PP_triggerPullToRefresh];
+    if ([PPCacheModel getForumCache].count>0) {
+        if ([[PPUtil isLastDate] isYesterday]) {
+            [_layoutCollectionView PP_triggerPullToRefresh];
+        } else {
+            [self.dataSource removeAllObjects];
+            [self.dataSource addObjectsFromArray:[PPCacheModel getForumCache]];
+            [self getContentAttriTitle];
+            [_layoutCollectionView reloadData];
+        }
+    } else {
+        [_layoutCollectionView PP_triggerPullToRefresh];
+    }
+    
     
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         if (self.dataSource.count == 0) {
@@ -81,6 +93,22 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [[PPSearchView showView] showInSuperView:self.view animated:NO];
+    if ([PPUtil shouldRefreshLiveContent]) {
+        NSMutableArray *refreshData = [NSMutableArray arrayWithArray:self.dataSource];
+        [self.dataSource removeAllObjects];
+        for (PPColumnModel *column in refreshData) {
+            NSMutableArray *programList = [NSMutableArray array];
+            for (PPProgramModel *program in column.programList) {
+                if (![program.title isEqualToString:@"昨日"]) {
+                    program.spare = [NSString stringWithFormat:@"%ld",[program.spare integerValue] + arc4random() % 3 + 1 ];
+                }
+                [programList addObject:program];
+            }
+            column.programList = programList;
+            [self.dataSource addObject:column];
+        }
+    }
+    
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -153,7 +181,7 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
             cell.imgUrl = program.coverImg;
             cell.title = program.title;
             cell.theme = program.title;
-//            cell.theme = program
+            cell.latest = program.spare;
         }
     }
     return cell;

@@ -74,8 +74,13 @@ QBDefineLazyPropertyInitialization(PPColumnModel, response)
     
     if ([PPUtil currentVipLevel] < _vipLevel) {
         [_layoutCollectionView PP_addVipDetailNotiWithVipLevel:_vipLevel RefreshWithHandler:^{
-            [[PPHudManager manager] showHudWithText:@"升级VIP可观看更多"];
             @strongify(self);
+            if (self.isScrolling) {
+                [[PPHudManager manager] showHudWithText:@"升级VIP可观看更多"];
+            } else {
+                [self presentPayViewControllerWithBaseModel:nil];
+            }
+            
             [self->_layoutCollectionView PP_endPullToRefresh];
         }];
     }
@@ -196,5 +201,17 @@ QBDefineLazyPropertyInitialization(PPColumnModel, response)
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
     [[QBStatsManager sharedManager] statsTabIndex:self.tabBarController.selectedIndex subTabIndex:NSNotFound forSlideCount:1];
 }
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    [NSObject cancelPreviousPerformRequestsWithTarget:self];
+    [self performSelector:@selector(scrollViewDidEndScrollingAnimation:) withObject:nil afterDelay:0.3];
+    self.isScrolling = YES;
+}
+
+- (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView {
+    [NSObject cancelPreviousPerformRequestsWithTarget:self];
+    self.isScrolling = NO;
+}
+
 
 @end

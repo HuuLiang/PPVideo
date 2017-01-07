@@ -34,6 +34,7 @@ static NSString *const kUserNickKeyName         = @"kPPUserNickKeyName";
 static NSString *const kUserImageKeyName        = @"kPPUserImageKeyName";
 
 static NSString *const kLiveRefreshKeyName      = @"kPPLiveRefreshKeyName";
+static NSString *const kForumRefreshKeyName     = @"kPPForumRefreshKeyName";
 
 @implementation PPUtil
 
@@ -224,6 +225,15 @@ static NSString *const kLiveRefreshKeyName      = @"kPPLiveRefreshKeyName";
     }
     
     return  result;
+}
+
++ (NSDate *)isLastDate {
+    NSDate *lastDate = [[NSUserDefaults standardUserDefaults] objectForKey:kForumRefreshKeyName];
+    if (!lastDate) {
+        lastDate = [NSDate date];
+        [[NSUserDefaults standardUserDefaults] setObject:lastDate forKey:kForumRefreshKeyName];
+    }
+    return lastDate;
 }
 
 + (BOOL)shouldRefreshLiveContent {

@@ -86,7 +86,15 @@
 }
 
 - (void)setLatest:(NSString *)latest {
-    _latestLabel.text = [NSString stringWithFormat:@"最后发表:%@秒前",latest];
+    NSUInteger randomTime = arc4random() % 300 + 1;
+    NSString *timeStr;
+    if ((long)(randomTime / 60) > 0) {
+        timeStr = [NSString stringWithFormat:@"%ld分钟前",(long)(randomTime/60)];
+    } else {
+        timeStr = [NSString stringWithFormat:@"%ld秒前",randomTime];
+    }
+    
+    _latestLabel.text = [NSString stringWithFormat:@"最后发表:%@",timeStr];
 }
 
 

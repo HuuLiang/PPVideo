@@ -57,7 +57,11 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
         @weakify(self);
         [_layoutCollectionView PP_addVIPNotiRefreshWithHandler:^{
             @strongify(self);
-            [[PPHudManager manager] showHudWithText:@"升级VIP可观看更多"];
+            if (self.isScrolling) {
+                [[PPHudManager manager] showHudWithText:@"升级VIP可观看更多"];
+            } else {
+                [self presentPayViewControllerWithBaseModel:nil];
+            }
             [_layoutCollectionView PP_endPullToRefresh];
         }];
     }

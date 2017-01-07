@@ -48,6 +48,7 @@
 }
     
 - (void)PP_addVIPNotiRefreshWithHandler:(void (^)(void))handler {
+    
     if (!self.footer) {
         MJRefreshAutoNormalFooter *refreshFooter = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:handler];
         [refreshFooter setTitle:@"升级VIP可观看更多" forState:MJRefreshStateIdle];
