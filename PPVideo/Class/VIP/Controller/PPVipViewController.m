@@ -44,9 +44,9 @@ QBDefineLazyPropertyInitialization(PPColumnModel, response)
     
     UICollectionViewFlowLayout *mainLayout = [[UICollectionViewFlowLayout alloc] init];
     mainLayout.minimumLineSpacing = kWidth(24);
-    mainLayout.minimumInteritemSpacing = kWidth(20);
+    mainLayout.minimumInteritemSpacing = kWidth(10);
     _layoutCollectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:mainLayout];
-    _layoutCollectionView.backgroundColor = [UIColor colorWithHexString:@"#efefef"];
+    _layoutCollectionView.backgroundColor = [UIColor colorWithHexString:@"#ffffff"];
     _layoutCollectionView.delegate = self;
     _layoutCollectionView.dataSource = self;
     _layoutCollectionView.showsVerticalScrollIndicator = NO;
@@ -144,6 +144,12 @@ QBDefineLazyPropertyInitialization(PPColumnModel, response)
         normalCell.imgUrlStr = program.coverImg;
         normalCell.titleStr = program.title;
         normalCell.isVipCell = YES;
+        NSArray *array = [program.spare componentsSeparatedByString:@"|"];
+        if (array.count > 0) {
+            normalCell.playCount = [[array firstObject] integerValue];
+            normalCell.commentCount = [[array lastObject] integerValue];
+        }
+
     }
     return normalCell;
 }
@@ -162,7 +168,7 @@ QBDefineLazyPropertyInitialization(PPColumnModel, response)
 }
 
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section {
-    return UIEdgeInsetsMake(kWidth(20), kWidth(20), kWidth(20), kWidth(20));
+    return UIEdgeInsetsMake(kWidth(20), kWidth(0), kWidth(20), kWidth(0));
 }
 
 - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath {

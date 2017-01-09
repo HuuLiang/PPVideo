@@ -34,6 +34,7 @@
         _liveButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [_liveButton setTitle:@"Live" forState:UIControlStateNormal];
         [_liveButton setImage:[UIImage imageNamed:@"live_redPoint"] forState:UIControlStateNormal];
+        _liveButton.titleLabel.font = [UIFont systemFontOfSize:kWidth(20)];
         _liveButton.layer.cornerRadius = kWidth(13);
         _liveButton.layer.masksToBounds = YES;
         _liveButton.backgroundColor = [[UIColor colorWithHexString:@"#000000"] colorWithAlphaComponent:0.3];

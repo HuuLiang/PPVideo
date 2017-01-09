@@ -60,6 +60,8 @@ typedef NS_ENUM(NSInteger ,PPVipLevel) {
 #define PP_SYSTEM_TIMEOUT_URL             @"TIME_OUT"
 #define PP_SYSTEM_EXPIRE_TIME             @"EXPIRE_TIME"
 #define PP_SYSTEM_VIDEO_SIGN_KEY          @"VIDEO_SIGN_KEY"
+#define PP_SYSTEM_LIVE_URL                @"LIVE_URL"
+#define PP_SYSTEM_FORUM_URL               @"FORUM_URL"
 
 //#define PP_SYSTEM_MINE_IMG                @"MINE_IMG"
 //#define PP_SYSTEM_SVIP_PAY_AMOUNT         @"SVIP_PAY_AMOUNT"

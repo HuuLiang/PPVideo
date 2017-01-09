@@ -62,8 +62,8 @@
                             }
                             self->_moreBtn.isSelected = !self->_moreBtn.isSelected;
                         }];
-            _moreBtn.titleLabel.font = [UIFont systemFontOfSize:kWidth(28)];
-            _moreBtn.titleLabel.textColor = [UIColor colorWithHexString:@"#B854B4"];
+            _moreBtn.titleLabel.font = [UIFont systemFontOfSize:kWidth(24)];
+            _moreBtn.titleLabel.textColor = [UIColor colorWithHexString:@"#666666"];
             
             [view addSubview:_moreBtn];
             

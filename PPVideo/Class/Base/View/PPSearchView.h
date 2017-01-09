@@ -23,8 +23,12 @@
 
 @property (nonatomic,weak) id<PPSearchViewDelegate> delegate;
 
+
+- (void)hideFromSuperview;
+
 - (void)showInSuperView:(UIView *)view animated:(BOOL)animated;
 
+- (void)setUserImg:(UIImage *)userImg;
 
 @end
 

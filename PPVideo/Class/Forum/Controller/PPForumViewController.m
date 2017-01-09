@@ -52,14 +52,19 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
     {
         [_layoutCollectionView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.right.bottom.equalTo(self.view);
-            make.top.equalTo(self.view).offset(45);
+            make.top.equalTo(self.view).offset(44);
         }];
     }
     
     @weakify(self);
     [_layoutCollectionView PP_addPullToRefreshWithHandler:^{
         @strongify(self);
-        [self loadData];
+        //缓存无数据 到了刷新时间 可以主动刷新
+        if ([PPCacheModel getForumCache].count <= 0 || [PPUtil shouldRefreshLiveContent]) {
+            [self loadData];
+        } else {
+            [self->_layoutCollectionView PP_endPullToRefresh];
+        }
     }];
 
     if ([PPCacheModel getForumCache].count>0) {
@@ -93,22 +98,26 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [[PPSearchView showView] showInSuperView:self.view animated:NO];
-    if ([PPUtil shouldRefreshLiveContent]) {
-        NSMutableArray *refreshData = [NSMutableArray arrayWithArray:self.dataSource];
-        [self.dataSource removeAllObjects];
-        for (PPColumnModel *column in refreshData) {
-            NSMutableArray *programList = [NSMutableArray array];
-            for (PPProgramModel *program in column.programList) {
-                if (![program.title isEqualToString:@"昨日"]) {
-                    program.spare = [NSString stringWithFormat:@"%ld",[program.spare integerValue] + arc4random() % 3 + 1 ];
-                }
-                [programList addObject:program];
-            }
-            column.programList = programList;
-            [self.dataSource addObject:column];
-        }
-    }
     
+    if ([PPUtil shouldRefreshLiveContent]) {
+        [self refreshAndReplaceDataSource];
+    }
+}
+
+- (void)refreshAndReplaceDataSource {
+    NSMutableArray *refreshData = [NSMutableArray arrayWithArray:self.dataSource];
+    [self.dataSource removeAllObjects];
+    for (PPColumnModel *column in refreshData) {
+        NSMutableArray *programList = [NSMutableArray array];
+        for (PPProgramModel *program in column.programList) {
+            if (![program.title isEqualToString:@"昨日"]) {
+                program.spare = [NSString stringWithFormat:@"%ld",[program.spare integerValue] + arc4random() % 3 + 1 ];
+            }
+            [programList addObject:program];
+        }
+        column.programList = programList;
+        [self.dataSource addObject:column];
+    }
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -189,12 +198,12 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
     CGFloat fullWidth = CGRectGetWidth(collectionView.bounds);
-    CGFloat width = fullWidth/2;
+    CGFloat width = fullWidth/2-kWidth(40);
     return CGSizeMake((long)width, (long)kWidth(150));
 }
 
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section {
-    return UIEdgeInsetsMake(0, 0, 1, 0);
+    return UIEdgeInsetsMake(0, kWidth(20), 1, kWidth(20));
 };
 
 - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath {
@@ -221,7 +230,7 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
         }
     } else if (kind == PPElementKindSectionBackground) {
         UICollectionReusableView *sectionBgView = [collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:kSectionBackgroundReusableIdentifier forIndexPath:indexPath];
-        sectionBgView.backgroundColor = [UIColor colorWithHexString:@"#efefef"];
+        sectionBgView.backgroundColor = [UIColor colorWithHexString:@"#ffffff"];
         return sectionBgView;
     }
     return nil;
@@ -236,12 +245,8 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.section < self.dataSource.count) {
-        PPColumnModel *column = self.dataSource[indexPath.section];
-        if (indexPath.item < column.programList.count) {
-            PPProgramModel *program = column.programList[indexPath.item];
-            
-        }
+    if ([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:[PPSystemConfigModel sharedModel].forumUrl]]) {
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[PPSystemConfigModel sharedModel].forumUrl]];
     }
 }
 

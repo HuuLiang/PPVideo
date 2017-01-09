@@ -61,6 +61,7 @@
 		EC4C6A7F1DB4BE2C0009771A /* PPSexFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = EC4C6A7E1DB4BE2C0009771A /* PPSexFooterView.m */; };
 		EC4C6A861DB4E87D0009771A /* PPSectionBackgroundFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = EC4C6A851DB4E87D0009771A /* PPSectionBackgroundFlowLayout.m */; };
 		EC652F421DD4122C0021A847 /* PPCacheModel.m in Sources */ = {isa = PBXBuildFile; fileRef = EC652F411DD4122C0021A847 /* PPCacheModel.m */; };
+		EC6F83001E233DED00FA84E6 /* PPWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EC6F82FF1E233DED00FA84E6 /* PPWebViewController.m */; };
 		ECB8F0871DB71DD10088A118 /* PPAppModel.m in Sources */ = {isa = PBXBuildFile; fileRef = ECB8F0861DB71DD10088A118 /* PPAppModel.m */; };
 		ECB8F0B71DB71EB30088A118 /* JQKApplicationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = ECB8F0891DB71EB30088A118 /* JQKApplicationManager.m */; };
 		ECB8F0CD1DB71EE90088A118 /* JQKApplication.m in Sources */ = {isa = PBXBuildFile; fileRef = ECB8F0CC1DB71EE90088A118 /* JQKApplication.m */; };
@@ -228,6 +229,8 @@
 		EC4C6A851DB4E87D0009771A /* PPSectionBackgroundFlowLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPSectionBackgroundFlowLayout.m; sourceTree = "<group>"; };
 		EC652F401DD4122C0021A847 /* PPCacheModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPCacheModel.h; sourceTree = "<group>"; };
 		EC652F411DD4122C0021A847 /* PPCacheModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPCacheModel.m; sourceTree = "<group>"; };
+		EC6F82FE1E233DED00FA84E6 /* PPWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPWebViewController.h; sourceTree = "<group>"; };
+		EC6F82FF1E233DED00FA84E6 /* PPWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPWebViewController.m; sourceTree = "<group>"; };
 		ECB8F0851DB71DD10088A118 /* PPAppModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPAppModel.h; sourceTree = "<group>"; };
 		ECB8F0861DB71DD10088A118 /* PPAppModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPAppModel.m; sourceTree = "<group>"; };
 		ECB8F0881DB71EB30088A118 /* JQKApplicationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JQKApplicationManager.h; path = ../JQKApplicationManager.h; sourceTree = "<group>"; };
@@ -631,6 +634,8 @@
 		ECC0976D1DB1D97A00875D56 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				EC6F82FE1E233DED00FA84E6 /* PPWebViewController.h */,
+				EC6F82FF1E233DED00FA84E6 /* PPWebViewController.m */,
 				ECC097A01DB2096D00875D56 /* PPBaseViewController.h */,
 				ECC097A11DB2096D00875D56 /* PPBaseViewController.m */,
 				EC305DD31E1B414100BBE760 /* PPNavigationController.h */,
@@ -1164,6 +1169,7 @@
 				EC4C6A7F1DB4BE2C0009771A /* PPSexFooterView.m in Sources */,
 				EC0932D81E1CE35000AFCD76 /* PPForumCell.m in Sources */,
 				ECC097B91DB20CD600875D56 /* PPTrialViewController.m in Sources */,
+				EC6F83001E233DED00FA84E6 /* PPWebViewController.m in Sources */,
 				ECFA0E7F1DBA249B00E61347 /* PPPayHeaderCell.m in Sources */,
 				ECC097DA1DB23ECD00875D56 /* SDCollectionViewCell.m in Sources */,
 				EC4636EB1DC08D1B00901A05 /* PPVipHeaderView.m in Sources */,

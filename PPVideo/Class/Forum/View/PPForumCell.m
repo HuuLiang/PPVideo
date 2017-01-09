@@ -26,6 +26,8 @@
         self.contentView.backgroundColor = [UIColor colorWithHexString:@"#ffffff"];
         
         _imgV = [[UIImageView alloc] init];
+        _imgV.layer.cornerRadius = 3;
+        _imgV.layer.masksToBounds = YES;
         [self.contentView addSubview:_imgV];
         
         _titleLabel = [[UILabel alloc] init];
@@ -46,13 +48,13 @@
         {
             [_imgV mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.centerY.equalTo(self.contentView);
-                make.left.equalTo(self.contentView).offset(kWidth(20));
+                make.left.equalTo(self.contentView).offset(kWidth(0));
                 make.size.mas_equalTo(CGSizeMake(kWidth(168), kWidth(130)));
             }];
             
             [_titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.left.equalTo(_imgV.mas_right).offset(kWidth(8));
-                make.top.equalTo(_imgV.mas_top).offset(kWidth(10));
+                make.top.equalTo(_imgV.mas_top).offset(kWidth(0));
                 make.height.mas_equalTo(kWidth(28));
             }];
             

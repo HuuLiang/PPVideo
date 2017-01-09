@@ -232,6 +232,7 @@
         if (self->_headerCell) {
             self->_headerCell.userImg = pickedImage;
             [PPUtil setUserImage:pickedImage];
+            [[PPSearchView showView] setUserImg:pickedImage];
         }
     } else {
         [[PPHudManager manager] showHudWithText:@"照片获取失败"];

@@ -46,6 +46,7 @@ static NSString *const kAliPaySchemeUrl = @"paoPaoYingyuanAliPayUrlScheme";
     if (_rootViewController) {
         return _rootViewController;
     }
+    
     PPTabBarController *tabBarVC = [[PPTabBarController alloc] init];
     
     PPMineViewController *mineVC = [[PPMineViewController alloc] init];
@@ -340,7 +341,7 @@ static NSString *const kAliPaySchemeUrl = @"paoPaoYingyuanAliPayUrlScheme";
 - (void)presentHotVC:(NSNotification *)notification {
     CATransition *animation = [CATransition animation];
     animation.duration = 0.5;
-    animation.timingFunction = UIViewAnimationOptionCurveEaseInOut;
+    animation.timingFunction = UIViewAnimationOptionCurveEaseInOut ;
     animation.type = @"CurlDown";
     
     //animation.type = kCATransitionPush;
@@ -353,10 +354,15 @@ static NSString *const kAliPaySchemeUrl = @"paoPaoYingyuanAliPayUrlScheme";
 }
 
 - (void)hideHotVC:(NSNotification *)notification {
-    [self.window.rootViewController dismissViewControllerAnimated:YES completion:^{
+    if ([PPUtil deviceType] < PPDeviceType_iPhone6) {
         self.window.rootViewController = self.rootViewController;
         [self.window makeKeyAndVisible];
-    }];
+    } else {
+        [self.window.rootViewController dismissViewControllerAnimated:YES completion:^{
+            self.window.rootViewController = self.rootViewController;
+            [self.window makeKeyAndVisible];
+        }];
+    }
 }
 
 

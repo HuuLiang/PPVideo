@@ -88,7 +88,7 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
     
     PPSectionBackgroundFlowLayout *mainLayout = [[PPSectionBackgroundFlowLayout alloc] init];
     mainLayout.minimumLineSpacing = kWidth(24);
-    mainLayout.minimumInteritemSpacing = kWidth(20);
+    mainLayout.minimumInteritemSpacing = kWidth(10);
     _layoutCollectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:mainLayout];
     _layoutCollectionView.backgroundColor = [UIColor colorWithHexString:@"#efefef"];
     _layoutCollectionView.delegate = self;
@@ -342,9 +342,9 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
 
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section {
     if (section == PPTrailSectionFree || section == PPTrailSectionContent || section == PPTrailSectionMoreContent) {
-        return UIEdgeInsetsMake(kWidth(20), kWidth(20), kWidth(20), kWidth(20));
+        return UIEdgeInsetsMake(kWidth(20), kWidth(0), kWidth(20), kWidth(0));
     } else if (section == PPTrailSectionAd || section == PPTrailSectionMoreAd) {
-        return UIEdgeInsetsMake(kWidth(20), kWidth(20), kWidth(0), kWidth(20));
+        return UIEdgeInsetsMake(kWidth(20), kWidth(0), kWidth(10), kWidth(0));
     }
     
     return UIEdgeInsetsZero;
@@ -369,7 +369,7 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
     } else if (kind == PPElementKindSectionBackground) {
         UICollectionReusableView *sectionBgView = [collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:kSectionBackgroundReusableIdentifier forIndexPath:indexPath];
         if (indexPath.section == PPTrailSectionFree) {
-            sectionBgView.backgroundColor = [UIColor colorWithHexString:@"#efefef"];
+            sectionBgView.backgroundColor = [UIColor colorWithHexString:@"#ffffff"];
         } else if (indexPath.section == PPTrailSectionContent || indexPath.section == PPTrailSectionAd || indexPath.section == PPTrailSectionMoreAd || indexPath.section == PPTrailSectionMoreContent) {
             sectionBgView.backgroundColor = [UIColor colorWithHexString:@"#ffffff"];
         } else {
@@ -382,9 +382,9 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section {
     if (section == PPTrailSectionAd) {
-        return CGSizeMake(kScreenWidth, kWidth(60));
+        return CGSizeMake(kScreenWidth, kWidth(80));
     } else if (section == PPTrailSectionMoreAd) {
-        return CGSizeMake(kScreenWidth, kWidth(20));
+        return CGSizeMake(kScreenWidth, 1);
     } else {
         return CGSizeZero;
     }

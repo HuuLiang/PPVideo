@@ -22,7 +22,7 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        
+        self.backgroundColor = [UIColor whiteColor];
         @weakify(self);
         _graphicBtn = [[PPGraphicButton alloc] initWithNormalTitle:@"查看更多"
                                                      selectedTitle:@"收起"
@@ -43,11 +43,20 @@
         
         [self addSubview:_graphicBtn];
         
+        UIView *grayView = [[UIView alloc] init];
+        grayView.backgroundColor = [UIColor colorWithHexString:@"#efefef"];
+        [self addSubview:grayView];
+        
         {
             [_graphicBtn mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.centerX.equalTo(self);
-                make.top.equalTo(self.mas_top).offset(kWidth(0));
+                make.top.equalTo(self.mas_top).offset(kWidth(10));
                 make.size.mas_equalTo(CGSizeMake(kWidth(150), kWidth(40)));
+            }];
+            
+            [grayView mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.left.bottom.right.equalTo(self);
+                make.height.mas_equalTo(1);
             }];
         }
         

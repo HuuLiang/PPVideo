@@ -102,6 +102,10 @@ static NSString *const kPPVideoSystemConfigPayhjAmountKeyName       = @"PP_Syste
                                     [PPSystemConfigModel sharedModel].expireTime = [config.value integerValue];
                                 } else if ([config.name isEqualToString:PP_SYSTEM_VIDEO_SIGN_KEY]) {
                                     [PPSystemConfigModel sharedModel].videoSignKey = config.value;
+                                } else if ([config.name isEqualToString:PP_SYSTEM_LIVE_URL]) {
+                                    [PPSystemConfigModel sharedModel].liveUrl = config.value;
+                                } else if ([config.name isEqualToString:PP_SYSTEM_FORUM_URL]) {
+                                    [PPSystemConfigModel sharedModel].forumUrl = config.value;
                                 }
                                 
                                 //刷新价格缓存

@@ -16,6 +16,7 @@
 @property (nonatomic,strong) UITableView *leftTableview;
 @property (nonatomic,assign) CGFloat leftTableviewW;
 @property (nonatomic,strong) UIView *contentView;
+@property (nonatomic,strong) UIView *mainShadowView;
 @end
 
 
@@ -40,6 +41,10 @@
         
         self.leftVC = leftVC;
         self.mainVC = mainVC;
+        
+        _mainShadowView = [[UIView alloc] init];
+        _mainShadowView.backgroundColor = [[UIColor colorWithHexString:@"#000000"] colorWithAlphaComponent:0.3];
+        _mainShadowView.frame = mainVC.view.frame;
         
         //滑动手势
         self.pan = [[UIPanGestureRecognizer alloc]initWithTarget:self action:@selector(handlePan:)];
@@ -187,6 +192,8 @@
         [UIView beginAnimations:nil context:nil];
         tap.view.transform = CGAffineTransformScale(CGAffineTransformIdentity,1.0,1.0);
         tap.view.center = CGPointMake([UIScreen mainScreen].bounds.size.width/2,[UIScreen mainScreen].bounds.size.height/2);
+        [self.mainShadowView removeFromSuperview];
+
         self.closed = YES;
         
         self.leftTableview.center = CGPointMake(kLeftCenterX, kScreenHeight * 0.5);
@@ -209,6 +216,7 @@
     [UIView beginAnimations:nil context:nil];
     self.mainVC.view.transform = CGAffineTransformScale(CGAffineTransformIdentity,1.0,1.0);
     self.mainVC.view.center = CGPointMake(kScreenWidth / 2, kScreenHeight / 2);
+    [self.mainShadowView removeFromSuperview];
     self.closed = YES;
     
     self.leftTableview.center = CGPointMake(kLeftCenterX, kScreenHeight * 0.5);
@@ -227,6 +235,7 @@
     [UIView beginAnimations:nil context:nil];
     self.mainVC.view.transform = CGAffineTransformScale(CGAffineTransformIdentity,kMainPageScale,kMainPageScale);
     self.mainVC.view.center = kMainPageCenter;
+    [self.mainVC.view addSubview:self.mainShadowView];
     self.closed = NO;
     
     self.leftTableview.center = CGPointMake((kScreenWidth - kMainPageDistance) * 0.5, kScreenHeight * 0.5);

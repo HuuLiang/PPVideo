@@ -53,6 +53,9 @@ QBDefineLazyPropertyInitialization(NSMutableArray, childVCs)
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.tabBar.layer.borderColor = [UIColor colorWithWhite:0.8 alpha:0.6].CGColor;
+    self.tabBar.layer.borderWidth = 0.4;
+    
     if ([PPUtil launchSeq] > 1 && ![PP_CHANNEL_NO isEqualToString:@"IOS_XIUXIU_0001"]) {
         [PPUtil showSpreadBanner];
     } else {
@@ -77,21 +80,21 @@ QBDefineLazyPropertyInitialization(NSMutableArray, childVCs)
 - (void)presentWindow:(NSNotification *)notification {
     [self addChildViewControllers];
     
-    PPTabBarController *tabBar = [[PPTabBarController alloc] init];
-    CATransition *animation = [CATransition animation];
-    animation.duration = 1.0;
-    animation.timingFunction = UIViewAnimationCurveEaseInOut;
-    animation.type = @"suckEffect";
+//    PPTabBarController *tabBar = [[PPTabBarController alloc] init];
+//    CATransition *animation = [CATransition animation];
+//    animation.duration = 1.0;
+//    animation.timingFunction = UIViewAnimationCurveEaseInOut;
+//    animation.type = @"suckEffect";
     
     //animation.type = kCATransitionPush;
-    animation.subtype = kCATransitionFromLeft;
-    [self.view.window.layer addAnimation:animation forKey:nil];
-    
-    [self presentViewController:tabBar animated:NO completion:^{
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            [tabBar dismissViewControllerAnimated:NO completion:nil];
-        });
-    }];
+//    animation.subtype = kCATransitionFromLeft;
+//    [self.view.window.layer addAnimation:animation forKey:nil];
+//    
+//    [self presentViewController:tabBar animated:NO completion:^{
+//        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+//            [tabBar dismissViewControllerAnimated:NO completion:nil];
+//        });
+//    }];
 }
 
 - (void)addTrendsViewControllers {

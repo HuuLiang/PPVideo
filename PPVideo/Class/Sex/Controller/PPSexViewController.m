@@ -209,7 +209,7 @@ QBDefineLazyPropertyInitialization(NSMutableDictionary, reloadDic)
 }
 
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section {
-    return UIEdgeInsetsMake(kWidth(20), kWidth(20), kWidth(20), kWidth(20));
+    return UIEdgeInsetsMake(kWidth(20), kWidth(0), kWidth(20), kWidth(0));
 };
 
 - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath {
@@ -250,7 +250,7 @@ QBDefineLazyPropertyInitialization(NSMutableDictionary, reloadDic)
 };
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForFooterInSection:(NSInteger)section {
-    return CGSizeMake(kScreenWidth, section == 5 ? kWidth(90) : kWidth(80));
+    return CGSizeMake(kScreenWidth, section == 5 ? kWidth(70)+1 : kWidth(60)+1);
 }
 
 - (BOOL)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout shouldDisplaySectionBackgroundInSection:(NSUInteger)section {

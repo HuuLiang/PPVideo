@@ -25,7 +25,7 @@ static NSString *const kPPLiveHeaderViewReusableIdentifier = @"PPLiveHeaderViewR
     NSURL       *_newUrl;         //新图片链接
     UICollectionView *_layoutCollectionView;
     NSUInteger  refreshPage;     //主播刷新页码
-    BOOL        isRefresh;       //
+    BOOL        isRefresh;       //是否是再次刷新
 }
 @property (nonatomic) PPLiveModel *liveModel;
 @property (nonatomic) NSMutableArray *dataSource;
@@ -39,26 +39,64 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
     [super viewDidLoad];
     
     refreshPage = 0;
+    isRefresh = NO;
 
+    //初始化加载数据
+    [self loadData];
+    
     self.view.backgroundColor = [UIColor colorWithHexString:@"#ffffff"];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didEndPlay) name:AVPlayerItemDidPlayToEndTimeNotification  object:nil];
+}
+
+- (void)chooseShowType {
+    PPColumnModel *column = [self.dataSource firstObject];
+    PPProgramModel *program = [column.programList firstObject];
+    _playerVideoUrl = [NSURL URLWithString:program.videoUrl];
+    _originalUrl = [NSURL URLWithString:program.coverImg];
+    _newUrl = [NSURL URLWithString:program.detailsCoverImg];
+    
+    if ([PPUtil isFirstOpenLiveVC]) {
+        //第一次进入 加载视频
+        _playerItem = [AVPlayerItem playerItemWithURL:_playerVideoUrl];
+        _player = [AVPlayer playerWithPlayerItem:_playerItem];
+        _playerLayer = [AVPlayerLayer playerLayerWithPlayer:_player];
+        _playerLayer.frame = CGRectMake(0, 0, kScreenWidth, kScreenHeight);
+        [self.view.layer addSublayer:_playerLayer];
+        [self->_player play];
+        [PPUtil setFirstOpenLiveVCTag];
+    } else {
+        //加载背景图和主播列表
+        [self loadBackgroundImg];
+        [self loadLiveUsers];
+    }
+    isRefresh = YES;
+}
+
+- (void)didEndPlay {
+    //视频播放完成之后 移除视频播放层 加载背景图和主播列表
+    [_playerLayer removeFromSuperlayer];
+    
+    [self loadBackgroundImg];
+    [self loadLiveUsers];
+}
+
+
+- (void)loadBackgroundImg {
     _imageView = [[UIImageView alloc] init];
     _imageView.contentMode = UIViewContentModeScaleAspectFill;
     [self.view addSubview:_imageView];
     
-    @weakify(self);
-    [_imageView bk_whenTapped:^{
-        @strongify(self);
-        [self->_player play];
-        self->_layoutCollectionView.hidden = NO;
-        [_imageView sd_setImageWithURL:_newUrl];
-    }];
+    [_imageView sd_setImageWithURL:_newUrl];
     
     {
         [_imageView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.edges.equalTo(self.view);
         }];
     }
-    
+}
+
+- (void)loadLiveUsers {
     UICollectionViewFlowLayout *mainLayout = [[UICollectionViewFlowLayout alloc] init];
     mainLayout.minimumLineSpacing = kWidth(0);
     mainLayout.minimumInteritemSpacing = kWidth(10);
@@ -70,40 +108,37 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
     [_layoutCollectionView registerClass:[PPLiveCell class] forCellWithReuseIdentifier:kPPLiveCellReusableIdentifier];
     [_layoutCollectionView registerClass:[UICollectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:kPPLiveHeaderViewReusableIdentifier];
     _layoutCollectionView.scrollEnabled = NO;
-    [self.view addSubview:_layoutCollectionView];
+    [self.view insertSubview:_layoutCollectionView aboveSubview:_imageView];
     {
         [_layoutCollectionView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.center.equalTo(self.view);
             make.size.mas_equalTo(CGSizeMake(kScreenWidth*0.9, ((kScreenWidth *0.9-kWidth(60))/3+kWidth(78))*3 + kWidth(150)));
         }];
     }
-    
-    [_layoutCollectionView PP_addPullToRefreshWithHandler:^{
-        @strongify(self);
-        [self loadData];
-    }];
-    
-    [_layoutCollectionView PP_triggerPullToRefresh];
-    
-
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didEndPlay) name:AVPlayerItemDidPlayToEndTimeNotification  object:nil];
+    [self->_layoutCollectionView reloadData];
 }
 
-- (void)didEndPlay {
-    _imageView.userInteractionEnabled = NO;
-    [_imageView sd_setImageWithURL:_newUrl];
-    _layoutCollectionView.hidden = NO;
-    [_playerLayer removeFromSuperlayer];
+- (void)loadData {
+    @weakify(self);
+    [self.liveModel fetchLiveInfoWithPage:refreshPage CompletionHandler:^(BOOL success, id obj) {
+        @strongify(self);
+        if (success) {
+            [self.dataSource removeAllObjects];
+            [self removeCurrentRefreshBtn];
+            [self.dataSource addObjectsFromArray:obj];
+            if (!isRefresh) {
+                [self chooseShowType];
+            } else {
+                [self->_layoutCollectionView reloadData];
+            }
+        }
+    }];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    if ([PPUtil launchSeq] == 1) {
-        _layoutCollectionView.hidden = YES;
-    }
-    
-    if ([PPUtil shouldRefreshLiveContent]) {
+    if ([PPUtil shouldRefreshLiveContent] && isRefresh) {
         refreshPage++;
         [self loadData];
     }
@@ -116,47 +151,6 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
 - (BOOL)alwaysHideNavigationBar {
     return YES;
 }
-
-- (void)loadData {
-    @weakify(self);
-    [self.liveModel fetchLiveInfoWithPage:refreshPage CompletionHandler:^(BOOL success, id obj) {
-        @strongify(self);
-        if (success) {
-            [self.dataSource removeAllObjects];
-            [self removeCurrentRefreshBtn];
-            [self.dataSource addObjectsFromArray:obj];
-            [_layoutCollectionView reloadData];
-            [self setBackgroundContent];
-        }
-        [self->_layoutCollectionView PP_endPullToRefresh];
-    }];
-}
-
-- (void)setBackgroundContent {
-    PPColumnModel *column = [self.dataSource firstObject];
-    PPProgramModel *program = [column.programList firstObject];
-    
-    _playerVideoUrl = [NSURL URLWithString:program.videoUrl];
-    _originalUrl = [NSURL URLWithString:program.coverImg];
-    _newUrl = [NSURL URLWithString:program.detailsCoverImg];
-
-    if ([PPUtil launchSeq] == 1) {
-        _imageView.userInteractionEnabled = YES;
-        [_imageView sd_setImageWithURL:_originalUrl];
-        self->_layoutCollectionView.hidden = YES;
-        
-        _playerItem = [AVPlayerItem playerItemWithURL:_playerVideoUrl];
-        _player = [AVPlayer playerWithPlayerItem:_playerItem];
-        _playerLayer = [AVPlayerLayer playerLayerWithPlayer:_player];
-        _playerLayer.frame = CGRectMake(0, 0, kScreenWidth, kScreenHeight);
-        [self.view.layer addSublayer:_playerLayer];
-    } else {
-        [_imageView sd_setImageWithURL:_newUrl];
-    }
-    
-
-}
-
 
 #pragma mark - UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout
 
@@ -240,11 +234,8 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.section < self.dataSource.count) {
-        PPColumnModel *column = self.dataSource[indexPath.section];
-        if (indexPath.item < column.programList.count) {
-            PPProgramModel *program = column.programList[indexPath.item];
-        }
+    if ([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:[PPSystemConfigModel sharedModel].liveUrl]]) {
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[PPSystemConfigModel sharedModel].liveUrl]];
     }
 }
 

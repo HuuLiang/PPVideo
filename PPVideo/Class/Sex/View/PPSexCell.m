@@ -31,12 +31,12 @@
     if (self) {
         
         self.backgroundColor = [UIColor colorWithHexString:@"#ffffff"];
-        self.layer.shadowColor = [[UIColor colorWithHexString:@"#000000"] colorWithAlphaComponent:0.3].CGColor;
-        self.layer.shadowOffset = CGSizeMake(0, 1);
-        self.layer.shadowRadius = 1.0f;
-        self.layer.shadowOpacity = 0.5f;
-        self.layer.masksToBounds = NO;
-        self.layer.shadowPath = [UIBezierPath bezierPathWithRoundedRect:self.bounds cornerRadius:self.contentView.layer.cornerRadius].CGPath;
+//        self.layer.shadowColor = [[UIColor colorWithHexString:@"#000000"] colorWithAlphaComponent:0.3].CGColor;
+//        self.layer.shadowOffset = CGSizeMake(0, 1);
+//        self.layer.shadowRadius = 1.0f;
+//        self.layer.shadowOpacity = 0.5f;
+//        self.layer.masksToBounds = NO;
+//        self.layer.shadowPath = [UIBezierPath bezierPathWithRoundedRect:self.bounds cornerRadius:self.contentView.layer.cornerRadius].CGPath;
         
         _imgV = [[UIImageView alloc] init];
         [self addSubview:_imgV];
@@ -50,7 +50,7 @@
         [self addSubview:_tagLabel];
         
         _titleLabel = [[UILabel alloc] init];
-        _titleLabel.textColor = [UIColor colorWithHexString:@"#666666"];
+        _titleLabel.textColor = [UIColor colorWithHexString:@"#333333"];
         _titleLabel.font = [UIFont systemFontOfSize:[PPUtil isIpad] ? 24 : kWidth(32)];
         [self addSubview:_titleLabel];
         

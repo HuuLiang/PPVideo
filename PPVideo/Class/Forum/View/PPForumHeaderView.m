@@ -24,6 +24,11 @@
     if (self) {
         self.backgroundColor = [UIColor colorWithHexString:@"#ffffff"];
         
+        UIView *grayView = [[UIView alloc] init];
+        grayView.backgroundColor = [UIColor colorWithHexString:@"#efefef"];
+        [self addSubview:grayView];
+
+        
         _shadowView = [[UIImageView alloc] init];
         _shadowView.backgroundColor = [UIColor colorWithHexString:@"#333333"];
         [self addSubview:_shadowView];
@@ -39,6 +44,12 @@
         [self addSubview:_ownerLabel];
         
         {
+            [grayView mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.top.equalTo(self).offset(kWidth(10));
+                make.left.right.equalTo(self);
+                make.height.mas_equalTo(1);
+            }];
+            
             [_shadowView mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.centerY.equalTo(self);
                 make.left.equalTo(self).offset(kWidth(22));
@@ -86,6 +97,7 @@
     self = [super initWithFrame:frame];
     if (self) {
         self.backgroundColor = [UIColor colorWithHexString:@"#ffffff"];
+        
         
         mainTitleLabel = [[UILabel alloc] init];
         mainTitleLabel.textAlignment = NSTextAlignmentCenter;

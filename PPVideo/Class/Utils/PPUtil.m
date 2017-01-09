@@ -34,6 +34,7 @@ static NSString *const kUserNickKeyName         = @"kPPUserNickKeyName";
 static NSString *const kUserImageKeyName        = @"kPPUserImageKeyName";
 
 static NSString *const kLiveRefreshKeyName      = @"kPPLiveRefreshKeyName";
+static NSString *const kLiveFirstKeyName        = @"kPPLiveFirstKeyName";
 static NSString *const kForumRefreshKeyName     = @"kPPForumRefreshKeyName";
 
 @implementation PPUtil
@@ -230,7 +231,7 @@ static NSString *const kForumRefreshKeyName     = @"kPPForumRefreshKeyName";
 + (NSDate *)isLastDate {
     NSDate *lastDate = [[NSUserDefaults standardUserDefaults] objectForKey:kForumRefreshKeyName];
     if (!lastDate) {
-        lastDate = [NSDate date];
+        lastDate = [self currentDate];
         [[NSUserDefaults standardUserDefaults] setObject:lastDate forKey:kForumRefreshKeyName];
     }
     return lastDate;
@@ -239,17 +240,24 @@ static NSString *const kForumRefreshKeyName     = @"kPPForumRefreshKeyName";
 + (BOOL)shouldRefreshLiveContent {
     NSDate *lastDate = [[NSUserDefaults standardUserDefaults] objectForKey:kLiveRefreshKeyName];
     if (!lastDate) {
-        [[NSUserDefaults standardUserDefaults] setObject:[NSDate date] forKey:kLiveRefreshKeyName];
-        return NO;
+        [[NSUserDefaults standardUserDefaults] setObject:[self currentDate] forKey:kLiveRefreshKeyName];
+        return YES;
     } else {
-        NSTimeInterval timeInterval = [lastDate timeIntervalSinceNow];
-        timeInterval = -timeInterval;
-        if (timeInterval > 2) {
+        NSDate *newDate = [self currentDate];
+        NSTimeInterval timeInterval = [newDate timeIntervalSinceDate:lastDate];
+        if (timeInterval > 20) {
+            [[NSUserDefaults standardUserDefaults] setObject:newDate forKey:kLiveRefreshKeyName];
             return YES;
         } else {
             return NO;
         }
     }
+}
+
++ (NSDate *)currentDate {
+    NSDate *systemDate = [NSDate date];
+    NSDate *currentDate = [systemDate dateByAddingTimeInterval:[[NSTimeZone localTimeZone] secondsFromGMTForDate:systemDate]];
+    return currentDate;
 }
 
 #pragma mark - app检查
@@ -453,6 +461,14 @@ static NSString *const kForumRefreshKeyName     = @"kPPForumRefreshKeyName";
     [standbyUrl appendString:@".json"];
     
     return standbyUrl;
+}
+
++ (BOOL)isFirstOpenLiveVC {
+    return ![[[NSUserDefaults standardUserDefaults] objectForKey:kLiveFirstKeyName] isEqualToString:@"First"];
+}
+
++ (void)setFirstOpenLiveVCTag {
+    [[NSUserDefaults standardUserDefaults] setObject:@"First" forKey:kLiveFirstKeyName];
 }
 
 #pragma mark -- defaultConfig

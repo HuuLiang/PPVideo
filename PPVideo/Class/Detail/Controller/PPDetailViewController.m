@@ -110,6 +110,7 @@ QBDefineLazyPropertyInitialization(PPDetailResponse, response)
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    [[PPSearchView showView] hideFromSuperview];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onPaidNotificationInDetailVC:) name:kPaidNotificationName object:nil];
 }
 

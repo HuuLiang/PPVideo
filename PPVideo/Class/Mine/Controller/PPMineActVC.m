@@ -49,15 +49,21 @@
     
     [self initCells];
     
-        [self.navigationController.navigationBar bk_whenTouches:1 tapped:5 handler:^{
-            NSString *baseURLString = [PP_BASE_URL stringByReplacingCharactersInRange:NSMakeRange(0, PP_BASE_URL.length-6) withString:@"******"];
-            [[PPHudManager manager] showHudWithText:[NSString stringWithFormat:@"Server:%@\nChannelNo:%@\nPackageCertificate:%@\npV:%@/%@\nBundleId:%@\nVersion:%@", baseURLString, PP_CHANNEL_NO, PP_PACKAGE_CERTIFICATE, PP_REST_PV, PP_PAYMENT_PV,PP_BUNDLE_IDENTIFIER,PP_REST_APP_VERSION]];
-        }];
+    [self.navigationController.navigationBar bk_whenTouches:1 tapped:5 handler:^{
+        NSString *baseURLString = [PP_BASE_URL stringByReplacingCharactersInRange:NSMakeRange(0, PP_BASE_URL.length-6) withString:@"******"];
+        [[PPHudManager manager] showHudWithText:[NSString stringWithFormat:@"Server:%@\nChannelNo:%@\nPackageCertificate:%@\npV:%@/%@\nBundleId:%@\nVersion:%@", baseURLString, PP_CHANNEL_NO, PP_PACKAGE_CERTIFICATE, PP_REST_PV, PP_PAYMENT_PV,PP_BUNDLE_IDENTIFIER,PP_REST_APP_VERSION]];
+    }];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(deleteTextfieldContent:) name:kPaidNotificationName object:nil];
+}
+
+- (void)deleteTextfieldContent:(NSNotification *)notification {
+    self->_textField.text = @"";
+    [self->_textField resignFirstResponder];
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 

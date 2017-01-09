@@ -35,12 +35,24 @@
     self = [super init];
     if (self) {
         self.backgroundColor = [UIColor colorWithHexString:@"#ffffff"];
+        self.layer.borderColor = [[UIColor colorWithHexString:@"#efefef"] colorWithAlphaComponent:1].CGColor;
+        self.layer.borderWidth = 0.4;
+        
         _placeholderStr = @"波多野结衣最新力作";
         _bgColorAlpha = 0;
         _responder = NO;
         
         _userButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        [_userButton setBackgroundImage:[UIImage imageNamed:@"mine_avatar"] forState:UIControlStateNormal];
+        UIImage *userImg = nil;
+        if ([PPUtil getUserImage]) {
+            userImg = [PPUtil getUserImage];
+        } else {
+            userImg = [UIImage imageNamed:@"mine_avatar"];
+        }
+        
+        [_userButton setBackgroundImage:userImg forState:UIControlStateNormal];
+        _userButton.layer.cornerRadius = 18;
+        _userButton.layer.masksToBounds = YES;
         [self addSubview:_userButton];
         
         _searchBar = [[PPSearchBar alloc] init];
@@ -58,7 +70,7 @@
         _cancleButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [_cancleButton setTitle:@"取消" forState:UIControlStateNormal];
         [_cancleButton setTitleColor:[UIColor colorWithHexString:@"#333333"] forState:UIControlStateNormal];
-        _cancleButton.titleLabel.font = [UIFont systemFontOfSize:14];
+        _cancleButton.titleLabel.font = [UIFont systemFontOfSize:15];
         _cancleButton.hidden = YES;
         [self addSubview:_cancleButton];
         
@@ -79,7 +91,7 @@
         
         {
             [_userButton mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.left.equalTo(self).offset(kWidth(10));
+                make.left.equalTo(self).offset(kWidth(20));
                 make.bottom.equalTo(self.mas_bottom).offset(-kWidth(8));
                 make.size.mas_equalTo(CGSizeMake(36, 36));
             }];
@@ -87,14 +99,14 @@
             [_searchBar mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.bottom.equalTo(self.mas_bottom).offset(-7);
                 make.height.mas_equalTo(30);
-                make.left.equalTo(self).offset(kWidth(45)+36);
+                make.left.equalTo(self).offset(kWidth(55)+36);
                 make.right.equalTo(self.mas_right).offset(-kWidth(120));
             }];
             
             [_cancleButton mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.right.equalTo(self.mas_right).offset(-kWidth(12));
-                make.centerY.equalTo(_searchBar);
-                make.size.mas_equalTo(CGSizeMake(30, kWidth(28)));
+                make.right.equalTo(self.mas_right).offset(-kWidth(20));
+                make.centerY.equalTo(_userButton);
+                make.size.mas_equalTo(CGSizeMake(32, kWidth(30)));
             }];
         }
 
@@ -112,6 +124,7 @@
         self.bgColorAlpha = _bgColorAlpha;
         UIImageView *image=[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"hot_search_normal"]];
         _searchBar.leftView = image;
+        self.layer.borderColor = [[UIColor colorWithHexString:@"#efefef"] colorWithAlphaComponent:0].CGColor;
     } else {
         UIImageView *image=[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"hot_search_selected"]];
         _searchBar.leftView = image;
@@ -123,17 +136,26 @@
     }
     self.frame = CGRectMake(0, 0, kScreenWidth, 64);
     [view addSubview:self];
-//    [UIView animateKeyframesWithDuration:0.5 delay:0 options:UIViewKeyframeAnimationOptionCalculationModeLinear animations:^{
-//        self.transform = CGAffineTransformMakeTranslation(0, 64);
-//    } completion:^(BOOL finished) {
-//        self.frame = CGRectMake(0, 0, kScreenWidth, 64);
-//    }];
-
 }
+
+- (void)hideFromSuperview {
+    if (self.superview) {
+        [self removeFromSuperview];
+    }
+}
+
 
 - (void)setBgColorAlpha:(CGFloat)bgColorAlpha {
     _bgColorAlpha = bgColorAlpha;
+    if (_bgColorAlpha > 0.6) {
+        UIImageView *image=[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"hot_search_selected"]];
+        self->_searchBar.leftView = image;
+    } else {
+        UIImageView *image=[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"hot_search_normal"]];
+        self->_searchBar.leftView = image;
+    }
     self.backgroundColor = [UIColor colorWithWhite:1.0 alpha:bgColorAlpha];
+    self.layer.borderColor = [[UIColor colorWithHexString:@"#efefef"] colorWithAlphaComponent:bgColorAlpha].CGColor;
     _searchBar.backgroundColor = [[UIColor colorWithHexString:@"#ebebeb"] colorWithAlphaComponent:(0.3+bgColorAlpha*0.7)];
 }
 
@@ -146,6 +168,9 @@
     }
 }
 
+- (void)setUserImg:(UIImage *)userImg {
+    [_userButton setImage:userImg forState:UIControlStateNormal];
+}
 
 #pragma mark - UITextViewDelegate
 

@@ -151,7 +151,7 @@ QBDefineLazyPropertyInitialization(NSMutableArray, titleWidthArray)
     [self.titleWidthArray removeAllObjects];
     lineTag = 0;
     lineItemCount = 0;
-    CGFloat fullwidth = kScreenWidth - kWidth(92);
+    CGFloat fullwidth = kScreenWidth - kWidth(60);
     NSInteger count = 0;
     CGFloat currentWidth = 0;
     CGFloat nextWidth = 0;
@@ -181,7 +181,7 @@ QBDefineLazyPropertyInitialization(NSMutableArray, titleWidthArray)
                 lineTag++;
                 currentWidth = rowWidth;
                 [self.titleWidthArray addObject:@(currentWidth)];
-                rowWidth = kScreenWidth - kWidth(92);
+                rowWidth = kScreenWidth - kWidth(60);
             }
         } else {
             if (count <= 3 && rowWidth > currentWidth) {
@@ -278,9 +278,9 @@ QBDefineLazyPropertyInitialization(NSMutableArray, titleWidthArray)
 
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section {
     if (section == PPHotSectionTag) {
-        return UIEdgeInsetsMake(kWidth(20), kWidth(46), kWidth(20), kWidth(46));
+        return UIEdgeInsetsMake(kWidth(20), kWidth(30), kWidth(20), kWidth(30));
     } else if (section == PPHotSectionContent) {
-        return UIEdgeInsetsMake(kWidth(20), kWidth(20), kWidth(20), kWidth(20));
+        return UIEdgeInsetsMake(kWidth(20), kWidth(0), kWidth(20), kWidth(0));
     }
     return UIEdgeInsetsZero;
 };

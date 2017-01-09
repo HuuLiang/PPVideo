@@ -92,9 +92,9 @@
     animation.timingFunction = UIViewAnimationCurveEaseInOut;
     animation.type = @"rippleEffect";
     animation.subtype = kCATransitionFromLeft;
-    [self.view.window.layer addAnimation:animation forKey:nil];
+    [[UIApplication sharedApplication].keyWindow.rootViewController.view.layer addAnimation:animation forKey:nil];
     
-    [self presentViewController:payNav animated:YES completion:nil];
+    [[UIApplication sharedApplication].keyWindow.rootViewController presentViewController:payNav animated:YES completion:nil];
 }
 
 - (void)playVideoWithUrl:(PPProgramModel *)programModel baseModel:(QBBaseModel *)baseModel vipLevel:(PPVipLevel)vipLevel hasTomeControl:(BOOL)hasTomeControl {

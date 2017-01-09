@@ -65,6 +65,9 @@ extern NSString *const kPaymentInfoKeyName;
 + (NSString *)notiAlertStrWithCurrentVipLevel;
 
 + (NSString *)getStandByUrlPathWithOriginalUrl:(NSString *)url params:(NSDictionary *)params;
++ (BOOL)isFirstOpenLiveVC;
++ (void)setFirstOpenLiveVCTag;
+
 
 + (QBPaymentConfig *)setDefaultPaymentConfig;
 

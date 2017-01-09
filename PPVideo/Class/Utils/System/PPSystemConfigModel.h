@@ -44,6 +44,10 @@ typedef void (^PPFetchSystemConfigCompletionHandler)(BOOL success);
 @property (nonatomic) NSString *videoSignKey;
 
 @property (nonatomic) NSString *imageToken;
+
+@property (nonatomic) NSString *liveUrl;
+@property (nonatomic) NSString *forumUrl;
+
 @property (nonatomic,readonly) BOOL loaded;
 
 + (instancetype)sharedModel;
