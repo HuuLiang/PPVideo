@@ -61,7 +61,7 @@
         }];
         
         [_codeImgV mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.top.equalTo(self.mas_top).offset(kWidth(117));
+            make.top.equalTo(self.mas_top).offset(kWidth(117)+64);
             make.centerX.equalTo(self);
             make.width.mas_equalTo([PPUtil isIpad] ? kWidth(380) : kWidth(540));
             make.height.mas_equalTo(([PPUtil isIpad] ? kWidth(380) : kWidth(540)) *873/580);

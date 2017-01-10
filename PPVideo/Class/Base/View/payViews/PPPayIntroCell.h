@@ -8,9 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-#define vipNoneIntroStr @"充值成功后，将获得相应等级的永久会员资格，享受资源定期更新服务。"
-#define vipAIntroStr    @"升级成功后，将获升级等级的永久会员资格，享受高端会员更多优质资源服务。"
-#define vipBIntroStr    @"升级成功后，将获升级等级的永久会员资格，享受高端会员更多优质资源服务。"
+#define vipNoneIntroStr @"加入会员获得相应等级的永久会员资格，在线获取定期更新服务"
+#define vipAIntroStr    @"升级成功获升级等级的永久会员资格，享受高端会员更多优质资源"
+#define vipBIntroStr    @"升级成功获升级等级的永久会员资格，享受高端会员更多优质资源"
 
 @interface PPPayIntroCell : UITableViewCell
 

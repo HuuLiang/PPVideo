@@ -51,7 +51,7 @@
     
     if (!self.footer) {
         MJRefreshAutoNormalFooter *refreshFooter = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:handler];
-        [refreshFooter setTitle:@"升级VIP可观看更多" forState:MJRefreshStateIdle];
+        [refreshFooter setTitle:@"点击升级VIP可观看更多" forState:MJRefreshStateIdle];
         self.footer = refreshFooter;
     }
 }
@@ -60,11 +60,11 @@
     if (!self.footer) {
         NSString *str = nil;
         if (vipLevel == PPVipLevelVipA) {
-            str = @"成为黄金会员查看更多";
+            str = @"点击成为黄金会员查看更多";
         } else if (vipLevel == PPVipLevelVipB) {
-            str = @"成为钻石会员查看更多";
+            str = @"点击成为钻石会员查看更多";
         } else if (vipLevel == PPVipLevelVipC) {
-            str = @"成为黑金会员查看更多";
+            str = @"点击成为黑金会员查看更多";
         }
         MJRefreshAutoNormalFooter *refreshFooter = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:handler];
         [refreshFooter setTitle:str forState:MJRefreshStateIdle];

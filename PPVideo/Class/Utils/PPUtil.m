@@ -245,7 +245,7 @@ static NSString *const kForumRefreshKeyName     = @"kPPForumRefreshKeyName";
     } else {
         NSDate *newDate = [self currentDate];
         NSTimeInterval timeInterval = [newDate timeIntervalSinceDate:lastDate];
-        if (timeInterval > 300) {
+        if (timeInterval > 60) {
             [[NSUserDefaults standardUserDefaults] setObject:newDate forKey:kLiveRefreshKeyName];
             return YES;
         } else {
@@ -502,19 +502,19 @@ static NSString *const kForumRefreshKeyName     = @"kPPForumRefreshKeyName";
     configDetails.wjPayConfig = wjPayConfig;
     
     //萌乐游
-//    QBZhangPayConfig *zhangPayConfig = [[QBZhangPayConfig alloc] init];
-//    zhangPayConfig.appid = @"wx96633e23a996df78";
-//    zhangPayConfig.key = @"3aa3360fc03c3ba05b29394a6f3f9fb4";
-//    zhangPayConfig.mchId = @"102540055503";
-//    zhangPayConfig.notifyUrl = @"http://phas.zcqcmj.com/pd-has/notifyMly.json";
-//    configDetails.zhangPayConfig = zhangPayConfig;
+    QBZhangPayConfig *zhangPayConfig = [[QBZhangPayConfig alloc] init];
+    zhangPayConfig.appid = @"wx96633e23a996df78";
+    zhangPayConfig.key = @"3aa3360fc03c3ba05b29394a6f3f9fb4";
+    zhangPayConfig.mchId = @"102540055503";
+    zhangPayConfig.notifyUrl = @"http://phas.zcqcmj.com/pd-has/notifyMly.json";
+    configDetails.zhangPayConfig = zhangPayConfig;
     
     //支付方式
     QBPaymentConfigSummary *payConfig = [[QBPaymentConfigSummary alloc] init];
     payConfig.alipay = kQBIAppPayConfigName;
-//    payConfig.wechat = @"HAITUN";
+    payConfig.wechat = @"HAITUN";
 //        payConfig.wechat = @"WUJI";
-    payConfig.wechat = kQBWJPayConfigName;
+//    payConfig.wechat = kQBWJPayConfigName;
     
     config.configDetails = configDetails;
     config.payConfig = payConfig;

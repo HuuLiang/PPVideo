@@ -58,7 +58,7 @@
     NSMutableString *dataString = [[NSMutableString alloc] init];
     for (NSInteger i = 0; i < currentString.length; i++) {
         NSInteger ascii = [currentString characterAtIndex:i];
-        [dataString appendString:[NSString stringWithFormat:@"%ld",ascii]];
+        [dataString appendString:[NSString stringWithFormat:@"%ld",(long)ascii]];
     }
     
     if ([[orderId substringToIndex:8] isEqualToString:dataString]) {

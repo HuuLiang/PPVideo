@@ -21,6 +21,8 @@
     self = [super init];
     if (self) {
         self.selectionStyle = UITableViewCellSelectionStyleNone;
+        self.backgroundColor = [UIColor clearColor];
+
         
         _title = [[UILabel alloc] init];
         _title.textColor = [UIColor colorWithHexString:@"#666666"];

@@ -62,6 +62,7 @@
 		EC4C6A861DB4E87D0009771A /* PPSectionBackgroundFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = EC4C6A851DB4E87D0009771A /* PPSectionBackgroundFlowLayout.m */; };
 		EC652F421DD4122C0021A847 /* PPCacheModel.m in Sources */ = {isa = PBXBuildFile; fileRef = EC652F411DD4122C0021A847 /* PPCacheModel.m */; };
 		EC6F83001E233DED00FA84E6 /* PPWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EC6F82FF1E233DED00FA84E6 /* PPWebViewController.m */; };
+		EC8596DF1E24E7C900137F6B /* pay_back.jpg in Resources */ = {isa = PBXBuildFile; fileRef = EC8596DE1E24E7C900137F6B /* pay_back.jpg */; };
 		ECB8F0871DB71DD10088A118 /* PPAppModel.m in Sources */ = {isa = PBXBuildFile; fileRef = ECB8F0861DB71DD10088A118 /* PPAppModel.m */; };
 		ECB8F0B71DB71EB30088A118 /* JQKApplicationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = ECB8F0891DB71EB30088A118 /* JQKApplicationManager.m */; };
 		ECB8F0CD1DB71EE90088A118 /* JQKApplication.m in Sources */ = {isa = PBXBuildFile; fileRef = ECB8F0CC1DB71EE90088A118 /* JQKApplication.m */; };
@@ -231,6 +232,7 @@
 		EC652F411DD4122C0021A847 /* PPCacheModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPCacheModel.m; sourceTree = "<group>"; };
 		EC6F82FE1E233DED00FA84E6 /* PPWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPWebViewController.h; sourceTree = "<group>"; };
 		EC6F82FF1E233DED00FA84E6 /* PPWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPWebViewController.m; sourceTree = "<group>"; };
+		EC8596DE1E24E7C900137F6B /* pay_back.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = pay_back.jpg; sourceTree = "<group>"; };
 		ECB8F0851DB71DD10088A118 /* PPAppModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPAppModel.h; sourceTree = "<group>"; };
 		ECB8F0861DB71DD10088A118 /* PPAppModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPAppModel.m; sourceTree = "<group>"; };
 		ECB8F0881DB71EB30088A118 /* JQKApplicationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JQKApplicationManager.h; path = ../JQKApplicationManager.h; sourceTree = "<group>"; };
@@ -597,6 +599,7 @@
 			isa = PBXGroup;
 			children = (
 				EC3DC7241E1F967C004D5418 /* mine_vipBack.png */,
+				EC8596DE1E24E7C900137F6B /* pay_back.jpg */,
 				ECFA0E7A1DB9FE7700E61347 /* mine_back.jpg */,
 			);
 			path = Resource;
@@ -1092,6 +1095,7 @@
 			files = (
 				EC3DC7251E1F967C004D5418 /* mine_vipBack.png in Resources */,
 				ECC097851DB1E06500875D56 /* config.plist in Resources */,
+				EC8596DF1E24E7C900137F6B /* pay_back.jpg in Resources */,
 				ECC097631DB1C8AA00875D56 /* LaunchScreen.storyboard in Resources */,
 				ECFA0E7B1DB9FE7700E61347 /* mine_back.jpg in Resources */,
 				ECC097601DB1C8AA00875D56 /* Assets.xcassets in Resources */,

@@ -333,7 +333,7 @@ QBDefineLazyPropertyInitialization(NSMutableArray, titleWidthArray)
         if (indexPath.section == PPHotSectionTag) {
             sectionBgView.backgroundColor = [UIColor colorWithHexString:@"#ffffff"];
         } else if (indexPath.section == PPHotSectionContent) {
-            sectionBgView.backgroundColor = [UIColor colorWithHexString:@"#efefef"];
+            sectionBgView.backgroundColor = [UIColor colorWithHexString:@"#ffffff"];
         } else {
             sectionBgView.backgroundColor = [UIColor clearColor];
         }

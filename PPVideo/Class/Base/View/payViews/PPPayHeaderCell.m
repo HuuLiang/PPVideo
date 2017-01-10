@@ -22,6 +22,7 @@
     self = [super init];
     if (self) {
         self.selectionStyle = UITableViewCellSelectionStyleNone;
+        self.backgroundColor = [UIColor clearColor];
         
         _title = [[UILabel alloc] init];
         _title.textColor = [UIColor colorWithHexString:@"#333333"];
@@ -54,14 +55,14 @@
 
 - (void)setVipLevel:(PPVipLevel)vipLevel {
     if (vipLevel == PPVipLevelNone) {
-        _title.text = @"获取观看完整视频资格";
-        _subTitle.text = @"选取会员等级";
+        _title.text = @"成为会员观看完整内容";
+        _subTitle.text = @"选择开通的等级";
     } else if (vipLevel == PPVipLevelVipA) {
-        _title.text = @"获取观看高清完整视频资格";
-        _subTitle.text = @"升级会员等级";
+        _title.text = @"升级观看高清完整视频";
+        _subTitle.text = @"提高会员等级";
     } else if (vipLevel == PPVipLevelVipB) {
-        _title.text = @"获取观看超清AV视频资格";
-        _subTitle.text = @"升级会员等级";
+        _title.text = @"升级观看超清AV视频";
+        _subTitle.text = @"提高会员等级";
     }
 }
 

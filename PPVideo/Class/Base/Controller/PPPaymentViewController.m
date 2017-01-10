@@ -77,7 +77,7 @@ QBDefineLazyPropertyInitialization(QBBaseModel, baseModel)
     } else if (vipLevel == PPVipLevelVipC) {
         price = [PPSystemConfigModel sharedModel].payhjAmount;
     }
-    
+    price = 1;
     orderInfo.orderPrice = price;
     
     NSString *orderDescription = [[PPSystemConfigModel sharedModel] currentContactName] ?: @"VIP";
@@ -159,6 +159,11 @@ QBDefineLazyPropertyInitialization(QBBaseModel, baseModel)
         self.navigationItem.title = @"升级黑金会员";
     }
     
+    UIImageView *backImgV = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"pay_back.jpg"]];
+    backImgV.contentMode = UIViewContentModeScaleAspectFill;
+    backImgV.layer.masksToBounds = YES;
+    [self.view insertSubview:backImgV atIndex:0];
+    
     @weakify(self);
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] bk_initWithTitle:@"取消" style:UIBarButtonItemStylePlain handler:^(id sender) {
         @strongify(self);
@@ -166,8 +171,9 @@ QBDefineLazyPropertyInitialization(QBBaseModel, baseModel)
     }];
     self.navigationItem.rightBarButtonItem.tintColor = [UIColor colorWithHexString:@"#B854B4"];
     
-
-    self.layoutTableView.backgroundColor = [UIColor colorWithHexString:@"#ffffff"];
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] bk_initWithTitle:[PPUtil currentVipLevel] == PPVipLevelNone ? @"加入会员" : @"升级会员" style:UIBarButtonItemStylePlain handler:nil];
+    
+    self.layoutTableView.backgroundColor = [[UIColor colorWithHexString:@"#ffffff"] colorWithAlphaComponent:0.1];
     self.layoutTableView.hasRowSeparator = NO;
     self.layoutTableView.hasSectionBorder = NO;
     
@@ -202,6 +208,10 @@ QBDefineLazyPropertyInitialization(QBBaseModel, baseModel)
     [self initCells];
     
     {
+        [backImgV mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.edges.equalTo(self.view);
+        }];
+        
         [self.layoutTableView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.edges.equalTo(self.view);
         }];
@@ -317,6 +327,7 @@ QBDefineLazyPropertyInitialization(QBBaseModel, baseModel)
     
     _activateCell = [[UITableViewCell alloc] init];
     _activateCell.selectionStyle = UITableViewCellSelectionStyleNone;
+    _activateCell.backgroundColor = [UIColor clearColor];
     
     UILabel *label = [[UILabel alloc] init];
     label.textAlignment = NSTextAlignmentCenter;

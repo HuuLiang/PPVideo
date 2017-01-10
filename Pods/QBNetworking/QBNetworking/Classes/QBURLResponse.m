@@ -17,21 +17,10 @@ const NSUInteger kSuccessResponseCode = 100;
 
 @end
 
-@interface QBURLResponse ()
-
-@property (nonatomic,retain) QBURLResponseCode *code;
-
-@end
-
 @implementation QBURLResponse
 
-- (Class)codeClass {
+- (Class)responseCodeClass {
     return [QBURLResponseCode class];
-}
-
-- (BOOL)resultSuccess {
-    
-    return self.code.value.integerValue == kSuccessResponseCode ? YES : NO;
 }
 
 - (void)parseResponseWithDictionary:(NSDictionary *)dic {
@@ -55,11 +44,17 @@ const NSUInteger kSuccessResponseCode = 100;
             setPropertyName = [instance performSelector:NSSelectorFromString(kNameMappingProperty) withObject:propertyName];
         }
         
+        id value = obj;
+        
+        if ([setPropertyName isEqualToString:@"code"] && [value isKindOfClass:[NSDictionary class]]) {
+            setPropertyName = @"responseCode";
+            propertyName = setPropertyName;
+        }
+        
         if (![properties containsObject:setPropertyName]) {
             return ;
         }
         
-        id value = obj;
         if ([value isKindOfClass:[NSString class]]
             || [value isKindOfClass:[NSNumber class]]) {
             [instance setValue:value forKey:setPropertyName];

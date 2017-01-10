@@ -32,8 +32,12 @@
     self = [super initWithFrame:frame];
     if (self) {
         
+        self.backgroundColor = [UIColor colorWithHexString:@"#ffffff"];
+
+        
         _imgV = [[UIImageView alloc] init];
         _imgV.contentMode = UIViewContentModeScaleAspectFill;
+        _imgV.layer.masksToBounds = YES;
         [self addSubview:_imgV];
         
 //        UIImage *shadowImg = [UIImage imageNamed:@"trail_normal_shadow"];
@@ -50,7 +54,7 @@
         [self addSubview:_playImgV];
         
         _playLabel = [[UILabel alloc] init];
-        _playLabel.textColor = [UIColor colorWithHexString:@"#999999"];
+        _playLabel.textColor = [UIColor colorWithHexString:@"#666666"];
         _playLabel.font = [UIFont systemFontOfSize:kWidth(22)];
         [self addSubview:_playLabel];
         
@@ -59,7 +63,7 @@
         [self addSubview:_commentImgV];
         
         _commentLabel = [[UILabel alloc] init];
-        _commentLabel.textColor = [UIColor colorWithHexString:@"#999999"];
+        _commentLabel.textColor = [UIColor colorWithHexString:@"#666666"];
         _commentLabel.font = [UIFont systemFontOfSize:kWidth(22)];
         [self addSubview:_commentLabel];
         
@@ -77,13 +81,13 @@
             [_titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.left.equalTo(self).offset(kWidth(10));
                 make.right.equalTo(self.mas_right).offset(-kWidth(10));
-                make.top.equalTo(_imgV.mas_bottom).offset(kWidth(4));
+                make.top.equalTo(_imgV.mas_bottom).offset(kWidth(6));
                 make.height.mas_equalTo(kWidth(30));
             }];
             
             [_playImgV mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.left.equalTo(self).offset(kWidth(14));
-                make.bottom.equalTo(self.mas_bottom).offset(-kWidth(8));
+                make.bottom.equalTo(self.mas_bottom).offset(-kWidth(0));
 //                make.size.mas_equalTo(CGSizeMake(playImg.size.width, playImg.size.height));
                 make.size.mas_equalTo(CGSizeMake(kWidth(22), kWidth(22)));
             }];
@@ -96,7 +100,7 @@
             
             [_commentImgV mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.centerY.equalTo(_playLabel);
-                make.left.equalTo(_playLabel.mas_right).offset(kWidth(20));
+                make.left.equalTo(_playLabel.mas_right).offset(kWidth(40));
 //                make.size.mas_equalTo(CGSizeMake(commentImg.size.width, commentImg.size.height));
                 make.size.mas_equalTo(CGSizeMake(kWidth(22), kWidth(20)));
             }];

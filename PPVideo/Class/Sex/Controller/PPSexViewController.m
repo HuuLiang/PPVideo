@@ -42,7 +42,7 @@ QBDefineLazyPropertyInitialization(NSMutableDictionary, reloadDic)
     // Do any additional setup after loading the view.
     PPSectionBackgroundFlowLayout *mainLayout = [[PPSectionBackgroundFlowLayout alloc] init];
     mainLayout.minimumLineSpacing = kWidth(20);
-    mainLayout.minimumInteritemSpacing = kWidth(20);
+    mainLayout.minimumInteritemSpacing = kWidth(10);
     _layoutCollectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:mainLayout];
     _layoutCollectionView.backgroundColor = [UIColor colorWithHexString:@"#efefef"];
     _layoutCollectionView.delegate = self;

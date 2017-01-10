@@ -106,7 +106,7 @@
             
             [_commentImgV mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.centerY.equalTo(_playLabel);
-                make.left.equalTo(_playLabel.mas_right).offset(kWidth(20));
+                make.left.equalTo(_playLabel.mas_right).offset(kWidth(40));
 //                make.size.mas_equalTo(CGSizeMake(commentImg.size.width, commentImg.size.height));
                 make.size.mas_equalTo(CGSizeMake(kWidth(22), kWidth(20)));
             }];

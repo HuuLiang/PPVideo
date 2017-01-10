@@ -26,6 +26,8 @@
     self = [super init];
     if (self) {
         self.selectionStyle = UITableViewCellSelectionStyleNone;
+        self.backgroundColor = [UIColor clearColor];
+
         
         _frameView = [[UIView alloc] init];
         _frameView.layer.cornerRadius = [PPUtil isIpad] ? 10 : kWidth(10);
@@ -97,7 +99,7 @@
         _moneyLabel.text = [NSString stringWithFormat:@"¥%ld",[PPSystemConfigModel sharedModel].payAmount/100];
     } else if (vipLevel == PPVipLevelVipB) {
         _title.text = [PPUtil currentVipLevel] == PPVipLevelVipA ? @"升级为钻石会员" : @"钻石会员";
-        _subTitle.text = @"上千部高清限制级精彩视频";
+        _subTitle.text = [PPUtil currentVipLevel] == PPVipLevelVipA ? @"上千部高清限制级精彩视频" : @"上千部高清完整版视频";
         if ([PPUtil currentVipLevel] == PPVipLevelNone) {
             _moneyLabel.text = [NSString stringWithFormat:@"¥%ld",[PPSystemConfigModel sharedModel].payzsAmount/100+[PPSystemConfigModel sharedModel].payAmount/100];
         } else {

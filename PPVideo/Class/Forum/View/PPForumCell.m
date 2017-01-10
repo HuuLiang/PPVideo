@@ -91,7 +91,7 @@
     NSUInteger randomTime = arc4random() % 300 + 1;
     NSString *timeStr;
     if ((long)(randomTime / 60) > 0) {
-        timeStr = [NSString stringWithFormat:@"%ld分钟前",(long)(randomTime/60)];
+        timeStr = [NSString stringWithFormat:@"%ld分前",(long)(randomTime/60)];
     } else {
         timeStr = [NSString stringWithFormat:@"%ld秒前",randomTime];
     }

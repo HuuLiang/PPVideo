@@ -55,6 +55,11 @@
         _userButton.layer.masksToBounds = YES;
         [self addSubview:_userButton];
         
+        UIView *redView = [[UIView alloc] init];
+        redView.backgroundColor = [UIColor colorWithHexString:@"#E51C23"];
+        redView.layer.cornerRadius = kWidth(8);
+        [self addSubview:redView];
+        
         _searchBar = [[PPSearchBar alloc] init];
         _searchBar.backgroundColor = [[UIColor colorWithHexString:@"#ebebeb"] colorWithAlphaComponent:0.3];
         _searchBar.delegate = self;
@@ -94,6 +99,12 @@
                 make.left.equalTo(self).offset(kWidth(20));
                 make.bottom.equalTo(self.mas_bottom).offset(-kWidth(8));
                 make.size.mas_equalTo(CGSizeMake(36, 36));
+            }];
+            
+            [redView mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.top.equalTo(_userButton.mas_top).offset(-1);
+                make.right.equalTo(_userButton.mas_right).offset(-1);
+                make.size.mas_equalTo(CGSizeMake(kWidth(17), kWidth(17)));
             }];
             
             [_searchBar mas_makeConstraints:^(MASConstraintMaker *make) {

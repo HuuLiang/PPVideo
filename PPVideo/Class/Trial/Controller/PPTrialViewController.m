@@ -341,10 +341,12 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
 }
 
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section {
-    if (section == PPTrailSectionFree || section == PPTrailSectionContent || section == PPTrailSectionMoreContent) {
-        return UIEdgeInsetsMake(kWidth(20), kWidth(0), kWidth(20), kWidth(0));
+    if (section == PPTrailSectionContent || section == PPTrailSectionMoreContent) {
+        return UIEdgeInsetsMake(kWidth(0), kWidth(0), kWidth(20), kWidth(0));
     } else if (section == PPTrailSectionAd || section == PPTrailSectionMoreAd) {
         return UIEdgeInsetsMake(kWidth(20), kWidth(0), kWidth(10), kWidth(0));
+    } else if (section == PPTrailSectionFree) {
+        return UIEdgeInsetsMake(kWidth(20), kWidth(0), kWidth(20), kWidth(0));
     }
     
     return UIEdgeInsetsZero;

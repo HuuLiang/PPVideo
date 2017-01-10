@@ -21,6 +21,7 @@
     self = [super init];
     if (self) {
         self.selectionStyle = UITableViewCellSelectionStyleNone;
+        self.backgroundColor = [UIColor clearColor];
         
         _payButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [_payButton setTitleColor:[UIColor colorWithHexString:@"#ffffff"] forState:UIControlStateNormal];

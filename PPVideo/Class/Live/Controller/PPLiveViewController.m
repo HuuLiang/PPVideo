@@ -77,6 +77,7 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
 - (void)didEndPlay {
     //视频播放完成之后 移除视频播放层 加载背景图和主播列表
     [_playerLayer removeFromSuperlayer];
+    _playerLayer = nil;
     
     [self loadBackgroundImg];
     [self loadLiveUsers];
@@ -142,6 +143,15 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
     if ([PPUtil shouldRefreshLiveContent] && isRefresh) {
         refreshPage++;
         [self loadData];
+    }
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    
+    //播放中离开做为播放完成处理
+    if ([self.view.layer.sublayers containsObject:_playerLayer]) {
+        [self didEndPlay];
     }
 }
 

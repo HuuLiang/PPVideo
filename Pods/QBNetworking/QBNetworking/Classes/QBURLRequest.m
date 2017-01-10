@@ -79,8 +79,10 @@ NSString *const kQBNetworkingErrorMessageKey = @"com.iqu8.qbnetworking.errormess
     }
     
     _requestSessionManager = [[AFHTTPSessionManager alloc] initWithBaseURL:[self baseURL]];
-    _requestSessionManager.responseSerializer = [AFHTTPResponseSerializer serializer];
-    _requestSessionManager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html",@"text/plain",nil];
+    if (self.configuration.encryptedType == QBURLEncryptedTypeNew) {
+        _requestSessionManager.responseSerializer = [AFHTTPResponseSerializer serializer];
+        _requestSessionManager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html",@"text/plain",nil];
+    }
     return _requestSessionManager;
 }
 
@@ -90,9 +92,10 @@ NSString *const kQBNetworkingErrorMessageKey = @"com.iqu8.qbnetworking.errormess
     }
     
     _standbyRequestSessionManager = [[AFHTTPSessionManager alloc] initWithBaseURL:[self standbyBaseURL]];
-    _standbyRequestSessionManager.responseSerializer = [AFHTTPResponseSerializer serializer];
-    _standbyRequestSessionManager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html",@"text/plain",nil];
-
+    if (self.configuration.encryptedType == QBURLEncryptedTypeNew) {
+        _standbyRequestSessionManager.responseSerializer = [AFHTTPResponseSerializer serializer];
+        _standbyRequestSessionManager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html",@"text/plain",nil];
+    }
     return _standbyRequestSessionManager;
 }
 
@@ -207,7 +210,7 @@ NSString *const kQBNetworkingErrorMessageKey = @"com.iqu8.qbnetworking.errormess
             if (self.configuration.encryptedType == QBURLEncryptedTypeOriginal) {
             status = urlResp.success.boolValue ? QBURLResponseSuccess : QBURLResponseFailedByInterface;
             }else if(self.configuration.encryptedType == QBURLEncryptedTypeNew){
-                status = urlResp.resultSuccess ? QBURLResponseSuccess :QBURLResponseFailedByInterface;
+                status = [urlResp.responseCode.value integerValue] == 100 ? QBURLResponseSuccess :QBURLResponseFailedByInterface;
             }
             errorMessage = (status == QBURLResponseSuccess) ? nil : [NSString stringWithFormat:@"ResultCode: %@", urlResp.resultCode];
         } else {
