@@ -354,7 +354,7 @@ static NSString *const kAliPaySchemeUrl = @"paoPaoYingyuanAliPayUrlScheme";
 }
 
 - (void)hideHotVC:(NSNotification *)notification {
-    if ([PPUtil deviceType] < PPDeviceType_iPhone6) {
+    if ([PPUtil deviceType] <= PPDeviceType_iPhone4S) {
         self.window.rootViewController = self.rootViewController;
         [self.window makeKeyAndVisible];
     } else {

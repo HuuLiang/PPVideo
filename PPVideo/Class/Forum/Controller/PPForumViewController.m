@@ -11,6 +11,7 @@
 #import "PPForumCell.h"
 #import "PPForumHeaderView.h"
 #import "PPForumModel.h"
+#import "PPWebViewController.h"
 
 static NSString *const kPPForumHeaderViewReusableIdentifier = @"PPForumHeaderViewReusableIdentifier";
 static NSString *const kPPForumTitleViewReusableIdentifier  = @"PPForumTitleViewReusableIdentifier";
@@ -245,9 +246,22 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    if ([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:[PPSystemConfigModel sharedModel].forumUrl]]) {
-        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[PPSystemConfigModel sharedModel].forumUrl]];
+    if ([PPUtil currentVipLevel] != PPVipLevelVipC) {
+        [UIAlertView bk_showAlertViewWithTitle:@"很抱歉!" message:@"论坛只针对黑金VIP用户开放" cancelButtonTitle:@"再考虑看看" otherButtonTitles:@[@"立即开通"] handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
+            if (buttonIndex == 1) {
+                [self presentPayViewControllerWithBaseModel:nil];
+            }
+        }];
+    } else {
+//        if ([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:[PPSystemConfigModel sharedModel].forumUrl]]) {
+//            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[PPSystemConfigModel sharedModel].forumUrl]];
+//        }
+        PPWebViewController *webVC = [[PPWebViewController alloc] initWithURL:[NSURL URLWithString:[PPSystemConfigModel sharedModel].forumUrl] standbyURL:nil];
+        [self.navigationController pushViewController:webVC animated:YES];
+
     }
+    
+    
 }
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {

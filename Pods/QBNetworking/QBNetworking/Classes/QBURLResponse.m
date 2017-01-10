@@ -11,7 +11,28 @@
 #import "QBDefines.h"
 #import "NSObject+Properties.h"
 
+const NSUInteger kSuccessResponseCode = 100;
+
+@implementation QBURLResponseCode
+
+@end
+
+@interface QBURLResponse ()
+
+@property (nonatomic,retain) QBURLResponseCode *code;
+
+@end
+
 @implementation QBURLResponse
+
+- (Class)codeClass {
+    return [QBURLResponseCode class];
+}
+
+- (BOOL)resultSuccess {
+    
+    return self.code.value.integerValue == kSuccessResponseCode ? YES : NO;
+}
 
 - (void)parseResponseWithDictionary:(NSDictionary *)dic {
     [self parseDataWithDictionary:dic inInstance:self];

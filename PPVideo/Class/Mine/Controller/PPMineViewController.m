@@ -99,6 +99,9 @@ QBDefineLazyPropertyInitialization(PPAppResponse, response)
     }
     
     [self.layoutTableView PP_triggerPullToRefresh];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onPaidNotification:) name:kPaidNotificationName object:nil];
+
 }
 
 - (BOOL)alwaysHideNavigationBar {
@@ -110,17 +113,16 @@ QBDefineLazyPropertyInitialization(PPAppResponse, response)
 }
 
 - (void)onPaidNotification:(NSNotification *)notification {
+    [self initCells];
     [self.layoutTableView PP_triggerPullToRefresh];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onPaidNotification:) name:kPaidNotificationName object:nil];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:kPaidNotificationName object:nil];
 }
 
 - (void)contactCustomerService {

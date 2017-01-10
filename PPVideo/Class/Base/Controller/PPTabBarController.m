@@ -199,8 +199,8 @@ QBDefineLazyPropertyInitialization(NSMutableArray, childVCs)
 #pragma mark - UITabBarControllerDelegate
 
 - (void)tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController {
-    if ([PPUtil currentTabPageIndex] != 5 && [PPUtil currentTabPageIndex] != 7) {
-        [[PPSearchView showView] showInSuperView:self.view animated:[PPUtil currentTabPageIndex] == 0];
+    if ([PPUtil currentTabPageIndex] == 5) {
+        [[PPSearchView showView] hideFromSuperview];
     }
     [[QBStatsManager sharedManager] statsTabIndex:[PPUtil currentTabPageIndex] subTabIndex:[PPUtil currentSubTabPageIndex] forClickCount:1];
 }

@@ -10,6 +10,7 @@
 #import <AVFoundation/AVFoundation.h>
 #import "PPLiveCell.h"
 #import "PPLiveModel.h"
+#import "PPWebViewController.h"
 
 static NSString *const kPPLiveCellReusableIdentifier       = @"kPPLiveCellReusableIdentifier";
 static NSString *const kPPLiveHeaderViewReusableIdentifier = @"PPLiveHeaderViewReusableIdentifier";
@@ -234,8 +235,18 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    if ([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:[PPSystemConfigModel sharedModel].liveUrl]]) {
-        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[PPSystemConfigModel sharedModel].liveUrl]];
+    if ([PPUtil currentVipLevel] < PPVipLevelVipB) {
+        [UIAlertView bk_showAlertViewWithTitle:@"很抱歉!" message:@"美女直播只针对钻石VIP以上用户开放" cancelButtonTitle:@"再考虑看看" otherButtonTitles:@[@"立即开通"] handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
+            if (buttonIndex == 1) {
+                [self presentPayViewControllerWithBaseModel:nil];
+            }
+        }];
+    } else {
+//        if ([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:[PPSystemConfigModel sharedModel].liveUrl]]) {
+//            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[PPSystemConfigModel sharedModel].liveUrl]];
+//        }
+        PPWebViewController *webVC = [[PPWebViewController alloc] initWithURL:[NSURL URLWithString:[PPSystemConfigModel sharedModel].liveUrl] standbyURL:nil];
+        [self.navigationController pushViewController:webVC animated:YES];
     }
 }
 

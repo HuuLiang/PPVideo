@@ -33,6 +33,7 @@
     if (self) {
         
         _imgV = [[UIImageView alloc] init];
+        _imgV.contentMode = UIViewContentModeScaleAspectFill;
         [self addSubview:_imgV];
         
 //        UIImage *shadowImg = [UIImage imageNamed:@"trail_normal_shadow"];

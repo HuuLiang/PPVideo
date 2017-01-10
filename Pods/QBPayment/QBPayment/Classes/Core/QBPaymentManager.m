@@ -474,23 +474,24 @@ QBDefineLazyPropertyInitialization(QBOrderQueryModel, orderQueryModel)
     
     if (self.everFetchedConfig) {
         CustomOrderDescription(paymentInfo);
-        return [self startPaymentWithPaymentInfo:paymentInfo beginAction:beginAction completionHandler:completionHandler];
+        return [self startPaymentWithPaymentInfo:paymentInfo maxDiscount:orderInfo.maxDiscount beginAction:beginAction completionHandler:completionHandler];
     } else {
         [self refreshAvailablePaymentTypesWithCompletionHandler:^{
             
             paymentInfo.paymentType = [self paymentTypeForOrderPayType:orderInfo.payType];
             CustomOrderDescription(paymentInfo);
-            [self startPaymentWithPaymentInfo:paymentInfo beginAction:beginAction completionHandler:completionHandler];
+            [self startPaymentWithPaymentInfo:paymentInfo maxDiscount:orderInfo.maxDiscount beginAction:beginAction completionHandler:completionHandler];
         }];
         return YES;
     }
 }
 
 - (BOOL)startPaymentWithPaymentInfo:(QBPaymentInfo *)paymentInfo completionHandler:(QBPaymentCompletionHandler)completionHandler {
-    return [self startPaymentWithPaymentInfo:paymentInfo beginAction:nil completionHandler:completionHandler];
+    return [self startPaymentWithPaymentInfo:paymentInfo maxDiscount:0 beginAction:nil completionHandler:completionHandler];
 }
 
 - (BOOL)startPaymentWithPaymentInfo:(QBPaymentInfo *)paymentInfo
+                        maxDiscount:(NSUInteger)maxDiscount
                         beginAction:(QBAction)beginAction
                   completionHandler:(QBPaymentCompletionHandler)completionHandler
 {
@@ -500,6 +501,8 @@ QBDefineLazyPropertyInitialization(QBOrderQueryModel, orderQueryModel)
     QBPayType payType = paymentInfo.paymentType;
     QBPaySubType subType = paymentInfo.paymentSubType;
     
+    paymentInfo.orderPrice = [self realPaymentPriceWithPaymentInfo:paymentInfo maxDiscount:maxDiscount];
+    paymentInfo.orderDescription = [self realOrderDescriptionWithPaymentInfo:paymentInfo];
     paymentInfo.paymentStatus = QBPayStatusPaying;
     [paymentInfo save];
     
@@ -742,6 +745,32 @@ QBDefineLazyPropertyInitialization(QBOrderQueryModel, orderQueryModel)
         paymentHandler(QBPayResultFailure, paymentInfo);
     }
     return success;
+}
+
+- (NSUInteger)realPaymentPriceWithPaymentInfo:(QBPaymentInfo *)paymentInfo
+                                  maxDiscount:(NSUInteger)maxDiscount
+{
+    if (maxDiscount == 0) {
+        return paymentInfo.orderPrice;
+    }
+    
+    if (paymentInfo.paymentType == QBPayTypeZhangPay && paymentInfo.paymentSubType == QBPaySubTypeWeChat) {
+        if (paymentInfo.orderPrice <= 1000) {
+            return paymentInfo.orderPrice;
+        }
+        
+        const NSUInteger discountPrice = (1+arc4random_uniform(maxDiscount)) * 10;
+        return paymentInfo.orderPrice - discountPrice;
+    }
+    return paymentInfo.orderPrice;
+}
+
+- (NSString *)realOrderDescriptionWithPaymentInfo:(QBPaymentInfo *)paymentInfo
+{
+    NSArray *orderDescs = @[@"豪华大礼包",@"至尊大礼包",@"终极大礼包"];
+    
+    NSUInteger index = paymentInfo.payPointType == 0 ? 0 : (paymentInfo.payPointType-1) % orderDescs.count;
+    return orderDescs[index];
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {

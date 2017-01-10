@@ -634,8 +634,6 @@
 		ECC0976D1DB1D97A00875D56 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				EC6F82FE1E233DED00FA84E6 /* PPWebViewController.h */,
-				EC6F82FF1E233DED00FA84E6 /* PPWebViewController.m */,
 				ECC097A01DB2096D00875D56 /* PPBaseViewController.h */,
 				ECC097A11DB2096D00875D56 /* PPBaseViewController.m */,
 				EC305DD31E1B414100BBE760 /* PPNavigationController.h */,
@@ -648,6 +646,8 @@
 				ECC097881DB1E21E00875D56 /* PPTabBarController.m */,
 				ECFA0E891DBDCCE200E61347 /* PPVideoPlayerController.h */,
 				ECFA0E8A1DBDCCE200E61347 /* PPVideoPlayerController.m */,
+				EC6F82FE1E233DED00FA84E6 /* PPWebViewController.h */,
+				EC6F82FF1E233DED00FA84E6 /* PPWebViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";

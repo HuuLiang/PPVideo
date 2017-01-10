@@ -245,7 +245,7 @@ static NSString *const kForumRefreshKeyName     = @"kPPForumRefreshKeyName";
     } else {
         NSDate *newDate = [self currentDate];
         NSTimeInterval timeInterval = [newDate timeIntervalSinceDate:lastDate];
-        if (timeInterval > 20) {
+        if (timeInterval > 300) {
             [[NSUserDefaults standardUserDefaults] setObject:newDate forKey:kLiveRefreshKeyName];
             return YES;
         } else {

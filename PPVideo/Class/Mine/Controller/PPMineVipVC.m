@@ -59,7 +59,11 @@
     };
     
     [self initCells];
-    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onPaidNotification:) name:kPaidNotificationName object:nil];
+}
+
+- (void)onPaidNotification:(NSNotification *)notification {
+    [self initCells];
 }
 
 - (BOOL)alwaysHideNavigationBar {
