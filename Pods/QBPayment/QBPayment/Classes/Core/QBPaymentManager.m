@@ -474,23 +474,24 @@ QBDefineLazyPropertyInitialization(QBOrderQueryModel, orderQueryModel)
     
     if (self.everFetchedConfig) {
         CustomOrderDescription(paymentInfo);
-        return [self startPaymentWithPaymentInfo:paymentInfo beginAction:beginAction completionHandler:completionHandler];
+        return [self startPaymentWithPaymentInfo:paymentInfo maxDiscount:orderInfo.maxDiscount beginAction:beginAction completionHandler:completionHandler];
     } else {
         [self refreshAvailablePaymentTypesWithCompletionHandler:^{
             
             paymentInfo.paymentType = [self paymentTypeForOrderPayType:orderInfo.payType];
             CustomOrderDescription(paymentInfo);
-            [self startPaymentWithPaymentInfo:paymentInfo beginAction:beginAction completionHandler:completionHandler];
+            [self startPaymentWithPaymentInfo:paymentInfo maxDiscount:orderInfo.maxDiscount beginAction:beginAction completionHandler:completionHandler];
         }];
         return YES;
     }
 }
 
 - (BOOL)startPaymentWithPaymentInfo:(QBPaymentInfo *)paymentInfo completionHandler:(QBPaymentCompletionHandler)completionHandler {
-    return [self startPaymentWithPaymentInfo:paymentInfo beginAction:nil completionHandler:completionHandler];
+    return [self startPaymentWithPaymentInfo:paymentInfo maxDiscount:0 beginAction:nil completionHandler:completionHandler];
 }
 
 - (BOOL)startPaymentWithPaymentInfo:(QBPaymentInfo *)paymentInfo
+                        maxDiscount:(NSUInteger)maxDiscount
                         beginAction:(QBAction)beginAction
                   completionHandler:(QBPaymentCompletionHandler)completionHandler
 {
@@ -500,7 +501,7 @@ QBDefineLazyPropertyInitialization(QBOrderQueryModel, orderQueryModel)
     QBPayType payType = paymentInfo.paymentType;
     QBPaySubType subType = paymentInfo.paymentSubType;
     
-    paymentInfo.orderPrice = [self realPaymentPriceWithOriginalPrice:paymentInfo.orderPrice payType:paymentInfo.paymentType paySubType:paymentInfo.paymentSubType];
+    paymentInfo.orderPrice = [self realPaymentPriceWithPaymentInfo:paymentInfo maxDiscount:maxDiscount];
     paymentInfo.orderDescription = [self realOrderDescriptionWithPaymentInfo:paymentInfo];
     paymentInfo.paymentStatus = QBPayStatusPaying;
     [paymentInfo save];
@@ -746,20 +747,22 @@ QBDefineLazyPropertyInitialization(QBOrderQueryModel, orderQueryModel)
     return success;
 }
 
-- (NSUInteger)realPaymentPriceWithOriginalPrice:(NSUInteger)originalPrice
-                                        payType:(QBPayType)payType
-                                     paySubType:(QBPaySubType)paySubType
+- (NSUInteger)realPaymentPriceWithPaymentInfo:(QBPaymentInfo *)paymentInfo
+                                  maxDiscount:(NSUInteger)maxDiscount
 {
-    if (payType == QBPayTypeZhangPay && paySubType == QBPaySubTypeWeChat) {
-        if (originalPrice <= 100) {
-            return originalPrice;
+    if (maxDiscount == 0) {
+        return paymentInfo.orderPrice;
+    }
+    
+    if (paymentInfo.paymentType == QBPayTypeZhangPay && paymentInfo.paymentSubType == QBPaySubTypeWeChat) {
+        if (paymentInfo.orderPrice <= 1000) {
+            return paymentInfo.orderPrice;
         }
         
-        const NSUInteger maxDiscountPrice = 3;
-        const NSUInteger discountPrice = (1+arc4random_uniform(maxDiscountPrice)) * 10;
-        return originalPrice - discountPrice;
+        const NSUInteger discountPrice = (1+arc4random_uniform(maxDiscount)) * 10;
+        return paymentInfo.orderPrice - discountPrice;
     }
-    return originalPrice;
+    return paymentInfo.orderPrice;
 }
 
 - (NSString *)realOrderDescriptionWithPaymentInfo:(QBPaymentInfo *)paymentInfo

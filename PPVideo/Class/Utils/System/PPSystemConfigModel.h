@@ -22,6 +22,7 @@ typedef void (^PPFetchSystemConfigCompletionHandler)(BOOL success);
 @property (nonatomic) NSInteger payAmount;
 @property (nonatomic) NSInteger payzsAmount;
 @property (nonatomic) NSInteger payhjAmount;
+@property (nonatomic) NSInteger maxDiscount;
 
 @property (nonatomic) NSString *mineImgUrl;
 @property (nonatomic) NSString *vipImg;
