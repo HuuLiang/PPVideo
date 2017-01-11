@@ -151,13 +151,13 @@ QBDefineLazyPropertyInitialization(QBBaseModel, baseModel)
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    if (_vipLevel == PPVipLevelNone) {
-        self.navigationItem.title = @"充值永久会员";
-    } else if (_vipLevel == PPVipLevelVipA) {
-        self.navigationItem.title = @"升级钻石会员";
-    } else if (_vipLevel == PPVipLevelVipB) {
-        self.navigationItem.title = @"升级黑金会员";
-    }
+//    if (_vipLevel == PPVipLevelNone) {
+//        self.navigationItem.title = @"充值永久会员";
+//    } else if (_vipLevel == PPVipLevelVipA) {
+//        self.navigationItem.title = @"升级钻石会员";
+//    } else if (_vipLevel == PPVipLevelVipB) {
+//        self.navigationItem.title = @"升级黑金会员";
+//    }
     
     UIImageView *backImgV = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"pay_back.jpg"]];
     backImgV.contentMode = UIViewContentModeScaleAspectFill;
