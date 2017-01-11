@@ -77,7 +77,7 @@ QBDefineLazyPropertyInitialization(QBBaseModel, baseModel)
     } else if (vipLevel == PPVipLevelVipC) {
         price = [PPSystemConfigModel sharedModel].payhjAmount;
     }
-    price = 1;
+    
     orderInfo.orderPrice = price;
     
     NSString *orderDescription = [[PPSystemConfigModel sharedModel] currentContactName] ?: @"VIP";
