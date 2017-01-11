@@ -36,6 +36,7 @@ static NSString *const kUserImageKeyName        = @"kPPUserImageKeyName";
 static NSString *const kLiveRefreshKeyName      = @"kPPLiveRefreshKeyName";
 static NSString *const kLiveFirstKeyName        = @"kPPLiveFirstKeyName";
 static NSString *const kForumRefreshKeyName     = @"kPPForumRefreshKeyName";
+static NSString *const kForumLastDayKeyName     = @"kPPForumLastKeyName";
 
 @implementation PPUtil
 
@@ -229,10 +230,10 @@ static NSString *const kForumRefreshKeyName     = @"kPPForumRefreshKeyName";
 }
 
 + (NSDate *)isLastDate {
-    NSDate *lastDate = [[NSUserDefaults standardUserDefaults] objectForKey:kForumRefreshKeyName];
+    NSDate *lastDate = [[NSUserDefaults standardUserDefaults] objectForKey:kForumLastDayKeyName];
     if (!lastDate) {
         lastDate = [self currentDate];
-        [[NSUserDefaults standardUserDefaults] setObject:lastDate forKey:kForumRefreshKeyName];
+        [[NSUserDefaults standardUserDefaults] setObject:lastDate forKey:kForumLastDayKeyName];
     }
     return lastDate;
 }
@@ -247,6 +248,23 @@ static NSString *const kForumRefreshKeyName     = @"kPPForumRefreshKeyName";
         NSTimeInterval timeInterval = [newDate timeIntervalSinceDate:lastDate];
         if (timeInterval > 60) {
             [[NSUserDefaults standardUserDefaults] setObject:newDate forKey:kLiveRefreshKeyName];
+            return YES;
+        } else {
+            return NO;
+        }
+    }
+}
+
++ (BOOL)shouldRefreshForumContent {
+    NSDate *lastDate = [[NSUserDefaults standardUserDefaults] objectForKey:kForumRefreshKeyName];
+    if (!lastDate) {
+        [[NSUserDefaults standardUserDefaults] setObject:[self currentDate] forKey:kForumRefreshKeyName];
+        return YES;
+    } else {
+        NSDate *newDate = [self currentDate];
+        NSTimeInterval timeInterval = [newDate timeIntervalSinceDate:lastDate];
+        if (timeInterval > 60) {
+            [[NSUserDefaults standardUserDefaults] setObject:newDate forKey:kForumRefreshKeyName];
             return YES;
         } else {
             return NO;

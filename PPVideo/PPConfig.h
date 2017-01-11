@@ -35,6 +35,7 @@
 #define PP_SEARCH_URL                  @"/iosvideo/search.htm"
 #define PP_DETAIL_URL                  @"/iosvideo/detailsg.htm"
 #define PP_LIVE_URL                    @"/iosvideo/ranking.htm"
+#define PP_LIVEREFRESH_URL             @"/iosvideo/program.htm"
 #define PP_FORUM_URL                   @"/iosvideo/category.htm"
 
 

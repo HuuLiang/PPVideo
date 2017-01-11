@@ -27,6 +27,7 @@ static NSString *const kPPLiveHeaderViewReusableIdentifier = @"PPLiveHeaderViewR
     UICollectionView *_layoutCollectionView;
     NSUInteger  refreshPage;     //主播刷新页码
     BOOL        isRefresh;       //是否是再次刷新
+    NSUInteger  columnId;        //刷新的栏目id
 }
 @property (nonatomic) PPLiveModel *liveModel;
 @property (nonatomic) NSMutableArray *dataSource;
@@ -52,6 +53,8 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
 
 - (void)chooseShowType {
     PPColumnModel *column = [self.dataSource firstObject];
+    PPColumnModel *lastColumn = [self.dataSource lastObject];
+    columnId = lastColumn.columnId;
     PPProgramModel *program = [column.programList firstObject];
     _playerVideoUrl = [NSURL URLWithString:program.videoUrl];
     _originalUrl = [NSURL URLWithString:program.coverImg];
@@ -78,6 +81,9 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
     //视频播放完成之后 移除视频播放层 加载背景图和主播列表
     [_playerLayer removeFromSuperlayer];
     _playerLayer = nil;
+    if (_player) {
+        [_player pause];
+    }
     
     [self loadBackgroundImg];
     [self loadLiveUsers];
@@ -122,7 +128,7 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
 
 - (void)loadData {
     @weakify(self);
-    [self.liveModel fetchLiveInfoWithPage:refreshPage CompletionHandler:^(BOOL success, id obj) {
+    [self.liveModel fetchLiveInfoWithColumnId:columnId Page:refreshPage CompletionHandler:^(BOOL success, id obj) {
         @strongify(self);
         if (success) {
             [self.dataSource removeAllObjects];

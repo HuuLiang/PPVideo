@@ -10,10 +10,12 @@
 
 @interface PPLiveReponse : QBURLResponse
 @property (nonatomic) NSArray <PPColumnModel *> *columnList;
+@property (nonatomic) NSInteger columnId;
+@property (nonatomic) NSArray <PPProgramModel *> *programList;
 @end
 
 @interface PPLiveModel : QBEncryptedURLRequest
 
-- (BOOL)fetchLiveInfoWithPage:(NSUInteger)page CompletionHandler:(QBCompletionHandler)handler;
+- (BOOL)fetchLiveInfoWithColumnId:(NSUInteger)columnId Page:(NSUInteger)page CompletionHandler:(QBCompletionHandler)handler;
 
 @end

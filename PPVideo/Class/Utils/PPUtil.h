@@ -40,6 +40,7 @@ extern NSString *const kPaymentInfoKeyName;
 + (NSString *)compareCurrentTime:(NSString *)compareDateString;
 + (NSDate *)isLastDate;
 + (BOOL)shouldRefreshLiveContent;
++ (BOOL)shouldRefreshForumContent;
 
 + (void)checkAppInstalledWithBundleId:(NSString *)bundleId completionHandler:(void (^)(BOOL))handler;
 

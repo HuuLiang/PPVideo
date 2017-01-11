@@ -14,6 +14,10 @@
     return [PPColumnModel class];
 }
 
+- (Class)programListElementClass {
+    return [PPProgramModel class];
+}
+
 @end
 
 @implementation PPLiveModel
@@ -26,11 +30,18 @@
     return [PPSystemConfigModel sharedModel].timeoutInterval;
 }
 
-- (BOOL)fetchLiveInfoWithPage:(NSUInteger)page CompletionHandler:(QBCompletionHandler)handler {
-    NSDictionary *params = @{@"page":[NSNumber numberWithUnsignedInteger:page]};
+- (BOOL)fetchLiveInfoWithColumnId:(NSUInteger)columnId Page:(NSUInteger)page CompletionHandler:(QBCompletionHandler)handler {
+    NSDictionary *params = nil;
+    NSString *url = nil;
+    if (page == 0) {
+        url = PP_LIVE_URL;
+    } else {
+        url = PP_LIVEREFRESH_URL;
+        params = @{@"columnId":[NSNumber numberWithUnsignedInteger:columnId],@"page":[NSNumber numberWithUnsignedInteger:page]};
+    }
     @weakify(self);
-    BOOL success = [self requestURLPath:PP_LIVE_URL
-                         standbyURLPath:[PPUtil getStandByUrlPathWithOriginalUrl:PP_LIVE_URL params:nil]
+    BOOL success = [self requestURLPath:url
+                         standbyURLPath:[PPUtil getStandByUrlPathWithOriginalUrl:url params:params]
                              withParams:params
                         responseHandler:^(QBURLResponseStatus respStatus, NSString *errorMessage)
                     {
@@ -39,6 +50,12 @@
                         PPLiveReponse *resp = nil;
                         if (respStatus == QBURLResponseSuccess) {
                             resp = self.response;
+                            if (page > 0) {
+                                PPColumnModel *column = [[PPColumnModel alloc] init];
+                                column.columnId = resp.columnId;
+                                column.programList = resp.programList;
+                                resp.columnList = @[column];
+                            }
                             [PPCacheModel updateSexCacheWithColumnInfo:resp.columnList];
                         }
                         

@@ -100,7 +100,7 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
     [super viewWillAppear:animated];
     [[PPSearchView showView] showInSuperView:self.view animated:NO];
     
-    if ([PPUtil shouldRefreshLiveContent]) {
+    if ([PPUtil shouldRefreshForumContent]) {
         [self refreshAndReplaceDataSource];
     }
 }
