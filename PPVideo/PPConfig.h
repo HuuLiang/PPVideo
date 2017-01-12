@@ -12,7 +12,7 @@
 #define PP_CHANNEL_NO               [PPConfiguration sharedConfig].channelNo
 #define PP_REST_APPID               @"QUBA_2026"
 #define PP_REST_PV                  @"232"
-#define PP_PAYMENT_PV               @"200"
+#define PP_PAYMENT_PV               @"203"
 #define PP_PACKAGE_CERTIFICATE      @"iPhone Distribution: Neijiang Fenghuang Enterprise (Group) Co., Ltd."
 
 #define PP_REST_APP_VERSION         ((NSString *)([NSBundle mainBundle].infoDictionary[@"CFBundleShortVersionString"]))
