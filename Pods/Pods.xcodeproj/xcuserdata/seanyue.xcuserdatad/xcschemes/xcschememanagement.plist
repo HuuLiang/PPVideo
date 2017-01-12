@@ -74,79 +74,13 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>XMLReader-Arc.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
-	<dict>
-		<key>096A55B24F1E84BC37058ABCAC9BA997</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>0AC55E754182E1FCF070AC7F74379523</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>0B30C65879B66C93A52A4C111B78569F</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>175B076ED45EB1A3E40F58BA14036467</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>33C54D5D7A63B9F28368F99DA506AB2E</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>496643A0C6647A237EA495B023CFA1A7</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>790E2957A856ECF602BBEBC4703D35AC</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>8642CC820CE8C5B88C113D7F47AF4BC3</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>9DC8D9E02903E93BD0B2FEC9D846EA20</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>9E033EDB5EC0819481B0546434FA577B</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>A48DA8456CB7AC42904FE9076B1A57DB</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>B8EAAB392A13AD22EA60F7B3E410193F</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>C7C5FD310966070D9553E5B95C59641B</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>E43CB2F3BE4EAFD975A03B09198554B8</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-	</dict>
+	<dict/>
 </dict>
 </plist>

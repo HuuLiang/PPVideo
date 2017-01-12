@@ -63,8 +63,6 @@ typedef NS_ENUM(NSUInteger, QBPayStatus) {
 @class QBPaymentInfo;
 typedef void (^QBPaymentCompletionHandler)(QBPayResult payResult, QBPaymentInfo *paymentInfo);
 
-static NSString *const kQBDXTXWeChatAppId = @"wxf5f945e675dda51d";
-
 #define QBPDEPRECATED(desc) __attribute__((unavailable(desc)))
 
 #endif /* QBPaymentDefines_h */

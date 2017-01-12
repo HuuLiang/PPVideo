@@ -107,6 +107,7 @@ extern NSString *const kQBZhangPayConfigName;
 @interface QBDXTXPayConfig : NSObject
 
 @property (nonatomic) NSString *appKey;
+@property (nonatomic) NSString *appid;
 @property (nonatomic) NSString *notifyUrl;
 @property (nonatomic) NSNumber *waresid;
 
