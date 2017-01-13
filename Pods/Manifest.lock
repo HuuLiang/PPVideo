@@ -49,6 +49,10 @@ PODS:
     - OpenSSL (~> 1.0.208)
   - QBPayment/CoreUI (58):
     - MBProgressHUD (~> 0.9.2)
+  - QBPayment/DXTXPay (58):
+    - QBPayment/Core
+    - QBPayment/CorePay
+    - QBPayment/WFTPay
   - QBPayment/HTPay (58):
     - QBPayment/Core
     - QBPayment/CorePay
@@ -57,6 +61,8 @@ PODS:
   - QBPayment/IappPay (58):
     - QBPayment/Core
     - QBPayment/CorePay
+  - QBPayment/MLYPay (58):
+    - QBPayment/WFTPay
   - QBPayment/VIAPay (58):
     - QBPayment/Core
     - QBPayment/CorePay
@@ -65,6 +71,10 @@ PODS:
     - QBPayment/CorePay
     - QBPayment/CoreUI
     - XMLReader-Arc (~> 1.1)
+  - QBPayment/WJPay (58):
+    - QBPayment/Core
+    - QBPayment/CoreUI
+    - QBPayment/WFTPay
   - QBStatisticsManager (0.0.5):
     - BlocksKit (~> 2.2.5)
     - FMDB (~> 2.6.2)
@@ -82,9 +92,12 @@ DEPENDENCIES:
   - Masonry (~> 0.6.3)
   - MBProgressHUD (~> 0.9.2)
   - MJRefresh (~> 2.4.12)
+  - QBPayment/DXTXPay
   - QBPayment/HTPay
   - QBPayment/IappPay
+  - QBPayment/MLYPay
   - QBPayment/VIAPay
+  - QBPayment/WJPay
   - QBStatisticsManager (~> 0.0.4)
   - SDWebImage (= 3.7.3)
   - SFHFKeychainUtils (~> 0.0.1)
@@ -107,6 +120,6 @@ SPEC CHECKSUMS:
   UMengAnalytics-NO-IDFA: 985292af177111685325c90c321094172b95d2cb
   XMLReader-Arc: 7832c527346fc26511fd6c05ebcee18008c34d6d
 
-PODFILE CHECKSUM: a9d040630fe4aa22f81ad2615eec575f5aca683b
+PODFILE CHECKSUM: 5ed0bbbad183d946265b199d2ba12bdd64dc3a45
 
 COCOAPODS: 1.2.0.beta.1
