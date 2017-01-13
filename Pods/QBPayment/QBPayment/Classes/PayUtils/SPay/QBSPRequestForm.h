@@ -1,5 +1,5 @@
 //
-//  SPRequestForm.h
+//  QBSPRequestForm.h
 //  SPaySDKDemo
 //
 //  Created by wongfish on 15/6/14.
@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface SPRequestForm : NSObject
+@interface QBSPRequestForm : NSObject
 
 
 + (id)sharedInstance;;

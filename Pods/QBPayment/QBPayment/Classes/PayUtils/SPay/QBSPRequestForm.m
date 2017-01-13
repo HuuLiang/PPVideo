@@ -1,21 +1,21 @@
 //
-//  SPRequestForm.m
+//  QBSPRequestForm.m
 //  SPaySDKDemo
 //
 //  Created by wongfish on 15/6/14.
 //  Copyright (c) 2015年 wongfish. All rights reserved.
 //
 
-#import "SPRequestForm.h"
+#import "QBSPRequestForm.h"
 #import "NSDictionary+SPayUtilsExtras.h"
 #import "SPConst.h"
 
-@implementation SPRequestForm
+@implementation QBSPRequestForm
 
 
 + (id)sharedInstance
 {
-    static SPRequestForm *_sharedClient = nil;
+    static QBSPRequestForm *_sharedClient = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         _sharedClient = [[self alloc] init];

@@ -23,7 +23,7 @@ NSString *const kQBJSPayConfigName = @"JSPAY";
 NSString *const kQBHeePayConfigName = @"HFB";
 NSString *const kQBXLTXPayConfigName = @"XLTX";
 NSString *const kQBWJPayConfigName = @"WUJI";
-NSString *const kQBZhangPayConfigName = @"MLY";
+NSString *const kQBMLYPayConfigName = @"MLY";
 
 @implementation QBPaymentConfigDetail
 
@@ -52,8 +52,8 @@ NSString *const kQBZhangPayConfigName = @"MLY";
         return [QBXLTXPayConfig class];
     } else if ([propName isEqualToString:NSStringFromSelector(@selector(wjPayConfig))]) {
         return [QBWJPayConfig class];
-    } else if ([propName isEqualToString:NSStringFromSelector(@selector(zhangPayConfig))]) {
-        return [QBZhangPayConfig class];
+    } else if ([propName isEqualToString:NSStringFromSelector(@selector(mlyPayConfig))]) {
+        return [QBMLYPayConfig class];
     }
     return nil;
 }
@@ -83,8 +83,8 @@ NSString *const kQBZhangPayConfigName = @"MLY";
         return NSStringFromSelector(@selector(xltxPayConfig));
     } else if ([parsingName hasSuffix:[@"-" stringByAppendingString:kQBWJPayConfigName]]) {
         return NSStringFromSelector(@selector(wjPayConfig));
-    } else if ([parsingName hasSuffix:[@"-" stringByAppendingString:kQBZhangPayConfigName]]) {
-        return NSStringFromSelector(@selector(zhangPayConfig));
+    } else if ([parsingName hasSuffix:[@"-" stringByAppendingString:kQBMLYPayConfigName]]) {
+        return NSStringFromSelector(@selector(mlyPayConfig));
     }
     return nil;
 }
@@ -259,6 +259,6 @@ NSString *const kQBZhangPayConfigName = @"MLY";
 
 @end
 
-@implementation QBZhangPayConfig
+@implementation QBMLYPayConfig
 
 @end

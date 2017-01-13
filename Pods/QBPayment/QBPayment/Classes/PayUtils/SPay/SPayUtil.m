@@ -8,7 +8,7 @@
 
 #import "SPayUtil.h"
 #import "QBPaymentInfo.h"
-#import "SPRequestForm.h"
+#import "QBSPRequestForm.h"
 #import "SPHTTPManager.h"
 #import "SPayClient.h"
 #import "SPayClientWechatConfigModel.h"
@@ -67,7 +67,7 @@
     
     NSNumber *amount = [NSNumber numberWithInteger:total_fee];
     //生成提交表单
-    NSDictionary *postInfo = [[SPRequestForm sharedInstance]
+    NSDictionary *postInfo = [[QBSPRequestForm sharedInstance]
                               spay_pay_gateway:service
                               version:nil
                               charset:nil
@@ -223,7 +223,7 @@
     srand( (unsigned)time(0) );
     NSString *nonce_str  = [NSString stringWithFormat:@"%d", rand()];
     
-    NSDictionary *postInfo = [[SPRequestForm sharedInstance] spay_pay_gateway:@"unified.trade.query" version:nil charset:nil sign_type:nil sign_key:self.signKey mch_id:self.mchId out_trade_no:paymentInfo.orderId device_info:nil body:paymentInfo.orderDescription total_fee:0 mch_create_ip:[self getIPAddress] notify_url:self.notifyUrl time_start:nil time_expire:nil nonce_str:nonce_str attach:nil];
+    NSDictionary *postInfo = [[QBSPRequestForm sharedInstance] spay_pay_gateway:@"unified.trade.query" version:nil charset:nil sign_type:nil sign_key:self.signKey mch_id:self.mchId out_trade_no:paymentInfo.orderId device_info:nil body:paymentInfo.orderDescription total_fee:0 mch_create_ip:[self getIPAddress] notify_url:self.notifyUrl time_start:nil time_expire:nil nonce_str:nonce_str attach:nil];
     
     [MBProgressHUD showHUDAddedTo:[UIApplication sharedApplication].keyWindow animated:YES];
     [[SPHTTPManager sharedInstance] post:@"pay/gateway" paramter:postInfo success:^(id task, id responseObject) {
