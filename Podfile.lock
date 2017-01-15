@@ -41,39 +41,39 @@ PODS:
   - QBNetworking (0.0.16):
     - AFNetworking (~> 3.1.0)
     - QBExtensions (~> 0.0.3)
-  - QBPayment/Core (61):
+  - QBPayment/Core (62):
     - Aspects (~> 1.4.1)
     - QBExtensions (~> 0.0.6)
     - QBNetworking (~> 0.0.4)
-  - QBPayment/CorePay (61):
+  - QBPayment/CorePay (62):
     - OpenSSL (~> 1.0.208)
-  - QBPayment/CoreUI (61):
+  - QBPayment/CoreUI (62):
     - MBProgressHUD (~> 0.9.2)
-  - QBPayment/DXTXPay (61):
+  - QBPayment/DXTXPay (62):
     - QBPayment/Core
     - QBPayment/CorePay
     - QBPayment/WFTPay
-  - QBPayment/HTPay (61):
+  - QBPayment/HTPay (62):
     - QBPayment/Core
     - QBPayment/CorePay
     - QBPayment/CoreUI
     - QBPayment/WFTPay
-  - QBPayment/IappPay (61):
+  - QBPayment/IappPay (62):
     - QBPayment/Core
     - QBPayment/CorePay
-  - QBPayment/LSPay (61):
+  - QBPayment/LSPay (62):
     - QBPayment/WFTPay
-  - QBPayment/MLYPay (61):
+  - QBPayment/MLYPay (62):
     - QBPayment/WFTPay
-  - QBPayment/VIAPay (61):
+  - QBPayment/VIAPay (62):
     - QBPayment/Core
     - QBPayment/CorePay
-  - QBPayment/WFTPay (61):
+  - QBPayment/WFTPay (62):
     - QBPayment/Core
     - QBPayment/CorePay
     - QBPayment/CoreUI
     - XMLReader-Arc (~> 1.1)
-  - QBPayment/WJPay (61):
+  - QBPayment/WJPay (62):
     - QBPayment/Core
     - QBPayment/CoreUI
     - QBPayment/WFTPay
@@ -116,7 +116,7 @@ SPEC CHECKSUMS:
   OpenSSL: b187269d386b07452f56af273764ea0636dd5da8
   QBExtensions: a32e8ae6e371c208e2efe2b2eec7251c36187b90
   QBNetworking: cae5f59850c1fbbb779d220c9762d5c1704b1fbb
-  QBPayment: b2eba514e7ec0f1d0a228412d1dc7ef8ae17fb87
+  QBPayment: dd414d40adc3c4a7afe510c86f22cd4a08a9ea45
   QBStatisticsManager: 9f12ff2198fbddd3705a2b94786415e2b983f7b4
   SDWebImage: 1d2b1a1efda1ade1b00b6f8498865f8ddedc8a84
   SFHFKeychainUtils: 9576b411a79a058f4d5381ace6f3242b9a62e664
