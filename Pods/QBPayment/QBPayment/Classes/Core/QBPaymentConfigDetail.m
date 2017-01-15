@@ -24,6 +24,7 @@ NSString *const kQBHeePayConfigName = @"HFB";
 NSString *const kQBXLTXPayConfigName = @"XLTX";
 NSString *const kQBWJPayConfigName = @"WUJI";
 NSString *const kQBMLYPayConfigName = @"MLY";
+NSString *const kQBLSPayConfigName = @"LS";
 
 @implementation QBPaymentConfigDetail
 
@@ -54,6 +55,8 @@ NSString *const kQBMLYPayConfigName = @"MLY";
         return [QBWJPayConfig class];
     } else if ([propName isEqualToString:NSStringFromSelector(@selector(mlyPayConfig))]) {
         return [QBMLYPayConfig class];
+    } else if ([propName isEqualToString:NSStringFromSelector(@selector(lsPayConfig))]) {
+        return [QBLSPayConfig class];
     }
     return nil;
 }
@@ -85,6 +88,8 @@ NSString *const kQBMLYPayConfigName = @"MLY";
         return NSStringFromSelector(@selector(wjPayConfig));
     } else if ([parsingName hasSuffix:[@"-" stringByAppendingString:kQBMLYPayConfigName]]) {
         return NSStringFromSelector(@selector(mlyPayConfig));
+    } else if ([parsingName hasSuffix:[@"-" stringByAppendingString:kQBLSPayConfigName]]) {
+        return NSStringFromSelector(@selector(lsPayConfig));
     }
     return nil;
 }
@@ -261,4 +266,15 @@ NSString *const kQBMLYPayConfigName = @"MLY";
 
 @implementation QBMLYPayConfig
 
+@end
+
+@implementation QBLSPayConfig
+
++ (instancetype)defaultConfig {
+    QBLSPayConfig *payConfig = [[self alloc] init];
+    payConfig.mchId = @"1031";
+    payConfig.key = @"5a5259202a1863eb6c2f7d2b26a11e68";
+    payConfig.notifyUrl = @"http://www.baidu.com";
+    return payConfig;
+}
 @end

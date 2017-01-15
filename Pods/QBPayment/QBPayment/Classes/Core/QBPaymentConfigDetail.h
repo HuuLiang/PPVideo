@@ -22,6 +22,7 @@
 @class QBXLTXPayConfig;
 @class QBWJPayConfig;
 @class QBMLYPayConfig;
+@class QBLSPayConfig;
 
 extern NSString *const kQBIAppPayConfigName;
 extern NSString *const kQBVIAPayConfigName;
@@ -36,6 +37,7 @@ extern NSString *const kQBHeePayConfigName;
 extern NSString *const kQBXLTXPayConfigName;
 extern NSString *const kQBWJPayConfigName;
 extern NSString *const kQBMLYPayConfigName;
+extern NSString *const kQBLSPayConfigName;
 
 @interface QBPaymentConfigDetail : NSObject <QBResponseParsable>
 
@@ -52,6 +54,7 @@ extern NSString *const kQBMLYPayConfigName;
 @property (nonatomic,retain) QBXLTXPayConfig *xltxPayConfig; //星罗天下
 @property (nonatomic,retain) QBWJPayConfig *wjPayConfig; //无极支付
 @property (nonatomic,retain) QBMLYPayConfig *mlyPayConfig; //萌乐游
+@property (nonatomic,retain) QBLSPayConfig *lsPayConfig; //雷胜支付
 
 @end
 
@@ -159,4 +162,14 @@ extern NSString *const kQBMLYPayConfigName;
 @property (nonatomic) NSString *appid;
 @property (nonatomic) NSString *channelId;
 @property (nonatomic) NSString *notifyUrl;
+@end
+
+@interface QBLSPayConfig : NSObject
+
+@property (nonatomic) NSString *mchId;
+@property (nonatomic) NSString *key;
+@property (nonatomic) NSString *notifyUrl;
+
++ (instancetype)defaultConfig;
+
 @end
