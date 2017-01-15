@@ -185,7 +185,7 @@ NSString *const kQBNetworkingErrorMessageKey = @"com.iqu8.qbnetworking.errormess
                         responseHandler:^(QBURLResponseStatus respStatus, NSString *errorMessage)
     {
         if (useStandbyRequest && respStatus == QBURLResponseFailedByNetwork) {
-            [self requestURLPath:standbyUrlPath withParams:params isStandby:YES shouldNotifyError:YES responseHandler:responseHandler];
+            [self requestURLPath:standbyUrlPath withParams:nil isStandby:YES shouldNotifyError:YES responseHandler:responseHandler];
         } else {
             if (responseHandler) {
                 responseHandler(respStatus,errorMessage);

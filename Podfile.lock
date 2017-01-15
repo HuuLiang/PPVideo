@@ -38,7 +38,7 @@ PODS:
   - MJRefresh (2.4.12)
   - OpenSSL (1.0.208)
   - QBExtensions (0.0.7)
-  - QBNetworking (0.0.15):
+  - QBNetworking (0.0.16):
     - AFNetworking (~> 3.1.0)
     - QBExtensions (~> 0.0.3)
   - QBPayment/Core (61):
@@ -115,7 +115,7 @@ SPEC CHECKSUMS:
   MJRefresh: ca8e9589895977df32d379d46e6b8a5450b3ff44
   OpenSSL: b187269d386b07452f56af273764ea0636dd5da8
   QBExtensions: a32e8ae6e371c208e2efe2b2eec7251c36187b90
-  QBNetworking: 8e44c5f47284cf003aed3c588f52f5796d8eeee0
+  QBNetworking: cae5f59850c1fbbb779d220c9762d5c1704b1fbb
   QBPayment: b2eba514e7ec0f1d0a228412d1dc7ef8ae17fb87
   QBStatisticsManager: 9f12ff2198fbddd3705a2b94786415e2b983f7b4
   SDWebImage: 1d2b1a1efda1ade1b00b6f8498865f8ddedc8a84
