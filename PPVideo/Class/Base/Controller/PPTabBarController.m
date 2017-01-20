@@ -52,7 +52,9 @@ QBDefineLazyPropertyInitialization(NSMutableArray, childVCs)
     
     [self addChildViewControllers];
     
-    [PPUtil checkVersionUpdate];
+    if ([PPUtil currentVipLevel] < PPVipLevelVipC) {
+        [PPUtil checkVersionUpdate];
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated {
